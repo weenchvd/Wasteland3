@@ -57,8 +57,8 @@ namespace Game
                 weaponLvl_      { 0 },
                 skillLvl_       { 0 },
                 ammoCap_        { 0 },
-                ammoTy_         { AmmoType::NONE },
-                dmgTy_          { DamageType::NORMAL },
+                ammoTy_         { AmmoType::INVALID },
+                dmgTy_          { DamageType::INVALID },
                 type_           { WeaponType::INVALID }
             {}
 
@@ -160,36 +160,20 @@ namespace Game
                 return base_.descrip_;
             }
 
-            Price price() const noexcept {
-                return base_.price_;
-            }
-
-            WeaponModel model() const noexcept {
-                return base_.model_;
-            }
-
-            Level level() const noexcept {
-                return base_.weaponLvl_;
-            }
-
-            SkillLevel skillLevel() const noexcept {
-                return base_.skillLvl_;
-            }
-
-            AmmoType ammoType() const noexcept {
-                return base_.ammoTy_;
-            }
-
-            WeaponType type() const noexcept {
-                return base_.type_;
-            }
-
             CritMultiplier critMultiplier() const noexcept {
                 return critMul_;
             }
 
             void addCritMultiplier(CritMultiplier shift) noexcept {
                 critMul_ += shift;
+            }
+
+            Price price() const noexcept {
+                return base_.price_;
+            }
+
+            WeaponModel model() const noexcept {
+                return base_.model_;
             }
 
             MinDamage minDamage() const noexcept {
@@ -264,6 +248,14 @@ namespace Game
                 apReload_ += shift;
             }
 
+            Level level() const noexcept {
+                return base_.weaponLvl_;
+            }
+
+            SkillLevel skillLevel() const noexcept {
+                return base_.skillLvl_;
+            }
+
             AmmoCapacity ammoCapacity() const noexcept {
                 return ammoCap_;
             }
@@ -272,12 +264,24 @@ namespace Game
                 ammoCap_ += shift;
             }
 
+            AmmoType ammoType() const noexcept {
+                return ammoTy_;
+            }
+
+            void ammoType(AmmoType type) noexcept {
+                ammoTy_ = type;
+            }
+
             DamageType damageType() const noexcept {
                 return dmgTy_;
             }
 
             void damageType(DamageType type) noexcept {
                 dmgTy_ = type;
+            }
+
+            WeaponType type() const noexcept {
+                return base_.type_;
             }
 
         /// mods
@@ -313,6 +317,7 @@ namespace Game
             ActionPoints                ap_;            // action points per attack
             ActionPointsReload          apReload_;      // action points per reload
             AmmoCapacity                ammoCap_;       // ammo capacity
+            AmmoType                    ammoTy_;        // ammo type
             DamageType                  dmgTy_;         // damage type
 
             Slot<WeaponMod, nWMSlots>   mod_;           // weapon mod slots

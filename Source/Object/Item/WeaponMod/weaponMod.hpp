@@ -44,9 +44,7 @@ namespace Game
                 modLvl_         { 0 },
                 skillLvl_       { 0 },
                 ammoCap_        { 0 },
-                //changeAmmoTy_   { false },
                 ammoTy_         { AmmoType::INVALID },
-                //changeDmgTy_    { false },
                 dmgTy_          { DamageType::INVALID },
                 type_           { WeaponModType::INVALID }
             {}
@@ -73,9 +71,7 @@ namespace Game
             void level(Level level) noexcept                            { modLvl_ = level; }
             void skillLevel(SkillLevel level) noexcept                  { skillLvl_ = level; }
             void ammoCapacity(AmmoCapacity capacity) noexcept           { ammoCap_ = capacity; }
-            //void changeAmmoType(bool value) noexcept                    { changeAmmoTy_ = value; }
             void ammoType(AmmoType type) noexcept                       { ammoTy_ = type; }
-            //void changeDamageType(bool value) noexcept                  { changeDmgTy_ = value; }
             void damageType(DamageType type) noexcept                   { dmgTy_ = type; }
             void weaponModType(WeaponModType type) noexcept             { type_ = type; }
 
@@ -96,9 +92,7 @@ namespace Game
             Level                       modLvl_;        // weapon mod level
             SkillLevel                  skillLvl_;      // min level of skill
             AmmoCapacity                ammoCap_;       // ammo capacity
-            //bool                        changeAmmoTy_;  // change ammo type
             AmmoType                    ammoTy_;        // ammo type
-            //bool                        changeDmgTy_;   // change damage type
             DamageType                  dmgTy_;         // damage type
             WeaponModType               type_;          // weapon mod type (kind)
         };

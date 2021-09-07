@@ -22,7 +22,7 @@ namespace Game
             using ValueType = Type;
             using Kind      = typename ValueType::Type;
 
-            static const int slotNotFound = -1;
+            static constexpr int slotNotFound = -1;
 
         public:
             Slot(array<Kind, N> list) noexcept

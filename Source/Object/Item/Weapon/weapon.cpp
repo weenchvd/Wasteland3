@@ -33,6 +33,7 @@ namespace Game
             ap_             { base_.ap_ },
             apReload_       { base_.apReload_ },
             ammoCap_        { base_.ammoCap_ },
+            ammoTy_         { base_.ammoTy_ },
             dmgTy_          { base_.dmgTy_ },
             mod_            { base_.modTypes_ }
         {}
@@ -87,6 +88,7 @@ namespace Game
                 auto slotNumber = mod_.slotNumber(mod->type());
                 if (slotNumber != mod_.slotNotFound) {
                     swapUP(item, mod_[slotNumber]);
+                    apply();
                     return true;
                 }
             }
@@ -104,6 +106,7 @@ namespace Game
                 WeaponMod* mod = static_cast<WeaponMod*>(item.get());
                 if (mod_.kind(slotNumber) == mod->type()) {
                     swapUP(item, mod_[slotNumber]);
+                    apply();
                     return true;
                 }
             }
@@ -116,6 +119,7 @@ namespace Game
                 return false;
             }
             item.reset(mod_[slotNumber].release());
+            apply();
             return true;
         }
 

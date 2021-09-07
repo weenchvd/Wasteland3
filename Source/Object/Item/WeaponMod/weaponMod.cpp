@@ -23,7 +23,6 @@ namespace Game
 
         void WeaponMod::apply(Weapon& weapon)
         {
-            //if (base_.critMul_  != refDef_.critMul_)    { weapon.addCritMultiplier(base_.critMul_); }
             weapon.addCritMultiplier(base_.critMul_);
             weapon.addMinDamage(base_.minDmg_);
             weapon.addMaxDamage(base_.maxDmg_);
@@ -34,15 +33,9 @@ namespace Game
             weapon.addAttackNumber(base_.nAttacks_);
             weapon.addActionPoints(base_.ap_);
             weapon.addActionPointsReload(base_.apReload_);
-            //base_.modLvl_;
-            //base_.skillLvl_;
             weapon.addAmmoCapacity(base_.ammoCap_);
-            //if (base_.changeAmmoTy_);
-            if (base_.ammoTy_ != AmmoType::INVALID);
-            //base_.changeDmgTy_;
+            if (base_.ammoTy_ != AmmoType::INVALID) weapon.ammoType(base_.ammoTy_);
             if (base_.dmgTy_ != DamageType::INVALID) weapon.damageType(base_.dmgTy_);
-            //base_.type_;
-
         }
 
         vector<WeaponModReference> WeaponMod::ref_ = vector<WeaponModReference>();
