@@ -49,7 +49,7 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2);
+        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept;
 
         //template<class T, class Enum>
         //auto createItem(Enum model) {

@@ -19,46 +19,63 @@ namespace Game
 
         class Inventory {
         public:
+            struct ItemRange {
+                list<unique_ptr<Item>>::const_iterator beg;     // beginning
+                list<unique_ptr<Item>>::const_iterator end;     // end
+            };
+
+            struct Roster {
+                ItemRange newItems;
+                ItemRange oldItems;
+            };
+
+            //struct Roster {
+            //    pair<list<unique_ptr<Item>>::const_iterator, list<unique_ptr<Item>>::const_iterator> newItems;
+            //    pair<list<unique_ptr<Item>>::const_iterator, list<unique_ptr<Item>>::const_iterator> oldItems;
+            //};
+
+        public:
             Inventory() noexcept
-                : nNew_{ 0 } {}
+                : viewed_{ true }
+            {
+                roster_ = roster();
+            }
             
             Inventory(const Inventory&) = delete;
             Inventory& operator=(const Inventory&) = delete;
 
-            //list<unique_ptr<Item>>::const_iterator cbegin() const noexcept {
-            //    return invent_.cbegin();
-            //}
+            // insert (put) an item into inventory 
+            void insert(unique_ptr<Item>& item, bool isNew = false);
 
-            list<unique_ptr<Item>>::iterator begin() noexcept {
-                return invent_.begin();
-            }
+            unique_ptr<Item> extract(list<unique_ptr<Item>>::const_iterator iterator);
 
-            //list<unique_ptr<Item>>::const_iterator cend() const noexcept {
-            //    return invent_.cend();
-            //}
+            Inventory::Roster& roster();
 
-            list<unique_ptr<Item>>::iterator end() noexcept {
-                return invent_.end();
-            }
+            Inventory::Roster& roster(ItemType type);
 
-            void insert(unique_ptr<Item>& item);
-
-            void bringBack(unique_ptr<Item>& item);
-
-            list<unique_ptr<Item>>::iterator erase(list<unique_ptr<Item>>::iterator iter) noexcept {
-                return invent_.erase(iter);
-            }
-
-            pair<list<unique_ptr<Item>>::iterator, list<unique_ptr<Item>>::iterator>
-                range(ItemType type);
+            size_t size();
             
-            void sort() {
-                invent_.sort();
-            }
+        private:
+            void clean();
+
+            void mergeLists();
+
+            //void sort();
+
+            void erase(list<unique_ptr<Item>>::const_iterator iterator);
+
+            list<unique_ptr<Item>>::iterator find(list<unique_ptr<Item>>::const_iterator iterator);
+
+            //pair<list<unique_ptr<Item>>::iterator, list<unique_ptr<Item>>::iterator>
+            //    find(unique_ptr<Item>& item);
+
+        public:
+            static Roster           roster_;
 
         private:
-            list<unique_ptr<Item>>  invent_;
-            unsigned int            nNew_;          // number of new items
+            list<unique_ptr<Item>>  newItems_;
+            list<unique_ptr<Item>>  oldItems_;
+            bool                    viewed_;
         };
 
     }

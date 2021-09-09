@@ -66,29 +66,29 @@ int main()
     unique_ptr<Item> magQuickfire1  = WeaponMod::create(WeaponModModel::MAG_QUICKFIRE);
 
     Inventory inv;
-    inv.insert(arSocom1);
-    inv.insert(arKalash97_1);
-    inv.insert(barrelLight1);
-    inv.insert(barrelShort1);
+    inv.insert(arSocom1, true);
+    inv.insert(arKalash97_1, true);
+    inv.insert(barrelLight1, true);
+    inv.insert(barrelShort1, true);
     inv.insert(arSocom2);
     inv.insert(magAdvMat1);
     inv.insert(magOversized1);
     inv.insert(smgRipper1);
     inv.insert(magQuickfire1);
-    inv.sort();
+    //inv.sort();
 
-    auto weapons = inv.range(ItemType::Weapon);
-    auto weaponMods = inv.range(ItemType::WeaponMod);
-    auto armors = inv.range(ItemType::Armor);
-    auto iter = inv.end();
-    iter--;
+    auto weapons = inv.roster(ItemType::Weapon);
+    auto weaponMods = inv.roster(ItemType::WeaponMod);
+    auto armors = inv.roster(ItemType::Armor);
+    /*auto iter = inv.roster().oldItems.second;
+    --iter;
     
-    auto weapon1Iter = weapons.first;
+    auto weapon1Iter = weapons.oldItems.first;
     auto& weapon1UP = *weapon1Iter;
     weapon1UP->accept(typeIV1);
     if (typeIV1.isWeapon()) {
         Weapon* weapon1 = static_cast<Weapon*>(weapon1UP.get());
-        list<unique_ptr<Item>>::iterator weaponMod1Iter = weaponMods.first;
+        list<unique_ptr<Item>>::iterator weaponMod1Iter = weaponMods.oldItems.first;
         int slotNumber = weapon1->modNumber((static_cast<WeaponMod*>(weaponMod1Iter->get()))->type());
         bool b1 = weapon1->setMod(*weaponMod1Iter);
         list<unique_ptr<Item>>::iterator weaponMod2Iter = weaponMod1Iter;
@@ -109,7 +109,7 @@ int main()
             inv.erase(weaponMod3Iter);
         }
 
-    }
+    }*/
 
 
 

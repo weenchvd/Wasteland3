@@ -11,7 +11,7 @@ namespace Game
 {
     namespace Object
     {
-        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2)
+        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
         {
             if (item1->type() < item2->type()) {
                 return true;
