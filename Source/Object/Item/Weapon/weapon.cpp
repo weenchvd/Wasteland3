@@ -97,14 +97,14 @@ namespace Game
 
         bool Weapon::setMod(unique_ptr<Item>& item, unsigned int slotNumber) noexcept
         {
-            if (!item || slotNumber >= mod_.size() || mod_.kind(slotNumber) == WeaponModType::INVALID) {
+            if (!item || slotNumber >= mod_.size() || mod_.type(slotNumber) == WeaponModType::INVALID) {
                 return false;
             }
             TypeItemVisitor visitor;
             item->accept(visitor);
             if (visitor.isWeaponMod()) {
                 WeaponMod* mod = static_cast<WeaponMod*>(item.get());
-                if (mod_.kind(slotNumber) == mod->type()) {
+                if (mod_.type(slotNumber) == mod->type()) {
                     swapUP(item, mod_[slotNumber]);
                     apply();
                     return true;

@@ -295,7 +295,7 @@ namespace Game
             }
 
             WeaponModType modType(unsigned int slotNumber) const noexcept {
-                return mod_.kind(slotNumber);
+                return mod_.type(slotNumber);
             }
 
             bool setMod(unique_ptr<Item>& item) noexcept;

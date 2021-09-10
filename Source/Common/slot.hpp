@@ -16,46 +16,45 @@ namespace Game
     {
         using namespace std;
 
-        template<class Type, unsigned int N>
+        template<class T, unsigned int N>
         class Slot {
         public:
-            using ValueType = Type;
-            using Kind      = typename ValueType::Type;
+            using Type = typename T::Type;
 
             static constexpr int slotNotFound = -1;
 
         public:
-            Slot(array<Kind, N> list) noexcept
-                : kind_{ list } {}
+            Slot(array<Type, N> list) noexcept
+                : type_{ list } {}
 
             unsigned int size() const noexcept {
                 return elem_.size();
             }
 
             // 0 - first slot index
-            const Kind& kind(unsigned int slotNumber) const noexcept {
-                return kind_[slotNumber];
+            const Type& type(unsigned int slotNumber) const noexcept {
+                return type_[slotNumber];
             }
 
             // 0 - first slot index
-            Kind& kind(unsigned int slotNumber) noexcept {
-                return kind_[slotNumber];
+            Type& type(unsigned int slotNumber) noexcept {
+                return type_[slotNumber];
             }
 
             // 0 - first slot index
-            const unique_ptr<ValueType>& operator[](unsigned int slotNumber) const noexcept {
+            const unique_ptr<T>& operator[](unsigned int slotNumber) const noexcept {
                 return elem_[slotNumber];
             }
 
             // 0 - first slot index
-            unique_ptr<ValueType>& operator[](unsigned int slotNumber) noexcept {
+            unique_ptr<T>& operator[](unsigned int slotNumber) noexcept {
                 return elem_[slotNumber];
             }
 
-            // if the type is not found, return -1
-            int slotNumber(Kind type) const noexcept {
-                for (int i = 0; i < kind_.size(); ++i) {
-                    if (kind_[i] == type) {
+            // 0 - first slot index, if the type is not found, return -1
+            int slotNumber(Type type) const noexcept {
+                for (int i = 0; i < type_.size(); ++i) {
+                    if (type_[i] == type) {
                         return i;
                     }
                 }
@@ -63,8 +62,8 @@ namespace Game
             }
 
         private:
-            array<unique_ptr<ValueType>, N>     elem_;
-            array<Kind, N>                      kind_;
+            array<unique_ptr<T>, N>             elem_;
+            array<Type, N>                      type_;
         };
 
     }
