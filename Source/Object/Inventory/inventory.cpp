@@ -24,17 +24,12 @@ namespace Game
                     auto iter = newItems_.emplace(newItems_.cbegin(), unique_ptr<Item>{});
                     *iter = move(item);
                     viewed_ = false;
-                    roster_.newItems.beg = iter;
                 }
                 else {
                     // inserts the item into the inventory last among the same ones
-                    auto first = oldItems_.cbegin();
-                    auto pos = upper_bound(first, oldItems_.cend(), item);
+                    auto pos = upper_bound(oldItems_.cbegin(), oldItems_.cend(), item);
                     auto iter = oldItems_.emplace(pos, unique_ptr<Item>{});
                     *iter = move(item);
-                    if (first == pos) {
-                        roster_.oldItems.beg = iter;
-                    }
                 }
             }
         }
@@ -49,28 +44,7 @@ namespace Game
                 return unique_ptr<Item>{};
             }
             unique_ptr<Item> item = move(*iter);
-            if (iter == roster_.newItems.beg) {
-                roster_.newItems.beg = ++iter;
-                newItems_.erase(--iter);
-            }
-            else if (iter == roster_.oldItems.beg) {
-                roster_.oldItems.beg = ++iter;
-                oldItems_.erase(--iter);
-            }
-            else {
-                erase(iter);
-            }
-            //if (iter == newItems_.begin()) {
-            //    roster_.newItems.beg = newItems_.begin()++;
-            //    newItems_.erase(iter);
-            //}
-            //else if (iter == oldItems_.begin()) {
-            //    roster_.oldItems.beg = oldItems_.begin()++;
-            //    oldItems_.erase(iter);
-            //}
-            //else {
-            //    erase(iter);
-            //}
+            erase(iter);
             return item;
         }
 
@@ -84,7 +58,7 @@ namespace Game
             }
         }
 
-        Inventory::Roster& Inventory::roster()
+        Inventory::Roster Inventory::roster()
         {
             clean();
             if (viewed_) {
@@ -92,12 +66,13 @@ namespace Game
             }
             viewed_ = true;
 
-            roster_.newItems = { newItems_.cbegin(), newItems_.cend() };
-            roster_.oldItems = { oldItems_.cbegin(), oldItems_.cend() };
-            return roster_;
+            Inventory::Roster roster;
+            roster.newItems = { newItems_.cbegin(), newItems_.cend() };
+            roster.oldItems = { oldItems_.cbegin(), oldItems_.cend() };
+            return roster;
         }
 
-        Inventory::Roster& Inventory::roster(ItemType type)
+        Inventory::Roster Inventory::roster(ItemType type)
         {
             struct ItemType_Less {
                 bool operator()(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) {
@@ -114,13 +89,14 @@ namespace Game
 
             Item i{ type, 0 };
             unique_ptr<Item> item{ &i };
-            roster_.newItems = { newItems_.cbegin(), newItems_.cend() };
-            roster_.oldItems = {
+            Inventory::Roster roster;
+            roster.newItems = { newItems_.cbegin(), newItems_.cend() };
+            roster.oldItems = {
                 lower_bound(oldItems_.cbegin(), oldItems_.cend(), item, ItemType_Less{}),
                 upper_bound(oldItems_.cbegin(), oldItems_.cend(), item, ItemType_Less{})
             };
             item.release();
-            return roster_;
+            return roster;
         }
 
         size_t Inventory::size()
@@ -131,14 +107,9 @@ namespace Game
 
         inline void Inventory::mergeLists()
         {
+            newItems_.sort();
             oldItems_.merge(newItems_);
         }
-
-        //void Inventory::sort()
-        //{
-        //    clean();
-        //    oldItems_.sort();
-        //}
 
         void Inventory::clean()
         {
@@ -153,15 +124,6 @@ namespace Game
 
             newItems_.remove_if(UniquePtr_Null{});
             oldItems_.remove_if(UniquePtr_Null{});
-
-            //auto iter = oldItems_.cbegin();
-            //while (iter != oldItems_.cend()) {
-            //    auto current = iter;
-            //    ++iter;
-            //    if (*current == nullptr) {
-            //        oldItems_.erase(current);
-            //    }
-            //}
         }
 
         list<unique_ptr<Item>>::iterator Inventory::find(list<unique_ptr<Item>>::const_iterator iterator)
@@ -179,18 +141,6 @@ namespace Game
             }
             throw Error::OutOfRangeError{"Inventory::find()"};
         }
-
-        //pair<list<unique_ptr<Item>>::iterator, list<unique_ptr<Item>>::iterator>
-        //    Inventory::find(unique_ptr<Item>& item)
-        //{
-        //    clean();
-        //    return {
-        //        lower_bound(oldItems_.begin(), oldItems_.end(), item),
-        //        upper_bound(oldItems_.begin(), oldItems_.end(), item)
-        //    };
-        //}
-
-        Inventory::Roster Inventory::roster_;
 
     }
 }

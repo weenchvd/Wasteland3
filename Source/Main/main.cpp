@@ -77,6 +77,8 @@ int main()
     inv.insert(magQuickfire1);
     //inv.sort();
 
+    auto all = inv.roster();
+    auto all2 = inv.roster();
     auto weapons = inv.roster(ItemType::Weapon);
     auto weaponMods = inv.roster(ItemType::WeaponMod);
     auto armors = inv.roster(ItemType::Armor);

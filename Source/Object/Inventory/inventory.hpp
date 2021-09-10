@@ -29,17 +29,9 @@ namespace Game
                 ItemRange oldItems;
             };
 
-            //struct Roster {
-            //    pair<list<unique_ptr<Item>>::const_iterator, list<unique_ptr<Item>>::const_iterator> newItems;
-            //    pair<list<unique_ptr<Item>>::const_iterator, list<unique_ptr<Item>>::const_iterator> oldItems;
-            //};
-
         public:
             Inventory() noexcept
-                : viewed_{ true }
-            {
-                roster_ = roster();
-            }
+                : viewed_{ true } {}
             
             Inventory(const Inventory&) = delete;
             Inventory& operator=(const Inventory&) = delete;
@@ -49,9 +41,9 @@ namespace Game
 
             unique_ptr<Item> extract(list<unique_ptr<Item>>::const_iterator iterator);
 
-            Inventory::Roster& roster();
+            Inventory::Roster roster();
 
-            Inventory::Roster& roster(ItemType type);
+            Inventory::Roster roster(ItemType type);
 
             size_t size();
             
@@ -60,17 +52,9 @@ namespace Game
 
             void mergeLists();
 
-            //void sort();
-
             void erase(list<unique_ptr<Item>>::const_iterator iterator);
 
             list<unique_ptr<Item>>::iterator find(list<unique_ptr<Item>>::const_iterator iterator);
-
-            //pair<list<unique_ptr<Item>>::iterator, list<unique_ptr<Item>>::iterator>
-            //    find(unique_ptr<Item>& item);
-
-        public:
-            static Roster           roster_;
 
         private:
             list<unique_ptr<Item>>  newItems_;
