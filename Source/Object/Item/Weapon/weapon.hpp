@@ -286,9 +286,7 @@ namespace Game
 
         /// mods
         public:
-            unsigned int modSize() const noexcept {
-                return mod_.size();
-            }
+            unsigned int modSize() const noexcept;
 
             int modNumber(WeaponModType type) const noexcept {
                 return mod_.slotNumber(type);
@@ -298,11 +296,15 @@ namespace Game
                 return mod_.type(slotNumber);
             }
 
-            bool setMod(unique_ptr<Item>& item) noexcept;
+            const unique_ptr<WeaponMod>& modGet(unsigned int slotNumber) const {
+                return mod_[slotNumber];
+            }
 
-            bool setMod(unique_ptr<Item>& item, unsigned int slotNumber) noexcept;
+            //bool modSet(unique_ptr<Item>& source) noexcept;
 
-            bool unsetMod(unique_ptr<Item>& item, unsigned int slotNumber) noexcept;
+            bool modSet(unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
+
+            bool modUnset(unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
 
         private:
             const WeaponReference&      base_;          // reference, sample, template

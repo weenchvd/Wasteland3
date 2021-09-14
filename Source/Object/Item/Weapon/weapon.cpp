@@ -76,36 +76,50 @@ namespace Game
             if (ammoCap_    < refMin_.ammoCap_)     ammoCap_    = refMin_.ammoCap_;
         }
 
-        bool Weapon::setMod(unique_ptr<Item>& item) noexcept
+        unsigned int Weapon::modSize() const noexcept
         {
-            if (!item) {
-                return false;
-            }
-            TypeItemVisitor visitor;
-            item->accept(visitor);
-            if (visitor.isWeaponMod()) {
-                WeaponMod* mod = static_cast<WeaponMod*>(item.get());
-                auto slotNumber = mod_.slotNumber(mod->type());
-                if (slotNumber != mod_.slotNotFound) {
-                    swapUP(item, mod_[slotNumber]);
-                    apply();
-                    return true;
+            unsigned int size = 0;
+            for (int i = 0; i < mod_.size(); ++i) {
+                if (mod_.type(i) != WeaponMod::Type::INVALID) {
+                    ++size;
                 }
             }
-            return false;
+            return size;
         }
 
-        bool Weapon::setMod(unique_ptr<Item>& item, unsigned int slotNumber) noexcept
+        //bool Weapon::modSet(unique_ptr<Item>& source) noexcept
+        //{
+        //    if (!source) {
+        //        return false;
+        //    }
+        //    TypeItemVisitor visitor;
+        //    source->accept(visitor);
+        //    if (visitor.isWeaponMod()) {
+        //        WeaponMod* mod = static_cast<WeaponMod*>(source.get());
+        //        auto slotNumber = mod_.slotNumber(mod->type());
+        //        if (slotNumber != mod_.slotNotFound) {
+        //            swapUP(source, mod_[slotNumber]);
+        //            apply();
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        bool Weapon::modSet(unique_ptr<Item>& source, unsigned int slotNumber) noexcept
         {
-            if (!item || slotNumber >= mod_.size() || mod_.type(slotNumber) == WeaponModType::INVALID) {
+            if (source == nullptr ||
+                slotNumber >= mod_.size() ||
+                mod_.type(slotNumber) == WeaponMod::Type::INVALID ||
+                mod_[slotNumber] != nullptr) {
                 return false;
             }
             TypeItemVisitor visitor;
-            item->accept(visitor);
+            source->accept(visitor);
             if (visitor.isWeaponMod()) {
-                WeaponMod* mod = static_cast<WeaponMod*>(item.get());
+                WeaponMod* mod = static_cast<WeaponMod*>(source.get());
                 if (mod_.type(slotNumber) == mod->type()) {
-                    swapUP(item, mod_[slotNumber]);
+                    mod_[slotNumber].reset(static_cast<WeaponMod*>(source.release()));
                     apply();
                     return true;
                 }
@@ -113,12 +127,14 @@ namespace Game
             return false;
         }
 
-        bool Weapon::unsetMod(unique_ptr<Item>& item, unsigned int slotNumber) noexcept
+        bool Weapon::modUnset(unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept
         {
-            if (item || slotNumber >= mod_.size() || !mod_[slotNumber]) {
+            if (receiver != nullptr ||
+                slotNumber >= mod_.size() ||
+                mod_[slotNumber] == nullptr) {
                 return false;
             }
-            item.reset(mod_[slotNumber].release());
+            receiver.reset(mod_[slotNumber].release());
             apply();
             return true;
         }
