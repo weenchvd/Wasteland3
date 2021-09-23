@@ -14,8 +14,6 @@ namespace Game
 {
     namespace Common
     {
-        using namespace std;
-
         template<class T, unsigned int N>
         class Slot {
         public:
@@ -24,7 +22,7 @@ namespace Game
             static constexpr int slotNotFound = -1;
 
         public:
-            Slot(array<Type, N> list) noexcept
+            Slot(std::array<Type, N> list) noexcept
                 : type_{ list } {}
 
             unsigned int size() const noexcept {
@@ -42,12 +40,12 @@ namespace Game
             }
 
             // 0 - first slot index
-            const unique_ptr<T>& operator[](unsigned int slotNumber) const noexcept {
+            const std::unique_ptr<T>& operator[](unsigned int slotNumber) const noexcept {
                 return elem_[slotNumber];
             }
 
             // 0 - first slot index
-            unique_ptr<T>& operator[](unsigned int slotNumber) noexcept {
+            std::unique_ptr<T>& operator[](unsigned int slotNumber) noexcept {
                 return elem_[slotNumber];
             }
 
@@ -62,8 +60,8 @@ namespace Game
             }
 
         private:
-            array<unique_ptr<T>, N>             elem_;
-            array<Type, N>                      type_;
+            std::array<std::unique_ptr<T>, N>   elem_;
+            std::array<Type, N>                 type_;
         };
 
     }

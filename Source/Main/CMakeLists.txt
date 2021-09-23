@@ -20,7 +20,7 @@ set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
 
 # Add source to this project's executable.
 add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
-target_link_libraries(${EXEC_NAME} inventory item)
+target_link_libraries(${EXEC_NAME} unit inventory item)
 #target_link_libraries(${EXEC_NAME} weapon armor destroyable)
 
 target_include_directories(${EXEC_NAME} PRIVATE ${ALL_INCLUDE_DIRECTORIES})

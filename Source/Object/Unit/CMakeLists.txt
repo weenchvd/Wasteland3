@@ -1,0 +1,24 @@
+﻿
+# Copyright (c) 2021 Vitaly Dikov
+# 
+# Distributed under the Boost Software License, Version 1.0.
+# (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+cmake_minimum_required(VERSION 3.14)
+
+# specify the C++ standard
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+
+
+set(LIBRARY_NAME "unit")
+set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
+                    "Character/character.cpp"
+                    )
+
+add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
+
+target_link_libraries(${LIBRARY_NAME} PRIVATE item)
+
+target_include_directories(${LIBRARY_NAME} PRIVATE ${ALL_INCLUDE_DIRECTORIES})

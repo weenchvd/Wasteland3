@@ -26,6 +26,7 @@ namespace Game
 
         enum class WeaponType : unsigned char {
             INVALID,                        /// invalid class, must be the first
+            ANY,                            // any type
 
             AR,
             SMG,

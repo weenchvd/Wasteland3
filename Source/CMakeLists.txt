@@ -13,6 +13,8 @@ set(ALL_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/Common"
                             "${CMAKE_CURRENT_SOURCE_DIR}/Object/Item/Armor"
                             "${CMAKE_CURRENT_SOURCE_DIR}/Object/Item/Weapon"
                             "${CMAKE_CURRENT_SOURCE_DIR}/Object/Item/WeaponMod"
+                            "${CMAKE_CURRENT_SOURCE_DIR}/Object/Unit"
+                            "${CMAKE_CURRENT_SOURCE_DIR}/Object/Unit/Character"
                             )
 
 

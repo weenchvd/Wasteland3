@@ -4,6 +4,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"unit.hpp"
+#include"character.hpp"
 #include"inventory.hpp"
 #include"item.hpp"
 #include"weapon.hpp"
@@ -20,6 +22,8 @@ using namespace Game::Object;
 
 int main()
 {
+    using namespace Game;
+
     sizeof(ItemType);
     sizeof(ItemModel);
     sizeof(Item);
@@ -113,7 +117,10 @@ int main()
 
     }*/
 
-
+    unique_ptr<Unit> unit1 = Character::create(Character::Model::RANGER_COMMON);
+    auto weapon = inv.extract(weapons.oldItems.beg);
+    unique_ptr<Character> char1{ static_cast<Character*>(unit1.release()) };
+    char1->weaponSet(weapon, 0);
 
     cout << "\tmain.exe Done!" << endl;
     return 0;
