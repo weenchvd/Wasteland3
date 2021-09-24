@@ -8,16 +8,13 @@
 #define ITEM_HPP
 
 #include"itemCommon.hpp"
+#include"itemVisitor.hpp"
 #include<memory>
 
 namespace Game
 {
     namespace Object
     {
-        using namespace std;
-
-        class ItemVisitor;
-
         class Item {
         public:
             Item(const Item&) = delete;
@@ -49,24 +46,7 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept;
-
-        //template<class T, class Enum>
-        //auto createItem(Enum model) {
-        //    return typename T::create(move(model));
-        //}
-
-        //template<class UniquePtr1, class UniquePtr2>
-        //bool convert(UniquePtr1& to, UniquePtr2& from)
-        //{
-        //    TypeItemVisitor visitor;
-
-        //    if (isConvertible(to, from)) {
-        //        to = UniquePtr1{ static_cast<typename UniquePtr1::element_type*>(from.release()) };
-        //        return true;
-        //    }
-        //    return false;
-        //}
+        bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
 
     }
 }

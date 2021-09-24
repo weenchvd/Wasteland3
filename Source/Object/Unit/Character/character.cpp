@@ -5,13 +5,13 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"character.hpp"
-#include<memory>
-#include<vector>
 
 namespace Game
 {
     namespace Object
     {
+        using namespace std;
+
         Character::Character(CharacterModel model) noexcept
             : Unit              { UnitType::Character, static_cast<UnitModel>(model) },
             base_               { ref_[static_cast<underlying_type_t<CharacterModel>>(model)] },

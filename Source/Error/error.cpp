@@ -4,12 +4,9 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include<iostream>
-#include<iomanip>
-#include<string>
-#include<vector>
-#include<stdexcept>
 #include"error.hpp"
+#include<iostream>
+#include<vector>
 
 namespace Game
 {
@@ -33,17 +30,17 @@ namespace Game
             { "Can't open output file" }
         };
 
-        void ErrPrint(std::ostream& os, Level errLevel, const std::string& message)
+        void errPrint(std::ostream& os, Level errLevel, const std::string& message)
         {
             os << std::endl << prefixLevel << level[int(errLevel)] << suffixLevel << message << std::endl;
         }
 
-        void ErrPrint(std::ostream& os, Level errLevel, Type errType)
+        void errPrint(std::ostream& os, Level errLevel, Type errType)
         {
             os << std::endl << prefixLevel << level[int(errLevel)] << suffixLevel << type[int(errType)] << std::endl;
         }
 
-        void ErrPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message)
+        void errPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message)
         {
             os << std::endl << prefixLevel << level[int(errLevel)] << suffixLevel << type[int(errType)];
             if (message.size() > 0) {

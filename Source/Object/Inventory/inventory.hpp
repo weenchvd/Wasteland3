@@ -15,13 +15,11 @@ namespace Game
 {
     namespace Object
     {
-        using namespace std;
-
         class Inventory {
         public:
             struct ItemRange {
-                list<unique_ptr<Item>>::const_iterator beg;     // beginning
-                list<unique_ptr<Item>>::const_iterator end;     // end
+                std::list<std::unique_ptr<Item>>::const_iterator beg;   // beginning
+                std::list<std::unique_ptr<Item>>::const_iterator end;   // end
             };
 
             struct Roster {
@@ -37,9 +35,9 @@ namespace Game
             Inventory& operator=(const Inventory&) = delete;
 
             // insert (put) an item into inventory 
-            void insert(unique_ptr<Item>& item, bool isNew = false);
+            void insert(std::unique_ptr<Item>& item, bool isNew = false);
 
-            unique_ptr<Item> extract(list<unique_ptr<Item>>::const_iterator iterator);
+            std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
             Inventory::Roster roster();
 
@@ -52,14 +50,15 @@ namespace Game
 
             void mergeLists();
 
-            void erase(list<unique_ptr<Item>>::const_iterator iterator);
+            void erase(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
-            list<unique_ptr<Item>>::iterator find(list<unique_ptr<Item>>::const_iterator iterator);
+            std::list<std::unique_ptr<Item>>::iterator
+                find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
         private:
-            list<unique_ptr<Item>>  newItems_;
-            list<unique_ptr<Item>>  oldItems_;
-            bool                    viewed_;
+            std::list<std::unique_ptr<Item>>    newItems_;
+            std::list<std::unique_ptr<Item>>    oldItems_;
+            bool                                viewed_;
         };
 
     }

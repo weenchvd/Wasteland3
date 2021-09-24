@@ -12,27 +12,27 @@
 #include"weaponMod.hpp"
 //#include"armor.hpp"
 //#include"destroyable.hpp"
+#include<array>
 #include<iostream>
 #include<memory>
-#include<array>
 #include<string>
 
-using namespace std;
-using namespace Game::Object;
 
 int main()
 {
+    using namespace std;
     using namespace Game;
+    using namespace Game::Object;
 
     sizeof(ItemType);
     sizeof(ItemModel);
     sizeof(Item);
     sizeof(WeaponReference);
-    sizeof(Text);
+    sizeof(Common::Text);
     sizeof(WeaponModType);
     sizeof(array<WeaponModType, 4>);
     sizeof(array<unique_ptr<WeaponMod>, 4>);
-    sizeof(Slot<WeaponMod, 4>);
+    sizeof(Common::Slot<WeaponMod, 4>);
     sizeof(Weapon);
 
     unique_ptr<Item> socom1 = Weapon::create(WeaponModel::AR_SOCOM);

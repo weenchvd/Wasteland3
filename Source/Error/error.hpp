@@ -7,6 +7,7 @@
 #ifndef ERROR_HPP
 #define ERROR_HPP
 
+#include<stdexcept>
 #include<string>
 
 namespace Game
@@ -27,9 +28,9 @@ namespace Game
             OUTFILE
         };
 
-        void ErrPrint(std::ostream& os, Level errLevel, const std::string& message);
-        void ErrPrint(std::ostream& os, Level errLevel, Type errType);
-        void ErrPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message);
+        void errPrint(std::ostream& os, Level errLevel, const std::string& message);
+        void errPrint(std::ostream& os, Level errLevel, Type errType);
+        void errPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message);
 
         class RuntimeError : public std::exception {
         public:

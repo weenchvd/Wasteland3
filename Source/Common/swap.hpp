@@ -14,14 +14,12 @@ namespace Game
 {
     namespace Common
     {
-        using namespace std;
-
         template<class Base, class Derived>
-        inline void swapUP(unique_ptr<Base>& base, unique_ptr<Derived>& derived)
+        inline void swapUP(std::unique_ptr<Base>& base, std::unique_ptr<Derived>& derived)
         {
-            unique_ptr<Base> temp{ derived.release() };
+            std::unique_ptr<Base> temp{ derived.release() };
             derived.reset(static_cast<Derived*>(base.release()));
-            base = move(temp);
+            base = std::move(temp);
         }
 
     }

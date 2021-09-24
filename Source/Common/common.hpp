@@ -13,9 +13,7 @@ namespace Game
 {
     namespace Common
     {
-        using namespace std;
-
-        using Text                  = string;
+        using Text                  = std::string;
         using Name                  = Text;
         using Description           = Text;
         using Price                 = short int;

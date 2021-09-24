@@ -8,14 +8,12 @@
 #define UNIT_HPP
 
 #include"unitCommon.hpp"
-#include<memory>
+#include"unitVisitor.hpp"
 
 namespace Game
 {
     namespace Object
     {
-        class UnitVisitor;
-
         class Unit {
         public:
             Unit(const Unit&) = delete;
@@ -41,9 +39,6 @@ namespace Game
             const UnitType          type_;          // type of Unit
             const UnitModel         model_;         // model of Unit
         };
-
-        ///------------------------------------------------------------------------------------------------
-
 
     }
 }

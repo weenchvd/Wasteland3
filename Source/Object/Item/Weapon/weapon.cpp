@@ -5,19 +5,13 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"weapon.hpp"
-#include"item.hpp"
-#include"itemCommon.hpp"
-#include"itemVisitor.hpp"
-#include<memory>
 #include<string>
-#include<vector>
-#include<type_traits>
 
 namespace Game
 {
     namespace Object
     {
-        using namespace Common;
+        using namespace std;
 
         Weapon::Weapon(WeaponModel model) noexcept
             : Item          { ItemType::Weapon, static_cast<ItemModel>(model) },
@@ -172,10 +166,10 @@ namespace Game
             //    WeaponReference ref;
             //    ref.weaponType();
             //    ref.weaponModel();
-            //    ref.weaponModTypes(Weapon_ModTypes{ WeaponModType:,
-            //                                        WeaponModType:,
-            //                                        WeaponModType:,
-            //                                        WeaponModType: });
+            //    ref.weaponModTypes(Slot_WeaponModTypes{ WeaponModType:,
+            //                                            WeaponModType:,
+            //                                            WeaponModType:,
+            //                                            WeaponModType: });
             //    ref.price();
             //    ref.minDamage();
             //    ref.maxDamage();
@@ -205,10 +199,10 @@ namespace Game
                     WeaponReference ref;
                     ref.weaponType(WeaponType::AR);
                     ref.weaponModel(WeaponModel::AR_KALASH97);
-                    ref.weaponModTypes(Weapon_ModTypes{ WeaponModType::BARREL,
-                                                        WeaponModType::UNDERBARREL,
-                                                        WeaponModType::SCOPE,
-                                                        WeaponModType::MAGAZINE });
+                    ref.weaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
+                                                            WeaponModType::UNDERBARREL,
+                                                            WeaponModType::SCOPE,
+                                                            WeaponModType::MAGAZINE });
                     ref.price(1175);
                     ref.minDamage(26);
                     ref.maxDamage(32);
@@ -236,10 +230,10 @@ namespace Game
                     WeaponReference ref;
                     ref.weaponType(WeaponType::AR);
                     ref.weaponModel(WeaponModel::AR_SOCOM);
-                    ref.weaponModTypes(Weapon_ModTypes{ WeaponModType::BARREL,
-                                                        WeaponModType::UNDERBARREL,
-                                                        WeaponModType::SCOPE,
-                                                        WeaponModType::MAGAZINE });
+                    ref.weaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
+                                                            WeaponModType::UNDERBARREL,
+                                                            WeaponModType::SCOPE,
+                                                            WeaponModType::MAGAZINE });
                     ref.price(1800);
                     ref.minDamage(40);
                     ref.maxDamage(48);
@@ -270,10 +264,10 @@ namespace Game
                     WeaponReference ref; // TODO (stats from KALASH97)
                     ref.weaponType(WeaponType::SMG);
                     ref.weaponModel(WeaponModel::SMG_RIPPER);
-                    ref.weaponModTypes(Weapon_ModTypes{ WeaponModType::BARREL,
-                                                        WeaponModType::UNDERBARREL,
-                                                        WeaponModType::SCOPE,
-                                                        WeaponModType::MAGAZINE });
+                    ref.weaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
+                                                            WeaponModType::UNDERBARREL,
+                                                            WeaponModType::SCOPE,
+                                                            WeaponModType::MAGAZINE });
                     ref.price(1175);
                     ref.minDamage(26);
                     ref.maxDamage(32);

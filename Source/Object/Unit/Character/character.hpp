@@ -7,13 +7,14 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
-#include"characterCommon.hpp"
-#include"unit.hpp"
-#include"unitVisitor.hpp"
-#include"weapon.hpp"
 #include"common.hpp"
 #include"slot.hpp"
+#include"weapon.hpp"
+#include"unit.hpp"
+#include"characterCommon.hpp"
+#include<array>
 #include<memory>
+#include<type_traits>
 #include<vector>
 
 namespace Game
@@ -24,9 +25,9 @@ namespace Game
         constexpr unsigned int nWSlots = 2; // number of weapon slots
         constexpr unsigned int nQSlots = 5; // number of quick slots
 
-        //using Slot_ArmorTypes       = array<ArmorType, nASlots>;
-        using Slot_WeaponTypes      = array<WeaponType, nWSlots>;
-        //using Slot_ConsumableTypes  = array<ConsumableType, nQSlots>;
+        //using Slot_ArmorTypes       = std::array<ArmorType, nASlots>;
+        using Slot_WeaponTypes      = std::array<WeaponType, nWSlots>;
+        //using Slot_ConsumableTypes  = std::array<ConsumableType, nQSlots>;
 
         struct CharacterReference {
             explicit CharacterReference() noexcept
@@ -236,9 +237,9 @@ namespace Game
 
             virtual ~Character() noexcept {}
 
-            static unique_ptr<Unit> create(CharacterModel model) {
+            static std::unique_ptr<Unit> create(CharacterModel model) {
                 if (ref_.size() == 0) initRef();
-                return unique_ptr<Unit>(new Character(move(model)));
+                return std::unique_ptr<Unit>(new Character(std::move(model)));
             }
 
             virtual void accept(UnitVisitor& visitor) noexcept override {
@@ -253,7 +254,7 @@ namespace Game
             static void initRef();
 
             static void add(CharacterReference common) {
-                ref_[static_cast<underlying_type_t<CharacterModel>>(common.model_)] = move(common);
+                ref_[static_cast<std::underlying_type_t<CharacterModel>>(common.model_)] = std::move(common);
             }
 
         /// weapons
@@ -268,13 +269,13 @@ namespace Game
                 return slotWeapon_.type(slotNumber);
             }
 
-            const unique_ptr<Weapon>& weaponGet(unsigned int slotNumber) const {
+            const std::unique_ptr<Weapon>& weaponGet(unsigned int slotNumber) const {
                 return slotWeapon_[slotNumber];
             }
 
-            bool weaponSet(unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
+            bool weaponSet(std::unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
 
-            bool weaponUnset(unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
+            bool weaponUnset(std::unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
 
         private:
             const CharacterReference&   base_;          // reference, sample, template
@@ -334,11 +335,11 @@ namespace Game
             Common::Perception          percept_;       // perception
             Common::Radiation           radRes_;        // radiation resistance
 
-            //Common::Slot<Armor, nASlots>        slotArmor_;
-            Common::Slot<Weapon, nWSlots>       slotWeapon_;
-            //Common::Slot<Consumable, nQSlots>   slotConsum_;
+            //Common::Slot<Armor, nASlots>            slotArmor_;
+            Common::Slot<Weapon, nWSlots>           slotWeapon_;
+            //Common::Slot<Consumable, nQSlots>       slotConsum_;
 
-            static vector<CharacterReference>   ref_;       // references
+            static std::vector<CharacterReference>  ref_;       // references
         };
 
         ///------------------------------------------------------------------------------------------------

@@ -4,18 +4,16 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"weaponMod.hpp"
-#include"item.hpp"
-#include"itemCommon.hpp"
 #include"weapon.hpp"
+#include"weaponMod.hpp"
 #include<string>
-#include<vector>
-#include<type_traits>
 
 namespace Game
 {
     namespace Object
     {
+        using namespace std;
+
         WeaponMod::WeaponMod(WeaponModModel model) noexcept
             : Item          { ItemType::WeaponMod, static_cast<ItemModel>(model) },
             base_           { ref_[static_cast<underlying_type_t<WeaponModModel>>(model)] }
@@ -39,7 +37,6 @@ namespace Game
         }
 
         vector<WeaponModReference> WeaponMod::ref_ = vector<WeaponModReference>();
-        WeaponModReference WeaponMod::refDef_;
 
         void WeaponMod::initialize()
         {

@@ -38,17 +38,14 @@ namespace Game
 
             bool isCharacter()     const noexcept { return isChar_; }
 
-        protected:
-            void reset() noexcept;
+        private:
+            void reset() noexcept {
+                isChar_ = false;
+            }
 
         private:
             bool isChar_        { false };
         };
-
-        inline void TypeUnitVisitor::reset() noexcept
-        {
-            isChar_         = false;
-        }
 
     }
 }

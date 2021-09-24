@@ -11,8 +11,6 @@ namespace Game
 {
     namespace Object
     {
-        using namespace std;
-
         class Weapon;
         class WeaponMod;
         class Armor;
@@ -75,8 +73,15 @@ namespace Game
             bool isAmmo()       const noexcept { return isAmmo_; }
             bool isJunk()       const noexcept { return isJunk_; }
 
-        protected:
-            void reset() noexcept;
+        private:
+            void reset() noexcept {
+                isWeapon_       = false;
+                isWeaponMod_    = false;
+                isArmor_        = false;
+                isArmorMod_     = false;
+                isAmmo_         = false;
+                isJunk_         = false;
+            }
 
         private:
             bool isWeapon_      { false };
@@ -86,16 +91,6 @@ namespace Game
             bool isAmmo_        { false };
             bool isJunk_        { false };
         };
-
-        inline void TypeItemVisitor::reset() noexcept
-        {
-            isWeapon_       = false;
-            isWeaponMod_    = false;
-            isArmor_        = false;
-            isArmorMod_     = false;
-            isAmmo_         = false;
-            isJunk_         = false;
-        }
 
     }
 }

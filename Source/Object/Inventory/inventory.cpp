@@ -4,18 +4,17 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"inventory.hpp"
 #include"error.hpp"
-#include"item.hpp"
-#include"itemCommon.hpp"
+#include"inventory.hpp"
 #include<algorithm>
-#include<list>
-#include<memory>
+#include<type_traits>
 
 namespace Game
 {
     namespace Object
     {
+        using namespace std;
+
         void Inventory::insert(unique_ptr<Item>& item, bool isNew)
         {
             if (item) {

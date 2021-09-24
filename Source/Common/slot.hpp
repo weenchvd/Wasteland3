@@ -7,8 +7,8 @@
 #ifndef SLOT_HPP
 #define SLOT_HPP
 
-#include<memory>
 #include<array>
+#include<memory>
 
 namespace Game
 {
