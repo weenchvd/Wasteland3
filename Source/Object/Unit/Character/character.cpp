@@ -81,54 +81,6 @@ namespace Game
 
         }
 
-        unsigned int Character::weaponSize() const noexcept
-        {
-            unsigned int size = 0;
-            for (int i = 0; i < slotWeapon_.size(); ++i) {
-                if (slotWeapon_.type(i) != Weapon::Type::INVALID) {
-                    ++size;
-                }
-            }
-            return size;
-        }
-
-        bool Character::weaponSet(unique_ptr<Item>& source, unsigned int slotNumber) noexcept
-        {
-            if (source == nullptr ||
-                slotNumber >= slotWeapon_.size() ||
-                slotWeapon_.type(slotNumber) == Weapon::Type::INVALID ||
-                slotWeapon_[slotNumber] != nullptr)
-            {
-                return false;
-            }
-            TypeItemVisitor visitor;
-            source->accept(visitor);
-            if (visitor.isWeapon()) {
-                Weapon* weapon = static_cast<Weapon*>(source.get());
-                if (slotWeapon_.type(slotNumber) == Weapon::Type::ANY ||
-                    slotWeapon_.type(slotNumber) == weapon->type())
-                {
-                    slotWeapon_[slotNumber].reset(static_cast<Weapon*>(source.release()));
-                    apply();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        bool Character::weaponUnset(unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept
-        {
-            if (receiver != nullptr ||
-                slotNumber >= slotWeapon_.size() ||
-                slotWeapon_[slotNumber] == nullptr)
-            {
-                return false;
-            }
-            receiver.reset(slotWeapon_[slotNumber].release());
-            apply();
-            return true;
-        }
-
         vector<CharacterReference> Character::ref_ = vector<CharacterReference>();
 
         void Character::initRef()

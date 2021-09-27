@@ -120,7 +120,24 @@ int main()
     unique_ptr<Unit> unit1 = Character::create(Character::Model::RANGER_COMMON);
     auto weapon = inv.extract(weapons.oldItems.beg);
     unique_ptr<Character> char1{ static_cast<Character*>(unit1.release()) };
-    char1->weaponSet(weapon, 0);
+    static_cast<Weapon*>(weapon.get())->slotMod().set(0, inv.extract(weaponMods.oldItems.beg));
+    char1->slotWeapon().set(0, weapon);
+    char1->slotWeapon().get(0)->slotMod().set(0, inv.extract(inv.roster(ItemType::WeaponMod).oldItems.beg));
+    char1->slotWeapon().get(0)->slotMod().set(3, inv.extract(----inv.roster(ItemType::WeaponMod).oldItems.end));
+
+    const WeaponMod::Type ty1 = char1->slotWeapon().get(0)->slotMod().get(0)->type();
+    const auto size1 = char1->slotWeapon().get(0)->slotMod().size();
+    const auto sizeRaw1 = char1->slotWeapon().get(0)->slotMod().sizeRaw();
+    const auto arSlotNum1 = char1->slotWeapon().slotNumber(Weapon::Type::AR);
+    const auto magSlotNum1 = char1->slotWeapon().get(0)->slotMod().slotNumber(WeaponMod::Type::MAGAZINE);
+    char1->slotWeapon().get(0)->slotMod().type(2) = WeaponMod::Type::WEIGHT;
+
+    char1->slotWeapon().get(0)->apply();
+    char1->slotWeapon().unset(0, weapon);
+    unique_ptr<Item> mod;
+    static_cast<Weapon*>(weapon.get())->slotMod().unset(0, mod);
+    inv.insert(weapon);
+    inv.insert(mod);
 
     cout << "\tmain.exe Done!" << endl;
     return 0;

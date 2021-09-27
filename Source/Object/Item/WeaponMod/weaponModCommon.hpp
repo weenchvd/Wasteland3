@@ -37,6 +37,7 @@ namespace Game
         
         enum class WeaponModType : unsigned char {
             INVALID,                        /// invalid class, must be the first
+            ANY,                            // any type
 
             CHOKE,
             BARREL,

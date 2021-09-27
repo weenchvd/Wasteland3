@@ -277,25 +277,15 @@ namespace Game
                 return base_.type_;
             }
 
-        /// mods
+        /// slots
         public:
-            unsigned int weaponModSize() const noexcept;
-
-            int weaponModNumber(WeaponModType type) const noexcept {
-                return slotWeaponMod_.slotNumber(type);
+            const Common::Slot<WeaponMod, nWMSlots>& slotMod() const noexcept {
+                return slotWeaponMod_;
             }
 
-            WeaponModType weaponModType(unsigned int slotNumber) const noexcept {
-                return slotWeaponMod_.type(slotNumber);
+            Common::Slot<WeaponMod, nWMSlots>& slotMod() noexcept {
+                return slotWeaponMod_;
             }
-
-            const std::unique_ptr<WeaponMod>& weaponModGet(unsigned int slotNumber) const {
-                return slotWeaponMod_[slotNumber];
-            }
-
-            bool weaponModSet(std::unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
-
-            bool weaponModUnset(std::unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
 
         private:
             const WeaponReference&      base_;          // reference, sample, template

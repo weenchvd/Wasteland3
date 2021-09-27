@@ -71,50 +71,6 @@ namespace Game
             if (shoPerAttack_   < refMin.shoPerAttack_)     shoPerAttack_   = refMin.shoPerAttack_;
         }
 
-        unsigned int Weapon::weaponModSize() const noexcept
-        {
-            unsigned int size = 0;
-            for (int i = 0; i < slotWeaponMod_.size(); ++i) {
-                if (slotWeaponMod_.type(i) != WeaponMod::Type::INVALID) {
-                    ++size;
-                }
-            }
-            return size;
-        }
-
-        bool Weapon::weaponModSet(unique_ptr<Item>& source, unsigned int slotNumber) noexcept
-        {
-            if (source == nullptr ||
-                slotNumber >= slotWeaponMod_.size() ||
-                slotWeaponMod_.type(slotNumber) == WeaponMod::Type::INVALID ||
-                slotWeaponMod_[slotNumber] != nullptr) {
-                return false;
-            }
-            TypeItemVisitor visitor;
-            source->accept(visitor);
-            if (visitor.isWeaponMod()) {
-                WeaponMod* mod = static_cast<WeaponMod*>(source.get());
-                if (slotWeaponMod_.type(slotNumber) == mod->type()) {
-                    slotWeaponMod_[slotNumber].reset(static_cast<WeaponMod*>(source.release()));
-                    apply();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        bool Weapon::weaponModUnset(unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept
-        {
-            if (receiver != nullptr ||
-                slotNumber >= slotWeaponMod_.size() ||
-                slotWeaponMod_[slotNumber] == nullptr) {
-                return false;
-            }
-            receiver.reset(slotWeaponMod_[slotNumber].release());
-            apply();
-            return true;
-        }
-
         vector<WeaponReference> Weapon::ref_ = vector<WeaponReference>();
 
         void Weapon::initRef()

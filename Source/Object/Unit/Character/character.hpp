@@ -257,25 +257,15 @@ namespace Game
                 ref_[static_cast<std::underlying_type_t<CharacterModel>>(common.model_)] = std::move(common);
             }
 
-        /// weapons
+        /// slots
         public:
-            unsigned int weaponSize() const noexcept;
-
-            int weaponNumber(WeaponType type) const noexcept {
-                return slotWeapon_.slotNumber(type);
+            const Common::Slot<Weapon, nWSlots>& slotWeapon() const noexcept {
+                return slotWeapon_;
             }
 
-            WeaponType weaponType(unsigned int slotNumber) const noexcept {
-                return slotWeapon_.type(slotNumber);
+            Common::Slot<Weapon, nWSlots>& slotWeapon() noexcept {
+                return slotWeapon_;
             }
-
-            const std::unique_ptr<Weapon>& weaponGet(unsigned int slotNumber) const {
-                return slotWeapon_[slotNumber];
-            }
-
-            bool weaponSet(std::unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
-
-            bool weaponUnset(std::unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
 
         private:
             const CharacterReference&   base_;          // reference, sample, template

@@ -19,13 +19,23 @@ namespace Game
         public:
             using Type = typename T::Type;
 
-            static constexpr int slotNotFound = -1;
+            static constexpr int SLOTNOTFOUND = -1;
 
         public:
             Slot(std::array<Type, N> list) noexcept
                 : type_{ list } {}
 
             unsigned int size() const noexcept {
+                unsigned int size = 0;
+                for (int i = 0; i < type_.size(); ++i) {
+                    if (type_[i] != Type::INVALID) {
+                        ++size;
+                    }
+                }
+                return size;
+            }
+
+            unsigned int sizeRaw() const noexcept {
                 return elem_.size();
             }
 
@@ -40,12 +50,12 @@ namespace Game
             }
 
             // 0 - first slot index
-            const std::unique_ptr<T>& operator[](unsigned int slotNumber) const noexcept {
+            const std::unique_ptr<T>& get(unsigned int slotNumber) const noexcept {
                 return elem_[slotNumber];
             }
 
             // 0 - first slot index
-            std::unique_ptr<T>& operator[](unsigned int slotNumber) noexcept {
+            const std::unique_ptr<T>& operator[](unsigned int slotNumber) const noexcept {
                 return elem_[slotNumber];
             }
 
@@ -56,7 +66,40 @@ namespace Game
                         return i;
                     }
                 }
-                return slotNotFound;
+                return SLOTNOTFOUND;
+            }
+
+            template<class Base>
+            bool set(unsigned int slotNumber, std::unique_ptr<Base>& source) noexcept
+            {
+                if (source == nullptr ||
+                    slotNumber >= elem_.size() ||
+                    type_[slotNumber] == Type::INVALID ||
+                    elem_[slotNumber] != nullptr)
+                {
+                    return false;
+                }
+                T* derived = static_cast<T*>(source.get());
+                if (type_[slotNumber] == Type::ANY ||
+                    type_[slotNumber] == derived->type())
+                {
+                    elem_[slotNumber].reset(static_cast<T*>(source.release()));
+                    return true;
+                }
+                return false;
+            }
+
+            template<class Base>
+            bool unset(unsigned int slotNumber, std::unique_ptr<Base>& receiver) noexcept
+            {
+                if (receiver != nullptr ||
+                    slotNumber >= elem_.size() ||
+                    elem_[slotNumber] == nullptr)
+                {
+                    return false;
+                }
+                receiver.reset(elem_[slotNumber].release());
+                return true;
             }
 
         private:
