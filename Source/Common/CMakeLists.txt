@@ -12,16 +12,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(LIBRARY_NAME "unit")
-set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
-                    "Character/character.cpp"
+set(LIBRARY_NAME "common")
+set(HEADER_CXX_LIST "common.hpp"
+                    "slot.hpp"
                     )
 
-add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
+add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
 
 target_include_directories(${LIBRARY_NAME}
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character"
+                           INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
                            )
-
-target_link_libraries(${LIBRARY_NAME} PUBLIC common item)

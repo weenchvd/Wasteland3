@@ -18,4 +18,8 @@ set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
-target_include_directories(${LIBRARY_NAME} PRIVATE ${ALL_INCLUDE_DIRECTORIES})
+target_include_directories(${LIBRARY_NAME}
+                           INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
+                           )
+
+target_link_libraries(${LIBRARY_NAME} PUBLIC error item)

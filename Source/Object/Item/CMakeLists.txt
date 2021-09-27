@@ -14,11 +14,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(LIBRARY_NAME "item")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
-                    #"Armor/armor.cpp"
                     "Weapon/weapon.cpp"
                     "WeaponMod/weaponMod.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
-target_include_directories(${LIBRARY_NAME} PRIVATE ${ALL_INCLUDE_DIRECTORIES})
+target_include_directories(${LIBRARY_NAME}
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Ammo"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Weapon"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/WeaponMod"
+                           )
+
+target_link_libraries(${LIBRARY_NAME} PUBLIC common)

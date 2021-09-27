@@ -6,8 +6,6 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-project("Error" VERSION 0.1)
-
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
@@ -19,3 +17,7 @@ set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
+
+target_include_directories(${LIBRARY_NAME}
+                           INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
+                           )
