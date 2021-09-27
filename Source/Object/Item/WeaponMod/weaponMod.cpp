@@ -21,33 +21,33 @@ namespace Game
 
         void WeaponMod::apply(Weapon& weapon)
         {
-            weapon.addCritMultiplier(base_.critMul_);
-            weapon.addMinDamage(base_.minDmg_);
-            weapon.addMaxDamage(base_.maxDmg_);
-            weapon.addHitChance(base_.hitChance_);
-            weapon.addCritChance(base_.critChance_);
-            weapon.addPenetration(base_.penet_);
-            weapon.addAttackRange(base_.range_);
-            weapon.addAttackNumber(base_.nAttacks_);
-            weapon.addActionPoints(base_.ap_);
-            weapon.addActionPointsReload(base_.apReload_);
-            weapon.addAmmoCapacity(base_.ammoCap_);
-            if (base_.ammoTy_ != AmmoType::INVALID) weapon.ammoType(base_.ammoTy_);
-            if (base_.dmgTy_ != DamageType::INVALID) weapon.damageType(base_.dmgTy_);
+            weapon.multiplierCritDamageAdd(base_.mulCritDmg_);
+            weapon.damageMinimumAdd(base_.dmgMin_);
+            weapon.damageMaximumAdd(base_.dmgMax_);
+            weapon.chanceHitAdd(base_.chaHit_);
+            weapon.chanceCritDamageAdd(base_.chaCritDmg_);
+            weapon.armorPenetrationAdd(base_.armorPen_);
+            weapon.rangeAttackAdd(base_.rangeAttack_);
+            weapon.shotsPerAttackAdd(base_.shoPerAttack_);
+            weapon.actionPointPerAttackAdd(base_.apAttack_);
+            weapon.actionPointPerReloadAdd(base_.apReload_);
+            weapon.capacityAmmoAdd(base_.capAmmo_);
+            if (base_.tyAmmo_ != AmmoType::INVALID) weapon.ammoType(base_.tyAmmo_);
+            if (base_.tyDmg_ != DamageType::INVALID) weapon.damageType(base_.tyDmg_);
         }
 
         vector<WeaponModReference> WeaponMod::ref_ = vector<WeaponModReference>();
 
-        void WeaponMod::initialize()
+        void WeaponMod::initRef()
         {
             ref_.resize(static_cast<underlying_type_t<WeaponModModel>>(WeaponModModel::NUMBER_OF_MODELS));
             
             ///// TEMPLATE
             //{
             //    WeaponModReference ref;
-            //    ref.weaponModType();
-            //    ref.weaponModModel();
-            //    ref.skillLevel();
+            //    ref.weaponModType(WeaponModType:);
+            //    ref.weaponModModel(WeaponModModel:);
+            //    ref.levelSkill();
             //    ref.price();
             //    ref.name();
             //    ref.description();
@@ -62,14 +62,14 @@ namespace Game
                     WeaponModReference ref;
                     ref.weaponModType(WeaponModType::BARREL);
                     ref.weaponModModel(WeaponModModel::BARREL_SHORTENED);
-                    ref.skillLevel(8);
+                    ref.levelSkill(8);
                     ref.price(600);
                     ref.name("SHORTENED BARREL");
                     ref.description("This short barrel reduces Chance to Hit but increases "
                         "bullet velocity dramatically. Best for skilled marksmen.");
-                    ref.minDamage(20);
-                    ref.maxDamage(20);
-                    ref.hitChance(-10);
+                    ref.damageMinimum(20);
+                    ref.damageMaximum(20);
+                    ref.chanceHit(-100);
 
                     add(move(ref));
                 }
@@ -79,15 +79,15 @@ namespace Game
                     WeaponModReference ref;
                     ref.weaponModType(WeaponModType::BARREL);
                     ref.weaponModModel(WeaponModModel::BARREL_LIGHTWEIGHT);
-                    ref.skillLevel(8);
+                    ref.levelSkill(8);
                     ref.price(600);
                     ref.name("LIGHTWEIGHT BARREL");
                     ref.description("Lighter materials in this barrel significantly reduce weight "
                         "at the cost of firepower.");
-                    ref.minDamage(-12);
-                    ref.maxDamage(-12);
-                    ref.hitChance(12);
-                    ref.penetration(1);
+                    ref.damageMinimum(-12);
+                    ref.damageMaximum(-12);
+                    ref.chanceHit(120);
+                    ref.armorPenetration(1);
 
                     add(move(ref));
                 }
@@ -101,12 +101,12 @@ namespace Game
                     WeaponModReference ref;
                     ref.weaponModType(WeaponModType::MAGAZINE);
                     ref.weaponModModel(WeaponModModel::MAG_QUICKFIRE);
-                    ref.skillLevel(10);
+                    ref.levelSkill(10);
                     ref.price(450);
                     ref.name("QUICKFIRE MAG");
                     ref.description("This magazine has a built-in mechanism to slam bullets directry "
                         "into the chamber.");
-                    ref.actionPoints(-1);
+                    ref.actionPointPerAttack(-1);
 
                     add(move(ref));
                 }
@@ -116,13 +116,13 @@ namespace Game
                     WeaponModReference ref;
                     ref.weaponModType(WeaponModType::MAGAZINE);
                     ref.weaponModModel(WeaponModModel::MAG_ADVANCED_MATERIALS);
-                    ref.skillLevel(8);
+                    ref.levelSkill(8);
                     ref.price(350);
                     ref.name("ADVANCED MATERIALS MAG");
                     ref.description("A smaller, lightweight magazine can make reloads faster "
                         "when it counts.");
-                    ref.actionPointsReload(-1);
-                    ref.ammoCapacity(-1);
+                    ref.actionPointPerReload(-1);
+                    ref.capacityAmmo(-1);
 
                     add(move(ref));
                 }
@@ -132,13 +132,13 @@ namespace Game
                     WeaponModReference ref;
                     ref.weaponModType(WeaponModType::MAGAZINE);
                     ref.weaponModModel(WeaponModModel::MAG_OVERSIZED);
-                    ref.skillLevel(7);
+                    ref.levelSkill(7);
                     ref.price(275);
                     ref.name("OVERSIZED MAG");
                     ref.description("A smaller, lightweight magazine can make reloads faster "
                         "when it counts.");
-                    ref.actionPointsReload(1);
-                    ref.ammoCapacity(8);
+                    ref.actionPointPerReload(1);
+                    ref.capacityAmmo(8);
 
                     add(move(ref));
                 }

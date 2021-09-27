@@ -95,22 +95,22 @@ int main()
     if (typeIV1.isWeapon()) {
         Weapon* weapon1 = static_cast<Weapon*>(weapon1UP.get());
         list<unique_ptr<Item>>::iterator weaponMod1Iter = weaponMods.oldItems.first;
-        int slotNumber = weapon1->modNumber((static_cast<WeaponMod*>(weaponMod1Iter->get()))->type());
-        bool b1 = weapon1->modSet(*weaponMod1Iter);
+        int slotNumber = weapon1->weaponModNumber((static_cast<WeaponMod*>(weaponMod1Iter->get()))->type());
+        bool b1 = weapon1->weaponModSet(*weaponMod1Iter);
         list<unique_ptr<Item>>::iterator weaponMod2Iter = weaponMod1Iter;
         weaponMod2Iter++;
         if (!*weaponMod1Iter) {
             inv.erase(weaponMod1Iter);
         }
-        if ((static_cast<WeaponMod*>(weaponMod2Iter->get()))->type() == weapon1->modType(slotNumber)) {
-            bool b2 = weapon1->modSet(*weaponMod2Iter, slotNumber);
+        if ((static_cast<WeaponMod*>(weaponMod2Iter->get()))->type() == weapon1->weaponModType(slotNumber)) {
+            bool b2 = weapon1->weaponModSet(*weaponMod2Iter, slotNumber);
         }
         if (!*weaponMod2Iter) {
             inv.erase(weaponMod2Iter);
         }
         list<unique_ptr<Item>>::iterator weaponMod3Iter = weaponMod2Iter;
         weaponMod3Iter++;
-        bool b3 = weapon1->modSet(*weaponMod3Iter);
+        bool b3 = weapon1->weaponModSet(*weaponMod3Iter);
         if (!*weaponMod3Iter) {
             inv.erase(weaponMod3Iter);
         }

@@ -15,6 +15,7 @@ namespace Game
     {
         enum class WeaponModel : CommonItemBase {
             INVALID,                        /// invalid model, must be the first
+            MINIMUM,                        // minimum valid stats
 
             AR_KALASH97,
             AR_SOCOM,

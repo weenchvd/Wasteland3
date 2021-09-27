@@ -29,30 +29,30 @@ namespace Game
         struct WeaponReference {
             explicit WeaponReference() noexcept
                 :
-                name_           {},
-                descrip_        {},
-                critMul_        { 0.0 },
-                modTypes_       { WeaponModType::INVALID,
+                model_          { WeaponModel::INVALID },
+                type_           { WeaponType::INVALID },
+                weaponModTypes_ { WeaponModType::INVALID,
                                   WeaponModType::INVALID,
                                   WeaponModType::INVALID,
                                   WeaponModType::INVALID },
+                name_           {},
+                descrip_        {},
+                dmgMin_         { 0 },
+                dmgMax_         { 0 },
                 price_          { 0 },
-                model_          { WeaponModel::INVALID },
-                minDmg_         { 0 },
-                maxDmg_         { 0 },
-                hitChance_      { 0 },
-                critChance_     { 0 },
-                penet_          { 0 },
-                range_          { 0 },
-                nAttacks_       { 0 },
-                ap_             { 0 },
+                rangeAttack_    { 0 },
+                capAmmo_        { 0 },
+                mulCritDmg_     { 0 },
+                chaHit_         { 0 },
+                chaCritDmg_     { 0 },
+                level_          { 0 },
+                levSkill_       { 0 },
+                armorPen_       { 0 },
+                apAttack_       { 0 },
                 apReload_       { 0 },
-                weaponLvl_      { 0 },
-                skillLvl_       { 0 },
-                ammoCap_        { 0 },
-                ammoTy_         { AmmoType::INVALID },
-                dmgTy_          { DamageType::INVALID },
-                type_           { WeaponType::INVALID }
+                shoPerAttack_   { 0 },
+                tyAmmo_         { AmmoType::INVALID },
+                tyDmg_          { DamageType::INVALID }
             {}
 
             WeaponReference(const WeaponReference&) = delete;
@@ -60,49 +60,51 @@ namespace Game
             WeaponReference(WeaponReference&&) = default;
             WeaponReference& operator=(WeaponReference&&) = default;
 
-            void name(Common::Name name) noexcept                       { name_ = name; }
-            void description(Common::Description descr) noexcept        { descrip_ = descr; }
-            void critMultiplier(CritMultiplier mult) noexcept           { critMul_ = mult; }
-            void weaponModTypes(Slot_WeaponModTypes types) noexcept     { modTypes_ = types; }
-            void price(Common::Price price) noexcept                    { price_ = price; }
             void weaponModel(WeaponModel model) noexcept                { model_ = model; }
-            void minDamage(MinDamage damage) noexcept                   { minDmg_ = damage; }
-            void maxDamage(MaxDamage damage) noexcept                   { maxDmg_ = damage; }
-            void hitChance(HitChance chance) noexcept                   { hitChance_ = chance; }
-            void critChance(CritChance chance) noexcept                 { critChance_ = chance; }
-            void penetration(Penetration penet) noexcept                { penet_ = penet; }
-            void attackRange(AttackRange range) noexcept                { range_ = range; }
-            void attackNumber(AttackNumber number) noexcept             { nAttacks_ = number; }
-            void actionPoints(ActionPoints ap) noexcept                 { ap_ = ap; }
-            void actionPointsReload(ActionPointsReload ap) noexcept     { apReload_ = ap; }
-            void level(Common::Level level) noexcept                    { weaponLvl_ = level; }
-            void skillLevel(SkillLevel level) noexcept                  { skillLvl_ = level; }
-            void ammoCapacity(AmmoCapacity capacity) noexcept           { ammoCap_ = capacity; }
-            void ammoType(AmmoType type) noexcept                       { ammoTy_ = type; }
-            void damageType(DamageType type) noexcept                   { dmgTy_ = type; }
             void weaponType(WeaponType type) noexcept                   { type_ = type; }
+            void slotWeaponModTypes(Slot_WeaponModTypes types) noexcept { weaponModTypes_ = types; }
 
-            Common::Name            name_;          // weapon name
-            Common::Description     descrip_;       // description
-            CritMultiplier          critMul_;       // crit damage multiplier
-            Slot_WeaponModTypes     modTypes_;      // list of slot types
-            Common::Price           price_;         // price
+            void name(Common::Text text) noexcept                       { name_ = text; }
+            void description(Common::Text text) noexcept                { descrip_ = text; }
+            void damageMinimum(Common::Damage dmg) noexcept             { dmgMin_ = dmg; }
+            void damageMaximum(Common::Damage dmg) noexcept             { dmgMax_ = dmg; }
+            void price(Common::Price price) noexcept                    { price_ = price; }
+            void rangeAttack(Common::Range range) noexcept              { rangeAttack_ = range; }
+            void capacityAmmo(Common::Capacity capacity) noexcept       { capAmmo_ = capacity; }
+            void multiplierCritDamage(Common::Multiplier mul) noexcept  { mulCritDmg_ = mul; }
+            void chanceHit(Common::Chance chance) noexcept              { chaHit_ = chance; }
+            void chanceCritDamage(Common::Chance chance) noexcept       { chaCritDmg_ = chance; }
+            void level(Common::Level level) noexcept                    { level_ = level; }
+            void levelSkill(Common::Level level) noexcept               { levSkill_ = level; }
+            void armorPenetration(Common::Armor ar) noexcept            { armorPen_ = ar; }
+            void actionPointPerAttack(Common::ActionPoint ap) noexcept  { apAttack_ = ap; }
+            void actionPointPerReload(Common::ActionPoint ap) noexcept  { apReload_ = ap; }
+            void shotsPerAttack(Common::NumberShots num) noexcept       { shoPerAttack_ = num; }
+            void ammoType(AmmoType type) noexcept                       { tyAmmo_ = type; }
+            void damageType(DamageType type) noexcept                   { tyDmg_ = type; }
+
             WeaponModel             model_;         // weapon model
-            MinDamage               minDmg_;        // min damage per hit
-            MaxDamage               maxDmg_;        // max damage per hit
-            HitChance               hitChance_;     // base hit chance
-            CritChance              critChance_;    // crit chance
-            Penetration             penet_;         // penetration
-            AttackRange             range_;         // attack range
-            AttackNumber            nAttacks_;      // number of attacks per turn
-            ActionPoints            ap_;            // action points per attack
-            ActionPointsReload      apReload_;      // action points per reload
-            Common::Level           weaponLvl_;     // weapon level
-            SkillLevel              skillLvl_;      // min level of skill
-            AmmoCapacity            ammoCap_;       // ammo capacity
-            AmmoType                ammoTy_;        // ammo type
-            DamageType              dmgTy_;         // damage type
             WeaponType              type_;          // weapon type (kind)
+            Slot_WeaponModTypes     weaponModTypes_;// list of slot types
+
+            Common::Text            name_;          // weapon name
+            Common::Text            descrip_;       // description
+            Common::Damage          dmgMin_;        // min damage per hit
+            Common::Damage          dmgMax_;        // max damage per hit
+            Common::Price           price_;         // price
+            Common::Range           rangeAttack_;   // attack range
+            Common::Capacity        capAmmo_;       // ammo capacity
+            Common::Multiplier      mulCritDmg_;    // critical damage multiplier
+            Common::Chance          chaHit_;        // base hit chance
+            Common::Chance          chaCritDmg_;    // base critical damage chance
+            Common::Level           level_;         // weapon level
+            Common::Level           levSkill_;      // min level of skill
+            Common::Armor           armorPen_;      // penetration
+            Common::ActionPoint     apAttack_;      // action points per attack
+            Common::ActionPoint     apReload_;      // action points per reload
+            Common::NumberShots     shoPerAttack_;  // number of shots per attack
+            AmmoType                tyAmmo_;        // ammo type
+            DamageType              tyDmg_;         // damage type
         };
 
         ///------------------------------------------------------------------------------------------------
@@ -122,7 +124,7 @@ namespace Game
             virtual ~Weapon() noexcept {}
 
             static std::unique_ptr<Item> create(WeaponModel model) {
-                if (ref_.size() == 0) initialize();
+                if (ref_.size() == 0) initRef();
                 return std::unique_ptr<Item>(new Weapon(std::move(model)));
             }
 
@@ -135,9 +137,7 @@ namespace Game
         private:
             void check() noexcept;
 
-            static void initialize();
-
-            static void initializeRefMin();
+            static void initRef();
 
             static void add(WeaponReference common) {
                 ref_[static_cast<std::underlying_type_t<WeaponModel>>(common.model_)] = std::move(common);
@@ -145,20 +145,20 @@ namespace Game
 
         /// weapon parameters
         public:
-            Common::Name name() const noexcept {
+            Common::Text name() const noexcept {
                 return base_.name_;
             }
 
-            Common::Description description() const noexcept {
+            Common::Text description() const noexcept {
                 return base_.descrip_;
             }
 
-            CritMultiplier critMultiplier() const noexcept {
-                return critMul_;
+            Common::Multiplier multiplierCritDamage() const noexcept {
+                return mulCritDmg_;
             }
 
-            void addCritMultiplier(CritMultiplier shift) noexcept {
-                critMul_ += shift;
+            void multiplierCritDamageAdd(Common::Multiplier shift) noexcept {
+                mulCritDmg_ += shift;
             }
 
             Common::Price price() const noexcept {
@@ -169,108 +169,108 @@ namespace Game
                 return base_.model_;
             }
 
-            MinDamage minDamage() const noexcept {
-                return minDmg_;
+            Common::Damage damageMinimum() const noexcept {
+                return dmgMin_;
             }
 
-            void addMinDamage(MinDamage shift) noexcept {
-                minDmg_ += shift;
+            void damageMinimumAdd(Common::Damage shift) noexcept {
+                dmgMin_ += shift;
             }
 
-            MaxDamage maxDamage() const noexcept {
-                return maxDmg_;
+            Common::Damage damageMaximum() const noexcept {
+                return dmgMax_;
             }
 
-            void addMaxDamage(MaxDamage shift) noexcept {
-                maxDmg_ += shift;
+            void damageMaximumAdd(Common::Damage shift) noexcept {
+                dmgMax_ += shift;
             }
 
-            HitChance hitChance() const noexcept {
-                return hitChance_;
+            Common::Chance chanceHit() const noexcept {
+                return chaHit_;
             }
 
-            void addHitChance(HitChance shift) noexcept {
-                hitChance_ += shift;
+            void chanceHitAdd(Common::Chance shift) noexcept {
+                chaHit_ += shift;
             }
 
-            CritChance critChance() const noexcept {
-                return critChance_;
+            Common::Chance chanceCritDamage() const noexcept {
+                return chaCritDmg_;
             }
 
-            void addCritChance(CritChance shift) noexcept {
-                critChance_ += shift;
+            void chanceCritDamageAdd(Common::Chance shift) noexcept {
+                chaCritDmg_ += shift;
             }
 
-            Penetration penetration() const noexcept {
-                return penet_;
+            Common::Armor armorPenetration() const noexcept {
+                return armorPen_;
             }
 
-            void addPenetration(Penetration shift) noexcept {
-                penet_ += shift;
+            void armorPenetrationAdd(Common::Armor shift) noexcept {
+                armorPen_ += shift;
             }
 
-            AttackRange attackRange() const noexcept {
-                return range_;
+            Common::Range rangeAttack() const noexcept {
+                return rangeAttack_;
             }
 
-            void addAttackRange(AttackRange shift) noexcept {
-                range_ += shift;
+            void rangeAttackAdd(Common::Range shift) noexcept {
+                rangeAttack_ += shift;
             }
 
-            AttackNumber attackNumber() const noexcept {
-                return nAttacks_;
+            Common::NumberShots shotsPerAttack() const noexcept {
+                return shoPerAttack_;
             }
 
-            void addAttackNumber(AttackNumber shift) noexcept {
-                nAttacks_ += shift;
+            void shotsPerAttackAdd(Common::NumberShots shift) noexcept {
+                shoPerAttack_ += shift;
             }
 
-            ActionPoints actionPoints() const noexcept {
-                return ap_;
+            Common::ActionPoint actionPointPerAttack() const noexcept {
+                return apAttack_;
             }
 
-            void addActionPoints(ActionPoints shift) noexcept {
-                ap_ += shift;
+            void actionPointPerAttackAdd(Common::ActionPoint shift) noexcept {
+                apAttack_ += shift;
             }
 
-            ActionPointsReload actionPointsReload() const noexcept {
+            Common::ActionPoint actionPointPerReload() const noexcept {
                 return apReload_;
             }
 
-            void addActionPointsReload(ActionPointsReload shift) noexcept {
+            void actionPointPerReloadAdd(Common::ActionPoint shift) noexcept {
                 apReload_ += shift;
             }
 
             Common::Level level() const noexcept {
-                return base_.weaponLvl_;
+                return base_.level_;
             }
 
-            SkillLevel skillLevel() const noexcept {
-                return base_.skillLvl_;
+            Common::Level levelSkill() const noexcept {
+                return base_.levSkill_;
             }
 
-            AmmoCapacity ammoCapacity() const noexcept {
-                return ammoCap_;
+            Common::Capacity capacityAmmo() const noexcept {
+                return capAmmo_;
             }
 
-            void addAmmoCapacity(AmmoCapacity shift) noexcept {
-                ammoCap_ += shift;
+            void capacityAmmoAdd(Common::Capacity shift) noexcept {
+                capAmmo_ += shift;
             }
 
             AmmoType ammoType() const noexcept {
-                return ammoTy_;
+                return tyAmmo_;
             }
 
             void ammoType(AmmoType type) noexcept {
-                ammoTy_ = type;
+                tyAmmo_ = type;
             }
 
             DamageType damageType() const noexcept {
-                return dmgTy_;
+                return tyDmg_;
             }
 
             void damageType(DamageType type) noexcept {
-                dmgTy_ = type;
+                tyDmg_ = type;
             }
 
             WeaponType type() const noexcept {
@@ -279,47 +279,44 @@ namespace Game
 
         /// mods
         public:
-            unsigned int modSize() const noexcept;
+            unsigned int weaponModSize() const noexcept;
 
-            int modNumber(WeaponModType type) const noexcept {
-                return mod_.slotNumber(type);
+            int weaponModNumber(WeaponModType type) const noexcept {
+                return slotWeaponMod_.slotNumber(type);
             }
 
-            WeaponModType modType(unsigned int slotNumber) const noexcept {
-                return mod_.type(slotNumber);
+            WeaponModType weaponModType(unsigned int slotNumber) const noexcept {
+                return slotWeaponMod_.type(slotNumber);
             }
 
-            const std::unique_ptr<WeaponMod>& modGet(unsigned int slotNumber) const {
-                return mod_[slotNumber];
+            const std::unique_ptr<WeaponMod>& weaponModGet(unsigned int slotNumber) const {
+                return slotWeaponMod_[slotNumber];
             }
 
-            //bool modSet(unique_ptr<Item>& source) noexcept;
+            bool weaponModSet(std::unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
 
-            bool modSet(std::unique_ptr<Item>& source, unsigned int slotNumber) noexcept;
-
-            bool modUnset(std::unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
+            bool weaponModUnset(std::unique_ptr<Item>& receiver, unsigned int slotNumber) noexcept;
 
         private:
             const WeaponReference&      base_;          // reference, sample, template
-            CritMultiplier              critMul_;       // crit damage multiplier
-            MinDamage                   minDmg_;        // min damage per hit
-            MaxDamage                   maxDmg_;        // max damage per hit
-            HitChance                   hitChance_;     // base hit chance
-            CritChance                  critChance_;    // crit chance
-            Penetration                 penet_;         // penetration
-            AttackRange                 range_;         // attack range
-            AttackNumber                nAttacks_;      // number of attacks per turn
-            ActionPoints                ap_;            // action points per attack
-            ActionPointsReload          apReload_;      // action points per reload
-            AmmoCapacity                ammoCap_;       // ammo capacity
-            AmmoType                    ammoTy_;        // ammo type
-            DamageType                  dmgTy_;         // damage type
 
-            Common::Slot<WeaponMod, nWMSlots>   mod_;       // weapon mod slots
+            Common::Damage              dmgMin_;        // min damage per hit
+            Common::Damage              dmgMax_;        // max damage per hit
+            Common::Range               rangeAttack_;   // attack range
+            Common::Capacity            capAmmo_;       // ammo capacity
+            Common::Multiplier          mulCritDmg_;    // crit damage multiplier
+            Common::Chance              chaHit_;        // base hit chance
+            Common::Chance              chaCritDmg_;    // base critical damage chance
+            Common::Armor               armorPen_;      // penetration
+            Common::ActionPoint         apAttack_;      // action points per attack
+            Common::ActionPoint         apReload_;      // action points per reload
+            Common::NumberShots         shoPerAttack_;  // number of shots per attack
+            AmmoType                    tyAmmo_;        // ammo type
+            DamageType                  tyDmg_;         // damage type
 
-            static std::vector<WeaponReference> ref_;       // references
-            static WeaponReference              refDef_;    // default reference
-            static WeaponReference              refMin_;    // minimal valid stats
+            Common::Slot<WeaponMod, nWMSlots>   slotWeaponMod_; // weapon mod slots
+
+            static std::vector<WeaponReference> ref_;           // references
         };
 
     }

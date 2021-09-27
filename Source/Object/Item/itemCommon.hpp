@@ -14,19 +14,6 @@ namespace Game
         using CommonItemBase                = unsigned short int;
         using ItemModel                     = CommonItemBase;
 
-        using CritMultiplier                = double;
-        using MinDamage                     = short int;
-        using MaxDamage                     = short int;
-        using HitChance                     = short int;
-        using CritChance                    = short int;
-        using Penetration                   = char;
-        using AttackRange                   = char;
-        using AttackNumber                  = char;
-        using ActionPoints                  = char;
-        using ActionPointsReload            = char;
-        using SkillLevel                    = char;
-        using AmmoCapacity                  = char;
-
         enum class ItemType : CommonItemBase {
             Weapon,
             WeaponMod,
