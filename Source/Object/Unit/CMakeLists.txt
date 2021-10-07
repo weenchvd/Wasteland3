@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(LIBRARY_NAME "unit")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
+                    "Character/attribute.cpp"
                     "Character/character.cpp"
                     )
 

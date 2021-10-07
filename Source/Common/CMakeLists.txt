@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(LIBRARY_NAME "common")
 set(HEADER_CXX_LIST "common.hpp"
+                    "point.hpp"
                     "slot.hpp"
                     )
 
