@@ -15,7 +15,7 @@ namespace Game
         using ItemModel                     = CommonItemBase;
 
         enum class ItemType : CommonItemBase {
-            Weapon,
+            Weapon, // TODO UPPERCASE
             WeaponMod,
             Armor,
             ArmorMod,

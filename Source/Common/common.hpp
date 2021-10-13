@@ -37,6 +37,9 @@ namespace Game
         using NumberShots           = char;
         using Perception            = char;
         using Radiation             = char;
+        using LevelStat             = char;         // statistic level
+        using PointAttribute        = char;
+        using PointSkill            = char;
 
     }
 }

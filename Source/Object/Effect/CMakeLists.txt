@@ -12,18 +12,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(LIBRARY_NAME "unit")
+set(LIBRARY_NAME "effect")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
-                    "Character/character.cpp"
-                    "Character/Attribute/attribute.cpp"
+                    "Level/effectAttribute.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
 target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character/Attribute"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Level"
                            )
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC common item effect)
+target_link_libraries(${LIBRARY_NAME} PUBLIC common unit)

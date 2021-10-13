@@ -11,6 +11,7 @@
 #include"slot.hpp"
 #include"weapon.hpp"
 #include"unit.hpp"
+#include"attribute.hpp"
 #include"characterCommon.hpp"
 #include<array>
 #include<memory>
@@ -229,7 +230,7 @@ namespace Game
             using Type      = CharacterType;
 
         protected:
-            explicit Character(CharacterModel model) noexcept; //TODO replace CharacterModel -> Character::Model
+            explicit Character(CharacterModel model); //TODO replace CharacterModel -> Character::Model
 
         public:
             Character(const Character&) = delete;
@@ -255,6 +256,111 @@ namespace Game
 
             static void add(CharacterReference common) {
                 ref_[static_cast<std::underlying_type_t<CharacterModel>>(common.model_)] = std::move(common);
+            }
+
+        public:
+            Common::Chance chanceLuckyAction() const noexcept {
+                return chaLuckAction_;
+            }
+
+            void chanceLuckyActionAdd(Common::Chance shift) noexcept {
+                chaLuckAction_ += shift;
+            }
+
+            Common::Chance chanceLuckyCritDamage() const noexcept {
+                return chaLuckCritDmg_;
+            }
+
+            void chanceLuckyCritDamageAdd(Common::Chance shift) noexcept {
+                chaLuckCritDmg_ += shift;
+            }
+
+            Common::Chance chanceLuckyMegaCritDamage() const noexcept {
+                return chaLuckMegaCritDmg_;
+            }
+
+            void chanceLuckyMegaCritDamageAdd(Common::Chance shift) noexcept {
+                chaLuckMegaCritDmg_ += shift;
+            }
+
+            Common::Chance chanceLuckyEvade() const noexcept {
+                return chaLuckEvade_;
+            }
+
+            void chanceLuckyEvadeAdd(Common::Chance shift) noexcept {
+                chaLuckEvade_ += shift;
+            }
+
+            Common::Chance chanceLuckyCritResist() const noexcept {
+                return chaLuckCritRes_;
+            }
+
+            void chanceLuckyCritResistAdd(Common::Chance shift) noexcept {
+                chaLuckCritRes_ += shift;
+            }
+
+            Common::Chance chanceLuckyDoubleHealing() const noexcept {
+                return chaLuckDblHeal_;
+            }
+
+            void chanceLuckyDoubleHealingAdd(Common::Chance shift) noexcept {
+                chaLuckDblHeal_ += shift;
+            }
+
+            Common::Chance chanceLuckyDoubleMoney() const noexcept {
+                return chaLuckDblMoney_;
+            }
+
+            void chanceLuckyDoubleMoneyAdd(Common::Chance shift) noexcept {
+                chaLuckDblMoney_ += shift;
+            }
+
+            Common::Chance chanceLuckyDoubleScrap() const noexcept {
+                return chaLuckDblScrap_;
+            }
+
+            void chanceLuckyDoubleScrapAdd(Common::Chance shift) noexcept {
+                chaLuckDblScrap_ += shift;
+            }
+
+            Common::Resistance resistanceStatusEffect() const noexcept {
+                return resStatEff_;
+            }
+
+            void resistanceStatusEffectAdd(Common::Resistance shift) noexcept {
+                resStatEff_ += shift;
+            }
+
+            Common::Level level() const noexcept {
+                return level_;
+            }
+
+            void levelAdd(Common::Level shift) noexcept {
+                level_ += shift;
+            }
+
+            Common::Armor armorPenetration() const noexcept {
+                return armorPen_;
+            }
+
+            void armorPenetrationAdd(Common::Armor shift) noexcept {
+                armorPen_ += shift;
+            }
+
+            Common::ActionPoint actionPointMaximum() const noexcept {
+                return apMax_;
+            }
+
+            void actionPointMaximumAdd(Common::ActionPoint shift) noexcept {
+                apMax_ += shift;
+            }
+
+            Common::ActionPoint actionPointCurrent() const noexcept {
+                return apCur_;
+            }
+
+            void actionPointCurrentAdd(Common::ActionPoint shift) noexcept {
+                apCur_ += shift;
             }
 
         /// slots
@@ -328,6 +434,8 @@ namespace Game
             //Common::Slot<Armor, nASlots>            slotArmor_;
             Common::Slot<Weapon, nWSlots>           slotWeapon_;
             //Common::Slot<Consumable, nQSlots>       slotConsum_;
+
+            std::unique_ptr<Attribute>              attrib_;
 
             static std::vector<CharacterReference>  ref_;       // references
         };

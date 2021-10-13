@@ -12,7 +12,7 @@ namespace Game
     {
         using namespace std;
 
-        Character::Character(CharacterModel model) noexcept
+        Character::Character(CharacterModel model)
             : Unit              { UnitType::Character, static_cast<UnitModel>(model) },
             base_               { ref_[static_cast<underlying_type_t<CharacterModel>>(model)] },
             name_               { base_.name_ },
@@ -67,9 +67,14 @@ namespace Game
             percept_            { base_.percept_ },
             radRes_             { base_.radRes_ },
             //slotArmor_          { base_.armorTypes_ },
-            slotWeapon_         { base_.weaponTypes_ }
+            slotWeapon_         { base_.weaponTypes_ },
             //slotConsum_         { base_.consumTypes_ }
-        {}
+            attrib_             { make_unique<Attribute>(*this) }
+        {
+            attrib_->addLevel(Attribute::Type::COORDINATION, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::LUCK, initAttributeLevel);
+            attrib_->accept();
+        }
 
         void Character::apply() noexcept
         {

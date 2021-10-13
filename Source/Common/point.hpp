@@ -19,21 +19,24 @@ namespace Game
             PointsStorage(unsigned short int initPoints) noexcept
                 : cur_{ initPoints }, acc_{ initPoints } {}
 
-            unsigned char get() const noexcept {
+            unsigned short int get() const noexcept {
                 return cur_;
             }
 
-            unsigned char getAccepted() const noexcept {
+            unsigned short int getAccepted() const noexcept {
                 return acc_;
             }
 
-            bool add(short int points) noexcept {
-                int newPoints = static_cast<int>(cur_) + points;
-                if (newPoints >= 0 && newPoints <= std::numeric_limits<unsigned short int>::max()) {
-                    cur_ = newPoints;
-                    return true;
-                }
-                return false;
+            unsigned short int getMinPossible() const noexcept {
+                return std::numeric_limits<unsigned short int>::min();
+            }
+
+            unsigned short int getMaxPossible() const noexcept {
+                return std::numeric_limits<unsigned short int>::max();
+            }
+
+            void add(short int points) noexcept {
+                cur_ += points;
             }
 
             void accept() noexcept {
@@ -44,8 +47,8 @@ namespace Game
                 cur_ = acc_;
             }
 
-            void reset(unsigned short int points = 0) noexcept {
-                cur_ = acc_ = points;
+            void reset() noexcept {
+                cur_ = acc_ = 0;
             }
 
         private:
@@ -62,8 +65,8 @@ namespace Game
             PointsDistribution(std::vector<unsigned char> distribution) noexcept
                 : dist_{ distribution } {}
 
-            // return a positive value if currentLevel < newLevel
-            // return a negative value if currentLevel > newLevel
+            // return a negative value if currentLevel < newLevel
+            // return a positive value if currentLevel > newLevel
             // return 0 if currentLevel == newLevel
             short int totalPoints(unsigned char currentLevel, unsigned char newLevel) const noexcept
             {
@@ -74,11 +77,11 @@ namespace Game
                 short int total = 0;
                 for (unsigned char level = currentLevel + 1; level <= newLevel; ++level) {
                     unsigned char i = (level < dist_.size()) ? level : dist_.size() - 1;
-                    total += dist_[i];
+                    total -= dist_[i];
                 }
                 for (unsigned char level = currentLevel; level > newLevel; --level) {
                     unsigned char i = (level < dist_.size()) ? level : dist_.size() - 1;
-                    total -= dist_[i];
+                    total += dist_[i];
                 }
                 return total;
             }
@@ -90,30 +93,8 @@ namespace Game
 
         class CustomLevel {
         public:
-            CustomLevel(unsigned char maxLevel) noexcept
-                : cur_{ 0 }, acc_{ 0 }, max_{ maxLevel } {}
-
-            //bool add(PointsStorage& storage, PointsDistribution& distr, char levels) noexcept {
-            //    int newLevel = static_cast<int>(cur_) + levels;
-            //    if (newLevel >= acc_ && newLevel <= max_) {
-            //        auto points = distr.totalPoints(cur_, newLevel);
-            //        if (storage.get() >= points) {
-            //            cur_ = newLevel;
-            //            storage.add(points);
-            //            return true;
-            //        }
-            //    }
-            //    return false;
-            //}
-
-            bool add(char levels) noexcept {
-                int newLevel = static_cast<int>(cur_) + levels;
-                if (newLevel >= acc_ && newLevel <= max_) {
-                    cur_ = newLevel;
-                    return true;
-                }
-                return false;
-            }
+            CustomLevel(unsigned char minLevel, unsigned char maxLevel) noexcept
+                : cur_{ 0 }, acc_{ 0 }, min_{ minLevel }, max_{ maxLevel } {}
 
             unsigned char get() const noexcept {
                 return cur_;
@@ -123,8 +104,16 @@ namespace Game
                 return acc_;
             }
 
-            unsigned char getMax() const noexcept {
+            unsigned char getMinPossible() const noexcept {
+                return min_;
+            }
+
+            unsigned char getMaxPossible() const noexcept {
                 return max_;
+            }
+
+            void add(char levels) noexcept {
+                cur_ += levels;
             }
 
             void accept() noexcept {
@@ -135,13 +124,14 @@ namespace Game
                 cur_ = acc_;
             }
 
-            void reset(unsigned char level = 0) noexcept {
-                cur_ = acc_ = level;
+            void reset() noexcept {
+                cur_ = acc_ = 0;
             }
 
         private:
             unsigned char       cur_;                   // current level (not accepted)
             unsigned char       acc_;                   // last accepted level
+            const unsigned char min_;                   // minimum level
             const unsigned char max_;                   // maximum level
         };
 
@@ -157,9 +147,10 @@ namespace Game
             ) noexcept {
                 auto curLevel = static_cast<int>(curentLevel.get());
                 auto newLevel = curLevel + value;
-                if (newLevel >= curentLevel.getAccepted() && newLevel <= curentLevel.getMax()) {
+                if (newLevel >= curentLevel.getAccepted() && newLevel <= curentLevel.getMaxPossible()) {
                     auto points = distribution.totalPoints(curLevel, newLevel);
-                    if (storage.get() >= points) {
+                    auto sum = static_cast<long long int>(storage.get()) + points;
+                    if (sum >= storage.getMinPossible() && sum <= storage.getMaxPossible()) {
                         curentLevel.add(value);
                         storage.add(points);
                         return true;
