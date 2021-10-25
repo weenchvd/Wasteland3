@@ -71,8 +71,14 @@ namespace Game
             //slotConsum_         { base_.consumTypes_ }
             attrib_             { make_unique<Attribute>(*this) }
         {
+            attrib_->addPoint(initAttributePoints);
             attrib_->addLevel(Attribute::Type::COORDINATION, initAttributeLevel);
             attrib_->addLevel(Attribute::Type::LUCK, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::AWARENESS, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::STRENGTH, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::SPEED, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::INTELLIGENCE, initAttributeLevel);
+            attrib_->addLevel(Attribute::Type::CHARISMA, initAttributeLevel);
             attrib_->accept();
         }
 

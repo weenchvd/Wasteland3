@@ -14,8 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(LIBRARY_NAME "common")
 set(HEADER_CXX_LIST "common.hpp"
-                    "point.hpp"
+                    "distribution.hpp"
                     "slot.hpp"
+                    "specStorage.hpp"
                     )
 
 add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})

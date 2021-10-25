@@ -25,19 +25,11 @@ namespace Game
             {}
 
             EffectAttCoord(
-                Common::Resistance statusEffectRes,
-                Common::ActionPoint apMaximum,
-                Common::ActionPoint apCurrent);
+                Common::Resistance statusEffect,
+                Common::ActionPoint maximum,
+                Common::ActionPoint murrent);
 
             virtual ~EffectAttCoord() noexcept {}
-
-            //static std::unique_ptr<Effect> create(
-            //    Common::Resistance statusEffectRes,
-            //    Common::ActionPoint apMaximum,
-            //    Common::ActionPoint apCurrent)
-            //{
-            //    return std::unique_ptr<Effect>(new EffectAttCoord(statusEffectRes, apMaximum, apCurrent));
-            //}
 
             virtual void apply(Character& character) noexcept override;
 
@@ -101,6 +93,173 @@ namespace Game
 
         EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right);
         EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right);
+
+
+        class EffectAttAware : public Effect {
+        public:
+            EffectAttAware()
+                :
+                chaHit_         { 0 },
+                percept_        { 0 },
+                bonRangeDmg_    { 0 }
+            {}
+
+            EffectAttAware(
+                Common::Chance hit,
+                Common::Perception perception,
+                Common::Bonus rangedDamage);
+
+            virtual ~EffectAttAware() noexcept {}
+
+            virtual void apply(Character& character) noexcept override;
+
+            EffectAttAware& operator+=(const EffectAttAware& other);
+            EffectAttAware& operator-=(const EffectAttAware& other);
+
+        private:
+            Common::Chance              chaHit_;        // base hit chance
+            Common::Perception          percept_;       // perception
+            Common::Bonus               bonRangeDmg_;   // ranged damage bonus
+        };
+
+        EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right);
+        EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right);
+
+
+        class EffectAttStr : public Effect {
+        public:
+            EffectAttStr()
+                :
+                conMax_         { 0 },
+                conPerLvl_      { 0 },
+                bonMeleeDmg_    { 0 },
+                mulThrow_       { 0 }
+            {}
+
+            EffectAttStr(
+                Common::Constitution maximum,
+                Common::Constitution perLevel,
+                Common::Bonus meleeDamage,
+                Common::Multiplier throwingRange);
+
+            virtual ~EffectAttStr() noexcept {}
+
+            virtual void apply(Character& character) noexcept override;
+
+            EffectAttStr& operator+=(const EffectAttStr& other);
+            EffectAttStr& operator-=(const EffectAttStr& other);
+
+        private:
+            Common::Constitution        conMax_;        // constitution max value
+            Common::Constitution        conPerLvl_;     // constitution per level
+            Common::Bonus               bonMeleeDmg_;   // melee damage bonus
+            Common::Multiplier          mulThrow_;      // throwing range multiplier
+        };
+
+        EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right);
+        EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right);
+
+
+        class EffectAttSpeed : public Effect {
+        public:
+            EffectAttSpeed()
+                :
+                mulSpeed_   { 0 },
+                evasion_    { 0 },
+                initiat_    { 0 }
+            {}
+
+            EffectAttSpeed(
+                Common::Multiplier combatSpeed,
+                Common::Evasion evasion,
+                Common::Initiative initiative);
+
+            virtual ~EffectAttSpeed() noexcept {}
+
+            virtual void apply(Character& character) noexcept override;
+
+            EffectAttSpeed& operator+=(const EffectAttSpeed& other);
+            EffectAttSpeed& operator-=(const EffectAttSpeed& other);
+
+        private:
+            Common::Multiplier          mulSpeed_;      // combat speed multiplier
+            Common::Evasion             evasion_;       // evasion
+            Common::Initiative          initiat_;       // initiative
+        };
+
+        EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right);
+        EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right);
+
+
+        class EffectAttInt : public Effect {
+        public:
+            EffectAttInt()
+                :
+                chaCritDmg_     { 0 },
+                mulCritDmg_     { 0 },
+                chaCritHeal_    { 0 },
+                bonCritHeal_    { 0 },
+                poSkill_        { 0 }
+            {}
+
+            EffectAttInt(
+                Common::Chance critDamageChance,
+                Common::Multiplier critDamageMult,
+                Common::Chance critHealChance,
+                Common::Bonus critHealBonus,
+                Common::PointSkill point);
+
+            virtual ~EffectAttInt() noexcept {}
+
+            virtual void apply(Character& character) noexcept override;
+
+            EffectAttInt& operator+=(const EffectAttInt& other);
+            EffectAttInt& operator-=(const EffectAttInt& other);
+
+        private:
+            Common::Chance              chaCritDmg_;    // base critical damage chance
+            Common::Multiplier          mulCritDmg_;    // critical damage multiplier
+            Common::Chance              chaCritHeal_;   // base critical healing chance
+            Common::Bonus               bonCritHeal_;   // critical healing bonus
+            Common::PointSkill          poSkill_;       // skill point
+        };
+
+        EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right);
+        EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right);
+
+
+        class EffectAttCha : public Effect {
+        public:
+            EffectAttCha()
+                :
+                strike_         { 0 },
+                rangeLeader_    { 0 },
+                bonXP_          { 0 },
+                bonMissionRew_  { 0 }
+            {}
+
+            EffectAttCha(
+                Common::Strike strikeRate,
+                Common::Range leadershipRange,
+                Common::Bonus experience,
+                Common::Bonus missionReward);
+
+            virtual ~EffectAttCha() noexcept {}
+
+            virtual void apply(Character& character) noexcept override;
+
+            EffectAttCha& operator+=(const EffectAttCha& other);
+            EffectAttCha& operator-=(const EffectAttCha& other);
+
+        private:
+            Common::Strike              strike_;        // strike rate
+            Common::Range               rangeLeader_;   // leadership range
+            Common::Bonus               bonXP_;         // experience bonus
+            Common::Bonus               bonMissionRew_; // mission reward bonus
+        };
+
+        EffectAttCha operator+(const EffectAttCha& left, const EffectAttCha& right);
+        EffectAttCha operator-(const EffectAttCha& left, const EffectAttCha& right);
 
     }
 }
