@@ -15,12 +15,12 @@ namespace Game
         using ItemModel                     = CommonItemBase;
 
         enum class ItemType : CommonItemBase {
-            Weapon, // TODO UPPERCASE
-            WeaponMod,
-            Armor,
-            ArmorMod,
-            Ammo,
-            Junk
+            WEAPON,
+            WEAPONMOD,
+            ARMOR,
+            ARMORMOD,
+            AMMO,
+            JUNK
         };
 
         enum class DamageType : unsigned char {

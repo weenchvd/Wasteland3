@@ -118,6 +118,8 @@ namespace Game
                 pStor_.add(shift);
             }
 
+            bool isModified() const noexcept;
+
             void accept() noexcept;
 
             void reject() noexcept;
@@ -125,7 +127,9 @@ namespace Game
             void reset() noexcept;
 
         public:
-            const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept;
+            const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
+                return levels_[static_cast<std::underlying_type_t<Attribute::Type>>(type)];
+            }
 
             const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
                 return pStor_;

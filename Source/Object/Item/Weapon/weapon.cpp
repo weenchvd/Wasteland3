@@ -14,7 +14,7 @@ namespace Game
         using namespace std;
 
         Weapon::Weapon(WeaponModel model) noexcept
-            : Item          { ItemType::Weapon, static_cast<ItemModel>(model) },
+            : Item          { ItemType::WEAPON, static_cast<ItemModel>(model) },
             base_           { ref_[static_cast<underlying_type_t<WeaponModel>>(model)] },
             dmgMin_         { base_.dmgMin_ },
             dmgMax_         { base_.dmgMax_ },

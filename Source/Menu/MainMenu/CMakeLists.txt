@@ -12,8 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(LIBRARY_NAME "inventory")
-set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
+set(LIBRARY_NAME "menu")
+set(SOURCE_CXX_LIST "menuMain.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
@@ -22,4 +22,4 @@ target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
                            )
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC error item)
+target_link_libraries(${LIBRARY_NAME} PUBLIC common inventory squad unit)

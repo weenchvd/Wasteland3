@@ -12,6 +12,8 @@ namespace Game
     namespace Object
     {
         enum class AttributeType : unsigned char {
+            INVALID,                        /// invalid type, must be the first
+
             COORDINATION,
             LUCK,
             AWARENESS,
@@ -20,7 +22,7 @@ namespace Game
             INTELLIGENCE,
             CHARISMA,
 
-            NUMBER_OF_ATTRIBUTES            /// must be the last
+            NUMBER_OF                       /// must be the last
         };
 
     }

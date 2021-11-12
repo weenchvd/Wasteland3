@@ -76,6 +76,19 @@ namespace Game
             return false;
         }
 
+        bool Attribute::isModified() const noexcept
+        {
+            if (pStor_.get() != pStor_.getAccepted()) {
+                return true;
+            }
+            for (const Common::SpecStorage<Common::LevelStat>& level : levels_) {
+                if (level.get() != level.getAccepted()) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         void Attribute::accept() noexcept
         {
             for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
@@ -101,17 +114,12 @@ namespace Game
             pStor_.add(initAttributePoints + char_.level() - 1);
         }
 
-        inline const Common::SpecStorage<Common::LevelStat>& Attribute::level(Attribute::Type type) const noexcept
-        {
-            return levels_[static_cast<underlying_type_t<Attribute::Type>>(type)];
-        }
-
         vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()
         {
             Common::SpecStorage<Common::LevelStat> tempLevel{ minAttributeLevel, maxAttributeLevel };
-            auto numOfAttributes = static_cast<underlying_type_t<Attribute::Type>>
-                (Attribute::Type::NUMBER_OF_ATTRIBUTES);
-            return vector<Common::SpecStorage<Common::LevelStat>>(numOfAttributes, tempLevel);
+            auto nAttributes = static_cast<underlying_type_t<Attribute::Type>>
+                (Attribute::Type::NUMBER_OF);
+            return vector<Common::SpecStorage<Common::LevelStat>>(nAttributes, tempLevel);
         }
 
         inline vector<Common::PointAttribute> Attribute::initPointDist()

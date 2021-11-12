@@ -16,12 +16,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(EXEC_NAME "main")
 set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
+                    "initialization.cpp"
                     )
 
 # Add source to this project's executable.
 add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
 
-target_link_libraries(${EXEC_NAME} PRIVATE inventory unit item)
+target_link_libraries(${EXEC_NAME} PRIVATE inventory menu squad unit)
 
 # Add tests and install targets if needed.
 install(TARGETS ${EXEC_NAME} CONFIGURATIONS ${CMAKE_BUILD_TYPE} DESTINATION "${CMAKE_BUILD_TYPE}")

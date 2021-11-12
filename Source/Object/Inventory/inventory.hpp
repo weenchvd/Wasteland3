@@ -28,7 +28,7 @@ namespace Game
             };
 
         public:
-            Inventory() noexcept
+            Inventory()
                 : viewed_{ true } {}
             
             Inventory(const Inventory&) = delete;

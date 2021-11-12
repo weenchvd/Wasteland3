@@ -135,6 +135,12 @@ namespace Game
                 ref_[static_cast<std::underlying_type_t<WeaponModModel>>(ref.model_)] = std::move(ref);
             }
 
+        /// weapon mod parameters
+        public:
+            Common::Text name() const noexcept {
+                return base_.name_;
+            }
+
         private:
             const WeaponModReference&  base_;           // reference, sample, template
 

@@ -4,23 +4,47 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"initialization.hpp"
+#include"menuMain.hpp"
+#include"squad.hpp"
+#include"inventory.hpp"
+#include<iostream>
+
+
+#define SHOW 0
+
+#if SHOW
 #include"unit.hpp"
 #include"character.hpp"
 #include"inventory.hpp"
 #include"item.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
-//#include"armor.hpp"
-//#include"destroyable.hpp"
+#include"initialization.hpp"
 #include<array>
 #include<iostream>
 #include<memory>
 #include<string>
+#endif
 
 
 int main()
 {
     using namespace std;
+
+    cout << "\tmain.exe Start!" << endl;
+    cout << "----Welcome to Wasteland 3!----" << endl;
+
+    Game::Object::Squad squad;
+    Init::initializeSquad(squad);
+
+    Game::Object::Inventory shop;
+    Init::initializeShop(shop);
+
+    Game::Menu::menuMain(squad, shop);
+
+
+#if SHOW
     using namespace Game;
     using namespace Game::Object;
 
@@ -83,47 +107,17 @@ int main()
 
     auto all = inv.roster();
     auto all2 = inv.roster();
-    auto weapons = inv.roster(ItemType::Weapon);
-    auto weaponMods = inv.roster(ItemType::WeaponMod);
-    auto armors = inv.roster(ItemType::Armor);
-    /*auto iter = inv.roster().oldItems.second;
-    --iter;
-    
-    auto weapon1Iter = weapons.oldItems.first;
-    auto& weapon1UP = *weapon1Iter;
-    weapon1UP->accept(typeIV1);
-    if (typeIV1.isWeapon()) {
-        Weapon* weapon1 = static_cast<Weapon*>(weapon1UP.get());
-        list<unique_ptr<Item>>::iterator weaponMod1Iter = weaponMods.oldItems.first;
-        int slotNumber = weapon1->weaponModNumber((static_cast<WeaponMod*>(weaponMod1Iter->get()))->type());
-        bool b1 = weapon1->weaponModSet(*weaponMod1Iter);
-        list<unique_ptr<Item>>::iterator weaponMod2Iter = weaponMod1Iter;
-        weaponMod2Iter++;
-        if (!*weaponMod1Iter) {
-            inv.erase(weaponMod1Iter);
-        }
-        if ((static_cast<WeaponMod*>(weaponMod2Iter->get()))->type() == weapon1->weaponModType(slotNumber)) {
-            bool b2 = weapon1->weaponModSet(*weaponMod2Iter, slotNumber);
-        }
-        if (!*weaponMod2Iter) {
-            inv.erase(weaponMod2Iter);
-        }
-        list<unique_ptr<Item>>::iterator weaponMod3Iter = weaponMod2Iter;
-        weaponMod3Iter++;
-        bool b3 = weapon1->weaponModSet(*weaponMod3Iter);
-        if (!*weaponMod3Iter) {
-            inv.erase(weaponMod3Iter);
-        }
-
-    }*/
+    auto weapons = inv.roster(ItemType::WEAPON);
+    auto weaponMods = inv.roster(ItemType::WEAPONMOD);
+    auto armors = inv.roster(ItemType::ARMOR);
 
     unique_ptr<Unit> unit1 = Character::create(Character::Model::RANGER_COMMON);
     auto weapon = inv.extract(weapons.oldItems.beg);
     unique_ptr<Character> char1{ static_cast<Character*>(unit1.release()) };
     static_cast<Weapon*>(weapon.get())->slotMod().set(0, inv.extract(weaponMods.oldItems.beg));
     char1->slotWeapon().set(0, weapon);
-    char1->slotWeapon().get(0)->slotMod().set(0, inv.extract(inv.roster(ItemType::WeaponMod).oldItems.beg));
-    char1->slotWeapon().get(0)->slotMod().set(3, inv.extract(----inv.roster(ItemType::WeaponMod).oldItems.end));
+    char1->slotWeapon().get(0)->slotMod().set(0, inv.extract(inv.roster(ItemType::WEAPONMOD).oldItems.beg));
+    char1->slotWeapon().get(0)->slotMod().set(3, inv.extract(----inv.roster(ItemType::WEAPONMOD).oldItems.end));
 
     const WeaponMod::Type ty1 = char1->slotWeapon().get(0)->slotMod().get(0)->type();
     const auto size1 = char1->slotWeapon().get(0)->slotMod().size();
@@ -138,6 +132,7 @@ int main()
     static_cast<Weapon*>(weapon.get())->slotMod().unset(0, mod);
     inv.insert(weapon);
     inv.insert(mod);
+#endif
 
     cout << "\tmain.exe Done!" << endl;
     return 0;

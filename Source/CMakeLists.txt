@@ -6,5 +6,6 @@
 
 add_subdirectory("Common")
 add_subdirectory("Error")
+add_subdirectory("Main")
+add_subdirectory("Menu")
 add_subdirectory("Object")
-add_subdirectory("main")

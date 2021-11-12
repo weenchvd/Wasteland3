@@ -43,6 +43,9 @@ namespace Game
         using PointAttribute        = char;
         using LevelStat             = char;         // statistic level
 
+
+        using Money                 = long long int;
+
     }
 }
 
