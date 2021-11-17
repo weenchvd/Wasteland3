@@ -28,52 +28,21 @@ namespace Game
             chaDist_    { initCharismaDist() }
         {}
 
-        bool Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
+        void Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
         {
             auto index = static_cast<underlying_type_t<Attribute::Type>>(type);
-            auto curLevel = levels_[index].get();
-            if (Common::changeLevel(levels_[index], pStor_, pDist_, shift)) {
-                switch (type) {
-                case Attribute::Type::COORDINATION: {
-                    EffectAttCoord sum = cooDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::LUCK: {
-                    EffectAttLuck sum = lucDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::AWARENESS: {
-                    EffectAttAware sum = awaDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::STRENGTH: {
-                    EffectAttStr sum = strDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::SPEED: {
-                    EffectAttSpeed sum = spdDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::INTELLIGENCE: {
-                    EffectAttInt sum = intDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                case Attribute::Type::CHARISMA: {
-                    EffectAttCha sum = chaDist_.total(curLevel, curLevel + shift);
-                    sum.apply(char_);
-                    return true;
-                }
-                default:
-                    break;
-                }
-            }
-            return false;
+            Common::changeLevel(levels_[index], pStor_, pDist_, shift);
+        }
+        
+        void Attribute::addLevelToAll(Common::LevelStat shift) noexcept
+        {
+            addLevel(Attribute::Type::COORDINATION, shift);
+            addLevel(Attribute::Type::LUCK,         shift);
+            addLevel(Attribute::Type::AWARENESS,    shift);
+            addLevel(Attribute::Type::STRENGTH,     shift);
+            addLevel(Attribute::Type::SPEED,        shift);
+            addLevel(Attribute::Type::INTELLIGENCE, shift);
+            addLevel(Attribute::Type::CHARISMA,     shift);
         }
 
         bool Attribute::isModified() const noexcept
@@ -91,6 +60,7 @@ namespace Game
 
         void Attribute::accept() noexcept
         {
+            apply();
             for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
                 level.accept();
             }
@@ -111,7 +81,65 @@ namespace Game
                 level.reset();
             }
             pStor_.reset();
-            pStor_.add(initAttributePoints + char_.level() - 1);
+        }
+
+        void Attribute::apply() noexcept
+        {
+            apply(Attribute::Type::COORDINATION);
+            apply(Attribute::Type::LUCK);
+            apply(Attribute::Type::AWARENESS);
+            apply(Attribute::Type::STRENGTH);
+            apply(Attribute::Type::SPEED);
+            apply(Attribute::Type::INTELLIGENCE);
+            apply(Attribute::Type::CHARISMA);
+        }
+
+        void Attribute::apply(Attribute::Type type) noexcept
+        {
+            auto index = static_cast<underlying_type_t<Attribute::Type>>(type);
+            auto accLevel = levels_[index].getAccepted();
+            auto curLevel = levels_[index].get();
+            if (accLevel != curLevel) {
+                switch (type) {
+                case Attribute::Type::COORDINATION: {
+                    EffectAttCoord sum = cooDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::LUCK: {
+                    EffectAttLuck sum = lucDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::AWARENESS: {
+                    EffectAttAware sum = awaDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::STRENGTH: {
+                    EffectAttStr sum = strDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::SPEED: {
+                    EffectAttSpeed sum = spdDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::INTELLIGENCE: {
+                    EffectAttInt sum = intDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                case Attribute::Type::CHARISMA: {
+                    EffectAttCha sum = chaDist_.total(accLevel, curLevel);
+                    sum.apply(char_);
+                    break;
+                }
+                default:
+                    break;
+                }
+            }
         }
 
         vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()
@@ -124,7 +152,7 @@ namespace Game
 
         inline vector<Common::PointAttribute> Attribute::initPointDist()
         {
-            return vector<Common::PointAttribute>(pointDist);
+            return vector<Common::PointAttribute>(pointAttDist);
         }
 
         vector<EffectAttCoord> Attribute::initCoordDist()

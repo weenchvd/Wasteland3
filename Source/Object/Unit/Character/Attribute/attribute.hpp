@@ -22,13 +22,13 @@ namespace Game
     {
         constexpr Common::PointAttribute minAttributePoints     { 0 };
         constexpr Common::PointAttribute maxAttributePoints     { std::numeric_limits<Common::PointAttribute>::max() };
-        constexpr Common::PointAttribute initAttributePoints    { 21 - minAttributePoints };
+        constexpr Common::PointAttribute initAttributePoints    { 21 };
 
         constexpr Common::LevelStat minAttributeLevel   { 0 };
         constexpr Common::LevelStat maxAttributeLevel   { 10 };
-        constexpr Common::LevelStat initAttributeLevel  { 1 - minAttributeLevel };
+        constexpr Common::LevelStat initAttributeLevel  { 1 };
 
-        constexpr std::initializer_list<Common::PointAttribute> pointDist{ 0, -1 };
+        constexpr std::initializer_list<Common::PointAttribute> pointAttDist{ 0, -1 };
 
         // ATTRIBUTE LEVEL:
         //  0     1     2     3     4     5     6     7     8     9    10
@@ -39,6 +39,8 @@ namespace Game
             0,    0,    1,    0,    1,    0,    1,    0,    1,    0,    1 };
         constexpr std::initializer_list<Common::ActionPoint> coordAPMaxDist{
             0,    0,    1,    0,    1,    0,    1,    0,    1,    0,    1 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// LUCK
         constexpr std::initializer_list<Common::Armor> luckPenetDist{
             0,    0,    1,    0,    1,    0,    1,    0,    1,    0,    2 };
@@ -58,6 +60,8 @@ namespace Game
             0,    5,    5,    5,    5,    5,    5,    5,    5,    5,    5 };
         constexpr std::initializer_list<Common::Chance> luckDoubleScrapDist{
             0,    5,    5,    5,    5,    5,    5,    5,    5,    5,    5 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// AWARENESS
         constexpr std::initializer_list<Common::Chance> awareHitDist{
             0,   10,   10,   10,   10,   10,   10,   10,   10,   10,   30 };
@@ -65,6 +69,8 @@ namespace Game
             0,    0,    1,    0,    1,    0,    1,    0,    1,    0,    2 };
         constexpr std::initializer_list<Common::Bonus> awareRangedDmgDist{
             0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   80 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// STRENGTH
         constexpr std::initializer_list<Common::Constitution> strMaxDist{
             0,    5,    5,    5,    5,    5,    5,    5,    5,    5,   30 };
@@ -74,6 +80,8 @@ namespace Game
             0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   80 };
         constexpr std::initializer_list<Common::Multiplier> strThrowRangeDist{
             0,   10,   10,   10,   10,   10,   10,   10,   10,   10,   20 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// SPEED
         constexpr std::initializer_list<Common::Multiplier> speedCombatSpeedDist{
             0,   10,   10,   10,   10,   10,   10,   10,   10,   10,   50 };
@@ -81,6 +89,8 @@ namespace Game
             0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   60 };
         constexpr std::initializer_list<Common::Initiative> speedInitDist{
             0,   40,   40,   40,   40,   40,   40,   40,   40,   40,   90 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// INTELLIGENCE
         constexpr std::initializer_list<Common::Chance> intCritDmgChanceDist{
             0,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 };
@@ -92,6 +102,8 @@ namespace Game
             0,  100,  100,  100,  100,  100,  100,  100,  100,  100,  200 };
         constexpr std::initializer_list<Common::PointSkill> intSkillPointDist{
             0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+        // ATTRIBUTE LEVEL:
+        //  0     1     2     3     4     5     6     7     8     9    10
         /// CHARISMA
         constexpr std::initializer_list<Common::Strike> chaStrikeRateDist{
             0,   20,   20,   20,   20,   20,   20,   20,   20,   20,   40 };
@@ -112,7 +124,9 @@ namespace Game
         public:
             Attribute(Character& character);
 
-            bool addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
+            void addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
+
+            void addLevelToAll(Common::LevelStat shift) noexcept;
 
             void addPoint(Common::PointAttribute shift) noexcept {
                 pStor_.add(shift);
@@ -134,6 +148,11 @@ namespace Game
             const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
                 return pStor_;
             }
+
+        private:
+            void apply() noexcept;
+
+            void apply(Attribute::Type type) noexcept;
 
         private:
             static std::vector<Common::SpecStorage<Common::LevelStat>>  initLevels();

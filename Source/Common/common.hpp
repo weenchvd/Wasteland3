@@ -40,6 +40,7 @@ namespace Game
 
 
         using PointSkill            = short int;
+        using LevelSkill            = char;         // skill level
         using PointAttribute        = char;
         using LevelStat             = char;         // statistic level
 
