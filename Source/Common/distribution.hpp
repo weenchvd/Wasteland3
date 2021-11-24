@@ -8,6 +8,7 @@
 #define DISTRIBUTION_HPP
 
 #include"common.hpp"
+#include<initializer_list>
 #include<vector>
 
 namespace Game
@@ -46,6 +47,88 @@ namespace Game
         private:
             std::vector<T>              dist_;          // distribution of T by levels
         };
+
+
+
+
+        template<class E, class T1>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1)
+        {
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i] });
+            }
+            return dist;
+        }
+
+        template<class E, class T1, class T2>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1,
+            const std::vector<T2>& v2)
+        {
+            if (v1.size() != v2.size())
+            {
+                return std::vector<E>{};
+            }
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i],
+                    v2[i] });
+            }
+            return dist;
+        }
+
+        template<class E, class T1, class T2, class T3>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1,
+            const std::vector<T2>& v2,
+            const std::vector<T3>& v3)
+        {
+            if (v1.size() != v2.size() ||
+                v1.size() != v3.size())
+            {
+                return std::vector<E>{};
+            }
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i],
+                    v2[i],
+                    v3[i] });
+            }
+            return dist;
+        }
+
+        template<class E, class T1, class T2, class T3, class T4>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1,
+            const std::vector<T2>& v2,
+            const std::vector<T3>& v3,
+            const std::vector<T4>& v4)
+        {
+            if (v1.size() != v2.size() ||
+                v1.size() != v3.size() ||
+                v1.size() != v4.size())
+            {
+                return std::vector<E>{};
+            }
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i],
+                    v2[i],
+                    v3[i],
+                    v4[i] });
+            }
+            return dist;
+        }
 
     }
 }

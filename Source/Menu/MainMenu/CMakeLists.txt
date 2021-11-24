@@ -13,7 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "menu")
-set(SOURCE_CXX_LIST "menuMain.cpp"
+set(SOURCE_CXX_LIST "menuCommon.cpp"
+                    "menuMain.cpp"
+                    "menuAttribute.cpp"
+                    "menuSkill.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})

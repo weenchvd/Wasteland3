@@ -69,11 +69,14 @@ namespace Game
             //slotArmor_          { base_.armorTypes_ },
             slotWeapon_         { base_.weaponTypes_ },
             //slotConsum_         { base_.consumTypes_ }
-            attrib_             { make_unique<Attribute>(*this) }
+            attrib_             { make_unique<Attribute>(*this) },
+            skill_              { make_unique<Skill>(*this) }
         {
             attrib_->addPoint(initAttributePoints);
             attrib_->addLevelToAll(initAttributeLevel);
             attrib_->accept();
+            skill_->addPoint(initSkillPoints);
+            skill_->accept();
         }
 
         void Character::apply() noexcept

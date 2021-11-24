@@ -15,7 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(LIBRARY_NAME "effect")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Attribute/effectAttribute.cpp"
-#                    "Skill/effectSkill.cpp"
+                    "Skill/effectSkill.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
@@ -23,7 +23,7 @@ add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Attribute"
-#                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Skill"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Skill"
                            )
 
 target_link_libraries(${LIBRARY_NAME} PUBLIC common unit)

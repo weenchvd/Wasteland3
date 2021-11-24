@@ -6,6 +6,7 @@
 
 #include"effectAttribute.hpp"
 #include"character.hpp"
+#include"operators.hpp"
 #include<cmath>
 
 namespace Game
@@ -47,16 +48,12 @@ namespace Game
 
         EffectAttCoord operator+(const EffectAttCoord& left, const EffectAttCoord& right)
         {
-            EffectAttCoord temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttCoord operator-(const EffectAttCoord& left, const EffectAttCoord& right)
         {
-            EffectAttCoord temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
 
@@ -125,16 +122,12 @@ namespace Game
 
         EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right)
         {
-            EffectAttLuck temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right)
         {
-            EffectAttLuck temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
 
@@ -173,16 +166,12 @@ namespace Game
 
         EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right)
         {
-            EffectAttAware temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right)
         {
-            EffectAttAware temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
 
@@ -229,16 +218,12 @@ namespace Game
 
         EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right)
         {
-            EffectAttStr temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right)
         {
-            EffectAttStr temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttSpeed::EffectAttSpeed(
@@ -276,16 +261,12 @@ namespace Game
 
         EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right)
         {
-            EffectAttSpeed temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right)
         {
-            EffectAttSpeed temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttInt::EffectAttInt(
@@ -308,7 +289,7 @@ namespace Game
             character.multiplierCritDamageAdd(mulCritDmg_);
             character.chanceCritHealingAdd(chaCritHeal_);
             character.bonusCritHealingAdd(bonCritHeal_);
-            // TODO character.skill().addPoint(poSkill_);
+            character.skill().addPoint(poSkill_);
         }
 
         EffectAttInt& EffectAttInt::operator+=(const EffectAttInt& other)
@@ -333,16 +314,12 @@ namespace Game
 
         EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right)
         {
-            EffectAttInt temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right)
         {
-            EffectAttInt temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttCha::EffectAttCha(
@@ -385,16 +362,12 @@ namespace Game
 
         EffectAttCha operator+(const EffectAttCha& left, const EffectAttCha& right)
         {
-            EffectAttCha temp{ left };
-            temp += right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
         EffectAttCha operator-(const EffectAttCha& left, const EffectAttCha& right)
         {
-            EffectAttCha temp{ left };
-            temp -= right;
-            return temp;
+            return Common::operatorPlus(left, right);
         }
 
     }

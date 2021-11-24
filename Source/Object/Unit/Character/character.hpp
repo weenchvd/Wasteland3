@@ -12,6 +12,7 @@
 #include"weapon.hpp"
 #include"unit.hpp"
 #include"attribute.hpp"
+#include"skill.hpp"
 #include"characterCommon.hpp"
 #include<array>
 #include<memory>
@@ -424,8 +425,8 @@ namespace Game
 
         /// skills
         public:
-            //const Skill& skill() const noexcept { return *skill_; }
-            //Skill& skill() noexcept { return *skill_; }
+            const Skill& skill() const noexcept { return *skill_; }
+            Skill& skill() noexcept { return *skill_; }
 
         private:
             const CharacterReference&   base_;          // reference, sample, template
@@ -490,7 +491,7 @@ namespace Game
             //Common::Slot<Consumable, nQSlots>       slotConsum_;
 
             std::unique_ptr<Attribute>              attrib_;
-            //std::unique_ptr<Skill>                  skill_;
+            std::unique_ptr<Skill>                  skill_;
 
             static std::vector<CharacterReference>  ref_;       // references
         };
