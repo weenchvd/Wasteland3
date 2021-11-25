@@ -27,7 +27,7 @@ namespace Game
             EffectAttCoord(
                 Common::Resistance statusEffect,
                 Common::ActionPoint maximum,
-                Common::ActionPoint murrent);
+                Common::ActionPoint current);
 
             virtual ~EffectAttCoord() noexcept {}
 
@@ -45,6 +45,7 @@ namespace Game
         EffectAttCoord operator+(const EffectAttCoord& left, const EffectAttCoord& right);
         EffectAttCoord operator-(const EffectAttCoord& left, const EffectAttCoord& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttLuck : public Effect {
         public:
@@ -94,6 +95,7 @@ namespace Game
         EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right);
         EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttAware : public Effect {
         public:
@@ -125,6 +127,7 @@ namespace Game
         EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right);
         EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttStr : public Effect {
         public:
@@ -159,6 +162,7 @@ namespace Game
         EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right);
         EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttSpeed : public Effect {
         public:
@@ -190,6 +194,7 @@ namespace Game
         EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right);
         EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttInt : public Effect {
         public:
@@ -227,6 +232,7 @@ namespace Game
         EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right);
         EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right);
 
+        ///------------------------------------------------------------------------------------------------
 
         class EffectAttCha : public Effect {
         public:

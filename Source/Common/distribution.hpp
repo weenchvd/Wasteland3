@@ -20,6 +20,7 @@ namespace Game
             // vector[0] is always not used
             // vector[1] is T when moving from level 0 to level 1
             // vector[2] is T when moving from level 1 to level 2 and so on
+            // if newLevel >= dist_.size(), then T is the last T in the dist_
             explicit Distribution(std::vector<T> distribution) noexcept
                 : dist_{ distribution } {}
 
@@ -126,6 +127,75 @@ namespace Game
                     v2[i],
                     v3[i],
                     v4[i] });
+            }
+            return dist;
+        }
+
+        template<class E, class T1, class T2, class T3, class T4, class T5>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1,
+            const std::vector<T2>& v2,
+            const std::vector<T3>& v3,
+            const std::vector<T4>& v4,
+            const std::vector<T5>& v5)
+        {
+            if (v1.size() != v2.size() ||
+                v1.size() != v3.size() ||
+                v1.size() != v4.size() ||
+                v1.size() != v5.size())
+            {
+                return std::vector<E>{};
+            }
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i],
+                    v2[i],
+                    v3[i],
+                    v4[i],
+                    v5[i] });
+            }
+            return dist;
+        }
+
+        template<class E,
+            class T1, class T2, class T3, class T4, class T5, class T6, class T7, class T8, class T9>
+        std::vector<E> initializeDistribution(
+            const std::vector<T1>& v1,
+            const std::vector<T2>& v2,
+            const std::vector<T3>& v3,
+            const std::vector<T4>& v4,
+            const std::vector<T5>& v5,
+            const std::vector<T6>& v6,
+            const std::vector<T7>& v7,
+            const std::vector<T8>& v8,
+            const std::vector<T9>& v9)
+        {
+            if (v1.size() != v2.size() ||
+                v1.size() != v3.size() ||
+                v1.size() != v4.size() ||
+                v1.size() != v5.size() ||
+                v1.size() != v6.size() ||
+                v1.size() != v7.size() ||
+                v1.size() != v8.size() ||
+                v1.size() != v9.size())
+            {
+                return std::vector<E>{};
+            }
+            std::vector<E> dist;
+            dist.reserve(v1.size());
+            for (int i = 0; i < v1.size(); ++i) {
+                dist.push_back(E{
+                    v1[i],
+                    v2[i],
+                    v3[i],
+                    v4[i],
+                    v5[i],
+                    v6[i],
+                    v7[i],
+                    v8[i],
+                    v9[i] });
             }
             return dist;
         }

@@ -30,16 +30,10 @@ namespace Game
             aidDist_        { initFirstAidDist() },
             sneakyDist_     { initSneakyShitDist() },
             weirdDist_      { initWeirdScienceDist() },
-            //armorModDist_   { initArmorModDist() },
-            //lockpDist_      { initLockpickingDist() },
-            //nerdDist_       { initNerdStuffDist() },
             mechDist_       { initMechanicsDist() },
             survDist_       { initSurvivalDist() },
-            //toasterDist_    { initToasterRepairDist() },
             weaponModDist_  { initWeaponModDist() },
             barterDist_     { initBarterDist() },
-            //hardAssDist_    { initHardAssDist() },
-            //kissAssDist_    { initKissAssDist() },
             leaderDist_     { initLeadershipDist() }
         {}
 
@@ -175,21 +169,6 @@ namespace Game
                     sum.apply(char_);
                     break;
                 }
-                //case Skill::Type::ARMOR_MODDING: {
-                //    EffectSkillArmorMod sum = armorModDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
-                //case Skill::Type::LOCKPICKING: {
-                //    EffectSkillLockpicking sum = lockpDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
-                //case Skill::Type::NERD_STUFF: {
-                //    EffectSkillNerdStuff sum = nerdDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
                 case Skill::Type::MECHANICS: {
                     EffectSkillMechanics sum = mechDist_.total(accLevel, curLevel);
                     sum.apply(char_);
@@ -200,11 +179,6 @@ namespace Game
                     sum.apply(char_);
                     break;
                 }
-                //case Skill::Type::TOASTER_REPAIR: {
-                //    EffectSkillToasterRepair sum = toasterDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
                 case Skill::Type::WEAPON_MODDING: {
                     EffectSkillWeaponMod sum = weaponModDist_.total(accLevel, curLevel);
                     sum.apply(char_);
@@ -215,16 +189,6 @@ namespace Game
                     sum.apply(char_);
                     break;
                 }
-                //case Skill::Type::HARD_ASS: {
-                //    EffectSkillHardAss sum = hardAssDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
-                //case Skill::Type::KISS_ASS: {
-                //    EffectSkillKissAss sum = kissAssDist_.total(accLevel, curLevel);
-                //    sum.apply(char_);
-                //    break;
-                //}
                 case Skill::Type::LEADERSHIP: {
                     EffectSkillLeadership sum = leaderDist_.total(accLevel, curLevel);
                     sum.apply(char_);
@@ -389,7 +353,7 @@ namespace Game
                 vector<Common::Bonus>(survMutantDamageDist));
         }
 
-        std::vector<EffectSkillWeaponMod> Skill::initWeaponModDist()
+        vector<EffectSkillWeaponMod> Skill::initWeaponModDist()
         {
             return Common::initializeDistribution<EffectSkillWeaponMod,
                 Common::Bonus
@@ -397,7 +361,7 @@ namespace Game
                 vector<Common::Bonus>(weaponModScrapDist));
         }
 
-        std::vector<EffectSkillBarter> Skill::initBarterDist()
+        vector<EffectSkillBarter> Skill::initBarterDist()
         {
             return Common::initializeDistribution<EffectSkillBarter,
                 Common::Bonus,
@@ -407,7 +371,7 @@ namespace Game
                 vector<Common::Bonus>(barterBuyCostDist));
         }
 
-        std::vector<EffectSkillLeadership> Skill::initLeadershipDist()
+        vector<EffectSkillLeadership> Skill::initLeadershipDist()
         {
             return Common::initializeDistribution<EffectSkillLeadership,
                 Common::Chance,

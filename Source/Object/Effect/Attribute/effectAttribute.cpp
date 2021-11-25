@@ -56,6 +56,7 @@ namespace Game
             return Common::operatorPlus(left, right);
         }
 
+        ///------------------------------------------------------------------------------------------------
 
         EffectAttLuck::EffectAttLuck(
             Common::Armor penetration,
@@ -130,6 +131,7 @@ namespace Game
             return Common::operatorPlus(left, right);
         }
 
+        ///------------------------------------------------------------------------------------------------
 
         EffectAttAware::EffectAttAware(
             Common::Chance hit,
@@ -174,6 +176,7 @@ namespace Game
             return Common::operatorPlus(left, right);
         }
 
+        ///------------------------------------------------------------------------------------------------
 
         EffectAttStr::EffectAttStr(
             Common::Constitution maximum,
@@ -226,6 +229,8 @@ namespace Game
             return Common::operatorPlus(left, right);
         }
 
+        ///------------------------------------------------------------------------------------------------
+
         EffectAttSpeed::EffectAttSpeed(
             Common::Multiplier combatSpeed,
             Common::Evasion evasion,
@@ -268,6 +273,8 @@ namespace Game
         {
             return Common::operatorPlus(left, right);
         }
+
+        ///------------------------------------------------------------------------------------------------
 
         EffectAttInt::EffectAttInt(
             Common::Chance critDamageChance,
@@ -321,6 +328,8 @@ namespace Game
         {
             return Common::operatorPlus(left, right);
         }
+
+        ///------------------------------------------------------------------------------------------------
 
         EffectAttCha::EffectAttCha(
             Common::Strike strikeRate,

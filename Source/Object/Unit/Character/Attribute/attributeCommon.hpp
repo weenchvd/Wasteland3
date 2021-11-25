@@ -11,8 +11,8 @@ namespace Game
 {
     namespace Object
     {
-        enum class AttributeType : unsigned char {
-            INVALID,                        /// invalid type, must be the first
+        enum class AttributeType : char {
+            INVALID = -1,                   /// invalid type, must be the first
 
             COORDINATION,
             LUCK,

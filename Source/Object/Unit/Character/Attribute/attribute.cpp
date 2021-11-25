@@ -157,173 +157,106 @@ namespace Game
 
         vector<EffectAttCoord> Attribute::initCoordDist()
         {
-            vector<Common::Resistance>  res     { coordStatEffDist };
-            vector<Common::ActionPoint> ap      { coordAPDist };
-            vector<Common::ActionPoint> apMax   { coordAPMaxDist };
-            if (res.size() != ap.size() || res.size() != apMax.size()) {
-                return vector<EffectAttCoord>{};
-            }
-            vector<EffectAttCoord> dist;
-            dist.reserve(res.size());
-            for (int i = 0; i < res.size(); ++i) {
-                dist.push_back(EffectAttCoord{
-                    res     [i],
-                    ap      [i],
-                    apMax   [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttCoord,
+                Common::Resistance,
+                Common::ActionPoint,
+                Common::ActionPoint
+            >(
+                vector<Common::Resistance>  (coordStatEffDist),
+                vector<Common::ActionPoint> (coordAPMaxDist),
+                vector<Common::ActionPoint> (coordAPDist));
         }
 
         vector<EffectAttLuck> Attribute::initLuckDist()
         {
-            vector<Common::Armor>   pen         { luckPenetDist };
-            vector<Common::Chance>  act         { luckActionDist };
-            vector<Common::Chance>  crit        { luckCritDist };
-            vector<Common::Chance>  megaCrit    { luckMegaCritDist };
-            vector<Common::Chance>  evade       { luckEvadeDist };
-            vector<Common::Chance>  critResist  { luckCritResistDist };
-            vector<Common::Chance>  doubleHeal  { luckDoubleHealDist };
-            vector<Common::Chance>  doubleMoney { luckDoubleMoneyDist };
-            vector<Common::Chance>  doubleScrap { luckDoubleScrapDist };
-            if (pen.size() != act.size() ||
-                pen.size() != crit.size() ||
-                pen.size() != megaCrit.size() ||
-                pen.size() != evade.size() ||
-                pen.size() != critResist.size() ||
-                pen.size() != doubleHeal.size() ||
-                pen.size() != doubleMoney.size() ||
-                pen.size() != doubleScrap.size())
-            {
-                return vector<EffectAttLuck>{};
-            }
-            vector<EffectAttLuck> dist;
-            dist.reserve(pen.size());
-            for (int i = 0; i < pen.size(); ++i) {
-                dist.push_back(EffectAttLuck{
-                    pen         [i],
-                    act         [i],
-                    crit        [i],
-                    megaCrit    [i],
-                    evade       [i],
-                    critResist  [i],
-                    doubleHeal  [i],
-                    doubleMoney [i],
-                    doubleScrap [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttLuck,
+                Common::Armor,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance,
+                Common::Chance
+            >(
+                vector<Common::Armor>   (luckPenetDist),
+                vector<Common::Chance>  (luckActionDist),
+                vector<Common::Chance>  (luckCritDist),
+                vector<Common::Chance>  (luckMegaCritDist),
+                vector<Common::Chance>  (luckEvadeDist),
+                vector<Common::Chance>  (luckCritResistDist),
+                vector<Common::Chance>  (luckDoubleHealDist),
+                vector<Common::Chance>  (luckDoubleMoneyDist),
+                vector<Common::Chance>  (luckDoubleScrapDist));
         }
 
         vector<EffectAttAware> Attribute::initAwareDist()
         {
-            vector<Common::Chance>      hit     { awareHitDist };
-            vector<Common::Perception>  percep  { awarePercepDist };
-            vector<Common::Bonus>       rangDmg { awareRangedDmgDist };
-            if (hit.size() != percep.size() || hit.size() != rangDmg.size()) {
-                return vector<EffectAttAware>{};
-            }
-            vector<EffectAttAware> dist;
-            dist.reserve(hit.size());
-            for (int i = 0; i < hit.size(); ++i) {
-                dist.push_back(EffectAttAware{
-                    hit     [i],
-                    percep  [i],
-                    rangDmg [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttAware,
+                Common::Chance,
+                Common::Perception,
+                Common::Bonus
+            >(
+                vector<Common::Chance>      (awareHitDist),
+                vector<Common::Perception>  (awarePercepDist),
+                vector<Common::Bonus>       (awareRangedDmgDist));
         }
 
-        std::vector<EffectAttStr> Attribute::initStrDist()
+        vector<EffectAttStr> Attribute::initStrDist()
         {
-            vector<Common::Constitution>    max         { strMaxDist };
-            vector<Common::Constitution>    perLevel    { strPerLvlDist };
-            vector<Common::Bonus>           meleeDmg    { strMeleeDmgDist };
-            vector<Common::Multiplier>      throwRange  { strThrowRangeDist };
-            if (max.size() != perLevel.size() ||
-                max.size() != meleeDmg.size() ||
-                max.size() != throwRange.size())
-            {
-                return vector<EffectAttStr>{};
-            }
-            vector<EffectAttStr> dist;
-            dist.reserve(max.size());
-            for (int i = 0; i < max.size(); ++i) {
-                dist.push_back(EffectAttStr{
-                    max         [i],
-                    perLevel    [i],
-                    meleeDmg    [i],
-                    throwRange  [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttStr,
+                Common::Constitution,
+                Common::Constitution,
+                Common::Bonus,
+                Common::Multiplier
+            >(
+                vector<Common::Constitution>(strMaxDist),
+                vector<Common::Constitution>(strPerLvlDist),
+                vector<Common::Bonus>       (strMeleeDmgDist),
+                vector<Common::Multiplier>  (strThrowRangeDist));
         }
 
-        std::vector<EffectAttSpeed> Attribute::initSpeedDist()
+        vector<EffectAttSpeed> Attribute::initSpeedDist()
         {
-            vector<Common::Multiplier>  combatSpeed { speedCombatSpeedDist };
-            vector<Common::Evasion>     evasion     { speedEvasionDist };
-            vector<Common::Initiative>  initiative  { speedInitDist };
-            if (combatSpeed.size() != evasion.size() || combatSpeed.size() != initiative.size()) {
-                return vector<EffectAttSpeed>{};
-            }
-            vector<EffectAttSpeed> dist;
-            dist.reserve(combatSpeed.size());
-            for (int i = 0; i < combatSpeed.size(); ++i) {
-                dist.push_back(EffectAttSpeed{
-                    combatSpeed [i],
-                    evasion     [i],
-                    initiative  [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttSpeed,
+                Common::Multiplier,
+                Common::Evasion,
+                Common::Initiative
+            >(
+                vector<Common::Multiplier>  (speedCombatSpeedDist),
+                vector<Common::Evasion>     (speedEvasionDist),
+                vector<Common::Initiative>  (speedInitDist));
         }
 
-        std::vector<EffectAttInt> Attribute::initIntDist()
+        vector<EffectAttInt> Attribute::initIntDist()
         {
-            vector<Common::Chance>      critDmgChance   { intCritDmgChanceDist };
-            vector<Common::Multiplier>  critDmgMult     { intCritDmgMultDist };
-            vector<Common::Chance>      critHealChance  { intCritHealChanceDist };
-            vector<Common::Bonus>       critHealBonus   { intCritHealBonusDist };
-            vector<Common::PointSkill>  skillPoint      { intSkillPointDist };
-            if (critDmgChance.size() != critDmgMult.size() ||
-                critDmgChance.size() != critHealChance.size() ||
-                critDmgChance.size() != critHealBonus.size() ||
-                critDmgChance.size() != skillPoint.size())
-            {
-                return vector<EffectAttInt>{};
-            }
-            vector<EffectAttInt> dist;
-            dist.reserve(critDmgChance.size());
-            for (int i = 0; i < critDmgChance.size(); ++i) {
-                dist.push_back(EffectAttInt{
-                    critDmgChance   [i],
-                    critDmgMult     [i],
-                    critHealChance  [i],
-                    critHealBonus   [i],
-                    skillPoint      [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttInt,
+                Common::Chance,
+                Common::Multiplier,
+                Common::Chance,
+                Common::Bonus,
+                Common::PointSkill
+            >(
+                vector<Common::Chance>      (intCritDmgChanceDist),
+                vector<Common::Multiplier>  (intCritDmgMultDist),
+                vector<Common::Chance>      (intCritHealChanceDist),
+                vector<Common::Bonus>       (intCritHealBonusDist),
+                vector<Common::PointSkill>  (intSkillPointDist));
         }
 
-        std::vector<EffectAttCha> Attribute::initCharismaDist()
+        vector<EffectAttCha> Attribute::initCharismaDist()
         {
-            vector<Common::Strike>  strike      { chaStrikeRateDist };
-            vector<Common::Range>   leadership  { chaLeadershipDist };
-            vector<Common::Bonus>   xp          { chaExperienceDist };
-            vector<Common::Bonus>   reward      { chaMisRewardDist };
-            if (strike.size() != leadership.size() ||
-                strike.size() != xp.size() ||
-                strike.size() != reward.size())
-            {
-                return vector<EffectAttCha>{};
-            }
-            vector<EffectAttCha> dist;
-            dist.reserve(strike.size());
-            for (int i = 0; i < strike.size(); ++i) {
-                dist.push_back(EffectAttCha{
-                    strike      [i],
-                    leadership  [i],
-                    xp          [i],
-                    reward      [i] });
-            }
-            return dist;
+            return Common::initializeDistribution<EffectAttCha,
+                Common::Strike,
+                Common::Range,
+                Common::Bonus,
+                Common::Bonus
+            >(
+                vector<Common::Strike>  (chaStrikeRateDist),
+                vector<Common::Range>   (chaLeadershipDist),
+                vector<Common::Bonus>   (chaExperienceDist),
+                vector<Common::Bonus>   (chaMisRewardDist));
         }
 
     }

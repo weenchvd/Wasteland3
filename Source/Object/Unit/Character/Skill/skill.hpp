@@ -22,159 +22,121 @@ namespace Game
     {
         constexpr Common::PointSkill minSkillPoints     { 0 };
         constexpr Common::PointSkill maxSkillPoints     { std::numeric_limits<Common::PointSkill>::max() };
-        constexpr Common::PointSkill initSkillPoints    { 21 };
+        constexpr Common::PointSkill initSkillPoints    { 4 };
 
         constexpr Common::LevelStat minSkillLevel   { 0 };
         constexpr Common::LevelStat maxSkillLevel   { 10 };
-        //constexpr Common::LevelStat initSkillLevel  { 1 };
 
         constexpr std::initializer_list<Common::PointSkill>
             pointSkillDist{ 0, -1, -1, -1, -2, -2, -3, -3, -4, -5, -6 };
 
-        // SKILL LEVEL:
-        //  0     1     2     3     4     5     6     7     8     9    10
         /// --------------------Combat skills--------------------
+        /// SKILL LEVEL:
+        /// 0     1     2     3     4     5     6     7     8     9    10
         /// AUTOMATIC WEAPONS
         constexpr std::initializer_list<Common::Chance> automaticARHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> automaticSMGHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// BIG GUNS
         constexpr std::initializer_list<Common::Chance> bigHMGHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> bigFlamethrowerHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// BRAWLING
         constexpr std::initializer_list<Common::Multiplier> brawlingCombatSpeedDist{
-            0,    5,    5,    5,    5,    5,    5,    5,    5,    5,    5 };
+            0,    5/*,  5,    5,    5,    5,    5,    5,    5,    5,    5*/ };
         constexpr std::initializer_list<Common::Chance> brawlingWeaponHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// MELEE COMBAT
         constexpr std::initializer_list<Common::Chance> meleeBluntWeaponHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> meleeBladedWeaponHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// SMALL ARMS
         constexpr std::initializer_list<Common::Chance> smallSAPistolHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> smallRevolverHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> smallPumpShotgunHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Chance> smallAutoShotgunHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// SNIPER
         constexpr std::initializer_list<Common::Chance> sniperRifleHitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
-        // SKILL LEVEL:
-        //  0     1     2     3     4     5     6     7     8     9    10
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
+
         /// --------------------General skills--------------------
+        /// SKILL LEVEL:
+        /// 0     1     2     3     4     5     6     7     8     9    10
         /// ANIMAL WHISPERER
-        //constexpr std::initializer_list<Common::Level> animalTameDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
         constexpr std::initializer_list<Common::Bonus> animalCompanionDamageDist{
-            0,   50,   50,   50,   50,   50,   50,   50,   50,   50,   50 };
+            0,   50/*, 50,   50,   50,   50,   50,   50,   50,   50,   50*/ };
         /// EXPLOSIVES
         constexpr std::initializer_list<Common::Resistance> explosiveDamageResDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> explosiveDamageDist{
-            0,   50,   50,   50,   50,   50,   50,   50,   50,   50,   50 };
-        //constexpr std::initializer_list<Common::Level> explosiveDisarmDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,   50/*, 50,   50,   50,   50,   50,   50,   50,   50,   50*/ };
         /// FIRST AID
         constexpr std::initializer_list<Common::Bonus> aidHealingItemDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> aidHealingReviveDist{
-            0,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100 };
-        //constexpr std::initializer_list<Common::Level> aidHealingItemLevelDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,  100/*,100,  100,  100,  100,  100,  100,  100,  100,  100*/ };
         /// SNEAKY SHIT
         constexpr std::initializer_list<Common::Perception> sneakyPerceptionDist{
-            0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,    1/*,  1,    1,    1,    1,    1,    1,    1,    1,    1*/ };
         constexpr std::initializer_list<Common::Initiative> sneakyInitiativeDist{
-            0,   40,   40,   40,   40,   40,   40,   40,   40,   40,   40 };
+            0,   40/*, 40,   40,   40,   40,   40,   40,   40,   40,   40*/ };
         constexpr std::initializer_list<Common::Time> sneakyDetectionDist{
-            0,  300,  300,  300,  300,  300,  300,  300,  300,  300,  300 };
+            0,  300/*,300,  300,  300,  300,  300,  300,  300,  300,  300*/ };
         constexpr std::initializer_list<Common::Bonus> sneakyAttackDamageDist{
-            0,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100 };
-        //constexpr std::initializer_list<Common::Level> sneakyDisarmAlarmDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,  100/*,100,  100,  100,  100,  100,  100,  100,  100,  100*/ };
         /// WEIRD SCIENCE
         constexpr std::initializer_list<Common::Bonus> weirdEnergyDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> weirdFireDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> weirdColdDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
-        //constexpr std::initializer_list<Common::Level> weirdItemLevelDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        // SKILL LEVEL:
-        //  0     1     2     3     4     5     6     7     8     9    10
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
+
         /// --------------------Exploration skills--------------------
-        /// ARMOR MODDING
-        //constexpr std::initializer_list<Common::Level> armorModLevelDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        /// LOCKPICKING
-        //constexpr std::initializer_list<Common::Level> lockPickLocksDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        //constexpr std::initializer_list<Common::Level> lockCrackSafesDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        /// NERD STUFF
-        //constexpr std::initializer_list<Common::Level> nerdHackCompDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        //constexpr std::initializer_list<Common::Level> nerdHackRobotsDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+        /// SKILL LEVEL:
+        /// 0     1     2     3     4     5     6     7     8     9    10
         /// MECHANICS
         constexpr std::initializer_list<Common::Bonus> mechRobotDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> mechVehicleDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> mechSynthDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> mechRepairKitDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
-        //constexpr std::initializer_list<Common::Level> mechFixDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        //constexpr std::initializer_list<Common::Level> mechItemLevelDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// SURVIVAL
         constexpr std::initializer_list<Common::Bonus> survAnimalDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         constexpr std::initializer_list<Common::Bonus> survMutantDamageDist{
-            0,   30,   30,   30,   30,   30,   30,   30,   30,   30,   30 };
-        //constexpr std::initializer_list<Common::Level> survAvoidEncountersDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        /// TOASTER REPAIR
-        //constexpr std::initializer_list<Common::Level> toasterRepairDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,   30/*, 30,   30,   30,   30,   30,   30,   30,   30,   30*/ };
         /// WEAPON MODDING
         constexpr std::initializer_list<Common::Bonus> weaponModScrapDist{
-            0,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100 };
-        //constexpr std::initializer_list<Common::Level> weaponModLevelDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        // SKILL LEVEL:
-        //  0     1     2     3     4     5     6     7     8     9    10
+            0,  100/*,100,  100,  100,  100,  100,  100,  100,  100,  100*/ };
+
         /// --------------------Social skills--------------------
+        /// SKILL LEVEL:
+        /// 0     1     2     3     4     5     6     7     8     9    10
         /// BARTER
         constexpr std::initializer_list<Common::Bonus> barterSellValueDist{
-            0,  500,  500,  500,  500,  500,  500,  500,  500,  500,  500 };
+            0,  500/*,500,  500,  500,  500,  500,  500,  500,  500,  500*/ };
         constexpr std::initializer_list<Common::Bonus> barterBuyCostDist{
-            0,  -10,  -10,  -10,  -10,  -10,  -10,  -10,  -10,  -10,  -10 };
-        /// HARD ASS
-        //constexpr std::initializer_list<Common::Level> hardAssSkillCheckDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
-        /// KISS ASS
-        //constexpr std::initializer_list<Common::Level> kissAssSkillCheckDist{
-        //    0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1 };
+            0,  -10/*,-10,  -10,  -10,  -10,  -10,  -10,  -10,  -10,  -10*/ };
         /// LEADERSHIP
         constexpr std::initializer_list<Common::Chance> leaderHitChanceGainDist{
-            0,   10,   10,   10,   10,   10,   10,   10,   10,   10,   10 };
+            0,   10/*, 10,   10,   10,   10,   10,   10,   10,   10,   10*/ };
         constexpr std::initializer_list<Common::Bonus> leaderBossKillDamageGainDist{
-            0,   25,   25,   25,   25,   25,   25,   25,   25,   25,   25 };
+            0,   25/*, 25,   25,   25,   25,   25,   25,   25,   25,   25*/ };
         constexpr std::initializer_list<Common::Chance> leaderMultiKillCritChanceGainDist{
-            0,   10,   10,   10,   10,   10,   10,   10,   10,   10,   10 };
+            0,   10/*, 10,   10,   10,   10,   10,   10,   10,   10,   10*/ };
         constexpr std::initializer_list<Common::Bonus> leaderReviveCONHealedDist{
-            0,   20,   20,   20,   20,   20,   20,   20,   20,   20,   20 };
+            0,   20/*, 20,   20,   20,   20,   20,   20,   20,   20,   20*/ };
 
 
         class Character;
@@ -228,16 +190,10 @@ namespace Game
             static std::vector<EffectSkillFirstAid>                     initFirstAidDist();
             static std::vector<EffectSkillSneakyShit>                   initSneakyShitDist();
             static std::vector<EffectSkillWeirdScience>                 initWeirdScienceDist();
-            //static std::vector<EffectSkillArmorMod>                     initArmorModDist();
-            //static std::vector<EffectSkillLockpicking>                  initLockpickingDist();
-            //static std::vector<EffectSkillNerdStuff>                    initNerdStuffDist();
             static std::vector<EffectSkillMechanics>                    initMechanicsDist();
             static std::vector<EffectSkillSurvival>                     initSurvivalDist();
-            //static std::vector<EffectSkillToasterRepair>                initToasterRepairDist();
             static std::vector<EffectSkillWeaponMod>                    initWeaponModDist();
             static std::vector<EffectSkillBarter>                       initBarterDist();
-            //static std::vector<EffectSkillHardAss>                      initHardAssDist();
-            //static std::vector<EffectSkillKissAss>                      initKissAssDist();
             static std::vector<EffectSkillLeadership>                   initLeadershipDist();
 
         private:
@@ -256,16 +212,10 @@ namespace Game
             Common::Distribution<EffectSkillFirstAid>               aidDist_;
             Common::Distribution<EffectSkillSneakyShit>             sneakyDist_;
             Common::Distribution<EffectSkillWeirdScience>           weirdDist_;
-            //Common::Distribution<EffectSkillArmorMod>               armorModDist_;
-            //Common::Distribution<EffectSkillLockpicking>            lockpDist_;
-            //Common::Distribution<EffectSkillNerdStuff>              nerdDist_;
             Common::Distribution<EffectSkillMechanics>              mechDist_;
             Common::Distribution<EffectSkillSurvival>               survDist_;
-            //Common::Distribution<EffectSkillToasterRepair>          toasterDist_;
             Common::Distribution<EffectSkillWeaponMod>              weaponModDist_;
             Common::Distribution<EffectSkillBarter>                 barterDist_;
-            //Common::Distribution<EffectSkillHardAss>                hardAssDist_;
-            //Common::Distribution<EffectSkillKissAss>                kissAssDist_;
             Common::Distribution<EffectSkillLeadership>             leaderDist_;
         };
 

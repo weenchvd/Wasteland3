@@ -495,33 +495,6 @@ namespace Game
         EffectSkillLeadership operator+(const EffectSkillLeadership& left, const EffectSkillLeadership& right);
         EffectSkillLeadership operator-(const EffectSkillLeadership& left, const EffectSkillLeadership& right);
 
-        ///------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 
