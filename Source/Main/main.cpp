@@ -43,6 +43,10 @@ int main()
 
     Game::Menu::menuMain(squad, shop);
 
+    //sizeof(Game::Object::Character);
+    //sizeof(Game::Common::Text);
+    //sizeof(Game::Common::Slot<Game::Object::Weapon, Game::Object::nWSlots>);
+    //sizeof(std::unique_ptr<Game::Object::Attribute>);
 
 #if SHOW
     using namespace Game;

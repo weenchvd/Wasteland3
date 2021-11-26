@@ -326,10 +326,10 @@ namespace Game
         ///------------------------------------------------------------------------------------------------
 
         EffectSkillFirstAid::EffectSkillFirstAid(
-            Common::Bonus healingItemBonus,
+            Common::Bonus healingBonus,
             Common::Bonus healingWhenRevivingAlliesBonus)
             :
-            bonHealItem_    { healingItemBonus },
+            bonHeal_        { healingBonus },
             bonHealRevive_  { healingWhenRevivingAlliesBonus }
         {}
 
@@ -340,14 +340,14 @@ namespace Game
 
         EffectSkillFirstAid& EffectSkillFirstAid::operator+=(const EffectSkillFirstAid& other)
         {
-            this->bonHealItem_      += other.bonHealItem_;
+            this->bonHeal_          += other.bonHeal_;
             this->bonHealRevive_    += other.bonHealRevive_;
             return *this;
         }
 
         EffectSkillFirstAid& EffectSkillFirstAid::operator-=(const EffectSkillFirstAid& other)
         {
-            this->bonHealItem_      -= other.bonHealItem_;
+            this->bonHeal_          -= other.bonHeal_;
             this->bonHealRevive_    -= other.bonHealRevive_;
             return *this;
         }
@@ -455,15 +455,15 @@ namespace Game
         ///------------------------------------------------------------------------------------------------
 
         EffectSkillMechanics::EffectSkillMechanics(
-            Common::Bonus robotDamageBonus,
-            Common::Bonus vehicleDamageBonus,
-            Common::Bonus synthDamageBonus,
-            Common::Bonus repairKitBonus)
+            Common::Bonus damageBonusVsRobots,
+            Common::Bonus damageBonusVsVehicles,
+            Common::Bonus damageBonusVsSynths,
+            Common::Bonus repairBonus)
             :
-            bonRobotDmg_    { robotDamageBonus },
-            bonVehicDmg_    { vehicleDamageBonus },
-            bonSynthDmg_    { synthDamageBonus },
-            bonRepairKit_   { repairKitBonus }
+            bonDmgVsRobot_  { damageBonusVsRobots },
+            bonDmgVsVehic_  { damageBonusVsVehicles },
+            bonDmgVsSynth_  { damageBonusVsSynths },
+            bonRepair_      { repairBonus }
         {}
 
         void EffectSkillMechanics::apply(Character& character) noexcept
@@ -473,19 +473,19 @@ namespace Game
 
         EffectSkillMechanics& EffectSkillMechanics::operator+=(const EffectSkillMechanics& other)
         {
-            this->bonRobotDmg_  += other.bonRobotDmg_;
-            this->bonVehicDmg_  += other.bonVehicDmg_;
-            this->bonSynthDmg_  += other.bonSynthDmg_;
-            this->bonRepairKit_ += other.bonRepairKit_;
+            this->bonDmgVsRobot_    += other.bonDmgVsRobot_;
+            this->bonDmgVsVehic_    += other.bonDmgVsVehic_;
+            this->bonDmgVsSynth_    += other.bonDmgVsSynth_;
+            this->bonRepair_        += other.bonRepair_;
             return *this;
         }
 
         EffectSkillMechanics& EffectSkillMechanics::operator-=(const EffectSkillMechanics& other)
         {
-            this->bonRobotDmg_  -= other.bonRobotDmg_;
-            this->bonVehicDmg_  -= other.bonVehicDmg_;
-            this->bonSynthDmg_  -= other.bonSynthDmg_;
-            this->bonRepairKit_ -= other.bonRepairKit_;
+            this->bonDmgVsRobot_    -= other.bonDmgVsRobot_;
+            this->bonDmgVsVehic_    -= other.bonDmgVsVehic_;
+            this->bonDmgVsSynth_    -= other.bonDmgVsSynth_;
+            this->bonRepair_        -= other.bonRepair_;
             return *this;
         }
 
@@ -502,11 +502,11 @@ namespace Game
         ///------------------------------------------------------------------------------------------------
 
         EffectSkillSurvival::EffectSkillSurvival(
-            Common::Bonus animalDamageBonus,
-            Common::Bonus mutantDamageBonus)
+            Common::Bonus damageBonusVsAnimals,
+            Common::Bonus damageBonusVsMutants)
             :
-            bonAnimalDmg_{ animalDamageBonus },
-            bonMutantDmg_{ mutantDamageBonus }
+            bonDmgVsAnimal_{ damageBonusVsAnimals },
+            bonDmgVsMutant_{ damageBonusVsMutants }
         {}
 
         void EffectSkillSurvival::apply(Character& character) noexcept
@@ -516,15 +516,15 @@ namespace Game
 
         EffectSkillSurvival& EffectSkillSurvival::operator+=(const EffectSkillSurvival& other)
         {
-            this->bonAnimalDmg_ += other.bonAnimalDmg_;
-            this->bonMutantDmg_ += other.bonMutantDmg_;
+            this->bonDmgVsAnimal_ += other.bonDmgVsAnimal_;
+            this->bonDmgVsMutant_ += other.bonDmgVsMutant_;
             return *this;
         }
 
         EffectSkillSurvival& EffectSkillSurvival::operator-=(const EffectSkillSurvival& other)
         {
-            this->bonAnimalDmg_ -= other.bonAnimalDmg_;
-            this->bonMutantDmg_ -= other.bonMutantDmg_;
+            this->bonDmgVsAnimal_ -= other.bonDmgVsAnimal_;
+            this->bonDmgVsMutant_ -= other.bonDmgVsMutant_;
             return *this;
         }
 
@@ -543,7 +543,7 @@ namespace Game
         EffectSkillWeaponMod::EffectSkillWeaponMod(
             Common::Bonus fieldStrippingScrapBonus)
             :
-            bonScrapDmg_{ fieldStrippingScrapBonus }
+            bonScrap_{ fieldStrippingScrapBonus }
         {}
 
         void EffectSkillWeaponMod::apply(Character& character) noexcept
@@ -553,13 +553,13 @@ namespace Game
 
         EffectSkillWeaponMod& EffectSkillWeaponMod::operator+=(const EffectSkillWeaponMod& other)
         {
-            this->bonScrapDmg_ += other.bonScrapDmg_;
+            this->bonScrap_ += other.bonScrap_;
             return *this;
         }
 
         EffectSkillWeaponMod& EffectSkillWeaponMod::operator-=(const EffectSkillWeaponMod& other)
         {
-            this->bonScrapDmg_ -= other.bonScrapDmg_;
+            this->bonScrap_ -= other.bonScrap_;
             return *this;
         }
 
@@ -615,15 +615,15 @@ namespace Game
         ///------------------------------------------------------------------------------------------------
 
         EffectSkillLeadership::EffectSkillLeadership(
-            Common::Chance baseHitChance,
+            Common::Chance baseHitChanceOfNearbyAllies,
             Common::Bonus normalDamageBonusOnBossKill,
             Common::Chance baseCriticalDamageChanceOnMultiKill,
             Common::Bonus conHealedBonusOnRevive)
             :
-            chaHit_         { baseHitChance },
-            bonNormDmg_     { normalDamageBonusOnBossKill },
-            chaCritDmg_     { baseCriticalDamageChanceOnMultiKill },
-            bonCONHealed_   { conHealedBonusOnRevive }
+            chaHitOfNearbyAllies_   { baseHitChanceOfNearbyAllies },
+            bonNormDmgOnBossKill_   { normalDamageBonusOnBossKill },
+            chaCritDmgOnMultiKill_  { baseCriticalDamageChanceOnMultiKill },
+            bonCONHealedOnRevive_   { conHealedBonusOnRevive }
         {}
 
         void EffectSkillLeadership::apply(Character& character) noexcept
@@ -633,19 +633,19 @@ namespace Game
 
         EffectSkillLeadership& EffectSkillLeadership::operator+=(const EffectSkillLeadership& other)
         {
-            this->chaHit_       += other.chaHit_;
-            this->bonNormDmg_   += other.bonNormDmg_;
-            this->chaCritDmg_   += other.chaCritDmg_;
-            this->bonCONHealed_ += other.bonCONHealed_;
+            this->chaHitOfNearbyAllies_     += other.chaHitOfNearbyAllies_;
+            this->bonNormDmgOnBossKill_     += other.bonNormDmgOnBossKill_;
+            this->chaCritDmgOnMultiKill_    += other.chaCritDmgOnMultiKill_;
+            this->bonCONHealedOnRevive_     += other.bonCONHealedOnRevive_;
             return *this;
         }
 
         EffectSkillLeadership& EffectSkillLeadership::operator-=(const EffectSkillLeadership& other)
         {
-            this->chaHit_       -= other.chaHit_;
-            this->bonNormDmg_   -= other.bonNormDmg_;
-            this->chaCritDmg_   -= other.chaCritDmg_;
-            this->bonCONHealed_ -= other.bonCONHealed_;
+            this->chaHitOfNearbyAllies_     -= other.chaHitOfNearbyAllies_;
+            this->bonNormDmgOnBossKill_     -= other.bonNormDmgOnBossKill_;
+            this->chaCritDmgOnMultiKill_    -= other.chaCritDmgOnMultiKill_;
+            this->bonCONHealedOnRevive_     -= other.bonCONHealedOnRevive_;
             return *this;
         }
 

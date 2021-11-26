@@ -251,12 +251,12 @@ namespace Game
         public:
             EffectSkillFirstAid()
                 :
-                bonHealItem_    { 0 },
+                bonHeal_        { 0 },
                 bonHealRevive_  { 0 }
             {}
 
             EffectSkillFirstAid(
-                Common::Bonus healingItemBonus,
+                Common::Bonus healingBonus,
                 Common::Bonus healingWhenRevivingAlliesBonus);
 
             virtual ~EffectSkillFirstAid() noexcept {}
@@ -267,7 +267,7 @@ namespace Game
             EffectSkillFirstAid& operator-=(const EffectSkillFirstAid& other);
 
         private:
-            Common::Bonus               bonHealItem_;   // healing item bonus
+            Common::Bonus               bonHeal_;       // healing bonus
             Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
         };
 
@@ -347,17 +347,17 @@ namespace Game
         public:
             EffectSkillMechanics()
                 :
-                bonRobotDmg_    { 0 },
-                bonVehicDmg_    { 0 },
-                bonSynthDmg_    { 0 },
-                bonRepairKit_   { 0 }
+                bonDmgVsRobot_  { 0 },
+                bonDmgVsVehic_  { 0 },
+                bonDmgVsSynth_  { 0 },
+                bonRepair_      { 0 }
             {}
 
             EffectSkillMechanics(
-                Common::Bonus robotDamageBonus,
-                Common::Bonus vehicleDamageBonus,
-                Common::Bonus synthDamageBonus,
-                Common::Bonus repairKitBonus);
+                Common::Bonus damageBonusVsRobots,
+                Common::Bonus damageBonusVsVehicles,
+                Common::Bonus damageBonusVsSynths,
+                Common::Bonus repairBonus);
 
             virtual ~EffectSkillMechanics() noexcept {}
 
@@ -367,10 +367,10 @@ namespace Game
             EffectSkillMechanics& operator-=(const EffectSkillMechanics& other);
 
         private:
-            Common::Bonus               bonRobotDmg_;   // robot damage bonus
-            Common::Bonus               bonVehicDmg_;   // vehicle damage bonus
-            Common::Bonus               bonSynthDmg_;   // synth damage bonus
-            Common::Bonus               bonRepairKit_;  // repair kit bonus
+            Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+            Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+            Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+            Common::Bonus               bonRepair_;     // repair bonus
         };
 
         EffectSkillMechanics operator+(const EffectSkillMechanics& left, const EffectSkillMechanics& right);
@@ -382,13 +382,13 @@ namespace Game
         public:
             EffectSkillSurvival()
                 :
-                bonAnimalDmg_{ 0 },
-                bonMutantDmg_{ 0 }
+                bonDmgVsAnimal_{ 0 },
+                bonDmgVsMutant_{ 0 }
             {}
 
             EffectSkillSurvival(
-                Common::Bonus animalDamageBonus,
-                Common::Bonus mutantDamageBonus);
+                Common::Bonus damageBonusVsAnimals,
+                Common::Bonus damageBonusVsMutants);
 
             virtual ~EffectSkillSurvival() noexcept {}
 
@@ -398,8 +398,8 @@ namespace Game
             EffectSkillSurvival& operator-=(const EffectSkillSurvival& other);
 
         private:
-            Common::Bonus               bonAnimalDmg_;  // animal damage bonus
-            Common::Bonus               bonMutantDmg_;  // mutant damage bonus
+            Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
+            Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
         };
 
         EffectSkillSurvival operator+(const EffectSkillSurvival& left, const EffectSkillSurvival& right);
@@ -411,7 +411,7 @@ namespace Game
         public:
             EffectSkillWeaponMod()
                 :
-                bonScrapDmg_{ 0 }
+                bonScrap_{ 0 }
             {}
 
             EffectSkillWeaponMod(
@@ -425,7 +425,7 @@ namespace Game
             EffectSkillWeaponMod& operator-=(const EffectSkillWeaponMod& other);
 
         private:
-            Common::Bonus               bonScrapDmg_;   // field stripping scrap bonus
+            Common::Bonus               bonScrap_;      // field stripping scrap bonus
         };
 
         EffectSkillWeaponMod operator+(const EffectSkillWeaponMod& left, const EffectSkillWeaponMod& right);
@@ -466,14 +466,14 @@ namespace Game
         public:
             EffectSkillLeadership()
                 :
-                chaHit_         { 0 },
-                bonNormDmg_     { 0 },
-                chaCritDmg_     { 0 },
-                bonCONHealed_   { 0 }
+                chaHitOfNearbyAllies_   { 0 },
+                bonNormDmgOnBossKill_   { 0 },
+                chaCritDmgOnMultiKill_  { 0 },
+                bonCONHealedOnRevive_   { 0 }
             {}
 
             EffectSkillLeadership(
-                Common::Chance baseHitChance,
+                Common::Chance baseHitChanceOfNearbyAllies,
                 Common::Bonus normalDamageBonusOnBossKill,
                 Common::Chance baseCriticalDamageChanceOnMultiKill,
                 Common::Bonus conHealedBonusOnRevive);
@@ -486,10 +486,10 @@ namespace Game
             EffectSkillLeadership& operator-=(const EffectSkillLeadership& other);
 
         private:
-            Common::Chance              chaHit_;        // base hit chance
-            Common::Bonus               bonNormDmg_;    // normal damage bonus on boss kill
-            Common::Chance              chaCritDmg_;    // base critical damage chance on multi-kill
-            Common::Bonus               bonCONHealed_;  // CON healed bonus on revive
+            Common::Chance              chaHitOfNearbyAllies_;  // base hit chance of nearby allies
+            Common::Bonus               bonNormDmgOnBossKill_;  // normal damage bonus on boss kill
+            Common::Chance              chaCritDmgOnMultiKill_; // base critical damage chance on multi-kill
+            Common::Bonus               bonCONHealedOnRevive_;  // CON healed bonus on revive
         };
 
         EffectSkillLeadership operator+(const EffectSkillLeadership& left, const EffectSkillLeadership& right);

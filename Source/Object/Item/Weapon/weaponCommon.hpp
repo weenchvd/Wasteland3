@@ -31,8 +31,10 @@ namespace Game
 
             AR,
             SMG,
-            HANDGUN,
-            SHOTGUN,
+            SEMI_AUTO_PISTOL,
+            REVOLVER,
+            AUTO_SHOTGUN,
+            PUMP_SHOTGUN,
             SNIPER,
             FLAMETHROWER,
             HMG,

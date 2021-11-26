@@ -445,6 +445,20 @@ namespace Game
             Common::Multiplier          mulSpeed_;      // combat speed multiplier
             Common::Multiplier          mulThrow_;      // throwing range multiplier
             Common::Chance              chaHit_;        // base hit chance
+            //Common::Chance              chaHitAR_;      // assault rifle hit chance
+            //Common::Chance              chaHitSMG_;     // submachine gun hit chance
+            //Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
+            //Common::Chance              chaHitFT_;      // flamethrower hit chance
+            //Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
+            //Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
+            //Common::Chance              chaHitBladed_;  // bladed weapon hit chance
+            //Common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
+            //Common::Chance              chaHitRevolver_;    // revolver hit chance
+            //Common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
+            //Common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
+            //Common::Chance              chaHitSniper_;  // sniper rifle hit chance
+            //Common::Chance              chaHitOfNearbyAllies_;  // base hit chance of nearby allies
+            //Common::Chance              chaCritDmgOnMultiKill_; // base critical damage chance on multi-kill
             Common::Chance              chaCritDmg_;    // base critical damage chance
             Common::Chance              chaCritHeal_;   // base critical healing chance
             Common::Chance              chaLuckAction_;     // lucky action chance
@@ -457,8 +471,13 @@ namespace Game
             Common::Chance              chaLuckDblScrap_;   // lucky double scrap chance
             Common::Bonus               bonHeal_;       // healing bonus
             Common::Bonus               bonCritHeal_;   // critical healing bonus
+            Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
+            //Common::Bonus               bonRepair_;     // repair bonus
             Common::Bonus               bonXP_;         // experience bonus
             Common::Bonus               bonMissionRew_; // mission reward bonus
+            //Common::Bonus               bonScrap_;      // field stripping scrap bonus
+            //Common::Bonus               bonSellValue_;  // sell value bonus
+            //Common::Bonus               bonBuyCost_;    // buy cost bonus
             Common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
             Common::Bonus               bonNormDmg_;    // normal damage bonus
             Common::Bonus               bonMeleeDmg_;   // melee damage bonus
@@ -467,6 +486,14 @@ namespace Game
             Common::Bonus               bonColdDmg_;    // cold damage bonus
             Common::Bonus               bonEnerDmg_;    // energy damage bonus
             Common::Bonus               bonExplDmg_;    // explosive damage bonus
+            //Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
+            //Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+            //Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+            //Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+            //Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
+            //Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
+            //Common::Bonus               bonNormDmgOnBossKill_;  // normal damage bonus on boss kill
+            //Common::Bonus               bonCONHealedOnRevive_;  // CON healed bonus on revive
             Common::Resistance          resStatEff_;    // status effect resistance
             Common::Resistance          resCritDmg_;    // critical damage resistance
             Common::Resistance          resFireDmg_;    // fire damage resistance
