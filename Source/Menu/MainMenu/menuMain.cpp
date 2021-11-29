@@ -282,7 +282,7 @@ namespace Game
             cout << in2 << "Energy damage bonus: "
                                                 << percentBonus(character.bonusEnergyDamage()) << '%' << endl;
             cout << in2 << "Explosive damage bonus: "
-                                                << percentBonus(character.bonusExplisiveDamage()) << '%' << endl;
+                                                << percentBonus(character.bonusExplosiveDamage()) << '%' << endl;
             cout << in2 << "Perception: "       << integer(character.perception()) << endl;
             cout << in2 << "Throwing range: "   << multiplier(character.multiplierThrowingRange()) << 'X' << endl;
             cout << in2 << "Initiative: "       << percentInitiative(character.initiative()) << '%' << endl;

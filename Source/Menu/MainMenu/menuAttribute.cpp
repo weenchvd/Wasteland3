@@ -50,6 +50,7 @@ namespace Game
                 }
                 case ActionCommon::EXIT:
                     if (character.attribute().isModified()) {
+                        cout << ind1 << "Attributes have been changed. Do you want to save the changes?" << endl;
                         switch (getYesNo()) {
                         case YesNo::YES:
                             character.attribute().accept();

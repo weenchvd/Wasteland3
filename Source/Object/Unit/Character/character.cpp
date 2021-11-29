@@ -27,6 +27,20 @@ namespace Game
             mulSpeed_           { base_.mulSpeed_ },
             mulThrow_           { base_.mulThrow_ },
             chaHit_             { base_.chaHit_ },
+            chaHitAR_           { base_.chaHitAR_ },
+            chaHitSMG_          { base_.chaHitSMG_ },
+            chaHitHMG_          { base_.chaHitHMG_ },
+            chaHitFT_           { base_.chaHitFT_ },
+            chaHitBrawl_        { base_.chaHitBrawl_ },
+            chaHitBlunt_        { base_.chaHitBlunt_ },
+            chaHitBladed_       { base_.chaHitBladed_ },
+            chaHitSAPistol_     { base_.chaHitSAPistol_ },
+            chaHitRevolver_     { base_.chaHitRevolver_ },
+            chaHitPumpSG_       { base_.chaHitPumpSG_ },
+            chaHitAutoSG_       { base_.chaHitAutoSG_ },
+            chaHitSR_           { base_.chaHitSR_ },
+            chaHitNearbyAllies_ { base_.chaHitNearbyAllies_ },
+            chaCritDmgMultiKill_{ base_.chaCritDmgMultiKill_ },
             chaCritDmg_         { base_.chaCritDmg_ },
             chaCritHeal_        { base_.chaCritHeal_ },
             chaLuckAction_      { base_.chaLuckAction_ },
@@ -39,8 +53,13 @@ namespace Game
             chaLuckDblScrap_    { base_.chaLuckDblScrap_ },
             bonHeal_            { base_.bonHeal_ },
             bonCritHeal_        { base_.bonCritHeal_ },
+            bonHealRevive_      { base_.bonHealRevive_ },
+            bonRepair_          { base_.bonRepair_ },
             bonXP_              { base_.bonXP_ },
             bonMissionRew_      { base_.bonMissionRew_ },
+            bonScrap_           { base_.bonScrap_ },
+            bonSellValue_       { base_.bonSellValue_ },
+            bonBuyCost_         { base_.bonBuyCost_ },
             bonSneakDmg_        { base_.bonSneakDmg_ },
             bonNormDmg_         { base_.bonNormDmg_ },
             bonMeleeDmg_        { base_.bonMeleeDmg_ },
@@ -49,6 +68,14 @@ namespace Game
             bonColdDmg_         { base_.bonColdDmg_ },
             bonEnerDmg_         { base_.bonEnerDmg_ },
             bonExplDmg_         { base_.bonExplDmg_ },
+            bonAnimalDmg_       { base_.bonAnimalDmg_ },
+            bonDmgVsRobot_      { base_.bonDmgVsRobot_ },
+            bonDmgVsVehic_      { base_.bonDmgVsVehic_ },
+            bonDmgVsSynth_      { base_.bonDmgVsSynth_ },
+            bonDmgVsAnimal_     { base_.bonDmgVsAnimal_ },
+            bonDmgVsMutant_     { base_.bonDmgVsMutant_ },
+            bonNormDmgBossKill_ { base_.bonNormDmgBossKill_ },
+            bonCONHealedRevive_ { base_.bonCONHealedRevive_ },
             resStatEff_         { base_.resStatEff_ },
             resCritDmg_         { base_.resCritDmg_ },
             resFireDmg_         { base_.resFireDmg_ },
@@ -115,6 +142,20 @@ namespace Game
             //    ref.multiplierCombatSpeed();
             //    ref.multiplierThrowingRange();
             //    ref.chanceHit();
+            //    ref.chanceHitAssaultRifle();
+            //    ref.chanceHitSubMachineGun();
+            //    ref.chanceHitHeavyMachineGun();
+            //    ref.chanceHitFlameThrower();
+            //    ref.chanceHitBrawlingWeapon();
+            //    ref.chanceHitBluntWeapon();
+            //    ref.chanceHitBladedWeapon();
+            //    ref.chanceHitSemiAutoPistol();
+            //    ref.chanceHitRevolver();
+            //    ref.chanceHitPumpShotgun();
+            //    ref.chanceHitAutoShotgun();
+            //    ref.chanceHitSniperRifle();
+            //    ref.chanceHitOfNearbyAllies();
+            //    ref.chanceCritDamageOnMultiKill();
             //    ref.chanceCritDamage();
             //    ref.chanceCritHealing();
             //    ref.chanceLuckyAction();
@@ -127,8 +168,13 @@ namespace Game
             //    ref.chanceLuckyDoubleScrap();
             //    ref.bonusHealing();
             //    ref.bonusCritHealing();
+            //    ref.bonusHealingWhenRevivingAllies();
+            //    ref.bonusRepair();
             //    ref.bonusExperience();
             //    ref.bonusMissionReward();
+            //    ref.bonusFieldStrippingScrap();
+            //    ref.bonusSellValue();
+            //    ref.bonusBuyCost();
             //    ref.bonusSneakAttackDamage();
             //    ref.bonusNormalDamage();
             //    ref.bonusMeleeDamage();
@@ -136,7 +182,15 @@ namespace Game
             //    ref.bonusFireDamage();
             //    ref.bonusColdDamage();
             //    ref.bonusEnergyDamage();
-            //    ref.bonusExplisiveDamage();
+            //    ref.bonusExplosiveDamage();
+            //    ref.bonusAnimalCompanionDamage();
+            //    ref.bonusDamageVsRobots();
+            //    ref.bonusDamageVsVehicles();
+            //    ref.bonusDamageVsSynths();
+            //    ref.bonusDamageVsAnimals();
+            //    ref.bonusDamageVsMutants();
+            //    ref.bonusNormalDamageOnBossKill();
+            //    ref.bonusCONHealedOnRevive();
             //    ref.resistanceStatusEffect();
             //    ref.resistanceCritDamage();
             //    ref.resistanceFireDamage();
@@ -173,6 +227,20 @@ namespace Game
                 refMin.multiplierCombatSpeed(10);
                 refMin.multiplierThrowingRange(10);
                 refMin.chanceHit(0);
+                refMin.chanceHitAssaultRifle(0);
+                refMin.chanceHitSubMachineGun(0);
+                refMin.chanceHitHeavyMachineGun(0);
+                refMin.chanceHitFlameThrower(0);
+                refMin.chanceHitBrawlingWeapon(0);
+                refMin.chanceHitBluntWeapon(0);
+                refMin.chanceHitBladedWeapon(0);
+                refMin.chanceHitSemiAutoPistol(0);
+                refMin.chanceHitRevolver(0);
+                refMin.chanceHitPumpShotgun(0);
+                refMin.chanceHitAutoShotgun(0);
+                refMin.chanceHitSniperRifle(0);
+                refMin.chanceHitOfNearbyAllies(0);
+                refMin.chanceCritDamageOnMultiKill(0);
                 refMin.chanceCritDamage(0);
                 refMin.chanceCritHealing(0);
                 refMin.chanceLuckyAction(0);
@@ -185,8 +253,13 @@ namespace Game
                 refMin.chanceLuckyDoubleScrap(0);
                 refMin.bonusHealing(0);
                 refMin.bonusCritHealing(1'000);
+                refMin.bonusHealingWhenRevivingAllies(0);
+                refMin.bonusRepair(0);
                 refMin.bonusExperience(0);
                 refMin.bonusMissionReward(0);
+                refMin.bonusFieldStrippingScrap(0);
+                refMin.bonusSellValue(0);
+                refMin.bonusBuyCost(0);
                 refMin.bonusSneakAttackDamage(0);
                 refMin.bonusNormalDamage(0);
                 refMin.bonusMeleeDamage(0);
@@ -194,7 +267,15 @@ namespace Game
                 refMin.bonusFireDamage(0);
                 refMin.bonusColdDamage(0);
                 refMin.bonusEnergyDamage(0);
-                refMin.bonusExplisiveDamage(0);
+                refMin.bonusExplosiveDamage(0);
+                refMin.bonusAnimalCompanionDamage(0);
+                refMin.bonusDamageVsRobots(0);
+                refMin.bonusDamageVsVehicles(0);
+                refMin.bonusDamageVsSynths(0);
+                refMin.bonusDamageVsAnimals(0);
+                refMin.bonusDamageVsMutants(0);
+                refMin.bonusNormalDamageOnBossKill(0);
+                refMin.bonusCONHealedOnRevive(0);
                 refMin.resistanceStatusEffect(-1'000);
                 refMin.resistanceCritDamage(-1'000);
                 refMin.resistanceFireDamage(-1'000);

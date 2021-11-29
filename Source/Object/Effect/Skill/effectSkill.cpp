@@ -23,7 +23,8 @@ namespace Game
 
         void EffectSkillAutomatic::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitARAdd(chaHitAR_);
+            character.chanceHitSMGAdd(chaHitSMG_);
         }
 
         EffectSkillAutomatic& EffectSkillAutomatic::operator+=(const EffectSkillAutomatic& other)
@@ -62,7 +63,8 @@ namespace Game
 
         void EffectSkillBigGuns::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitHMGAdd(chaHitHMG_);
+            character.chanceHitFlamethrowerAdd(chaHitFT_);
         }
 
         EffectSkillBigGuns& EffectSkillBigGuns::operator+=(const EffectSkillBigGuns& other)
@@ -101,7 +103,8 @@ namespace Game
 
         void EffectSkillBrawling::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.multiplierCombatSpeedAdd(mulSpeed_);
+            character.chanceHitBrawlingAdd(chaHitBrawl_);
         }
 
         EffectSkillBrawling& EffectSkillBrawling::operator+=(const EffectSkillBrawling& other)
@@ -140,7 +143,8 @@ namespace Game
 
         void EffectSkillMelee::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitBluntAdd(chaHitBlunt_);
+            character.chanceHitBladedAdd(chaHitBladed_);
         }
 
         EffectSkillMelee& EffectSkillMelee::operator+=(const EffectSkillMelee& other)
@@ -183,7 +187,10 @@ namespace Game
 
         void EffectSkillSmallArms::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitSemiAutoPistolAdd(chaHitSAPistol_);
+            character.chanceHitRevolverAdd(chaHitRevolver_);
+            character.chanceHitPumpSGAdd(chaHitPumpSG_);
+            character.chanceHitAutoSGAdd(chaHitAutoSG_);
         }
 
         EffectSkillSmallArms& EffectSkillSmallArms::operator+=(const EffectSkillSmallArms& other)
@@ -219,23 +226,23 @@ namespace Game
         EffectSkillSniper::EffectSkillSniper(
             Common::Chance sniperRifleHitChance)
             :
-            chaHitSniper_{ sniperRifleHitChance }
+            chaHitSR_{ sniperRifleHitChance }
         {}
 
         void EffectSkillSniper::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitSRAdd(chaHitSR_);
         }
 
         EffectSkillSniper& EffectSkillSniper::operator+=(const EffectSkillSniper& other)
         {
-            this->chaHitSniper_ += other.chaHitSniper_;
+            this->chaHitSR_ += other.chaHitSR_;
             return *this;
         }
 
         EffectSkillSniper& EffectSkillSniper::operator-=(const EffectSkillSniper& other)
         {
-            this->chaHitSniper_ -= other.chaHitSniper_;
+            this->chaHitSR_ -= other.chaHitSR_;
             return *this;
         }
 
@@ -259,7 +266,7 @@ namespace Game
 
         void EffectSkillAnimal::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusAnimalCompanionDamageAdd(bonAnimalDmg_);
         }
 
         EffectSkillAnimal& EffectSkillAnimal::operator+=(const EffectSkillAnimal& other)
@@ -296,7 +303,8 @@ namespace Game
 
         void EffectSkillExplosive::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.resistanceExplosiveDamageAdd(resExplDmg_);
+            character.bonusExplosiveDamageAdd(bonExplDmg_);
         }
 
         EffectSkillExplosive& EffectSkillExplosive::operator+=(const EffectSkillExplosive& other)
@@ -335,7 +343,8 @@ namespace Game
 
         void EffectSkillFirstAid::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusHealingAdd(bonHeal_);
+            character.bonusHealingWhenRevivingAlliesAdd(bonHealRevive_);
         }
 
         EffectSkillFirstAid& EffectSkillFirstAid::operator+=(const EffectSkillFirstAid& other)
@@ -378,7 +387,10 @@ namespace Game
 
         void EffectSkillSneakyShit::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.timeDetectionAdd(timeDetect_);
+            character.initiativeAdd(initiat_);
+            character.bonusSneakAttackDamageAdd(bonSneakDmg_);
+            character.perceptionAdd(percept_);
         }
 
         EffectSkillSneakyShit& EffectSkillSneakyShit::operator+=(const EffectSkillSneakyShit& other)
@@ -423,7 +435,9 @@ namespace Game
 
         void EffectSkillWeirdScience::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusEnergyDamageAdd(bonEnerDmg_);
+            character.bonusFireDamageAdd(bonFireDmg_);
+            character.bonusColdDamageAdd(bonColdDmg_);
         }
 
         EffectSkillWeirdScience& EffectSkillWeirdScience::operator+=(const EffectSkillWeirdScience& other)
@@ -468,7 +482,10 @@ namespace Game
 
         void EffectSkillMechanics::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusDamageVsRobotsAdd(bonDmgVsRobot_);
+            character.bonusDamageVsVehiclesAdd(bonDmgVsVehic_);
+            character.bonusDamageVsSynthsAdd(bonDmgVsSynth_);
+            character.bonusRepairAdd(bonRepair_);
         }
 
         EffectSkillMechanics& EffectSkillMechanics::operator+=(const EffectSkillMechanics& other)
@@ -511,7 +528,8 @@ namespace Game
 
         void EffectSkillSurvival::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusDamageVsAnimalsAdd(bonDmgVsAnimal_);
+            character.bonusDamageVsMutantsAdd(bonDmgVsMutant_);
         }
 
         EffectSkillSurvival& EffectSkillSurvival::operator+=(const EffectSkillSurvival& other)
@@ -548,7 +566,7 @@ namespace Game
 
         void EffectSkillWeaponMod::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusFieldStrippingScrapAdd(bonScrap_);
         }
 
         EffectSkillWeaponMod& EffectSkillWeaponMod::operator+=(const EffectSkillWeaponMod& other)
@@ -585,7 +603,8 @@ namespace Game
 
         void EffectSkillBarter::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.bonusSellValueAdd(bonSellValue_);
+            character.bonusBuyCostAdd(bonBuyCost_);
         }
 
         EffectSkillBarter& EffectSkillBarter::operator+=(const EffectSkillBarter& other)
@@ -620,32 +639,35 @@ namespace Game
             Common::Chance baseCriticalDamageChanceOnMultiKill,
             Common::Bonus conHealedBonusOnRevive)
             :
-            chaHitOfNearbyAllies_   { baseHitChanceOfNearbyAllies },
-            bonNormDmgOnBossKill_   { normalDamageBonusOnBossKill },
-            chaCritDmgOnMultiKill_  { baseCriticalDamageChanceOnMultiKill },
-            bonCONHealedOnRevive_   { conHealedBonusOnRevive }
+            chaHitNearbyAllies_     { baseHitChanceOfNearbyAllies },
+            bonNormDmgBossKill_     { normalDamageBonusOnBossKill },
+            chaCritDmgMultiKill_    { baseCriticalDamageChanceOnMultiKill },
+            bonCONHealedRevive_     { conHealedBonusOnRevive }
         {}
 
         void EffectSkillLeadership::apply(Character& character) noexcept
         {
-            //TODO character.resistanceStatusEffectAdd(resStatEff_);
+            character.chanceHitOfNearbyAlliesAdd(chaHitNearbyAllies_);
+            character.bonusNormalDamageOnBossKillAdd(bonNormDmgBossKill_);
+            character.chanceCritDamageOnMultiKillAdd(chaCritDmgMultiKill_);
+            character.bonusCONHealedOnReviveAdd(bonCONHealedRevive_);
         }
 
         EffectSkillLeadership& EffectSkillLeadership::operator+=(const EffectSkillLeadership& other)
         {
-            this->chaHitOfNearbyAllies_     += other.chaHitOfNearbyAllies_;
-            this->bonNormDmgOnBossKill_     += other.bonNormDmgOnBossKill_;
-            this->chaCritDmgOnMultiKill_    += other.chaCritDmgOnMultiKill_;
-            this->bonCONHealedOnRevive_     += other.bonCONHealedOnRevive_;
+            this->chaHitNearbyAllies_   += other.chaHitNearbyAllies_;
+            this->bonNormDmgBossKill_   += other.bonNormDmgBossKill_;
+            this->chaCritDmgMultiKill_  += other.chaCritDmgMultiKill_;
+            this->bonCONHealedRevive_   += other.bonCONHealedRevive_;
             return *this;
         }
 
         EffectSkillLeadership& EffectSkillLeadership::operator-=(const EffectSkillLeadership& other)
         {
-            this->chaHitOfNearbyAllies_     -= other.chaHitOfNearbyAllies_;
-            this->bonNormDmgOnBossKill_     -= other.bonNormDmgOnBossKill_;
-            this->chaCritDmgOnMultiKill_    -= other.chaCritDmgOnMultiKill_;
-            this->bonCONHealedOnRevive_     -= other.bonCONHealedOnRevive_;
+            this->chaHitNearbyAllies_   -= other.chaHitNearbyAllies_;
+            this->bonNormDmgBossKill_   -= other.bonNormDmgBossKill_;
+            this->chaCritDmgMultiKill_  -= other.chaCritDmgMultiKill_;
+            this->bonCONHealedRevive_   -= other.bonCONHealedRevive_;
             return *this;
         }
 

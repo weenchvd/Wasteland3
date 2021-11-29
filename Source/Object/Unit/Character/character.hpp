@@ -59,6 +59,20 @@ namespace Game
                 mulSpeed_           { 140 },
                 mulThrow_           { 100 },
                 chaHit_             { 0 },
+                chaHitAR_           { 0 },
+                chaHitSMG_          { 0 },
+                chaHitHMG_          { 0 },
+                chaHitFT_           { 0 },
+                chaHitBrawl_        { 0 },
+                chaHitBlunt_        { 0 },
+                chaHitBladed_       { 0 },
+                chaHitSAPistol_     { 0 },
+                chaHitRevolver_     { 0 },
+                chaHitPumpSG_       { 0 },
+                chaHitAutoSG_       { 0 },
+                chaHitSR_           { 0 },
+                chaHitNearbyAllies_ { 0 },
+                chaCritDmgMultiKill_{ 0 },
                 chaCritDmg_         { 0 },
                 chaCritHeal_        { 0 },
                 chaLuckAction_      { 0 },
@@ -71,8 +85,13 @@ namespace Game
                 chaLuckDblScrap_    { 0 },
                 bonHeal_            { 1'000 },
                 bonCritHeal_        { 1'000 },
+                bonHealRevive_      { 1'000 },
+                bonRepair_          { 1'000 },
                 bonXP_              { 1'000 },
                 bonMissionRew_      { 1'000 },
+                bonScrap_           { 1'000 },
+                bonSellValue_       { 1'000 },
+                bonBuyCost_         { 1'000 },
                 bonSneakDmg_        { 1'000 },
                 bonNormDmg_         { 1'000 },
                 bonMeleeDmg_        { 1'000 },
@@ -81,6 +100,14 @@ namespace Game
                 bonColdDmg_         { 1'000 },
                 bonEnerDmg_         { 1'000 },
                 bonExplDmg_         { 1'000 },
+                bonAnimalDmg_       { 1'000 },
+                bonDmgVsRobot_      { 1'000 },
+                bonDmgVsVehic_      { 1'000 },
+                bonDmgVsSynth_      { 1'000 },
+                bonDmgVsAnimal_     { 1'000 },
+                bonDmgVsMutant_     { 1'000 },
+                bonNormDmgBossKill_ { 1'000 }, // TODO consider
+                bonCONHealedRevive_ { 1'000 },
                 resStatEff_         { 0 },
                 resCritDmg_         { 0 },
                 resFireDmg_         { 0 },
@@ -122,6 +149,20 @@ namespace Game
             void multiplierCombatSpeed(Common::Multiplier mul) noexcept         { mulSpeed_ = mul; }
             void multiplierThrowingRange(Common::Multiplier mul) noexcept       { mulThrow_ = mul; }
             void chanceHit(Common::Chance chance) noexcept                      { chaHit_ = chance; }
+            void chanceHitAssaultRifle(Common::Chance chance) noexcept          { chaHitAR_ = chance; }
+            void chanceHitSubMachineGun(Common::Chance chance) noexcept         { chaHitSMG_ = chance; }
+            void chanceHitHeavyMachineGun(Common::Chance chance) noexcept       { chaHitHMG_ = chance; }
+            void chanceHitFlameThrower(Common::Chance chance) noexcept          { chaHitFT_ = chance; }
+            void chanceHitBrawlingWeapon(Common::Chance chance) noexcept        { chaHitBrawl_ = chance; }
+            void chanceHitBluntWeapon(Common::Chance chance) noexcept           { chaHitBlunt_ = chance; }
+            void chanceHitBladedWeapon(Common::Chance chance) noexcept          { chaHitBladed_ = chance; }
+            void chanceHitSemiAutoPistol(Common::Chance chance) noexcept        { chaHitSAPistol_ = chance; }
+            void chanceHitRevolver(Common::Chance chance) noexcept              { chaHitRevolver_ = chance; }
+            void chanceHitPumpShotgun(Common::Chance chance) noexcept           { chaHitPumpSG_ = chance; }
+            void chanceHitAutoShotgun(Common::Chance chance) noexcept           { chaHitAutoSG_ = chance; }
+            void chanceHitSniperRifle(Common::Chance chance) noexcept           { chaHitSR_ = chance; }
+            void chanceHitOfNearbyAllies(Common::Chance chance) noexcept        { chaHitNearbyAllies_ = chance; }
+            void chanceCritDamageOnMultiKill(Common::Chance chance) noexcept    { chaCritDmgMultiKill_ = chance; }
             void chanceCritDamage(Common::Chance chance) noexcept               { chaCritDmg_ = chance; }
             void chanceCritHealing(Common::Chance chance) noexcept              { chaCritHeal_ = chance; }
             void chanceLuckyAction(Common::Chance chance) noexcept              { chaLuckAction_ = chance; }
@@ -134,8 +175,13 @@ namespace Game
             void chanceLuckyDoubleScrap(Common::Chance chance) noexcept         { chaLuckDblScrap_ = chance; }
             void bonusHealing(Common::Bonus bonus) noexcept                     { bonHeal_ = bonus; }
             void bonusCritHealing(Common::Bonus bonus) noexcept                 { bonCritHeal_ = bonus; }
+            void bonusHealingWhenRevivingAllies(Common::Bonus bonus) noexcept   { bonHealRevive_ = bonus; }
+            void bonusRepair(Common::Bonus bonus) noexcept                      { bonRepair_ = bonus; }
             void bonusExperience(Common::Bonus bonus) noexcept                  { bonXP_ = bonus; }
             void bonusMissionReward(Common::Bonus bonus) noexcept               { bonMissionRew_ = bonus; }
+            void bonusFieldStrippingScrap(Common::Bonus bonus) noexcept         { bonScrap_ = bonus; }
+            void bonusSellValue(Common::Bonus bonus) noexcept                   { bonSellValue_ = bonus; }
+            void bonusBuyCost(Common::Bonus bonus) noexcept                     { bonBuyCost_ = bonus; }
             void bonusSneakAttackDamage(Common::Bonus bonus) noexcept           { bonSneakDmg_ = bonus; }
             void bonusNormalDamage(Common::Bonus bonus) noexcept                { bonNormDmg_ = bonus; }
             void bonusMeleeDamage(Common::Bonus bonus) noexcept                 { bonMeleeDmg_ = bonus; }
@@ -143,7 +189,15 @@ namespace Game
             void bonusFireDamage(Common::Bonus bonus) noexcept                  { bonFireDmg_ = bonus; }
             void bonusColdDamage(Common::Bonus bonus) noexcept                  { bonColdDmg_ = bonus; }
             void bonusEnergyDamage(Common::Bonus bonus) noexcept                { bonEnerDmg_ = bonus; }
-            void bonusExplisiveDamage(Common::Bonus bonus) noexcept             { bonExplDmg_ = bonus; }
+            void bonusExplosiveDamage(Common::Bonus bonus) noexcept             { bonExplDmg_ = bonus; }
+            void bonusAnimalCompanionDamage(Common::Bonus bonus) noexcept       { bonAnimalDmg_ = bonus; }
+            void bonusDamageVsRobots(Common::Bonus bonus) noexcept              { bonDmgVsRobot_ = bonus; }
+            void bonusDamageVsVehicles(Common::Bonus bonus) noexcept            { bonDmgVsVehic_ = bonus; }
+            void bonusDamageVsSynths(Common::Bonus bonus) noexcept              { bonDmgVsSynth_ = bonus; }
+            void bonusDamageVsAnimals(Common::Bonus bonus) noexcept             { bonDmgVsAnimal_ = bonus; }
+            void bonusDamageVsMutants(Common::Bonus bonus) noexcept             { bonDmgVsMutant_ = bonus; }
+            void bonusNormalDamageOnBossKill(Common::Bonus bonus) noexcept      { bonNormDmgBossKill_ = bonus; }
+            void bonusCONHealedOnRevive(Common::Bonus bonus) noexcept           { bonCONHealedRevive_ = bonus; }
             void resistanceStatusEffect(Common::Resistance res) noexcept        { resStatEff_ = res; }
             void resistanceCritDamage(Common::Resistance res) noexcept          { resCritDmg_ = res; }
             void resistanceFireDamage(Common::Resistance res) noexcept          { resFireDmg_ = res; }
@@ -182,6 +236,20 @@ namespace Game
             Common::Multiplier          mulSpeed_;      // combat speed multiplier
             Common::Multiplier          mulThrow_;      // throwing range multiplier
             Common::Chance              chaHit_;        // base hit chance
+            Common::Chance              chaHitAR_;      // assault rifle hit chance
+            Common::Chance              chaHitSMG_;     // submachine gun hit chance
+            Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
+            Common::Chance              chaHitFT_;      // flamethrower hit chance
+            Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
+            Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
+            Common::Chance              chaHitBladed_;  // bladed weapon hit chance
+            Common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
+            Common::Chance              chaHitRevolver_;    // revolver hit chance
+            Common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
+            Common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
+            Common::Chance              chaHitSR_;      // sniper rifle hit chance
+            Common::Chance              chaHitNearbyAllies_;  // base hit chance of nearby allies
+            Common::Chance              chaCritDmgMultiKill_; // base critical damage chance on multi-kill
             Common::Chance              chaCritDmg_;    // base critical damage chance
             Common::Chance              chaCritHeal_;   // base critical healing chance
             Common::Chance              chaLuckAction_;     // lucky action chance
@@ -194,8 +262,13 @@ namespace Game
             Common::Chance              chaLuckDblScrap_;   // lucky double scrap chance
             Common::Bonus               bonHeal_;       // healing bonus
             Common::Bonus               bonCritHeal_;   // critical healing bonus
+            Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
+            Common::Bonus               bonRepair_;     // repair bonus
             Common::Bonus               bonXP_;         // experience bonus
             Common::Bonus               bonMissionRew_; // mission reward bonus
+            Common::Bonus               bonScrap_;      // field stripping scrap bonus
+            Common::Bonus               bonSellValue_;  // sell value bonus
+            Common::Bonus               bonBuyCost_;    // buy cost bonus
             Common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
             Common::Bonus               bonNormDmg_;    // normal damage bonus
             Common::Bonus               bonMeleeDmg_;   // melee damage bonus
@@ -204,6 +277,14 @@ namespace Game
             Common::Bonus               bonColdDmg_;    // cold damage bonus
             Common::Bonus               bonEnerDmg_;    // energy damage bonus
             Common::Bonus               bonExplDmg_;    // explosive damage bonus
+            Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
+            Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+            Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+            Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+            Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
+            Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
+            Common::Bonus               bonNormDmgBossKill_;  // normal damage bonus on boss kill
+            Common::Bonus               bonCONHealedRevive_;  // CON healed bonus on revive
             Common::Resistance          resStatEff_;    // status effect resistance
             Common::Resistance          resCritDmg_;    // critical damage resistance
             Common::Resistance          resFireDmg_;    // fire damage resistance
@@ -296,6 +377,48 @@ namespace Game
             Common::Chance chanceHit() const noexcept { return chaHit_; }
             void chanceHitAdd(Common::Chance shift) noexcept { chaHit_ += shift; }
 
+            Common::Chance chanceHitAR() const noexcept { return chaHitAR_; }
+            void chanceHitARAdd(Common::Chance shift) noexcept { chaHitAR_ += shift; }
+
+            Common::Chance chanceHitSMG() const noexcept { return chaHitSMG_; }
+            void chanceHitSMGAdd(Common::Chance shift) noexcept { chaHitSMG_ += shift; }
+
+            Common::Chance chanceHitHMG() const noexcept { return chaHitHMG_; }
+            void chanceHitHMGAdd(Common::Chance shift) noexcept { chaHitHMG_ += shift; }
+
+            Common::Chance chanceHitFlamethrower() const noexcept { return chaHitFT_; }
+            void chanceHitFlamethrowerAdd(Common::Chance shift) noexcept { chaHitFT_ += shift; }
+
+            Common::Chance chanceHitBrawling() const noexcept { return chaHitBrawl_; }
+            void chanceHitBrawlingAdd(Common::Chance shift) noexcept { chaHitBrawl_ += shift; }
+
+            Common::Chance chanceHitBlunt() const noexcept { return chaHitBlunt_; }
+            void chanceHitBluntAdd(Common::Chance shift) noexcept { chaHitBlunt_ += shift; }
+
+            Common::Chance chanceHitBladed() const noexcept { return chaHitBladed_; }
+            void chanceHitBladedAdd(Common::Chance shift) noexcept { chaHitBladed_ += shift; }
+
+            Common::Chance chanceHitSemiAutoPistol() const noexcept { return chaHitSAPistol_; }
+            void chanceHitSemiAutoPistolAdd(Common::Chance shift) noexcept { chaHitSAPistol_ += shift; }
+
+            Common::Chance chanceHitRevolver() const noexcept { return chaHitRevolver_; }
+            void chanceHitRevolverAdd(Common::Chance shift) noexcept { chaHitRevolver_ += shift; }
+
+            Common::Chance chanceHitPumpSG() const noexcept { return chaHitPumpSG_; }
+            void chanceHitPumpSGAdd(Common::Chance shift) noexcept { chaHitPumpSG_ += shift; }
+
+            Common::Chance chanceHitAutoSG() const noexcept { return chaHitAutoSG_; }
+            void chanceHitAutoSGAdd(Common::Chance shift) noexcept { chaHitAutoSG_ += shift; }
+
+            Common::Chance chanceHitSR() const noexcept { return chaHitSR_; }
+            void chanceHitSRAdd(Common::Chance shift) noexcept { chaHitSR_ += shift; }
+
+            Common::Chance chanceHitOfNearbyAllies() const noexcept { return chaHitNearbyAllies_; }
+            void chanceHitOfNearbyAlliesAdd(Common::Chance shift) noexcept { chaHitNearbyAllies_ += shift; }
+
+            Common::Chance chanceCritDamageOnMultiKill() const noexcept { return chaCritDmgMultiKill_; }
+            void chanceCritDamageOnMultiKillAdd(Common::Chance shift) noexcept { chaCritDmgMultiKill_ += shift; }
+
             Common::Chance chanceCritDamage() const noexcept { return chaCritDmg_; }
             void chanceCritDamageAdd(Common::Chance shift) noexcept { chaCritDmg_ += shift; }
 
@@ -332,11 +455,26 @@ namespace Game
             Common::Bonus bonusCritHealing() const noexcept { return bonCritHeal_; }
             void bonusCritHealingAdd(Common::Bonus shift) noexcept { bonCritHeal_ += shift; }
 
+            Common::Bonus bonusHealingWhenRevivingAllies() const noexcept { return bonHealRevive_; }
+            void bonusHealingWhenRevivingAlliesAdd(Common::Bonus shift) noexcept { bonHealRevive_ += shift; }
+
+            Common::Bonus bonusRepair() const noexcept { return bonRepair_; }
+            void bonusRepairAdd(Common::Bonus shift) noexcept { bonRepair_ += shift; }
+
             Common::Bonus bonusExperience() const noexcept { return bonXP_; }
             void bonusExperienceAdd(Common::Bonus shift) noexcept { bonXP_ += shift; }
 
             Common::Bonus bonusMissionReward() const noexcept { return bonMissionRew_; }
             void bonusMissionRewardAdd(Common::Bonus shift) noexcept { bonMissionRew_ += shift; }
+
+            Common::Bonus bonusFieldStrippingScrap() const noexcept { return bonScrap_; }
+            void bonusFieldStrippingScrapAdd(Common::Bonus shift) noexcept { bonScrap_ += shift; }
+
+            Common::Bonus bonusSellValue() const noexcept { return bonSellValue_; }
+            void bonusSellValueAdd(Common::Bonus shift) noexcept { bonSellValue_ += shift; }
+
+            Common::Bonus bonusBuyCost() const noexcept { return bonBuyCost_; }
+            void bonusBuyCostAdd(Common::Bonus shift) noexcept { bonBuyCost_ += shift; }
 
             Common::Bonus bonusSneakAttackDamage() const noexcept { return bonSneakDmg_; }
             void bonusSneakAttackDamageAdd(Common::Bonus shift) noexcept { bonSneakDmg_ += shift; }
@@ -359,8 +497,32 @@ namespace Game
             Common::Bonus bonusEnergyDamage() const noexcept { return bonEnerDmg_; }
             void bonusEnergyDamageAdd(Common::Bonus shift) noexcept { bonEnerDmg_ += shift; }
 
-            Common::Bonus bonusExplisiveDamage() const noexcept { return bonExplDmg_; }
-            void bonusExplisiveDamageAdd(Common::Bonus shift) noexcept { bonExplDmg_ += shift; }
+            Common::Bonus bonusExplosiveDamage() const noexcept { return bonExplDmg_; }
+            void bonusExplosiveDamageAdd(Common::Bonus shift) noexcept { bonExplDmg_ += shift; }
+
+            Common::Bonus bonusAnimalCompanionDamage() const noexcept { return bonAnimalDmg_; }
+            void bonusAnimalCompanionDamageAdd(Common::Bonus shift) noexcept { bonAnimalDmg_ += shift; }
+
+            Common::Bonus bonusDamageVsRobots() const noexcept { return bonDmgVsRobot_; }
+            void bonusDamageVsRobotsAdd(Common::Bonus shift) noexcept { bonDmgVsRobot_ += shift; }
+
+            Common::Bonus bonusDamageVsVehicles() const noexcept { return bonDmgVsVehic_; }
+            void bonusDamageVsVehiclesAdd(Common::Bonus shift) noexcept { bonDmgVsVehic_ += shift; }
+
+            Common::Bonus bonusDamageVsSynths() const noexcept { return bonDmgVsSynth_; }
+            void bonusDamageVsSynthsAdd(Common::Bonus shift) noexcept { bonDmgVsSynth_ += shift; }
+
+            Common::Bonus bonusDamageVsAnimals() const noexcept { return bonDmgVsAnimal_; }
+            void bonusDamageVsAnimalsAdd(Common::Bonus shift) noexcept { bonDmgVsAnimal_ += shift; }
+
+            Common::Bonus bonusDamageVsMutants() const noexcept { return bonDmgVsMutant_; }
+            void bonusDamageVsMutantsAdd(Common::Bonus shift) noexcept { bonDmgVsMutant_ += shift; }
+
+            Common::Bonus bonusNormalDamageOnBossKill() const noexcept { return bonNormDmgBossKill_; }
+            void bonusNormalDamageOnBossKillAdd(Common::Bonus shift) noexcept { bonNormDmgBossKill_ += shift; }
+
+            Common::Bonus bonusCONHealedOnRevive() const noexcept { return bonCONHealedRevive_; }
+            void bonusCONHealedOnReviveAdd(Common::Bonus shift) noexcept { bonCONHealedRevive_ += shift; }
 
             Common::Resistance resistanceStatusEffect() const noexcept { return resStatEff_; }
             void resistanceStatusEffectAdd(Common::Resistance shift) noexcept { resStatEff_ += shift; }
@@ -445,20 +607,20 @@ namespace Game
             Common::Multiplier          mulSpeed_;      // combat speed multiplier
             Common::Multiplier          mulThrow_;      // throwing range multiplier
             Common::Chance              chaHit_;        // base hit chance
-            //Common::Chance              chaHitAR_;      // assault rifle hit chance
-            //Common::Chance              chaHitSMG_;     // submachine gun hit chance
-            //Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
-            //Common::Chance              chaHitFT_;      // flamethrower hit chance
-            //Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
-            //Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
-            //Common::Chance              chaHitBladed_;  // bladed weapon hit chance
-            //Common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
-            //Common::Chance              chaHitRevolver_;    // revolver hit chance
-            //Common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
-            //Common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
-            //Common::Chance              chaHitSniper_;  // sniper rifle hit chance
-            //Common::Chance              chaHitOfNearbyAllies_;  // base hit chance of nearby allies
-            //Common::Chance              chaCritDmgOnMultiKill_; // base critical damage chance on multi-kill
+            Common::Chance              chaHitAR_;      // assault rifle hit chance
+            Common::Chance              chaHitSMG_;     // submachine gun hit chance
+            Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
+            Common::Chance              chaHitFT_;      // flamethrower hit chance
+            Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
+            Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
+            Common::Chance              chaHitBladed_;  // bladed weapon hit chance
+            Common::Chance              chaHitSAPistol_;// semi-auto pistol hit chance
+            Common::Chance              chaHitRevolver_;// revolver hit chance
+            Common::Chance              chaHitPumpSG_;  // pump shotgun hit chance
+            Common::Chance              chaHitAutoSG_;  // auto shotgun hit chance
+            Common::Chance              chaHitSR_;      // sniper rifle hit chance
+            Common::Chance              chaHitNearbyAllies_;    // base hit chance of nearby allies
+            Common::Chance              chaCritDmgMultiKill_;   // base critical damage chance on multi-kill
             Common::Chance              chaCritDmg_;    // base critical damage chance
             Common::Chance              chaCritHeal_;   // base critical healing chance
             Common::Chance              chaLuckAction_;     // lucky action chance
@@ -472,12 +634,12 @@ namespace Game
             Common::Bonus               bonHeal_;       // healing bonus
             Common::Bonus               bonCritHeal_;   // critical healing bonus
             Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
-            //Common::Bonus               bonRepair_;     // repair bonus
+            Common::Bonus               bonRepair_;     // repair bonus
             Common::Bonus               bonXP_;         // experience bonus
             Common::Bonus               bonMissionRew_; // mission reward bonus
-            //Common::Bonus               bonScrap_;      // field stripping scrap bonus
-            //Common::Bonus               bonSellValue_;  // sell value bonus
-            //Common::Bonus               bonBuyCost_;    // buy cost bonus
+            Common::Bonus               bonScrap_;      // field stripping scrap bonus
+            Common::Bonus               bonSellValue_;  // sell value bonus
+            Common::Bonus               bonBuyCost_;    // buy cost bonus
             Common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
             Common::Bonus               bonNormDmg_;    // normal damage bonus
             Common::Bonus               bonMeleeDmg_;   // melee damage bonus
@@ -486,14 +648,14 @@ namespace Game
             Common::Bonus               bonColdDmg_;    // cold damage bonus
             Common::Bonus               bonEnerDmg_;    // energy damage bonus
             Common::Bonus               bonExplDmg_;    // explosive damage bonus
-            //Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
-            //Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
-            //Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
-            //Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
-            //Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
-            //Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
-            //Common::Bonus               bonNormDmgOnBossKill_;  // normal damage bonus on boss kill
-            //Common::Bonus               bonCONHealedOnRevive_;  // CON healed bonus on revive
+            Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
+            Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+            Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+            Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+            Common::Bonus               bonDmgVsAnimal_;// damage bonus vs animals
+            Common::Bonus               bonDmgVsMutant_;// damage bonus vs mutants
+            Common::Bonus               bonNormDmgBossKill_;    // normal damage bonus on boss kill
+            Common::Bonus               bonCONHealedRevive_;    // CON healed bonus on revive
             Common::Resistance          resStatEff_;    // status effect resistance
             Common::Resistance          resCritDmg_;    // critical damage resistance
             Common::Resistance          resFireDmg_;    // fire damage resistance

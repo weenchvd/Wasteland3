@@ -170,7 +170,7 @@ namespace Game
         public:
             EffectSkillSniper()
                 :
-                chaHitSniper_{ 0 }
+                chaHitSR_{ 0 }
             {}
 
             EffectSkillSniper(
@@ -184,7 +184,7 @@ namespace Game
             EffectSkillSniper& operator-=(const EffectSkillSniper& other);
 
         private:
-            Common::Chance              chaHitSniper_;  // sniper rifle hit chance
+            Common::Chance              chaHitSR_;      // sniper rifle hit chance
         };
 
         EffectSkillSniper operator+(const EffectSkillSniper& left, const EffectSkillSniper& right);
@@ -466,10 +466,10 @@ namespace Game
         public:
             EffectSkillLeadership()
                 :
-                chaHitOfNearbyAllies_   { 0 },
-                bonNormDmgOnBossKill_   { 0 },
-                chaCritDmgOnMultiKill_  { 0 },
-                bonCONHealedOnRevive_   { 0 }
+                chaHitNearbyAllies_     { 0 },
+                bonNormDmgBossKill_     { 0 },
+                chaCritDmgMultiKill_    { 0 },
+                bonCONHealedRevive_     { 0 }
             {}
 
             EffectSkillLeadership(
@@ -486,10 +486,10 @@ namespace Game
             EffectSkillLeadership& operator-=(const EffectSkillLeadership& other);
 
         private:
-            Common::Chance              chaHitOfNearbyAllies_;  // base hit chance of nearby allies
-            Common::Bonus               bonNormDmgOnBossKill_;  // normal damage bonus on boss kill
-            Common::Chance              chaCritDmgOnMultiKill_; // base critical damage chance on multi-kill
-            Common::Bonus               bonCONHealedOnRevive_;  // CON healed bonus on revive
+            Common::Chance              chaHitNearbyAllies_;    // base hit chance of nearby allies
+            Common::Bonus               bonNormDmgBossKill_;    // normal damage bonus on boss kill
+            Common::Chance              chaCritDmgMultiKill_;   // base critical damage chance on multi-kill
+            Common::Bonus               bonCONHealedRevive_;    // CON healed bonus on revive
         };
 
         EffectSkillLeadership operator+(const EffectSkillLeadership& left, const EffectSkillLeadership& right);

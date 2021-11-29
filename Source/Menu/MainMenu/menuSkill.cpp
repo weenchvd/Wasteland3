@@ -50,6 +50,7 @@ namespace Game
                 }
                 case ActionCommon::EXIT:
                     if (character.skill().isModified()) {
+                        cout << ind1 << "Skills have been changed. Do you want to save the changes?" << endl;
                         switch (getYesNo()) {
                         case YesNo::YES:
                             character.skill().accept();
