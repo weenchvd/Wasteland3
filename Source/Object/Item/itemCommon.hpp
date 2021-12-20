@@ -11,26 +11,16 @@ namespace Game
 {
     namespace Object
     {
-        using CommonItemBase                = unsigned short int;
-        using ItemModel                     = CommonItemBase;
+        using ItemBaseType                  = unsigned short int;
+        using ItemModel                     = ItemBaseType;
 
-        enum class ItemType : CommonItemBase {
+        enum class ItemType : ItemBaseType {
             WEAPON,
             WEAPONMOD,
             ARMOR,
             ARMORMOD,
             AMMO,
             JUNK
-        };
-
-        enum class DamageType : unsigned char {
-            INVALID,                        /// invalid type, must be the first
-
-            NORMAL,
-            FIRE,
-            COLD,
-            ENERGY,
-            EXPLOSIVE
         };
 
     }

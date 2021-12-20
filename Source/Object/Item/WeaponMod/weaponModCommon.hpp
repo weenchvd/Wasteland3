@@ -13,7 +13,7 @@ namespace Game
 {
     namespace Object
     {
-        enum class WeaponModModel : CommonItemBase {
+        enum class WeaponModModel : ItemBaseType {
             INVALID,                        /// invalid model, must be the first
 
             BARREL_SHORTENED,
@@ -32,7 +32,7 @@ namespace Game
             MAG_EXTENDED,
             MAG_LONG,
 
-            NUMBER_OF_MODELS                /// must be the last
+            NUMBER_OF                       /// must be the last
         };
         
         enum class WeaponModType : unsigned char {

@@ -5,9 +5,8 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"initialization.hpp"
+#include"factory.hpp"
 #include"character.hpp"
-#include"weapon.hpp"
-#include"weaponMod.hpp"
 
 namespace Init
 {
@@ -24,35 +23,42 @@ namespace Init
 
 	void initializeInventory(Game::Object::Inventory& inventory)
 	{
+		using Game::Object::Weapon;
+		using Game::Object::WeaponMod;
+		
+		Game::Global::Factory f;
+
 		/// weapons
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_SOCOM));
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_KALASH97));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_KALASH97));
 
 		/// weapon mods
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_ADVANCED_MATERIALS));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_QUICKFIRE));
-
-
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
 
 	}
 
 	void initializeShop(Game::Object::Inventory& inventory)
 	{
+		using Game::Object::Weapon;
+		using Game::Object::WeaponMod;
+
+		Game::Global::Factory f;
+
 		/// weapons
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_SOCOM));
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_SOCOM));
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_KALASH97));
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::AR_KALASH97));
-		inventory.insert(Game::Object::Weapon::create(Game::Object::Weapon::Model::SMG_RIPPER));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_KALASH97));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_KALASH97));
+		inventory.insert(f.createItem<Weapon>(Weapon::Model::SMG_RIPPER));
 
 		/// weapon mods
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::BARREL_LIGHTWEIGHT));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::BARREL_SHORTENED));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_ADVANCED_MATERIALS));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_OVERSIZED));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_QUICKFIRE));
-		inventory.insert(Game::Object::WeaponMod::create(Game::Object::WeaponMod::Model::MAG_QUICKFIRE));
-
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_LIGHTWEIGHT));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_SHORTENED));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_OVERSIZED));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
+		inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
 
 	}
 

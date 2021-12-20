@@ -12,21 +12,28 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(LIBRARY_NAME "item")
+#set(LIBRARY_NAME "factory")
+#set(HEADER_CXX_LIST "factory.hpp"
+#                    )
+
+#add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
+
+#target_include_directories(${LIBRARY_NAME}
+#                           INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
+#                           )
+
+#target_link_libraries(${LIBRARY_NAME} INTERFACE item)
+
+
+
+set(LIBRARY_NAME "factory")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
-                    "Weapon/weapon.cpp"
-                    "WeaponMod/weaponMod.cpp"
                     )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
 target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Ammo"
-                           #PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Armor"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Damage"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Weapon"
-                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/WeaponMod"
                            )
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC common)
+target_link_libraries(${LIBRARY_NAME} PUBLIC item)

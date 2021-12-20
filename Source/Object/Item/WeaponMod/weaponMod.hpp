@@ -10,6 +10,7 @@
 #include"common.hpp"
 #include"item.hpp"
 #include"ammo.hpp"
+#include"damage.hpp"
 #include"weaponModCommon.hpp"
 #include<memory>
 #include<type_traits>
@@ -17,11 +18,16 @@
 
 namespace Game
 {
+    namespace Global {
+        class Factory;
+    }
+
     namespace Object
     {
         struct WeaponModReference {
             explicit WeaponModReference() noexcept
                 :
+                itemType_       { Item::Type::WEAPONMOD },
                 model_          { WeaponModModel::INVALID },
                 type_           { WeaponModType::INVALID },
                 name_           {},
@@ -40,8 +46,8 @@ namespace Game
                 apAttack_       { 0 },
                 apReload_       { 0 },
                 shoPerAttack_   { 0 },
-                tyAmmo_         { AmmoType::INVALID },
-                tyDmg_          { DamageType::INVALID }
+                tyAmmo_         { Ammo::Type::INVALID },
+                tyDmg_          { Damage::Type::INVALID }
             {}
 
             WeaponModReference(const WeaponModReference&) = delete;
@@ -68,9 +74,10 @@ namespace Game
             void actionPointPerAttack(Common::ActionPoint ap) noexcept  { apAttack_ = ap; }
             void actionPointPerReload(Common::ActionPoint ap) noexcept  { apReload_ = ap; }
             void shotsPerAttack(Common::NumberShots num) noexcept       { shoPerAttack_ = num; }
-            void ammoType(AmmoType type) noexcept                       { tyAmmo_ = type; }
-            void damageType(DamageType type) noexcept                   { tyDmg_ = type; }
+            void ammoType(Ammo::Type type) noexcept                     { tyAmmo_ = type; }
+            void damageType(Damage::Type type) noexcept                 { tyDmg_ = type; }
 
+            ItemType                itemType_;      // item type
             WeaponModModel          model_;         // weapon mod model
             WeaponModType           type_;          // weapon mod type (kind)
 
@@ -90,8 +97,8 @@ namespace Game
             Common::ActionPoint     apAttack_;      // action points per attack
             Common::ActionPoint     apReload_;      // action points per reload
             Common::NumberShots     shoPerAttack_;  // number of shots per attack
-            AmmoType                tyAmmo_;        // ammo type
-            DamageType              tyDmg_;         // damage type
+            Ammo::Type              tyAmmo_;        // ammo type
+            Damage::Type            tyDmg_;         // damage type
         };
 
         ///------------------------------------------------------------------------------------------------
@@ -103,15 +110,19 @@ namespace Game
             using Model     = WeaponModModel;
             using Type      = WeaponModType;
 
+            friend Game::Global::Factory;
+
+        protected:
+            explicit WeaponMod(WeaponMod::Model model) noexcept;
+
         public:
             WeaponMod(const WeaponMod&) = delete;
             WeaponMod& operator=(const WeaponMod&) = delete;
 
             virtual ~WeaponMod() noexcept {}
 
-            static std::unique_ptr<Item> create(WeaponModModel model) {
+            static void initializeReference() {
                 if (ref_.size() == 0) initRef();
-                return std::unique_ptr<Item>(new WeaponMod(std::move(model)));
             }
 
             virtual void accept(ItemVisitor& visitor) noexcept override {
@@ -120,25 +131,33 @@ namespace Game
 
             void apply(Weapon& weapon);
 
+        /// weapon mod parameters
         public:
-            WeaponModType type() const noexcept {
+            virtual Item::Type itemType() const noexcept override {
+                return base_.itemType_;
+            }
+
+            virtual Item::Model itemModel() const noexcept override {
+                return static_cast<Item::Model>(base_.model_);
+            }
+
+            WeaponMod::Model model() const noexcept {
+                return base_.model_;
+            }
+
+            WeaponMod::Type type() const noexcept {
                 return base_.type_;
             }
 
-        protected:
-            explicit WeaponMod(WeaponModModel model) noexcept;
+            Common::Text name() const noexcept {
+                return base_.name_;
+            }
 
         private:
             static void initRef();
 
             static void add(WeaponModReference ref) {
-                ref_[static_cast<std::underlying_type_t<WeaponModModel>>(ref.model_)] = std::move(ref);
-            }
-
-        /// weapon mod parameters
-        public:
-            Common::Text name() const noexcept {
-                return base_.name_;
+                ref_[static_cast<std::underlying_type_t<WeaponMod::Model>>(ref.model_)] = std::move(ref);
             }
 
         private:

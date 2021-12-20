@@ -14,10 +14,10 @@ namespace Game
 
         bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
         {
-            if (item1->type() < item2->type()) {
+            if (item1->itemType() < item2->itemType()) {
                 return true;
             }
-            if (item1->type() == item2->type() && item1->model() < item2->model()) {
+            if (item1->itemType() == item2->itemType() && item1->itemModel() < item2->itemModel()) {
                 return true;
             }
             return false;

@@ -13,9 +13,9 @@ namespace Game
     {
         using namespace std;
 
-        Weapon::Weapon(WeaponModel model) noexcept
-            : Item          { ItemType::WEAPON, static_cast<ItemModel>(model) },
-            base_           { ref_[static_cast<underlying_type_t<WeaponModel>>(model)] },
+        Weapon::Weapon(Weapon::Model model) noexcept
+            :
+            base_           { ref_[static_cast<underlying_type_t<Weapon::Model>>(model)] },
             dmgMin_         { base_.dmgMin_ },
             dmgMax_         { base_.dmgMax_ },
             rangeAttack_    { base_.rangeAttack_ },
@@ -57,7 +57,8 @@ namespace Game
 
         void Weapon::check() noexcept
         {
-            WeaponReference& refMin = ref_[static_cast<underlying_type_t<WeaponModel>>(WeaponModel::MINIMUM)];
+            WeaponReference& refMin
+                = ref_[static_cast<underlying_type_t<Weapon::Model>>(Weapon::Model::MINIMUM)];
             if (dmgMin_         < refMin.dmgMin_)           dmgMin_         = refMin.dmgMin_;
             if (dmgMax_         < refMin.dmgMax_)           dmgMax_         = refMin.dmgMax_;
             if (rangeAttack_    < refMin.rangeAttack_)      rangeAttack_    = refMin.rangeAttack_;
@@ -75,17 +76,17 @@ namespace Game
 
         void Weapon::initRef()
         {
-            ref_.resize(static_cast<underlying_type_t<WeaponModel>>(WeaponModel::NUMBER_OF_MODELS));
+            ref_.resize(static_cast<underlying_type_t<Weapon::Model>>(Weapon::Model::NUMBER_OF));
 
             ///// TEMPLATE
             //{
             //    WeaponReference ref;
             //    ref.weaponType();
             //    ref.weaponModel();
-            //    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponModType::INVALID,
-            //                                                WeaponModType::INVALID,
-            //                                                WeaponModType::INVALID,
-            //                                                WeaponModType::INVALID });
+            //    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponMod::Type::INVALID,
+            //                                                WeaponMod::Type::INVALID,
+            //                                                WeaponMod::Type::INVALID,
+            //                                                WeaponMod::Type::INVALID });
             //    ref.price();
             //    ref.damageMinimum();
             //    ref.damageMaximum();
@@ -135,12 +136,12 @@ namespace Game
                 /// KALASH 97
                 {
                     WeaponReference ref;
-                    ref.weaponType(WeaponType::AR);
-                    ref.weaponModel(WeaponModel::AR_KALASH97);
-                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
-                                                                WeaponModType::UNDERBARREL,
-                                                                WeaponModType::SCOPE,
-                                                                WeaponModType::MAGAZINE });
+                    ref.weaponType(Weapon::Type::AR);
+                    ref.weaponModel(Weapon::Model::AR_KALASH97);
+                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponMod::Type::BARREL,
+                                                                WeaponMod::Type::UNDERBARREL,
+                                                                WeaponMod::Type::SCOPE,
+                                                                WeaponMod::Type::MAGAZINE });
                     ref.price(1175);
                     ref.damageMinimum(26);
                     ref.damageMaximum(32);
@@ -155,8 +156,8 @@ namespace Game
                     ref.level(17);
                     ref.levelSkill(6);
                     ref.capacityAmmo(25);
-                    ref.ammoType(AmmoType::A_7_62);
-                    ref.damageType(DamageType::NORMAL);
+                    ref.ammoType(Ammo::Type::A_7_62);
+                    ref.damageType(Damage::Type::NORMAL);
                     ref.name("KALASH 97");
                     ref.description("Description");
 
@@ -166,12 +167,12 @@ namespace Game
                 /// SOCOM ASSAULT RIFLE
                 {
                     WeaponReference ref;
-                    ref.weaponType(WeaponType::AR);
-                    ref.weaponModel(WeaponModel::AR_SOCOM);
-                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
-                                                                WeaponModType::UNDERBARREL,
-                                                                WeaponModType::SCOPE,
-                                                                WeaponModType::MAGAZINE });
+                    ref.weaponType(Weapon::Type::AR);
+                    ref.weaponModel(Weapon::Model::AR_SOCOM);
+                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponMod::Type::BARREL,
+                                                                WeaponMod::Type::UNDERBARREL,
+                                                                WeaponMod::Type::SCOPE,
+                                                                WeaponMod::Type::MAGAZINE });
                     ref.price(1800);
                     ref.damageMinimum(40);
                     ref.damageMaximum(48);
@@ -186,8 +187,8 @@ namespace Game
                     ref.level(21);
                     ref.levelSkill(7);
                     ref.capacityAmmo(30);
-                    ref.ammoType(AmmoType::A_5_56);
-                    ref.damageType(DamageType::NORMAL);
+                    ref.ammoType(Ammo::Type::A_5_56);
+                    ref.damageType(Damage::Type::NORMAL);
                     ref.name("SOCOM ASSAULT RIFLE");
                     ref.description("Description");
 
@@ -200,12 +201,12 @@ namespace Game
                 /// RIPPER
                 {
                     WeaponReference ref; // TODO (stats from KALASH97)
-                    ref.weaponType(WeaponType::SMG);
-                    ref.weaponModel(WeaponModel::SMG_RIPPER);
-                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponModType::BARREL,
-                                                                WeaponModType::UNDERBARREL,
-                                                                WeaponModType::SCOPE,
-                                                                WeaponModType::MAGAZINE });
+                    ref.weaponType(Weapon::Type::SMG);
+                    ref.weaponModel(Weapon::Model::SMG_RIPPER);
+                    ref.slotWeaponModTypes(Slot_WeaponModTypes{ WeaponMod::Type::BARREL,
+                                                                WeaponMod::Type::UNDERBARREL,
+                                                                WeaponMod::Type::SCOPE,
+                                                                WeaponMod::Type::MAGAZINE });
                     ref.price(1175);
                     ref.damageMinimum(26);
                     ref.damageMaximum(32);
@@ -220,8 +221,8 @@ namespace Game
                     ref.level(17);
                     ref.levelSkill(6);
                     ref.capacityAmmo(25);
-                    ref.ammoType(AmmoType::A_7_62);
-                    ref.damageType(DamageType::NORMAL);
+                    ref.ammoType(Ammo::Type::A_7_62);
+                    ref.damageType(Damage::Type::NORMAL);
                     ref.name("RIPPER");
                     ref.description("Description");
 

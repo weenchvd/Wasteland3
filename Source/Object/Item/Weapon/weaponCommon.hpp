@@ -13,7 +13,7 @@ namespace Game
 {
     namespace Object
     {
-        enum class WeaponModel : CommonItemBase {
+        enum class WeaponModel : ItemBaseType {
             INVALID,                        /// invalid model, must be the first
             MINIMUM,                        // minimum valid stats
 
@@ -22,7 +22,7 @@ namespace Game
 
             SMG_RIPPER,
 
-            NUMBER_OF_MODELS                /// must be the last
+            NUMBER_OF                       /// must be the last
         };
 
         enum class WeaponType : unsigned char {

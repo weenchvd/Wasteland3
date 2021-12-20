@@ -11,6 +11,7 @@
 #include"slot.hpp"
 #include"item.hpp"
 #include"ammo.hpp"
+#include"damage.hpp"
 #include"weaponMod.hpp"
 #include"weaponCommon.hpp"
 #include<array>
@@ -20,21 +21,26 @@
 
 namespace Game
 {
+    namespace Global {
+        class Factory;
+    }
+
     namespace Object
     {
         constexpr unsigned int nWMSlots = 4; // number of weapon mod slots
 
-        using Slot_WeaponModTypes = std::array<WeaponModType, nWMSlots>;
+        using Slot_WeaponModTypes = std::array<WeaponMod::Type, nWMSlots>;
 
         struct WeaponReference {
             explicit WeaponReference() noexcept
                 :
+                itemType_       { Item::Type::WEAPON },
                 model_          { WeaponModel::INVALID },
                 type_           { WeaponType::INVALID },
-                weaponModTypes_ { WeaponModType::INVALID,
-                                  WeaponModType::INVALID,
-                                  WeaponModType::INVALID,
-                                  WeaponModType::INVALID },
+                weaponModTypes_ { WeaponMod::Type::INVALID,
+                                  WeaponMod::Type::INVALID,
+                                  WeaponMod::Type::INVALID,
+                                  WeaponMod::Type::INVALID },
                 name_           {},
                 descrip_        {},
                 dmgMin_         { 0 },
@@ -51,8 +57,8 @@ namespace Game
                 apAttack_       { 0 },
                 apReload_       { 0 },
                 shoPerAttack_   { 0 },
-                tyAmmo_         { AmmoType::INVALID },
-                tyDmg_          { DamageType::INVALID }
+                tyAmmo_         { Ammo::Type::INVALID },
+                tyDmg_          { Damage::Type::INVALID }
             {}
 
             WeaponReference(const WeaponReference&) = delete;
@@ -80,9 +86,10 @@ namespace Game
             void actionPointPerAttack(Common::ActionPoint ap) noexcept  { apAttack_ = ap; }
             void actionPointPerReload(Common::ActionPoint ap) noexcept  { apReload_ = ap; }
             void shotsPerAttack(Common::NumberShots num) noexcept       { shoPerAttack_ = num; }
-            void ammoType(AmmoType type) noexcept                       { tyAmmo_ = type; }
-            void damageType(DamageType type) noexcept                   { tyDmg_ = type; }
+            void ammoType(Ammo::Type type) noexcept                     { tyAmmo_ = type; }
+            void damageType(Damage::Type type) noexcept                 { tyDmg_ = type; }
 
+            ItemType                itemType_;      // item type
             WeaponModel             model_;         // weapon model
             WeaponType              type_;          // weapon type (kind)
             Slot_WeaponModTypes     weaponModTypes_;// list of slot types
@@ -103,8 +110,8 @@ namespace Game
             Common::ActionPoint     apAttack_;      // action points per attack
             Common::ActionPoint     apReload_;      // action points per reload
             Common::NumberShots     shoPerAttack_;  // number of shots per attack
-            AmmoType                tyAmmo_;        // ammo type
-            DamageType              tyDmg_;         // damage type
+            Ammo::Type              tyAmmo_;        // ammo type
+            Damage::Type            tyDmg_;         // damage type
         };
 
         ///------------------------------------------------------------------------------------------------
@@ -114,8 +121,10 @@ namespace Game
             using Model     = WeaponModel;
             using Type      = WeaponType;
 
+            friend Game::Global::Factory;
+
         protected:
-            explicit Weapon(WeaponModel model) noexcept;
+            explicit Weapon(Weapon::Model model) noexcept;
 
         public:
             Weapon(const Weapon&) = delete;
@@ -123,9 +132,8 @@ namespace Game
 
             virtual ~Weapon() noexcept {}
 
-            static std::unique_ptr<Item> create(WeaponModel model) {
+            static void initializeReference() {
                 if (ref_.size() == 0) initRef();
-                return std::unique_ptr<Item>(new Weapon(std::move(model)));
             }
 
             virtual void accept(ItemVisitor& visitor) noexcept override {
@@ -137,14 +145,24 @@ namespace Game
         private:
             void check() noexcept;
 
-            static void initRef();
-
-            static void add(WeaponReference common) {
-                ref_[static_cast<std::underlying_type_t<WeaponModel>>(common.model_)] = std::move(common);
-            }
-
         /// weapon parameters
         public:
+            virtual Item::Type itemType() const noexcept override {
+                return base_.itemType_;
+            }
+
+            virtual Item::Model itemModel() const noexcept override {
+                return static_cast<Item::Model>(base_.model_);
+            }
+
+            Weapon::Model model() const noexcept {
+                return base_.model_;
+            }
+
+            Weapon::Type type() const noexcept {
+                return base_.type_;
+            }
+
             Common::Text name() const noexcept {
                 return base_.name_;
             }
@@ -153,20 +171,24 @@ namespace Game
                 return base_.descrip_;
             }
 
+            Common::Price price() const noexcept {
+                return base_.price_;
+            }
+
+            Common::Level level() const noexcept {
+                return base_.level_;
+            }
+
+            Common::Level levelSkill() const noexcept {
+                return base_.levSkill_;
+            }
+
             Common::Multiplier multiplierCritDamage() const noexcept {
                 return mulCritDmg_;
             }
 
             void multiplierCritDamageAdd(Common::Multiplier shift) noexcept {
                 mulCritDmg_ += shift;
-            }
-
-            Common::Price price() const noexcept {
-                return base_.price_;
-            }
-
-            WeaponModel model() const noexcept {
-                return base_.model_;
             }
 
             Common::Damage damageMinimum() const noexcept {
@@ -241,14 +263,6 @@ namespace Game
                 apReload_ += shift;
             }
 
-            Common::Level level() const noexcept {
-                return base_.level_;
-            }
-
-            Common::Level levelSkill() const noexcept {
-                return base_.levSkill_;
-            }
-
             Common::Capacity capacityAmmo() const noexcept {
                 return capAmmo_;
             }
@@ -257,24 +271,20 @@ namespace Game
                 capAmmo_ += shift;
             }
 
-            AmmoType ammoType() const noexcept {
+            Ammo::Type ammoType() const noexcept {
                 return tyAmmo_;
             }
 
-            void ammoType(AmmoType type) noexcept {
+            void ammoType(Ammo::Type type) noexcept {
                 tyAmmo_ = type;
             }
 
-            DamageType damageType() const noexcept {
+            Damage::Type damageType() const noexcept {
                 return tyDmg_;
             }
 
-            void damageType(DamageType type) noexcept {
+            void damageType(Damage::Type type) noexcept {
                 tyDmg_ = type;
-            }
-
-            WeaponType type() const noexcept {
-                return base_.type_;
             }
 
         /// slots
@@ -285,6 +295,13 @@ namespace Game
 
             Common::Slot<WeaponMod, nWMSlots>& slotMod() noexcept {
                 return slotWeaponMod_;
+            }
+
+        private:
+            static void initRef();
+
+            static void add(WeaponReference common) {
+                ref_[static_cast<std::underlying_type_t<Weapon::Model>>(common.model_)] = std::move(common);
             }
 
         private:
@@ -301,8 +318,8 @@ namespace Game
             Common::ActionPoint         apAttack_;      // action points per attack
             Common::ActionPoint         apReload_;      // action points per reload
             Common::NumberShots         shoPerAttack_;  // number of shots per attack
-            AmmoType                    tyAmmo_;        // ammo type
-            DamageType                  tyDmg_;         // damage type
+            Ammo::Type                  tyAmmo_;        // ammo type
+            Damage::Type                tyDmg_;         // damage type
 
             Common::Slot<WeaponMod, nWMSlots>   slotWeaponMod_; // weapon mod slots
 

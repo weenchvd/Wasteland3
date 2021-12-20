@@ -4,23 +4,14 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef AMMO_HPP
-#define AMMO_HPP
-
-#include"ammoCommon.hpp"
+#include"factory.hpp"
+#include"weapon.hpp"
+#include"weaponMod.hpp"
 
 namespace Game
 {
-	namespace Object
-	{
-		class Ammo {
-		public:
-			using Type = AmmoType;
+    namespace Global
+    {
 
-		public:
-
-		};
-	}
+    }
 }
-
-#endif // !AMMO_HPP

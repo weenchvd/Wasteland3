@@ -13,7 +13,7 @@ namespace Game
 {
     namespace Object
     {
-        enum class ArmorModel : CommonItemBase {
+        enum class ArmorModel : ItemBaseType {
             INVALID,                        /// invalid model, must be the first
 
 

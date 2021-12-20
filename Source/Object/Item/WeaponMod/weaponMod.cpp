@@ -14,9 +14,9 @@ namespace Game
     {
         using namespace std;
 
-        WeaponMod::WeaponMod(WeaponModModel model) noexcept
-            : Item          { ItemType::WEAPONMOD, static_cast<ItemModel>(model) },
-            base_           { ref_[static_cast<underlying_type_t<WeaponModModel>>(model)] }
+        WeaponMod::WeaponMod(WeaponMod::Model model) noexcept
+            :
+            base_           { ref_[static_cast<underlying_type_t<WeaponMod::Model>>(model)] }
         {}
 
         void WeaponMod::apply(Weapon& weapon)
@@ -32,21 +32,21 @@ namespace Game
             weapon.actionPointPerAttackAdd(base_.apAttack_);
             weapon.actionPointPerReloadAdd(base_.apReload_);
             weapon.capacityAmmoAdd(base_.capAmmo_);
-            if (base_.tyAmmo_ != AmmoType::INVALID) weapon.ammoType(base_.tyAmmo_);
-            if (base_.tyDmg_ != DamageType::INVALID) weapon.damageType(base_.tyDmg_);
+            if (base_.tyAmmo_ != Ammo::Type::INVALID) weapon.ammoType(base_.tyAmmo_);
+            if (base_.tyDmg_ != Damage::Type::INVALID) weapon.damageType(base_.tyDmg_);
         }
 
         vector<WeaponModReference> WeaponMod::ref_ = vector<WeaponModReference>();
 
         void WeaponMod::initRef()
         {
-            ref_.resize(static_cast<underlying_type_t<WeaponModModel>>(WeaponModModel::NUMBER_OF_MODELS));
+            ref_.resize(static_cast<underlying_type_t<WeaponMod::Model>>(WeaponMod::Model::NUMBER_OF));
             
             ///// TEMPLATE
             //{
             //    WeaponModReference ref;
-            //    ref.weaponModType(WeaponModType:);
-            //    ref.weaponModModel(WeaponModModel:);
+            //    ref.weaponModType(WeaponMod::Type:);
+            //    ref.weaponModModel(WeaponMod::Model:);
             //    ref.levelSkill();
             //    ref.price();
             //    ref.name();
@@ -60,8 +60,8 @@ namespace Game
                 /// SHORTENED BARREL
                 {
                     WeaponModReference ref;
-                    ref.weaponModType(WeaponModType::BARREL);
-                    ref.weaponModModel(WeaponModModel::BARREL_SHORTENED);
+                    ref.weaponModType(WeaponMod::Type::BARREL);
+                    ref.weaponModModel(WeaponMod::Model::BARREL_SHORTENED);
                     ref.levelSkill(8);
                     ref.price(600);
                     ref.name("SHORTENED BARREL");
@@ -77,8 +77,8 @@ namespace Game
                 /// LIGHTWEIGHT BARREL
                 {
                     WeaponModReference ref;
-                    ref.weaponModType(WeaponModType::BARREL);
-                    ref.weaponModModel(WeaponModModel::BARREL_LIGHTWEIGHT);
+                    ref.weaponModType(WeaponMod::Type::BARREL);
+                    ref.weaponModModel(WeaponMod::Model::BARREL_LIGHTWEIGHT);
                     ref.levelSkill(8);
                     ref.price(600);
                     ref.name("LIGHTWEIGHT BARREL");
@@ -99,8 +99,8 @@ namespace Game
                 /// QUICKFIRE MAG
                 {
                     WeaponModReference ref;
-                    ref.weaponModType(WeaponModType::MAGAZINE);
-                    ref.weaponModModel(WeaponModModel::MAG_QUICKFIRE);
+                    ref.weaponModType(WeaponMod::Type::MAGAZINE);
+                    ref.weaponModModel(WeaponMod::Model::MAG_QUICKFIRE);
                     ref.levelSkill(10);
                     ref.price(450);
                     ref.name("QUICKFIRE MAG");
@@ -114,8 +114,8 @@ namespace Game
                 /// ADVANCED MATERIALS MAG
                 {
                     WeaponModReference ref;
-                    ref.weaponModType(WeaponModType::MAGAZINE);
-                    ref.weaponModModel(WeaponModModel::MAG_ADVANCED_MATERIALS);
+                    ref.weaponModType(WeaponMod::Type::MAGAZINE);
+                    ref.weaponModModel(WeaponMod::Model::MAG_ADVANCED_MATERIALS);
                     ref.levelSkill(8);
                     ref.price(350);
                     ref.name("ADVANCED MATERIALS MAG");
@@ -130,8 +130,8 @@ namespace Game
                 /// OVERSIZED MAG
                 {
                     WeaponModReference ref;
-                    ref.weaponModType(WeaponModType::MAGAZINE);
-                    ref.weaponModModel(WeaponModModel::MAG_OVERSIZED);
+                    ref.weaponModType(WeaponMod::Type::MAGAZINE);
+                    ref.weaponModModel(WeaponMod::Model::MAG_OVERSIZED);
                     ref.levelSkill(7);
                     ref.price(275);
                     ref.name("OVERSIZED MAG");

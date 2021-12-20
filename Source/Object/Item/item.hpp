@@ -17,31 +17,22 @@ namespace Game
     {
         class Item {
         public:
+            using Type      = ItemType;
+            using Model     = ItemModel;
+
+        public:
+            Item() noexcept {}
+
             Item(const Item&) = delete;
             Item& operator=(const Item&) = delete;
 
             virtual ~Item() noexcept {}
 
-            const ItemType type() const noexcept {
-                return type_;
-            }
+            virtual Item::Type itemType() const noexcept = 0;
 
-            const ItemModel model() const noexcept {
-                return model_;
-            }
+            virtual Item::Model itemModel() const noexcept = 0;
 
             virtual void accept(ItemVisitor& visitor) noexcept {};
-
-        protected:
-            explicit Item(ItemType type, ItemModel model) noexcept
-                : type_{ type }, model_{ model } {}
-
-        private:
-            friend class Inventory;
-
-        private:
-            const ItemType          type_;          // type of Item
-            const ItemModel         model_;         // model of Item
         };
 
         ///------------------------------------------------------------------------------------------------

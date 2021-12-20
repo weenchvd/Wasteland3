@@ -6,6 +6,7 @@
 
 #include"error.hpp"
 #include"inventory.hpp"
+#include"weapon.hpp"
 #include<algorithm>
 #include<type_traits>
 
@@ -71,11 +72,20 @@ namespace Game
             return roster;
         }
 
-        Inventory::Roster Inventory::roster(ItemType type)
+        Inventory::Roster Inventory::roster(Item::Type type)
         {
+            struct ItemType_Equal {
+                bool operator()(const unique_ptr<Item>& item, Item::Type type) {
+                    if (item->itemType() == type) {
+                        return true;
+                    }
+                    return false;
+                }
+            };
+            
             struct ItemType_Less {
                 bool operator()(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) {
-                    if (item1->type() < item2->type()) {
+                    if (item1->itemType() < item2->itemType()) {
                         return true;
                     }
                     return false;
@@ -86,15 +96,26 @@ namespace Game
             mergeLists();
             viewed_ = true;
 
-            Item i{ type, 0 };
-            unique_ptr<Item> item{ &i };
+            //unique_ptr<Item> dummy;
+            //switch (type) {
+            //case Item::Type::WEAPON:
+                //dummy = Object::Weapon::create(Object::Weapon::Model::AR_SOCOM);
+                // TODO
+            //}
+
+            auto instance = lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Equal{});
+
             Inventory::Roster roster;
             roster.newItems = { newItems_.cbegin(), newItems_.cend() };
-            roster.oldItems = {
-                lower_bound(oldItems_.cbegin(), oldItems_.cend(), item, ItemType_Less{}),
-                upper_bound(oldItems_.cbegin(), oldItems_.cend(), item, ItemType_Less{})
-            };
-            item.release();
+            if (instance == oldItems_.cend()) {
+                roster.oldItems = { oldItems_.cend(), oldItems_.cend() };
+            }
+            else {
+                roster.oldItems = {
+			        lower_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{}),
+			        upper_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{})
+                };
+            }
             return roster;
         }
 
