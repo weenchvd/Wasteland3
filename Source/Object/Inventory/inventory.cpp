@@ -96,13 +96,6 @@ namespace Game
             mergeLists();
             viewed_ = true;
 
-            //unique_ptr<Item> dummy;
-            //switch (type) {
-            //case Item::Type::WEAPON:
-                //dummy = Object::Weapon::create(Object::Weapon::Model::AR_SOCOM);
-                // TODO
-            //}
-
             auto instance = lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Equal{});
 
             Inventory::Roster roster;

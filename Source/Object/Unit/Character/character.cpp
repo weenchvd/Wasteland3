@@ -12,9 +12,9 @@ namespace Game
     {
         using namespace std;
 
-        Character::Character(CharacterModel model)
+        Character::Character(Character::Model model)
             : Unit              { UnitType::Character, static_cast<UnitModel>(model) },
-            base_               { ref_[static_cast<underlying_type_t<CharacterModel>>(model)] },
+            base_               { ref_[static_cast<underlying_type_t<Character::Model>>(model)] },
             name_               { base_.name_ },
             timeDetect_         { base_.timeDetect_ },
             xp_                 { base_.xp_ },

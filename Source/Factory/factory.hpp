@@ -8,6 +8,7 @@
 #define FACTORY_HPP
 
 #include"item.hpp"
+#include"unit.hpp"
 #include<memory>
 
 namespace Game
@@ -20,6 +21,12 @@ namespace Game
             std::unique_ptr<Game::Object::Item> createItem(typename T::Model model) {
                 T::initializeReference();
                 return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
+            }
+
+            template<class T>
+            std::unique_ptr<Game::Object::Unit> createUnit(typename T::Model model) {
+                T::initializeReference();
+                return std::unique_ptr<Game::Object::Unit>(new T(std::move(model)));
             }
 
         };

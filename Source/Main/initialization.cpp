@@ -64,23 +64,27 @@ namespace Init
 
 	void initializeMembers(std::array<std::unique_ptr<Game::Object::Unit>, Game::Object::nMembers>& members)
 	{
+		using Game::Object::Character;
+
+		Game::Global::Factory f;
+
 		int i = 0;
 		/// member 1
 		if (i < members.size()) {
-			members[i] = Game::Object::Character::create(Game::Object::Character::Model::RANGER_COMMON);
-			auto& c = *static_cast<Game::Object::Character*>(members[i++].get());
+			members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+			auto& c = *static_cast<Character*>(members[i++].get());
 			c.name("YURI");
 		}
 		/// member 2
 		if (i < members.size()) {
-			members[i] = Game::Object::Character::create(Game::Object::Character::Model::RANGER_COMMON);
-			auto& c = *static_cast<Game::Object::Character*>(members[i++].get());
+			members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+			auto& c = *static_cast<Character*>(members[i++].get());
 			c.name("ECHO");
 		}
 		/// member 3
 		if (i < members.size()) {
-			members[i] = Game::Object::Character::create(Game::Object::Character::Model::RANGER_COMMON);
-			auto& c = *static_cast<Game::Object::Character*>(members[i++].get());
+			members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+			auto& c = *static_cast<Character*>(members[i++].get());
 			c.name("RUST");
 		}
 	}

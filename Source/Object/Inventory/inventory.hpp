@@ -41,7 +41,7 @@ namespace Game
 
             Inventory::Roster roster();
 
-            Inventory::Roster roster(ItemType type);
+            Inventory::Roster roster(Item::Type type);
 
             size_t size();
             
