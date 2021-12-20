@@ -22,16 +22,6 @@ namespace Game
                 return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
             }
 
-            //template<class T>
-            //static std::unique_ptr<Game::Object::Item> createItem(typename T::Model model) {
-            //    return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
-            //}
-
-            //template<class T, class... _Types>
-            //static std::unique_ptr<Game::Object::Item> createItem(_Types&&... _Args) {
-            //    return std::unique_ptr<Game::Object::Item>(new T(std::forward<_Types>(_Args)...));
-            //}
-
         };
 
     }

@@ -28,7 +28,7 @@ namespace Game
         constexpr unsigned int nQSlots = 5; // number of quick slots
 
         //using Slot_ArmorTypes       = std::array<ArmorType, nASlots>;
-        using Slot_WeaponTypes      = std::array<WeaponType, nWSlots>;
+        using Slot_WeaponTypes      = std::array<Weapon::Type, nWSlots>;
         //using Slot_ConsumableTypes  = std::array<ConsumableType, nQSlots>;
 
         struct CharacterReference {
@@ -40,8 +40,8 @@ namespace Game
                 //                      ArmorType::CHEST,
                 //                      ArmorType::LEG,
                 //                      ArmorType::UTILITY },
-                weaponTypes_        { WeaponType::ANY,
-                                      WeaponType::ANY },
+                weaponTypes_        { Weapon::Type::ANY,
+                                      Weapon::Type::ANY },
                 //consumTypes_        { ConsumableType::ANY,
                 //                      ConsumableType::ANY,
                 //                      ConsumableType::ANY,

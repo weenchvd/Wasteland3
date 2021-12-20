@@ -112,7 +112,7 @@ namespace Game
             /// MINIMUM
             {
                 WeaponReference refMin;
-                refMin.weaponModel(WeaponModel::MINIMUM);
+                refMin.weaponModel(Weapon::Model::MINIMUM);
                 refMin.price(0);
                 refMin.damageMinimum(1);
                 refMin.damageMaximum(1);
