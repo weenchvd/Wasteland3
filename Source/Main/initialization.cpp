@@ -5,7 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"initialization.hpp"
-#include"factory.hpp"
+#include"locator.hpp"
 #include"character.hpp"
 
 namespace Init
@@ -26,7 +26,7 @@ namespace Init
 		using Game::Object::Weapon;
 		using Game::Object::WeaponMod;
 		
-		Game::Global::Factory f;
+		Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		/// weapons
 		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -43,7 +43,7 @@ namespace Init
 		using Game::Object::Weapon;
 		using Game::Object::WeaponMod;
 
-		Game::Global::Factory f;
+		Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		/// weapons
 		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -62,11 +62,11 @@ namespace Init
 
 	}
 
-	void initializeMembers(std::array<std::unique_ptr<Game::Object::Unit>, Game::Object::nMembers>& members)
+	void initializeMembers(array<unique_ptr<Game::Object::Unit>, Game::Object::nMembers>& members)
 	{
 		using Game::Object::Character;
 
-		Game::Global::Factory f;
+		Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		int i = 0;
 		/// member 1

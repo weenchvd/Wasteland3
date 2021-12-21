@@ -22,7 +22,7 @@ set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
 # Add source to this project's executable.
 add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
 
-target_link_libraries(${EXEC_NAME} PRIVATE inventory factory menu squad unit)
+target_link_libraries(${EXEC_NAME} PRIVATE inventory locator menu squad unit)
 
 # Add tests and install targets if needed.
 install(TARGETS ${EXEC_NAME} CONFIGURATIONS ${CMAKE_BUILD_TYPE} DESTINATION "${CMAKE_BUILD_TYPE}")
