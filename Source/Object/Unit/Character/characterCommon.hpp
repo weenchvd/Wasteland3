@@ -13,13 +13,13 @@ namespace Game
 {
     namespace Object
     {
-        enum class CharacterModel : CommonUnitBase {
+        enum class CharacterModel : UnitBaseType {
             INVALID,                        /// invalid model, must be the first
             MINIMUM,                        // minimum valid stats
 
             RANGER_COMMON,
 
-            NUMBER_OF_MODELS                /// must be the last
+            NUMBER_OF                       /// must be the last
         };
 
         enum class CharacterType : unsigned char {

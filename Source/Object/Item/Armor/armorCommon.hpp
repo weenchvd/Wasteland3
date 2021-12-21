@@ -18,7 +18,7 @@ namespace Game
 
 
 
-            NUMBER_OF_MODELS                /// must be the last
+            NUMBER_OF                       /// must be the last
         };
 
         enum class ArmorType : unsigned char {

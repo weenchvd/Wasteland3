@@ -56,7 +56,24 @@ namespace Game
         private:
             void check() noexcept;
 
+        /// character parameters
         public:
+            virtual Unit::Type unitType() const noexcept override {
+                return Unit::Type::Character;
+            }
+
+            virtual Unit::Model unitModel() const noexcept override {
+                return static_cast<Unit::Model>(base_.model_);
+            }
+
+            Character::Model model() const noexcept {
+                return base_.model_;
+            }
+
+            Character::Type type() const noexcept {
+                return base_.type_;
+            }
+
             Common::Text name() const noexcept { return name_; }
             void name(Common::Text name) noexcept { name_ = name; }
 
@@ -310,7 +327,7 @@ namespace Game
             static void initRef();
 
             static void add(CharacterReference common) {
-                ref_[static_cast<std::underlying_type_t<CharacterModel>>(common.model_)] = std::move(common);
+                ref_[static_cast<std::underlying_type_t<Character::Model>>(common.model_)] = std::move(common);
             }
 
         private:

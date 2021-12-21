@@ -16,28 +16,22 @@ namespace Game
     {
         class Unit {
         public:
+            using Type      = UnitType;
+            using Model     = UnitModel;
+
+        public:
+            Unit() noexcept {}
+
             Unit(const Unit&) = delete;
             Unit& operator=(const Unit&) = delete;
 
             virtual ~Unit() noexcept {}
 
-            const UnitType type() const noexcept {
-                return type_;
-            }
+            virtual Unit::Type unitType() const noexcept = 0;
 
-            const UnitModel model() const noexcept {
-                return model_;
-            }
+            virtual Unit::Model unitModel() const noexcept = 0;
 
             virtual void accept(UnitVisitor& visitor) noexcept {};
-
-        protected:
-            explicit Unit(UnitType type, UnitModel model) noexcept
-                : type_{ type }, model_{ model } {}
-
-        private:
-            const UnitType          type_;          // type of Unit
-            const UnitModel         model_;         // model of Unit
         };
 
     }

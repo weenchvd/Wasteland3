@@ -11,10 +11,10 @@ namespace Game
 {
     namespace Object
     {
-        using CommonUnitBase                = unsigned short int;
-        using UnitModel                     = CommonUnitBase;
+        using UnitBaseType                  = unsigned short int;
+        using UnitModel                     = UnitBaseType;
 
-        enum class UnitType : CommonUnitBase {
+        enum class UnitType : UnitBaseType {
             Character,
             Human,
             Mutant,

@@ -58,7 +58,7 @@ namespace Game
         /// weapon parameters
         public:
             virtual Item::Type itemType() const noexcept override {
-                return base_.itemType_;
+                return Item::Type::WEAPON;
             }
 
             virtual Item::Model itemModel() const noexcept override {

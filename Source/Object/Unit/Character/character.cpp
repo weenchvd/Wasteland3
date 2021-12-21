@@ -13,7 +13,7 @@ namespace Game
         using namespace std;
 
         Character::Character(Character::Model model)
-            : Unit              { UnitType::Character, static_cast<UnitModel>(model) },
+            :
             base_               { ref_[static_cast<underlying_type_t<Character::Model>>(model)] },
             name_               { base_.name_ },
             timeDetect_         { base_.timeDetect_ },
@@ -120,7 +120,7 @@ namespace Game
 
         void Character::initRef()
         {
-            ref_.resize(static_cast<underlying_type_t<CharacterModel>>(CharacterModel::NUMBER_OF_MODELS));
+            ref_.resize(static_cast<underlying_type_t<Character::Model>>(Character::Model::NUMBER_OF));
 
             ///// TEMPLATE
             //{
@@ -215,7 +215,7 @@ namespace Game
             /// MINIMUM
             {
                 CharacterReference refMin;
-                refMin.characterModel(CharacterModel::MINIMUM);
+                refMin.characterModel(Character::Model::MINIMUM);
                 refMin.timeDetection(0);
                 refMin.experience(0);
                 refMin.experienceReward(0);
@@ -302,8 +302,8 @@ namespace Game
                 /// COMMON
                 {
                     CharacterReference ref;
-                    ref.characterModel(CharacterModel::RANGER_COMMON);
-                    ref.characterType(CharacterType::RANGER);
+                    ref.characterModel(Character::Model::RANGER_COMMON);
+                    ref.characterType(Character::Type::RANGER);
 
                     add(move(ref));
                 }
