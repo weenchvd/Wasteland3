@@ -105,8 +105,8 @@ namespace Game
             }
             else {
                 roster.oldItems = {
-			        lower_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{}),
-			        upper_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{})
+                    lower_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{}),
+                    upper_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{})
                 };
             }
             return roster;

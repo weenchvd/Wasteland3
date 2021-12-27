@@ -11,14 +11,14 @@
 
 namespace Game
 {
-	namespace Object
-	{
-		class Damage {
-		public:
-			using Type = DamageType;
+    namespace Object
+    {
+        class Damage {
+        public:
+            using Type = DamageType;
 
-		};
-	}
+        };
+    }
 }
 
 #endif // !DAMAGE_HPP

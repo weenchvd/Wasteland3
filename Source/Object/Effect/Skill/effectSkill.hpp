@@ -222,8 +222,8 @@ namespace Game
         public:
             EffectSkillExplosive()
                 :
-				resExplDmg_{ 0 },
-				bonExplDmg_{ 0 }
+                resExplDmg_{ 0 },
+                bonExplDmg_{ 0 }
             {}
 
             EffectSkillExplosive(

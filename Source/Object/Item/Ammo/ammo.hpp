@@ -11,16 +11,16 @@
 
 namespace Game
 {
-	namespace Object
-	{
-		class Ammo {
-		public:
-			using Type = AmmoType;
+    namespace Object
+    {
+        class Ammo {
+        public:
+            using Type = AmmoType;
 
-		public:
+        public:
 
-		};
-	}
+        };
+    }
 }
 
 #endif // !AMMO_HPP

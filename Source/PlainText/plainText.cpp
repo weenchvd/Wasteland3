@@ -12,8 +12,8 @@ namespace Game
     {
         using namespace std;
 
-		PlainText::PlainText(PlainText::Language lang)
-			: lang_{ lang }
+        PlainText::PlainText(PlainText::Language lang)
+            : lang_{ lang }
         {
             initialize();
         }

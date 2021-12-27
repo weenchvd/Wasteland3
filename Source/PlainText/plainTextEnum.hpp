@@ -14,33 +14,33 @@ namespace Game
         using PlainTextBaseType = int;
 
         enum class PlainText__Language : char {
-			INVALID = -1,					/// invalid, must be the first
-			
-			ENGLISH,
+            INVALID = -1,					/// invalid, must be the first
+            
+            ENGLISH,
             RUSSIAN,
 
-			NUMBER_OF                       /// must be the last
+            NUMBER_OF                       /// must be the last
         };
 
         enum class PlainText__General : PlainTextBaseType {
-			INVALID = -1,					/// invalid, must be the first
-			
-			INVALID_ENUM,
-			NO_DATA,
+            INVALID = -1,					/// invalid, must be the first
+            
+            INVALID_ENUM,
+            NO_DATA,
 
             NUMBER_OF                       /// must be the last
         };
 
         enum class PlainText__Skill : PlainTextBaseType {
-			INVALID = -1,					/// invalid, must be the first
+            INVALID = -1,					/// invalid, must be the first
 
-			GROUP_COMBAT,
-			GROUP_GENERAL,
-			GROUP_EXPLORATION,
-			GROUP_SOCIAL,
+            GROUP_COMBAT,
+            GROUP_GENERAL,
+            GROUP_EXPLORATION,
+            GROUP_SOCIAL,
 
-			NUMBER_OF                       /// must be the last
-		};
+            NUMBER_OF                       /// must be the last
+        };
         
 
     }
