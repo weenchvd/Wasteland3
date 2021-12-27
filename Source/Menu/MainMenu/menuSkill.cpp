@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"menuSkill.hpp"
+#include"locator.hpp"
 #include<limits>
 #include<sstream>
 #include<string>
@@ -84,9 +85,11 @@ namespace Game
 
             while (true)
             {
+                auto width{ utf8Size(Global::Locator::getPlainText().skill(type)) + 2 };
+
                 cout << endl << endl;
                 showSkillPoints(character, ind1);
-                showSkill(character, type, ind1);
+                cout << ind1 << "Skill: " << stringSkill(character, type, width, space) << endl;
                 cout << ind1 << "Actions:" << endl;
                 cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
                 cout << ind2 << '\'' << ActionModifySkill::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
@@ -95,7 +98,8 @@ namespace Game
 
                 switch (getAction()) {
                 case ActionModifySkill::SHOW_ACCEPTED:
-                    showSkill(character, type, ind2, true);
+                    cout << ind2 << "Skill (accepted): "
+                        << stringSkill(character, type, width, space, true) << endl;
                     break;
                 case ActionModifySkill::INCREASE_LEVEL: {
                     int n = getPosNumber();
@@ -127,6 +131,9 @@ namespace Game
 
         void showAllSkills(const Object::Character& character, const Indent indent, bool accepted)
         {
+            using Game::Global::PlainText;
+            const auto& text = Global::Locator::getPlainText();
+
             Indent ind1 = indent + Indent{};
             showSkillPoints(character, ind1, accepted);
             cout << ind1 << "Skills";
@@ -136,162 +143,66 @@ namespace Game
             cout << ":" << endl;
             Indent ind2 = ind1 + Indent{};
             Indent ind3 = ind2 + Indent{};
-            cout << ind2 << "COMBAT SKILLS" << endl;
-            cout << ind3 << "AUTOMATIC WEAPONS  "
-                << statLevel(character.skill().level(Object::Skill::Type::AUTOMATIC_WEAPONS), accepted) << endl;
-            cout << ind3 << "BIG GUNS           "
-                << statLevel(character.skill().level(Object::Skill::Type::BIG_GUNS), accepted) << endl;
-            cout << ind3 << "BRAWLING           "
-                << statLevel(character.skill().level(Object::Skill::Type::BRAWLING), accepted) << endl;
-            cout << ind3 << "MELEE COMBAT       "
-                << statLevel(character.skill().level(Object::Skill::Type::MELEE_COMBAT), accepted) << endl;
-            cout << ind3 << "SMALL ARMS         "
-                << statLevel(character.skill().level(Object::Skill::Type::SMALL_ARMS), accepted) << endl;
-            cout << ind3 << "SNIPER RIFLES      "
-                << statLevel(character.skill().level(Object::Skill::Type::SNIPER_RIFLES), accepted) << endl;
 
-            cout << ind2 << "GENERAL SKILLS" << endl;
-            cout << ind3 << "ANIMAL WHISPERER   "
-                << statLevel(character.skill().level(Object::Skill::Type::ANIMAL_WHISPERER), accepted) << endl;
-            cout << ind3 << "EXPLOSIVES         "
-                << statLevel(character.skill().level(Object::Skill::Type::EXPLOSIVES), accepted) << endl;
-            cout << ind3 << "FIRST AID          "
-                << statLevel(character.skill().level(Object::Skill::Type::FIRST_AID), accepted) << endl;
-            cout << ind3 << "SNEAKY SHIT        "
-                << statLevel(character.skill().level(Object::Skill::Type::SNEAKY_SHIT), accepted) << endl;
-            cout << ind3 << "WEIRD SCIENCE      "
-                << statLevel(character.skill().level(Object::Skill::Type::WEIRD_SCIENCE), accepted) << endl;
+            cout << ind2 << text.skill(PlainText::Skill::GROUP_COMBAT) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::AUTOMATIC_WEAPONS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::BIG_GUNS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::BRAWLING,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::MELEE_COMBAT,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::SMALL_ARMS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::SNIPER_RIFLES,
+                skillWidth, space, accepted) << endl;
 
+            cout << ind2 << text.skill(PlainText::Skill::GROUP_GENERAL) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::ANIMAL_WHISPERER,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::EXPLOSIVES,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::FIRST_AID,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::SNEAKY_SHIT,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::WEIRD_SCIENCE,
+                skillWidth, space, accepted) << endl;
 
-            cout << ind2 << "EXPLORATION SKILLS" << endl;
-            cout << ind3 << "ARMOR MODDING      "
-                << statLevel(character.skill().level(Object::Skill::Type::ARMOR_MODDING), accepted) << endl;
-            cout << ind3 << "LOCKPICKING        "
-                << statLevel(character.skill().level(Object::Skill::Type::LOCKPICKING), accepted) << endl;
-            cout << ind3 << "NERD STUFF         "
-                << statLevel(character.skill().level(Object::Skill::Type::NERD_STUFF), accepted) << endl;
-            cout << ind3 << "MECHANICS          "
-                << statLevel(character.skill().level(Object::Skill::Type::MECHANICS), accepted) << endl;
-            cout << ind3 << "SURVIVAL           "
-                << statLevel(character.skill().level(Object::Skill::Type::SURVIVAL), accepted) << endl;
-            cout << ind3 << "TOASTER REPAIR     "
-                << statLevel(character.skill().level(Object::Skill::Type::TOASTER_REPAIR), accepted) << endl;
-            cout << ind3 << "WEAPON MODDING     "
-                << statLevel(character.skill().level(Object::Skill::Type::WEAPON_MODDING), accepted) << endl;
+            cout << ind2 << text.skill(PlainText::Skill::GROUP_EXPLORATION) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::ARMOR_MODDING,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::LOCKPICKING,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::NERD_STUFF,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::MECHANICS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::SURVIVAL,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::TOASTER_REPAIR,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::WEAPON_MODDING,
+                skillWidth, space, accepted) << endl;
 
-
-            cout << ind2 << "SOCIAL SKILLS" << endl;
-            cout << ind3 << "BARTER             "
-                << statLevel(character.skill().level(Object::Skill::Type::BARTER), accepted) << endl;
-            cout << ind3 << "HARD ASS           "
-                << statLevel(character.skill().level(Object::Skill::Type::HARD_ASS), accepted) << endl;
-            cout << ind3 << "KISS ASS           "
-                << statLevel(character.skill().level(Object::Skill::Type::KISS_ASS), accepted) << endl;
-            cout << ind3 << "LEADERSHIP         "
-                << statLevel(character.skill().level(Object::Skill::Type::LEADERSHIP), accepted) << endl;
+            cout << ind2 << text.skill(PlainText::Skill::GROUP_SOCIAL) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::BARTER,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::HARD_ASS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::KISS_ASS,
+                skillWidth, space, accepted) << endl;
+            cout << ind3 << stringSkill(character, Object::Skill::Type::LEADERSHIP,
+                skillWidth, space, accepted) << endl;
         }
 
-        void showSkill(Object::Character& character, Object::Skill::Type type,
-            const Indent indent, bool accepted)
+        Game::Common::Text stringSkill(const Object::Character& character, Object::Skill::Type type,
+            unsigned char width, char symbol, bool accepted)
         {
-            cout << indent << "Skill";
-            if (accepted) {
-                cout << " (accepted)";
-            }
-            cout << " \'";
-            switch (type) {
-            case Object::Skill::Type::AUTOMATIC_WEAPONS:
-                cout << "AUTOMATIC WEAPONS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::BIG_GUNS:
-                cout << "BIG GUNS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::BRAWLING:
-                cout << "BRAWLING\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::MELEE_COMBAT:
-                cout << "MELEE COMBAT\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::SMALL_ARMS:
-                cout << "SMALL ARMS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::SNIPER_RIFLES:
-                cout << "SNIPER RIFLES\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::ANIMAL_WHISPERER:
-                cout << "ANIMAL WHISPERER\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::EXPLOSIVES:
-                cout << "EXPLOSIVES\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::FIRST_AID:
-                cout << "FIRST AID\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::SNEAKY_SHIT:
-                cout << "SNEAKY SHIT\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::WEIRD_SCIENCE:
-                cout << "WEIRD SCIENCE\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::ARMOR_MODDING:
-                cout << "ARMOR MODDING\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::LOCKPICKING:
-                cout << "LOCKPICKING\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::NERD_STUFF:
-                cout << "NERD STUFF\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::MECHANICS:
-                cout << "MECHANICS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::SURVIVAL:
-                cout << "SURVIVAL\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::TOASTER_REPAIR:
-                cout << "TOASTER REPAIR\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::WEAPON_MODDING:
-                cout << "WEAPON MODDING\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::BARTER:
-                cout << "BARTER\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::HARD_ASS:
-                cout << "HARD ASS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::KISS_ASS:
-                cout << "KISS ASS\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            case Object::Skill::Type::LEADERSHIP:
-                cout << "LEADERSHIP\': "
-                    << statLevel(character.skill().level(type), accepted) << endl;
-                break;
-            default:
-                cout << "UNKNOWN\'" << endl;
-                return;
-            }
+            Game::Common::Text t{ fillWithChars(Global::Locator::getPlainText().skill(type), width, symbol) };
+            t += statLevel(character.skill().level(type), accepted);
+            return t;
         }
 
         void showSkillPoints(const Object::Character& character, const Indent indent, bool accepted)
@@ -305,63 +216,33 @@ namespace Game
             }
         }
 
+        Game::Common::Text fillWithChars(const Game::Common::Text& source,
+            unsigned char width, char placeholder)
+        {
+            Game::Common::Text t{ source };
+            for (int i = utf8Size(source); i < width; ++i) {
+                t += placeholder;
+            }
+            return t;
+        }
+
         Object::Skill::Type pickSkill(const Indent indent)
         {
+            using Game::Global::PlainText;
+            const auto& text = Global::Locator::getPlainText();
+
             Indent ind1 = indent + Indent{};
             cout << ind1 << "Skills:" << endl;
             Indent ind2 = ind1 + Indent{};
             Indent ind3 = ind2 + Indent{};
-            cout << ind2 << "COMBAT SKILLS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::AUTOMATIC_WEAPONS)
-                << "\' AUTOMATIC WEAPONS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::BIG_GUNS)
-                << "\' BIG GUNS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::BRAWLING)
-                << "\' BRAWLING" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::MELEE_COMBAT)
-                << "\' MELEE COMBAT" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::SMALL_ARMS)
-                << "\' SMALL ARMS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::SNIPER_RIFLES)
-                << "\' SNIPER RIFLES" << endl;
 
-            cout << ind2 << "GENERAL SKILLS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::ANIMAL_WHISPERER)
-                << "\' ANIMAL WHISPERER" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::EXPLOSIVES)
-                << "\' EXPLOSIVES" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::FIRST_AID)
-                << "\' FIRST AID" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::SNEAKY_SHIT)
-                << "\' SNEAKY SHIT" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::WEIRD_SCIENCE)
-                << "\' WEIRD SCIENCE" << endl;
-
-            cout << ind2 << "EXPLORATION SKILLS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::ARMOR_MODDING)
-                << "\' ARMOR MODDING" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::LOCKPICKING)
-                << "\' LOCKPICKING" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::NERD_STUFF)
-                << "\' NERD STUFF" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::MECHANICS)
-                << "\' MECHANICS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::SURVIVAL)
-                << "\' SURVIVAL" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::TOASTER_REPAIR)
-                << "\' TOASTER REPAIR" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::WEAPON_MODDING)
-                << "\' WEAPON MODDING" << endl;
-
-            cout << ind2 << "SOCIAL SKILLS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::BARTER)
-                << "\' BARTER" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::HARD_ASS)
-                << "\' HARD ASS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::KISS_ASS)
-                << "\' KISS ASS" << endl;
-            cout << ind3 << '\'' << static_cast<int>(Object::Skill::Type::LEADERSHIP)
-                << "\' LEADERSHIP" << endl;
+            for (int i = static_cast<int>(Object::Skill::Type::INVALID) + 1;
+                i < static_cast<int>(Object::Skill::Type::NUMBER_OF);
+                ++i)
+            {
+                cout << ind2 << '\'' << i << "\' "
+                    << text.skill(static_cast<Object::Skill::Type>(i)) << endl;
+            }
 
             cout << ind1 << "Select a skill:" << endl;
             Object::Skill::Type t{ Object::Skill::Type::INVALID };

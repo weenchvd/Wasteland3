@@ -21,12 +21,34 @@ namespace Game
         namespace ActionMain
         {
             enum ActionMain {
-                MENU_SQUAD = ActionCommon::NEXT,
-                MENU_INVENTORY
+                MENU_OPTION = ActionCommon::NEXT,
+                MENU_SQUAD,
+                MENU_INVENTORY,
+                MENU_SHOP,
+                MENU_TRADE
             };
         }
 
         void menuMain(Object::Squad& squad, Object::Inventory& shop);
+
+        namespace ActionTrade
+        {
+            enum ActionTrade {
+                BUY_ITEM = ActionCommon::NEXT,
+                SELL_ITEM
+            };
+        }
+
+        void menuTrade(Object::Squad& squad, Object::Inventory& shop, const Indent indent);
+
+        namespace ActionShop
+        {
+            enum ActionShop {
+                ALL_ITEMS = ActionCommon::NEXT
+            };
+        }
+
+        void menuShop(Object::Inventory& shop, const Indent indent);
 
         namespace ActionInventory
         {
@@ -66,7 +88,7 @@ namespace Game
 
         Common::Text itemName(const std::unique_ptr<Object::Item>& item);
 
-        void showAll(Object::Inventory& inventory, const Indent indent);
+        void showAll(Object::Inventory& inventory, const Indent indent, bool squad = true);
 
         Object::Character* pickCharacter(Object::Squad& squad, const Indent indent);
 

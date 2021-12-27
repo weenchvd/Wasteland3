@@ -15,6 +15,8 @@ namespace Game
 {
     namespace Menu
     {
+        constexpr int skillWidth{ 30 };
+
         namespace ActionSkill
         {
             enum ActionSkill {
@@ -41,10 +43,13 @@ namespace Game
 
         void showAllSkills(const Object::Character& character, const Indent indent, bool accepted = false);
 
-        void showSkill(Object::Character& character, Object::Skill::Type type,
-            const Indent indent, bool accepted = false);
+        Game::Common::Text stringSkill(const Object::Character& character, Object::Skill::Type type,
+            unsigned char width, char symbol, bool accepted = false);
 
         void showSkillPoints(const Object::Character& character, const Indent indent, bool accepted = false);
+
+        Game::Common::Text fillWithChars(const Game::Common::Text& source,
+            unsigned char width, char placeholder);
 
         Object::Skill::Type pickSkill(const Indent indent);
 

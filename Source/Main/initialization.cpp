@@ -26,7 +26,7 @@ namespace Init
 		using Game::Object::Weapon;
 		using Game::Object::WeaponMod;
 		
-		Game::Global::Factory& f = Game::Global::Locator::getFactory();
+		const Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		/// weapons
 		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -43,7 +43,7 @@ namespace Init
 		using Game::Object::Weapon;
 		using Game::Object::WeaponMod;
 
-		Game::Global::Factory& f = Game::Global::Locator::getFactory();
+		const Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		/// weapons
 		inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -66,7 +66,7 @@ namespace Init
 	{
 		using Game::Object::Character;
 
-		Game::Global::Factory& f = Game::Global::Locator::getFactory();
+		const Game::Global::Factory& f = Game::Global::Locator::getFactory();
 
 		int i = 0;
 		/// member 1

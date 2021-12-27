@@ -102,5 +102,16 @@ namespace Game
             return s;
         }
 
+        unsigned int utf8Size(const std::string& s)
+        {
+            unsigned int size{ 0 };
+            for (auto& ch : s) {
+                if ((ch & 0xC0) != 0x80) {
+                    ++size;
+                }
+            }
+            return size;
+        }
+
     }
 }

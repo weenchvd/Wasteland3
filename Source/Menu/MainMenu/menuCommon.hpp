@@ -15,6 +15,8 @@ namespace Game
 {
     namespace Menu
     {
+        constexpr char space{ ' ' };
+
         class Indent {
         public:
             Indent()
@@ -94,6 +96,8 @@ namespace Game
         }
 
         Common::Text statLevel(const Common::SpecStorage<Common::LevelStat>& level, bool accepted = false);
+
+        unsigned int utf8Size(const std::string& s);
 
     }
 }

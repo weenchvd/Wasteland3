@@ -15,6 +15,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(LIBRARY_NAME "menu")
 set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "menuMain.cpp"
+                    "menuOption.cpp"
                     "menuAttribute.cpp"
                     "menuSkill.cpp"
                     )
@@ -25,4 +26,11 @@ target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
                            )
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC common inventory squad unit)
+target_link_libraries(${LIBRARY_NAME}
+                        PUBLIC common
+                        PUBLIC inventory
+                        PUBLIC locator
+                        PUBLIC plainText
+                        PUBLIC squad
+                        PUBLIC unit
+                        )

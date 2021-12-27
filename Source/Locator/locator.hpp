@@ -8,6 +8,7 @@
 #define LOCATOR_HPP
 
 #include"factory.hpp"
+#include<memory>
 
 namespace Game
 {
@@ -15,13 +16,22 @@ namespace Game
     {
         class Locator {
         public:
-            static Factory& getFactory() noexcept {
-                return factory;
+            static const Game::Global::Factory& getFactory() noexcept {
+                return factory_;
+            }
+
+            static Game::Global::PlainText& getPlainText() noexcept {
+                return *plainText_;
+            }
+
+            static Game::Global::Option& getOption() noexcept {
+                return *option_;
             }
 
         private:
-            static Factory                  factory;
-
+            static Game::Global::Factory                            factory_;
+            static std::unique_ptr<Game::Global::PlainText>         plainText_;
+            static std::unique_ptr<Game::Global::Option>            option_;
         };
 
     }

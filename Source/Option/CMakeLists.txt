@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(LIBRARY_NAME "factory")
+set(LIBRARY_NAME "option")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     )
 
@@ -23,8 +23,5 @@ target_include_directories(${LIBRARY_NAME}
                            )
 
 target_link_libraries(${LIBRARY_NAME}
-                        PUBLIC item
-                        PUBLIC plainText
-                        PUBLIC option
-                        PUBLIC unit
+                        PUBLIC locator
                         )

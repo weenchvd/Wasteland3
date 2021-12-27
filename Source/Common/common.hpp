@@ -8,6 +8,7 @@
 #define COMMON_HPP
 
 #include<string>
+#include<type_traits>
 
 namespace Game
 {
@@ -47,6 +48,18 @@ namespace Game
 
         using Money                 = long long int;
 
+
+        template <class Enum>
+        constexpr auto toUnderlying(Enum e) noexcept
+        {
+            return static_cast<std::underlying_type_t<Enum>>(e);
+        }
+
+        template <class Enum>
+        constexpr bool isValidEnum(Enum e) noexcept
+        {
+            return (e > Enum::INVALID && e < Enum::NUMBER_OF);
+        }
     }
 }
 
