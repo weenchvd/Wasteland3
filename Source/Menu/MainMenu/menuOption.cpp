@@ -91,7 +91,7 @@ namespace Game
         {
             static Common::Text lang_[Common::toUnderlying(Game::Global::PlainText::Language::NUMBER_OF)];
             lang_[Common::toUnderlying(Game::Global::PlainText::Language::ENGLISH)] = u8"ENGLISH";
-            lang_[Common::toUnderlying(Game::Global::PlainText::Language::RUSSIAN)] = u8"–”—— »…";
+            lang_[Common::toUnderlying(Game::Global::PlainText::Language::RUSSIAN)] = u8"–†–£–°–°–ö–ò–ô";
             return lang_[Common::toUnderlying(lang)];
         }
 

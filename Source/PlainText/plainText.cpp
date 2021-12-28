@@ -173,60 +173,60 @@ namespace Game
         void PlainText::initSkillRU()
         {
             skill_[Common::toUnderlying(PlainText::Skill::GROUP_COMBAT)]
-                = Common::Text{ u8"Боевые Навыки" };
+                = Common::Text{ u8"Р‘РѕРµРІС‹Рµ РќР°РІС‹РєРё" };
             skill_[Common::toUnderlying(PlainText::Skill::GROUP_GENERAL)]
-                = Common::Text{ u8"Общие Навыки" };
+                = Common::Text{ u8"РћР±С‰РёРµ РќР°РІС‹РєРё" };
             skill_[Common::toUnderlying(PlainText::Skill::GROUP_EXPLORATION)]
-                = Common::Text{ u8"Исследовательские Навыки" };
+                = Common::Text{ u8"РСЃСЃР»РµРґРѕРІР°С‚РµР»СЊСЃРєРёРµ РќР°РІС‹РєРё" };
             skill_[Common::toUnderlying(PlainText::Skill::GROUP_SOCIAL)]
-                = Common::Text{ u8"Социальные Навыки" };
+                = Common::Text{ u8"РЎРѕС†РёР°Р»СЊРЅС‹Рµ РќР°РІС‹РєРё" };
 
 
 
             skillType_[Common::toUnderlying(Object::Skill::Type::AUTOMATIC_WEAPONS)]
-                = Common::Text{ u8"Автомат. Оружие" };
+                = Common::Text{ u8"РђРІС‚РѕРјР°С‚. РћСЂСѓР¶РёРµ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::BIG_GUNS)]
-                = Common::Text{ u8"Тяжелое Оружие" };
+                = Common::Text{ u8"РўСЏР¶РµР»РѕРµ РћСЂСѓР¶РёРµ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::BRAWLING)]
-                = Common::Text{ u8"Рукопашная" };
+                = Common::Text{ u8"Р СѓРєРѕРїР°С€РЅР°СЏ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::MELEE_COMBAT)]
-                = Common::Text{ u8"Ближний Бой" };
+                = Common::Text{ u8"Р‘Р»РёР¶РЅРёР№ Р‘РѕР№" };
             skillType_[Common::toUnderlying(Object::Skill::Type::SMALL_ARMS)]
-                = Common::Text{ u8"Стрелковое Оружие" };
+                = Common::Text{ u8"РЎС‚СЂРµР»РєРѕРІРѕРµ РћСЂСѓР¶РёРµ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::SNIPER_RIFLES)]
-                = Common::Text{ u8"Снайперские Винтовки" };
+                = Common::Text{ u8"РЎРЅР°Р№РїРµСЂСЃРєРёРµ Р’РёРЅС‚РѕРІРєРё" };
             skillType_[Common::toUnderlying(Object::Skill::Type::ANIMAL_WHISPERER)]
-                = Common::Text{ u8"Дрессировщик" };
+                = Common::Text{ u8"Р”СЂРµСЃСЃРёСЂРѕРІС‰РёРє" };
             skillType_[Common::toUnderlying(Object::Skill::Type::EXPLOSIVES)]
-                = Common::Text{ u8"Взрывчатка" };
+                = Common::Text{ u8"Р’Р·СЂС‹РІС‡Р°С‚РєР°" };
             skillType_[Common::toUnderlying(Object::Skill::Type::FIRST_AID)]
-                = Common::Text{ u8"Первая Помощь" };
+                = Common::Text{ u8"РџРµСЂРІР°СЏ РџРѕРјРѕС‰СЊ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::SNEAKY_SHIT)]
-                = Common::Text{ u8"Исподтишка" };
+                = Common::Text{ u8"РСЃРїРѕРґС‚РёС€РєР°" };
             skillType_[Common::toUnderlying(Object::Skill::Type::WEIRD_SCIENCE)]
-                = Common::Text{ u8"Чудная наука" };
+                = Common::Text{ u8"Р§СѓРґРЅР°СЏ РЅР°СѓРєР°" };
             skillType_[Common::toUnderlying(Object::Skill::Type::ARMOR_MODDING)]
-                = Common::Text{ u8"Мод. Брони" };
+                = Common::Text{ u8"РњРѕРґ. Р‘СЂРѕРЅРё" };
             skillType_[Common::toUnderlying(Object::Skill::Type::LOCKPICKING)]
-                = Common::Text{ u8"Вскрывание Замков" };
+                = Common::Text{ u8"Р’СЃРєСЂС‹РІР°РЅРёРµ Р—Р°РјРєРѕРІ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::NERD_STUFF)]
-                = Common::Text{ u8"Всезнайка" };
+                = Common::Text{ u8"Р’СЃРµР·РЅР°Р№РєР°" };
             skillType_[Common::toUnderlying(Object::Skill::Type::MECHANICS)]
-                = Common::Text{ u8"Работа с Механикой" };
+                = Common::Text{ u8"Р Р°Р±РѕС‚Р° СЃ РњРµС…Р°РЅРёРєРѕР№" };
             skillType_[Common::toUnderlying(Object::Skill::Type::SURVIVAL)]
-                = Common::Text{ u8"Выживание" };
+                = Common::Text{ u8"Р’С‹Р¶РёРІР°РЅРёРµ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::TOASTER_REPAIR)]
-                = Common::Text{ u8"Ремонт Тостеров" };
+                = Common::Text{ u8"Р РµРјРѕРЅС‚ РўРѕСЃС‚РµСЂРѕРІ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::WEAPON_MODDING)]
-                = Common::Text{ u8"Мод. Оружия" };
+                = Common::Text{ u8"РњРѕРґ. РћСЂСѓР¶РёСЏ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::BARTER)]
-                = Common::Text{ u8"Бартер" };
+                = Common::Text{ u8"Р‘Р°СЂС‚РµСЂ" };
             skillType_[Common::toUnderlying(Object::Skill::Type::HARD_ASS)]
-                = Common::Text{ u8"Железная Задница" };
+                = Common::Text{ u8"Р–РµР»РµР·РЅР°СЏ Р—Р°РґРЅРёС†Р°" };
             skillType_[Common::toUnderlying(Object::Skill::Type::KISS_ASS)]
-                = Common::Text{ u8"Жополиз" };
+                = Common::Text{ u8"Р–РѕРїРѕР»РёР·" };
             skillType_[Common::toUnderlying(Object::Skill::Type::LEADERSHIP)]
-                = Common::Text{ u8"Лидерство" };
+                = Common::Text{ u8"Р›РёРґРµСЂСЃС‚РІРѕ" };
         }
 
     }

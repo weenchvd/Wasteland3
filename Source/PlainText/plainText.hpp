@@ -25,7 +25,7 @@ namespace Game
 
         const Game::Common::Text invalidEnum{ u8"INVALID ENUM" };
         const Game::Common::Text eng_NoData{ u8"NO DATA" };
-        const Game::Common::Text rus_NoData{ u8"Õ≈“ ƒ¿ÕÕ€’" };
+        const Game::Common::Text rus_NoData{ u8"–ù–ï–¢ –î–ê–ù–ù–´–•" };
 
         ///------------------------------------------------------------------------------------------------
 
