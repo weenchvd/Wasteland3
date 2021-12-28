@@ -28,4 +28,8 @@ target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character/Skill"
                            )
 
-target_link_libraries(${LIBRARY_NAME} PUBLIC common item effect)
+target_link_libraries(${LIBRARY_NAME}
+                      PUBLIC common
+                      PUBLIC item
+                      PUBLIC effect
+                      )

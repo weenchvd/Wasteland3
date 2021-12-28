@@ -30,6 +30,6 @@ target_include_directories(${LIBRARY_NAME}
                            )
 
 target_link_libraries(${LIBRARY_NAME}
-                        PUBLIC common
-                        PUBLIC locator
-                        )
+                      PUBLIC common
+                      PUBLIC locator
+                      )

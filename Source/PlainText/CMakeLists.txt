@@ -23,6 +23,6 @@ target_include_directories(${LIBRARY_NAME}
                            )
 
 target_link_libraries(${LIBRARY_NAME}
-                        PUBLIC common
-                        PUBLIC unit
-                        )
+                      PUBLIC common
+                      PUBLIC unit
+                      )
