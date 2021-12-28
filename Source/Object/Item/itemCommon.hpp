@@ -11,16 +11,20 @@ namespace Game
 {
     namespace Object
     {
-        using ItemBaseType                  = unsigned short int;
-        using ItemModel                     = ItemBaseType;
+        using ItemBaseType                  = short int;
+        using Item__Model                   = ItemBaseType;
 
-        enum class ItemType : ItemBaseType {
+        enum class Item__Type : ItemBaseType {
+            INVALID = -1,                   /// invalid, must be the first
+
             WEAPON,
             WEAPONMOD,
             ARMOR,
             ARMORMOD,
             AMMO,
-            JUNK
+            JUNK,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

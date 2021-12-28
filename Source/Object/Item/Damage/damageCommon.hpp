@@ -11,14 +11,16 @@ namespace Game
 {
     namespace Object
     {
-        enum class DamageType : unsigned char {
-            INVALID,                        /// invalid type, must be the first
+        enum class Damage__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
 
             NORMAL,
             FIRE,
             COLD,
             ENERGY,
-            EXPLOSIVE
+            EXPLOSIVE,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

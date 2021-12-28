@@ -13,8 +13,8 @@ namespace Game
 {
     namespace Object
     {
-        enum class WeaponModModel : ItemBaseType {
-            INVALID,                        /// invalid model, must be the first
+        enum class WeaponMod__Model : ItemBaseType {
+            INVALID = -1,                   /// invalid, must be the first
 
             BARREL_SHORTENED,
             BARREL_LIGHTWEIGHT,
@@ -35,8 +35,8 @@ namespace Game
             NUMBER_OF                       /// must be the last
         };
         
-        enum class WeaponModType : unsigned char {
-            INVALID,                        /// invalid class, must be the first
+        enum class WeaponMod__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
             ANY,                            // any type
 
             CHOKE,
@@ -45,7 +45,9 @@ namespace Game
             SCOPE,
             MAGAZINE,
             WEIGHT,
-            HANDLE
+            HANDLE,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

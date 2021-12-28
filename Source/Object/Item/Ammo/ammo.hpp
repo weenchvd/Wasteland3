@@ -15,7 +15,7 @@ namespace Game
     {
         class Ammo {
         public:
-            using Type = AmmoType;
+            using Type          = Ammo__Type;
 
         public:
 

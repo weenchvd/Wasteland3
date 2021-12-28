@@ -11,8 +11,8 @@ namespace Game
 {
     namespace Object
     {
-        enum class SkillType : char {
-            INVALID = -1,                   /// invalid type, must be the first
+        enum class Skill__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
 
             // Combat skills
             AUTOMATIC_WEAPONS,

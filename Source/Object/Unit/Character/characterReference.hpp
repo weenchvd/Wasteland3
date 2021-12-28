@@ -27,8 +27,8 @@ namespace Game
         struct CharacterReference {
             explicit CharacterReference() noexcept
                 :
-                model_              { CharacterModel::INVALID },
-                type_               { CharacterType::INVALID },
+                model_              { Character__Model::INVALID },
+                type_               { Character__Type::INVALID },
                 //armorTypes_         { Armor::Type::HEAD,
                 //                      Armor::Type::CHEST,
                 //                      Armor::Type::LEG,
@@ -125,8 +125,8 @@ namespace Game
             CharacterReference(CharacterReference&&) = default;
             CharacterReference& operator=(CharacterReference&&) = default;
 
-            void characterModel(CharacterModel model) noexcept                  { model_ = model; }
-            void characterType(CharacterType type) noexcept                     { type_ = type; }
+            void characterModel(Character__Model model) noexcept                { model_ = model; }
+            void characterType(Character__Type type) noexcept                   { type_ = type; }
             //void slotArmorTypes(Slot_ArmorTypes types) noexcept                 { armorTypes_ = types; }
             void slotWeaponTypes(Slot_WeaponTypes types) noexcept               { weaponTypes_ = types; }
             //void slotConsumableTypes(Slot_ConsumableTypes types) noexcept       { consumTypes_ = types; }
@@ -209,8 +209,8 @@ namespace Game
             void perception(Common::Perception perc) noexcept                   { percept_ = perc; }
             void radiationResistance(Common::Radiation rad) noexcept            { radRes_ = rad; }
 
-            CharacterModel              model_;         // character model
-            CharacterType               type_;          // character type
+            Character__Model            model_;         // character model
+            Character__Type             type_;          // character type
             //Slot_ArmorTypes             armorTypes_;    // list of slot types
             Slot_WeaponTypes            weaponTypes_;   // list of slot types
             //Slot_ConsumableTypes        consumTypes_;   // list of slot types

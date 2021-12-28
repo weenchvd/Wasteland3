@@ -26,8 +26,8 @@ namespace Game
         struct WeaponReference {
             explicit WeaponReference() noexcept
                 :
-                model_          { WeaponModel::INVALID },
-                type_           { WeaponType::INVALID },
+                model_          { Weapon__Model::INVALID },
+                type_           { Weapon__Type::INVALID },
                 weaponModTypes_ { WeaponMod::Type::INVALID,
                                   WeaponMod::Type::INVALID,
                                   WeaponMod::Type::INVALID,
@@ -57,8 +57,8 @@ namespace Game
             WeaponReference(WeaponReference&&) = default;
             WeaponReference& operator=(WeaponReference&&) = default;
 
-            void weaponModel(WeaponModel model) noexcept                { model_ = model; }
-            void weaponType(WeaponType type) noexcept                   { type_ = type; }
+            void weaponModel(Weapon__Model model) noexcept              { model_ = model; }
+            void weaponType(Weapon__Type type) noexcept                 { type_ = type; }
             void slotWeaponModTypes(Slot_WeaponModTypes types) noexcept { weaponModTypes_ = types; }
 
             void name(Common::Text text) noexcept                       { name_ = text; }
@@ -80,8 +80,8 @@ namespace Game
             void ammoType(Ammo::Type type) noexcept                     { tyAmmo_ = type; }
             void damageType(Damage::Type type) noexcept                 { tyDmg_ = type; }
 
-            WeaponModel             model_;         // weapon model
-            WeaponType              type_;          // weapon type (kind)
+            Weapon__Model           model_;         // weapon model
+            Weapon__Type            type_;          // weapon type (kind)
             Slot_WeaponModTypes     weaponModTypes_;// list of slot types
 
             Common::Text            name_;          // weapon name

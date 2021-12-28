@@ -11,12 +11,14 @@ namespace Game
 {
     namespace Object
     {
-        enum class AmmoType : unsigned char {
-            INVALID,                        /// invalid type, must be the first
+        enum class Ammo__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
 
             NONE,                           // without ammo
             A_5_56,                         // 5.56
-            A_7_62                          // 7.62
+            A_7_62,                         // 7.62
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

@@ -143,7 +143,7 @@ namespace Game
 
         class Skill {
         public:
-            using Type      = SkillType;
+            using Type          = Skill__Type;
 
         public:
             Skill(Character& character);

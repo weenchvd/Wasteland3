@@ -28,8 +28,8 @@ namespace Game
     {
         class Weapon : public Item {
         public:
-            using Model     = WeaponModel;
-            using Type      = WeaponType;
+            using Model         = Weapon__Model;
+            using Type          = Weapon__Type;
 
             friend Game::Global::Factory;
 

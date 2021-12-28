@@ -26,8 +26,8 @@ namespace Game
 
         class WeaponMod : public Item {
         public:
-            using Model     = WeaponModModel;
-            using Type      = WeaponModType;
+            using Model         = WeaponMod__Model;
+            using Type          = WeaponMod__Type;
 
             friend Game::Global::Factory;
 

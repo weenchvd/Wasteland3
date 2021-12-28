@@ -13,8 +13,8 @@ namespace Game
 {
     namespace Object
     {
-        enum class CharacterModel : UnitBaseType {
-            INVALID,                        /// invalid model, must be the first
+        enum class Character__Model : UnitBaseType {
+            INVALID = -1,                   /// invalid, must be the first
             MINIMUM,                        // minimum valid stats
 
             RANGER_COMMON,
@@ -22,11 +22,13 @@ namespace Game
             NUMBER_OF                       /// must be the last
         };
 
-        enum class CharacterType : unsigned char {
-            INVALID,                        /// invalid class, must be the first
+        enum class Character__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
 
             RANGER,
-            COMPANION
+            COMPANION,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

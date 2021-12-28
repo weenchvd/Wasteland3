@@ -13,8 +13,8 @@ namespace Game
 {
     namespace Object
     {
-        enum class WeaponModel : ItemBaseType {
-            INVALID,                        /// invalid model, must be the first
+        enum class Weapon__Model : ItemBaseType {
+            INVALID = -1,                   /// invalid, must be the first
             MINIMUM,                        // minimum valid stats
 
             AR_KALASH97,
@@ -25,8 +25,8 @@ namespace Game
             NUMBER_OF                       /// must be the last
         };
 
-        enum class WeaponType : unsigned char {
-            INVALID,                        /// invalid class, must be the first
+        enum class Weapon__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
             ANY,                            // any type
 
             AR,
@@ -42,7 +42,9 @@ namespace Game
             SCIENCE,
             BLADED,
             BLUNT,
-            BRAWLING
+            BRAWLING,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

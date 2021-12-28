@@ -15,7 +15,7 @@ namespace Game
     {
         class Damage {
         public:
-            using Type = DamageType;
+            using Type          = Damage__Type;
 
         };
     }

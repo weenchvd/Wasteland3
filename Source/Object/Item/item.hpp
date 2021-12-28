@@ -17,8 +17,8 @@ namespace Game
     {
         class Item {
         public:
-            using Type      = ItemType;
-            using Model     = ItemModel;
+            using Type          = Item__Type;
+            using Model         = Item__Model;
 
         public:
             Item() noexcept {}

@@ -13,21 +13,23 @@ namespace Game
 {
     namespace Object
     {
-        enum class ArmorModel : ItemBaseType {
-            INVALID,                        /// invalid model, must be the first
+        enum class Armor__Model : ItemBaseType {
+            INVALID = -1,                   /// invalid, must be the first
 
 
 
             NUMBER_OF                       /// must be the last
         };
 
-        enum class ArmorType : unsigned char {
-            INVALID,                        /// invalid class, must be the first
+        enum class Armor__Type : char {
+            INVALID = -1,                   /// invalid, must be the first
 
             HEAD,
             CHEST,
             LEG,
-            UTILITY
+            UTILITY,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

@@ -29,8 +29,8 @@ namespace Game
 
         class Character : public Unit {
         public:
-            using Model     = CharacterModel;
-            using Type      = CharacterType;
+            using Model         = Character__Model;
+            using Type          = Character__Type;
 
             friend Game::Global::Factory;
 
@@ -59,7 +59,7 @@ namespace Game
         /// character parameters
         public:
             virtual Unit::Type unitType() const noexcept override {
-                return Unit::Type::Character;
+                return Unit::Type::CHARACTER;
             }
 
             virtual Unit::Model unitModel() const noexcept override {

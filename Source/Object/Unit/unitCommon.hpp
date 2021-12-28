@@ -11,17 +11,21 @@ namespace Game
 {
     namespace Object
     {
-        using UnitBaseType                  = unsigned short int;
-        using UnitModel                     = UnitBaseType;
+        using UnitBaseType                  = short int;
+        using Unit__Model                   = UnitBaseType;
 
-        enum class UnitType : UnitBaseType {
-            Character,
-            Human,
-            Mutant,
-            Animal,
-            Vehicle,
-            Robot,
-            Synth
+        enum class Unit__Type : UnitBaseType {
+            INVALID = -1,                   /// invalid, must be the first
+
+            CHARACTER,
+            HUMAN,
+            MUTANT,
+            ANIMAL,
+            VEHICLE,
+            ROBOT,
+            SYNTH,
+
+            NUMBER_OF                       /// must be the last
         };
 
     }

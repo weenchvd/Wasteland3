@@ -16,8 +16,8 @@ namespace Game
     {
         class Unit {
         public:
-            using Type      = UnitType;
-            using Model     = UnitModel;
+            using Type          = Unit__Type;
+            using Model         = Unit__Model;
 
         public:
             Unit() noexcept {}

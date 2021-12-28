@@ -125,7 +125,7 @@ namespace Game
 
         class Attribute {
         public:
-            using Type      = AttributeType;
+            using Type          = Attribute__Type;
 
         public:
             Attribute(Character& character);
