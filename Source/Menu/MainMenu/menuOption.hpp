@@ -37,8 +37,6 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        const Common::Text& getLanguage(Game::Global::PlainText::Language lang);
-
         Game::Global::PlainText::Language pickLanguage(const Indent indent);
 
     }

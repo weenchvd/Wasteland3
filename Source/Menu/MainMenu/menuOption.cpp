@@ -49,6 +49,7 @@ namespace Game
         void menuLanguage(const Indent indent)
         {
             using Game::Global::PlainText;
+            using Game::Global::Locator;
 
             Indent ind1 = indent + Indent{};
             Indent ind2 = ind1 + Indent{};
@@ -58,7 +59,7 @@ namespace Game
                 cout << endl << endl;
                 cout << ind1 << "Language menu" << endl;
                 cout << ind1 << "Current language: "
-                    << getLanguage(Game::Global::Locator::getOption().getLanguage()) << endl;
+                    << Locator::getPlainText().language(Locator::getOption().getLanguage()) << endl;
                 cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
                 cout << ind2 << '\'' << ActionLanguage::CHANGE_LANGUAGE << "\' Change language" << endl;
 
@@ -87,17 +88,10 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        const Common::Text& getLanguage(Game::Global::PlainText::Language lang)
-        {
-            static Common::Text lang_[Common::toUnderlying(Game::Global::PlainText::Language::NUMBER_OF)];
-            lang_[Common::toUnderlying(Game::Global::PlainText::Language::ENGLISH)] = u8"ENGLISH";
-            lang_[Common::toUnderlying(Game::Global::PlainText::Language::RUSSIAN)] = u8"РУССКИЙ";
-            return lang_[Common::toUnderlying(lang)];
-        }
-
         Game::Global::PlainText::Language pickLanguage(const Indent indent)
         {
             using Game::Global::PlainText;
+            using Game::Global::Locator;
 
             Indent ind1 = indent + Indent{};
             cout << ind1 << "Languages:" << endl;
@@ -109,7 +103,7 @@ namespace Game
                 ++i)
             {
                 cout << ind2 << '\'' << i << "\' "
-                    << getLanguage(static_cast<PlainText::Language>(i)) << endl;
+                    << Locator::getPlainText().language(static_cast<PlainText::Language>(i)) << endl;
             }
 
             cout << ind1 << "Select a Language:" << endl;

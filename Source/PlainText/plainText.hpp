@@ -46,13 +46,15 @@ namespace Game
 
             ~PlainText() noexcept {}
 
-            PlainText::Language language() const noexcept {
-                return lang_;
+            PlainText::Language getLanguage() const noexcept {
+                return current_;
             }
 
-            void language(PlainText::Language lang);
+            void setLanguage(PlainText::Language lang);
 
         public:
+            const Game::Common::Text& language(PlainText::Language id) const noexcept;
+
             const Game::Common::Text& common(PlainText::General id) const noexcept;
 
             const Game::Common::Text& skill(PlainText::Skill id) const noexcept;
@@ -77,12 +79,14 @@ namespace Game
         private:
             using Text = Game::Common::Text;
 
+            static constexpr int sizeLang_ = Common::toUnderlying(PlainText::Language::NUMBER_OF);
             static constexpr int sizeCommon_ = Common::toUnderlying(PlainText::General::NUMBER_OF);
             static constexpr int sizeSkill_ = Common::toUnderlying(PlainText::Skill::NUMBER_OF);
             static constexpr int sizeSkillType_ = Common::toUnderlying(Game::Object::Skill::Type::NUMBER_OF);
 
         protected:
-            PlainText::Language                                 lang_;
+            PlainText::Language                                 current_;
+            std::array<Text, sizeLang_>                         lang_;
             std::array<Text, sizeCommon_>                       common_;
             std::array<Text, sizeSkill_>                        skill_;
             std::array<Text, sizeSkillType_>                    skillType_;

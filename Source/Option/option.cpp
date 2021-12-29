@@ -19,12 +19,12 @@ namespace Game
 
         Game::Global::PlainText::Language Option::getLanguage() const noexcept
         {
-            return Game::Global::Locator::getPlainText().language();
+            return Game::Global::Locator::getPlainText().getLanguage();
         }
 
         void Option::setLanguage(Game::Global::PlainText::Language lang) const noexcept
         {
-            Game::Global::Locator::getPlainText().language(lang);
+            Game::Global::Locator::getPlainText().setLanguage(lang);
         }
 
     }
