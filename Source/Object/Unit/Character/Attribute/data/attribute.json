@@ -1,0 +1,11 @@
+{
+    "min_attr_points": 0,
+    "max_attr_points": 127,
+    "init_attr_points": 21,
+    "min_attr_level": 0,
+    "max_attr_level": 10,
+    "init_attr_level": 1,
+    "point_attr_distr": {
+        "a": [ 0, -1 ]
+    }
+}

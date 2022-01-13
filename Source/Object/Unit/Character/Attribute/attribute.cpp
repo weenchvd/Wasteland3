@@ -5,16 +5,23 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"attribute.hpp"
+#include"attributePath.hpp"
 #include"character.hpp"
+#include"locator.hpp"
+#include<assert.h>
+#include<iostream>
+#include<fstream>
 
 namespace Game
 {
     namespace Object
     {
         using namespace std;
+        using Game::Common::Text;
 
         Attribute::Attribute(Character& character)
             :
+            buffer_     { initBuffer() },
             char_       { character },
             levels_     { initLevels() },
             pDist_      { initPointDist() },
@@ -30,7 +37,7 @@ namespace Game
 
         void Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
         {
-            auto index = static_cast<underlying_type_t<Attribute::Type>>(type);
+            auto index = Common::toUnderlying(type);
             Common::changeLevel(levels_[index], pStor_, pDist_, shift);
         }
         
@@ -83,6 +90,24 @@ namespace Game
             pStor_.reset();
         }
 
+        void Attribute::initializeText()
+        {
+            Game::Global::PlainText::Language lang =
+                Game::Global::Locator::getOption().getLanguage();
+        }
+
+        const Text& Attribute::name(Attribute::Type id) noexcept
+        {
+            assert(Common::isValidEnum(id));
+            return tName_[Common::toUnderlying(id)];
+        }
+
+        const Text& Attribute::descr(Attribute::Type id) noexcept
+        {
+            assert(Common::isValidEnum(id));
+            return tDescr_[Common::toUnderlying(id)];
+        }
+
         void Attribute::apply() noexcept
         {
             apply(Attribute::Type::COORDINATION);
@@ -96,7 +121,7 @@ namespace Game
 
         void Attribute::apply(Attribute::Type type) noexcept
         {
-            auto index = static_cast<underlying_type_t<Attribute::Type>>(type);
+            auto index = Common::toUnderlying(type);
             auto accLevel = levels_[index].getAccepted();
             auto curLevel = levels_[index].get();
             if (accLevel != curLevel) {
@@ -142,11 +167,32 @@ namespace Game
             }
         }
 
+        unique_ptr<const char> Attribute::initBuffer()
+        {
+            //constexpr char* fullPath{ REL_PATH_TO_ASSETS ""}
+            constexpr char* fullPath{ "W3_Data\\Assets\\attribute.bundle" };
+
+            ifstream infile;
+            infile.open(fullPath, ios::binary | ios::in);
+            auto temp = infile.is_open();
+            infile.seekg(0, ios::end);
+            int length = infile.tellg();
+            infile.seekg(0, ios::beg);
+            unique_ptr<char> buffer{ new char[length] };
+            infile.read(buffer.get(), length);
+            infile.close();
+
+            return buffer;
+        }
+
         vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()
         {
-            Common::SpecStorage<Common::LevelStat> tempLevel{ minAttributeLevel, maxAttributeLevel };
-            auto nAttributes = static_cast<underlying_type_t<Attribute::Type>>
-                (Attribute::Type::NUMBER_OF);
+            constexpr auto nAttributes = Common::toUnderlying(Attribute::Type::NUMBER_OF);
+            const FB_Attribute* attribute = GetFB_Attribute(buffer_.get());
+            const Common::SpecStorage<Common::LevelStat> tempLevel{
+                attribute->min_attr_level(),
+                attribute->max_attr_level()
+            };
             return vector<Common::SpecStorage<Common::LevelStat>>(nAttributes, tempLevel);
         }
 
@@ -258,6 +304,9 @@ namespace Game
                 vector<Common::Bonus>   (chaExperienceDist),
                 vector<Common::Bonus>   (chaMisRewardDist));
         }
+
+        array<Text, Attribute::sizeName_> Attribute::tName_;
+        array<Text, Attribute::sizeDescr_> Attribute::tDescr_;
 
     }
 }

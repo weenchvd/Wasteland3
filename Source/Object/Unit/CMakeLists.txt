@@ -1,4 +1,4 @@
-﻿
+
 # Copyright (c) 2021 Vitaly Dikov
 # 
 # Distributed under the Boost Software License, Version 1.0.
@@ -30,6 +30,11 @@ target_include_directories(${LIBRARY_NAME}
 
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC common
-                      PUBLIC item
                       PUBLIC effect
+                      PUBLIC flatbuffers
+                      PUBLIC item
+                      PUBLIC locator
                       )
+
+add_subdirectory("Character/Attribute")
+add_subdirectory("Character/Attribute/data")

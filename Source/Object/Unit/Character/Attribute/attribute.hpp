@@ -11,8 +11,11 @@
 #include"specStorage.hpp"
 #include"effectAttribute.hpp"
 #include"attributeCommon.hpp"
+#include"attribute_generated.h"
+#include<array>
 #include<initializer_list>
 #include<limits>
+#include<memory>
 #include<type_traits>
 #include<vector>
 
@@ -24,8 +27,8 @@ namespace Game
         constexpr Common::PointAttribute maxAttributePoints     { std::numeric_limits<Common::PointAttribute>::max() };
         constexpr Common::PointAttribute initAttributePoints    { 21 };
 
-        constexpr Common::LevelStat minAttributeLevel   { 0 };
-        constexpr Common::LevelStat maxAttributeLevel   { 10 };
+        //constexpr Common::LevelStat minAttributeLevel   { 0 };
+        //constexpr Common::LevelStat maxAttributeLevel   { 10 };
         constexpr Common::LevelStat initAttributeLevel  { 1 };
 
         constexpr std::initializer_list<Common::PointAttribute> pointAttDist{ 0, -1 };
@@ -148,12 +151,21 @@ namespace Game
 
         public:
             const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
-                return levels_[static_cast<std::underlying_type_t<Attribute::Type>>(type)];
+                return levels_[Common::toUnderlying(type)];
             }
 
             const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
                 return pStor_;
             }
+
+        public:
+            using Text = Game::Common::Text;
+
+            static void initializeText();
+
+            static const Text& name(Attribute::Type id) noexcept;
+
+            static const Text& descr(Attribute::Type id) noexcept;
 
         private:
             void apply() noexcept;
@@ -161,7 +173,8 @@ namespace Game
             void apply(Attribute::Type type) noexcept;
 
         private:
-            static std::vector<Common::SpecStorage<Common::LevelStat>>  initLevels();
+            static std::unique_ptr<const char>                          initBuffer();
+            std::vector<Common::SpecStorage<Common::LevelStat>>         initLevels();
             static std::vector<Common::PointAttribute>                  initPointDist();
             static std::vector<EffectAttCoord>                          initCoordDist();
             static std::vector<EffectAttLuck>                           initLuckDist();
@@ -172,6 +185,7 @@ namespace Game
             static std::vector<EffectAttCha>                            initCharismaDist();
 
         private:
+            std::unique_ptr<const char>                         buffer_;
             Character&                                          char_;
             std::vector<Common::SpecStorage<Common::LevelStat>> levels_;
             Common::SpecStorage<Common::PointAttribute>         pStor_;
@@ -183,6 +197,13 @@ namespace Game
             Common::Distribution<EffectAttSpeed>                spdDist_;
             Common::Distribution<EffectAttInt>                  intDist_;
             Common::Distribution<EffectAttCha>                  chaDist_;
+
+        private:
+            static constexpr int sizeName_ = Common::toUnderlying(Attribute::Type::NUMBER_OF);
+            static constexpr int sizeDescr_ = Common::toUnderlying(Attribute::Type::NUMBER_OF);
+
+            static std::array<Text, sizeName_>                  tName_;
+            static std::array<Text, sizeDescr_>                 tDescr_;
         };
 
     }
