@@ -8,7 +8,9 @@
 #define DISTRIBUTION_HPP
 
 #include"common.hpp"
+#include<assert.h>
 #include<initializer_list>
+#include<memory>
 #include<vector>
 
 namespace Game
@@ -22,12 +24,13 @@ namespace Game
             // vector[2] is T when moving from level 1 to level 2 and so on
             // if newLevel >= dist_.size(), then T is the last T in the dist_
             explicit Distribution(std::vector<T> distribution) noexcept
-                : dist_{ distribution } {}
+                : dist_{ std::move(distribution) } {}
 
             // return the total T when moving from currentLevel to newLevel
             T total(LevelStat currentLevel, LevelStat newLevel) const noexcept
             {
                 constexpr int minSize = 2;              // minimum size of the initialized vector
+                assert(dist_.size() >= minSize);
                 T total{};
                 if (currentLevel < 0 || newLevel < 0 ||
                     currentLevel == newLevel || dist_.size() < minSize)

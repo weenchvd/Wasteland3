@@ -4,7 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-namespace Game.Object;
+namespace Game.Object.fbAttribute;
 
 
 //table FB_EnumStringPair {
@@ -13,7 +13,80 @@ namespace Game.Object;
 //}
 
 struct FB_PointAttributeDistribution {
-  a:[int8:2];
+  p:[int8:2];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_CoordinationDistribution {
+  status_effect:[int16:11];
+  ap:[int8:11];
+  ap_max:[int8:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_LuckDistribution {
+  penet:[int8:11];
+  action:[int16:11];
+  crit_damage:[int16:11];
+  mega_crit_damage:[int16:11];
+  evade:[int16:11];
+  crit_resist:[int16:11];
+  double_healing:[int16:11];
+  double_money:[int16:11];
+  double_scrap:[int16:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_AwarenessDistribution {
+  hit:[int16:11];
+  percep:[int8:11];
+  ranged_damage:[int16:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_StrengthDistribution {
+  con_max:[int16:11];
+  con_per_lvl:[int16:11];
+  melee_damage:[int16:11];
+  throwing_range:[int16:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_SpeedDistribution {
+  combat_speed:[int16:11];
+  evasion:[int16:11];
+  initiative:[int16:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_IntelligenceDistribution {
+  crit_damage_chance:[int16:11];
+  crit_damage_mult:[int16:11];
+  crit_healing_chance:[int16:11];
+  crit_healing_bonus:[int16:11];
+  skill_point:[int16:11];
+}
+
+/// ATTRIBUTE LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_CharismaDistribution {
+  strike_rate:[int16:11];
+  leadership_range:[int16:11];
+  experience:[int16:11];
+  mission_reward:[int16:11];
 }
 
 table FB_Attribute {
@@ -24,6 +97,13 @@ table FB_Attribute {
   max_attr_level:int8;
   init_attr_level:int8;
   point_attr_distr:FB_PointAttributeDistribution;
+  coord_distr:FB_CoordinationDistribution;
+  luck_distr:FB_LuckDistribution;
+  aware_distr:FB_AwarenessDistribution;
+  str_distr:FB_StrengthDistribution;
+  speed_distr:FB_SpeedDistribution;
+  int_distr:FB_IntelligenceDistribution;
+  cha_distr:FB_CharismaDistribution;
 
 //  name:[FB_EnumStringPair];
 //  descr:[FB_EnumStringPair];

@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"flatbuffersConverter.hpp"
 #include"attribute.hpp"
 #include"attributePath.hpp"
 #include"character.hpp"
@@ -11,6 +12,7 @@
 #include<assert.h>
 #include<iostream>
 #include<fstream>
+#include<type_traits>
 
 namespace Game
 {
@@ -21,19 +23,20 @@ namespace Game
 
         Attribute::Attribute(Character& character)
             :
-            buffer_     { initBuffer() },
             char_       { character },
             levels_     { initLevels() },
-            pDist_      { initPointDist() },
-            pStor_      { minAttributePoints, maxAttributePoints },
-            cooDist_    { initCoordDist() },
-            lucDist_    { initLuckDist() },
-            awaDist_    { initAwareDist() },
-            strDist_    { initStrDist() },
-            spdDist_    { initSpeedDist() },
-            intDist_    { initIntDist() },
-            chaDist_    { initCharismaDist() }
-        {}
+            pStor_      { ref_.minAttrPoints_, ref_.maxAttrPoints_ },
+            pDist_      { ref_.pDist_ },
+            cooDist_    { ref_.cooDist_ },
+            lucDist_    { ref_.lucDist_ },
+            awaDist_    { ref_.awaDist_ },
+            strDist_    { ref_.strDist_ },
+            spdDist_    { ref_.spdDist_ },
+            intDist_    { ref_.intDist_ },
+            chaDist_    { ref_.chaDist_ }
+        {
+            assert(ref_.isInitialized());
+        }
 
         void Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
         {
@@ -88,24 +91,6 @@ namespace Game
                 level.reset();
             }
             pStor_.reset();
-        }
-
-        void Attribute::initializeText()
-        {
-            Game::Global::PlainText::Language lang =
-                Game::Global::Locator::getOption().getLanguage();
-        }
-
-        const Text& Attribute::name(Attribute::Type id) noexcept
-        {
-            assert(Common::isValidEnum(id));
-            return tName_[Common::toUnderlying(id)];
-        }
-
-        const Text& Attribute::descr(Attribute::Type id) noexcept
-        {
-            assert(Common::isValidEnum(id));
-            return tDescr_[Common::toUnderlying(id)];
         }
 
         void Attribute::apply() noexcept
@@ -167,14 +152,32 @@ namespace Game
             }
         }
 
-        unique_ptr<const char> Attribute::initBuffer()
+        const Text& Attribute::name(Attribute::Type id) noexcept
+        {
+            assert(Common::isValidEnum(id));
+            return tName_[Common::toUnderlying(id)];
+        }
+
+        const Text& Attribute::descr(Attribute::Type id) noexcept
+        {
+            assert(Common::isValidEnum(id));
+            return tDescr_[Common::toUnderlying(id)];
+        }
+
+        void Attribute::initialize()
+        {
+            initializeReference();
+            initializeText();
+        }
+
+        void Attribute::initializeReference()
         {
             //constexpr char* fullPath{ REL_PATH_TO_ASSETS ""}
             constexpr char* fullPath{ "W3_Data\\Assets\\attribute.bundle" };
 
             ifstream infile;
             infile.open(fullPath, ios::binary | ios::in);
-            auto temp = infile.is_open();
+            //auto temp = infile.is_open();
             infile.seekg(0, ios::end);
             int length = infile.tellg();
             infile.seekg(0, ios::beg);
@@ -182,40 +185,83 @@ namespace Game
             infile.read(buffer.get(), length);
             infile.close();
 
-            return buffer;
+            const fbAttribute::FB_Attribute* att =
+                fbAttribute::GetFB_Attribute(buffer.get());
+            assert(att != nullptr);
+
+            initPointDist(att);
+            initCoordDist(att);
+            initLuckDist(att);
+            initAwareDist(att);
+            initStrDist(att);
+            initSpeedDist(att);
+            initIntDist(att);
+            initCharismaDist(att);
+
+            ref_.minAttrPoints_     = { att->min_attr_points() };
+            ref_.maxAttrPoints_     = { att->max_attr_points() };
+            ref_.initAttrPoints_    = { att->init_attr_points() };
+            ref_.minAttrLevel_      = { att->min_attr_level() };
+            ref_.maxAttrLevel_      = { att->max_attr_level() };
+            ref_.initAttrLevel_     = { att->init_attr_level() };
+
+            ref_.initialized_       = true;
+        }
+
+        void Attribute::initializeText()
+        {
+            Game::Global::PlainText::Language lang =
+                Game::Global::Locator::getOption().getLanguage();
         }
 
         vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()
         {
+            initialize(); /// TODO delete, make initializer struct
+            assert(ref_.isInitialized());
             constexpr auto nAttributes = Common::toUnderlying(Attribute::Type::NUMBER_OF);
-            const FB_Attribute* attribute = GetFB_Attribute(buffer_.get());
             const Common::SpecStorage<Common::LevelStat> tempLevel{
-                attribute->min_attr_level(),
-                attribute->max_attr_level()
+                ref_.minAttrLevel_,
+                ref_.maxAttrLevel_
             };
             return vector<Common::SpecStorage<Common::LevelStat>>(nAttributes, tempLevel);
         }
 
-        inline vector<Common::PointAttribute> Attribute::initPointDist()
+        void Attribute::initPointDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return vector<Common::PointAttribute>(pointAttDist);
+            //const auto* pointAttrDistArray = attribute->point_attr_distr()->p();
+            //ref_.pDist_.reserve(pointAttrDistArray->size());
+            //for (int i = 0; i < pointAttrDistArray->size(); ++i) {
+            //    ref_.pDist_.push_back(
+            //        Common::PointAttribute{ pointAttrDistArray->Get(i) }
+            //    );
+            //}
+            ref_.pDist_ = move(
+                Common::convertToVector<Common::PointAttribute>(
+                    attribute->point_attr_distr()->p()
+                    )
+            );
         }
 
-        vector<EffectAttCoord> Attribute::initCoordDist()
+        void Attribute::initCoordDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttCoord,
+            const auto* dist = attribute->coord_distr();
+
+            ref_.cooDist_ = Common::initializeDistribution<EffectAttCoord,
                 Common::Resistance,
                 Common::ActionPoint,
                 Common::ActionPoint
             >(
-                vector<Common::Resistance>  (coordStatEffDist),
-                vector<Common::ActionPoint> (coordAPMaxDist),
-                vector<Common::ActionPoint> (coordAPDist));
+                Common::convertToVector<Common::Resistance>(dist->status_effect()),
+                Common::convertToVector<Common::ActionPoint>(dist->ap_max()),
+                Common::convertToVector<Common::ActionPoint>(dist->ap())
+                );
         }
 
-        vector<EffectAttLuck> Attribute::initLuckDist()
+        void Attribute::initLuckDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttLuck,
+            const auto* dist = attribute->luck_distr();
+
+            ref_.lucDist_ = Common::initializeDistribution<EffectAttLuck,
                 Common::Armor,
                 Common::Chance,
                 Common::Chance,
@@ -226,84 +272,102 @@ namespace Game
                 Common::Chance,
                 Common::Chance
             >(
-                vector<Common::Armor>   (luckPenetDist),
-                vector<Common::Chance>  (luckActionDist),
-                vector<Common::Chance>  (luckCritDist),
-                vector<Common::Chance>  (luckMegaCritDist),
-                vector<Common::Chance>  (luckEvadeDist),
-                vector<Common::Chance>  (luckCritResistDist),
-                vector<Common::Chance>  (luckDoubleHealDist),
-                vector<Common::Chance>  (luckDoubleMoneyDist),
-                vector<Common::Chance>  (luckDoubleScrapDist));
+                Common::convertToVector<Common::Armor>(dist->penet()),
+                Common::convertToVector<Common::Chance>(dist->action()),
+                Common::convertToVector<Common::Chance>(dist->crit_damage()),
+                Common::convertToVector<Common::Chance>(dist->mega_crit_damage()),
+                Common::convertToVector<Common::Chance>(dist->evade()),
+                Common::convertToVector<Common::Chance>(dist->crit_resist()),
+                Common::convertToVector<Common::Chance>(dist->double_healing()),
+                Common::convertToVector<Common::Chance>(dist->double_money()),
+                Common::convertToVector<Common::Chance>(dist->double_scrap())
+                );
         }
 
-        vector<EffectAttAware> Attribute::initAwareDist()
+        void Attribute::initAwareDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttAware,
+            const auto* dist = attribute->aware_distr();
+
+            ref_.awaDist_ = Common::initializeDistribution<EffectAttAware,
                 Common::Chance,
                 Common::Perception,
                 Common::Bonus
             >(
-                vector<Common::Chance>      (awareHitDist),
-                vector<Common::Perception>  (awarePercepDist),
-                vector<Common::Bonus>       (awareRangedDmgDist));
+                Common::convertToVector<Common::Chance>(dist->hit()),
+                Common::convertToVector<Common::Perception>(dist->percep()),
+                Common::convertToVector<Common::Bonus>(dist->ranged_damage())
+                );
         }
 
-        vector<EffectAttStr> Attribute::initStrDist()
+        void Attribute::initStrDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttStr,
+            const auto* dist = attribute->str_distr();
+
+            ref_.strDist_ = Common::initializeDistribution<EffectAttStr,
                 Common::Constitution,
                 Common::Constitution,
                 Common::Bonus,
                 Common::Multiplier
             >(
-                vector<Common::Constitution>(strMaxDist),
-                vector<Common::Constitution>(strPerLvlDist),
-                vector<Common::Bonus>       (strMeleeDmgDist),
-                vector<Common::Multiplier>  (strThrowRangeDist));
+                Common::convertToVector<Common::Constitution>(dist->con_max()),
+                Common::convertToVector<Common::Constitution>(dist->con_per_lvl()),
+                Common::convertToVector<Common::Bonus>(dist->melee_damage()),
+                Common::convertToVector<Common::Multiplier>(dist->throwing_range())
+                );
         }
 
-        vector<EffectAttSpeed> Attribute::initSpeedDist()
+        void Attribute::initSpeedDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttSpeed,
+            const auto* dist = attribute->speed_distr();
+
+            ref_.spdDist_ = Common::initializeDistribution<EffectAttSpeed,
                 Common::Multiplier,
                 Common::Evasion,
                 Common::Initiative
             >(
-                vector<Common::Multiplier>  (speedCombatSpeedDist),
-                vector<Common::Evasion>     (speedEvasionDist),
-                vector<Common::Initiative>  (speedInitDist));
+                Common::convertToVector<Common::Multiplier>(dist->combat_speed()),
+                Common::convertToVector<Common::Evasion>(dist->evasion()),
+                Common::convertToVector<Common::Initiative>(dist->initiative())
+                );
         }
 
-        vector<EffectAttInt> Attribute::initIntDist()
+        void Attribute::initIntDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttInt,
+            const auto* dist = attribute->int_distr();
+
+            ref_.intDist_ = Common::initializeDistribution<EffectAttInt,
                 Common::Chance,
                 Common::Multiplier,
                 Common::Chance,
                 Common::Bonus,
                 Common::PointSkill
             >(
-                vector<Common::Chance>      (intCritDmgChanceDist),
-                vector<Common::Multiplier>  (intCritDmgMultDist),
-                vector<Common::Chance>      (intCritHealChanceDist),
-                vector<Common::Bonus>       (intCritHealBonusDist),
-                vector<Common::PointSkill>  (intSkillPointDist));
+                Common::convertToVector<Common::Chance>(dist->crit_damage_chance()),
+                Common::convertToVector<Common::Multiplier>(dist->crit_damage_mult()),
+                Common::convertToVector<Common::Chance>(dist->crit_healing_chance()),
+                Common::convertToVector<Common::Bonus>(dist->crit_healing_bonus()),
+                Common::convertToVector<Common::PointSkill>(dist->skill_point())
+                );
         }
 
-        vector<EffectAttCha> Attribute::initCharismaDist()
+        void Attribute::initCharismaDist(const fbAttribute::FB_Attribute* attribute)
         {
-            return Common::initializeDistribution<EffectAttCha,
+            const auto* dist = attribute->cha_distr();
+
+            ref_.chaDist_ = Common::initializeDistribution<EffectAttCha,
                 Common::Strike,
                 Common::Range,
                 Common::Bonus,
                 Common::Bonus
             >(
-                vector<Common::Strike>  (chaStrikeRateDist),
-                vector<Common::Range>   (chaLeadershipDist),
-                vector<Common::Bonus>   (chaExperienceDist),
-                vector<Common::Bonus>   (chaMisRewardDist));
+                Common::convertToVector<Common::Strike>(dist->strike_rate()),
+                Common::convertToVector<Common::Range>(dist->leadership_range()),
+                Common::convertToVector<Common::Bonus>(dist->experience()),
+                Common::convertToVector<Common::Bonus>(dist->mission_reward())
+                );
         }
+
+        AttributeReference Attribute::ref_;
 
         array<Text, Attribute::sizeName_> Attribute::tName_;
         array<Text, Attribute::sizeDescr_> Attribute::tDescr_;
