@@ -37,3 +37,13 @@ if(GAME_ENABLE_TEST)
 
     add_subdirectory("Test")
 endif()
+
+include(FetchContent)
+FetchContent_Declare(
+    flatbuffers
+    GIT_REPOSITORY  https://github.com/google/flatbuffers.git
+    GIT_TAG         v2.0.0
+    SOURCE_DIR      ${CMAKE_CURRENT_SOURCE_DIR}/External/flatbuffers
+)
+
+FetchContent_MakeAvailable(flatbuffers)
