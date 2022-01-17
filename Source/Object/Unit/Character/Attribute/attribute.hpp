@@ -7,12 +7,12 @@
 #ifndef ATTRIBUTE_HPP
 #define ATTRIBUTE_HPP
 
-#include"distribution.hpp"
-#include"specStorage.hpp"
-#include"effectAttribute.hpp"
-#include"attributeReference.hpp"
-#include"attributeCommon.hpp"
 #include"attribute_generated.h"
+#include"attributeCommon.hpp"
+#include"attributeReference.hpp"
+#include"distribution.hpp"
+#include"effectAttribute.hpp"
+#include"specStorage.hpp"
 #include<array>
 #include<initializer_list>
 #include<limits>
@@ -76,21 +76,9 @@ namespace Game
 
             void apply(Attribute::Type type) noexcept;
 
-            static void initializeReference();
-
             static void initializeText();
 
-        private:
-            static std::vector<Common::SpecStorage<Common::LevelStat>>
-                        initLevels();
-            static void initPointDist(const fbAttribute::FB_Attribute* attribute);
-            static void initCoordDist(const fbAttribute::FB_Attribute* attribute);
-            static void initLuckDist(const fbAttribute::FB_Attribute* attribute);
-            static void initAwareDist(const fbAttribute::FB_Attribute* attribute);
-            static void initStrDist(const fbAttribute::FB_Attribute* attribute);
-            static void initSpeedDist(const fbAttribute::FB_Attribute* attribute);
-            static void initIntDist(const fbAttribute::FB_Attribute* attribute);
-            static void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
+            static std::vector<Common::SpecStorage<Common::LevelStat>> initLevels();
 
         private:
             Character&                                          char_;
@@ -105,7 +93,7 @@ namespace Game
             Common::Distribution<EffectAttInt>                  intDist_;
             Common::Distribution<EffectAttCha>                  chaDist_;
 
-            static AttributeReference                           ref_;
+            static const AttributeReference                     ref_;
 
         private:
             static constexpr int sizeName_ = Common::toUnderlying(Attribute::Type::NUMBER_OF);

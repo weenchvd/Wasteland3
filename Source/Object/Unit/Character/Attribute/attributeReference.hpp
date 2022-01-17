@@ -7,6 +7,7 @@
 #ifndef ATTRIBUTE_REFERENCE_HPP
 #define ATTRIBUTE_REFERENCE_HPP
 
+#include"attribute_generated.h"
 #include"common.hpp"
 #include"effectAttribute.hpp"
 #include<vector>
@@ -19,24 +20,7 @@ namespace Game
             using PointAttribute    = Common::PointAttribute;
             using LevelStat         = Common::LevelStat;
 
-            explicit AttributeReference() noexcept
-                :
-                pDist_              {},
-                cooDist_            {},
-                lucDist_            {},
-                awaDist_            {},
-                strDist_            {},
-                spdDist_            {},
-                intDist_            {},
-                chaDist_            {},
-                minAttrPoints_      { 0 },
-                maxAttrPoints_      { 0 },
-                initAttrPoints_     { 0 },
-                minAttrLevel_       { 0 },
-                maxAttrLevel_       { 0 },
-                initAttrLevel_      { 0 },
-                initialized_        { false }
-            {}
+            AttributeReference();
 
             AttributeReference(const AttributeReference&) = delete;
             AttributeReference& operator=(const AttributeReference&) = delete;
@@ -45,6 +29,17 @@ namespace Game
 
             bool isInitialized() const { return initialized_; }
 
+        private:
+            void initPointDist(const fbAttribute::FB_Attribute* attribute);
+            void initCoordDist(const fbAttribute::FB_Attribute* attribute);
+            void initLuckDist(const fbAttribute::FB_Attribute* attribute);
+            void initAwareDist(const fbAttribute::FB_Attribute* attribute);
+            void initStrDist(const fbAttribute::FB_Attribute* attribute);
+            void initSpeedDist(const fbAttribute::FB_Attribute* attribute);
+            void initIntDist(const fbAttribute::FB_Attribute* attribute);
+            void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
+
+        public:
             std::vector<PointAttribute>     pDist_;         // distribution of attribute points
             std::vector<EffectAttCoord>     cooDist_;
             std::vector<EffectAttLuck>      lucDist_;

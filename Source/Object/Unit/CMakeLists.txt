@@ -16,6 +16,7 @@ set(LIBRARY_NAME "unit")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Character/character.cpp"
                     "Character/Attribute/attribute.cpp"
+                    "Character/Attribute/attributeReference.cpp"
                     "Character/Skill/skill.cpp"
                     )
 
