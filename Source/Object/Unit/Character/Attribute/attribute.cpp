@@ -4,7 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"flatbuffersConverter.hpp"
+#include"flatbuffersAux.hpp"
 #include"attribute.hpp"
 #include"attributePath.hpp"
 #include"character.hpp"
@@ -172,18 +172,9 @@ namespace Game
 
         void Attribute::initializeReference()
         {
-            //constexpr char* fullPath{ REL_PATH_TO_ASSETS ""}
-            constexpr char* fullPath{ "W3_Data\\Assets\\attribute.bundle" };
-
-            ifstream infile;
-            infile.open(fullPath, ios::binary | ios::in);
-            //auto temp = infile.is_open();
-            infile.seekg(0, ios::end);
-            int length = infile.tellg();
-            infile.seekg(0, ios::beg);
-            unique_ptr<char> buffer{ new char[length] };
-            infile.read(buffer.get(), length);
-            infile.close();
+            unique_ptr<char[]> buffer{
+                Common::getFlatBuffer(ATTRIBUTE_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH)
+            };
 
             const fbAttribute::FB_Attribute* att =
                 fbAttribute::GetFB_Attribute(buffer.get());

@@ -10,12 +10,10 @@ cmake_minimum_required(VERSION 3.14)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-set(PATH_TO_FILES "W3_Data/Assets")
-
-configure_file("attribute.bundle"
-               "${CMAKE_BINARY_DIR}/Source/Main/${PATH_TO_FILES}/attribute.bundle"
+configure_file("${ATTRIBUTE_FB_FILENAME}"
+               "${CMAKE_BINARY_DIR}/Source/Main/${RELATIVE_PATH_TO_ASSETS}/${ATTRIBUTE_FB_FILENAME}"
                COPYONLY
 )
 
 # Add tests and install targets if needed.
-install(FILES "attribute.bundle" DESTINATION "${CMAKE_BUILD_TYPE}/${PATH_TO_FILES}")
+install(FILES "${ATTRIBUTE_FB_FILENAME}" DESTINATION "${CMAKE_BUILD_TYPE}/${RELATIVE_PATH_TO_ASSETS}")

@@ -7,6 +7,6 @@
 #ifndef ATTRIBUTE_PATH_HPP
 #define ATTRIBUTE_PATH_HPP
 
-#define REL_PATH_TO_ASSETS u8"W3_Data/Assets"
+#define ATTRIBUTE_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH u8R"(W3_Data\Assets\attribute.bundle)"
 
 #endif // !ATTRIBUTE_PATH_HPP

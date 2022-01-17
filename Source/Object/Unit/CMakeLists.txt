@@ -37,4 +37,3 @@ target_link_libraries(${LIBRARY_NAME}
                       )
 
 add_subdirectory("Character/Attribute")
-add_subdirectory("Character/Attribute/data")
