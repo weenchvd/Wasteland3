@@ -78,15 +78,17 @@ namespace Game
             }
         }
 
-        void menuModifySkill(Object::Character& character, Object::Skill::Type type, const Indent indent)
+        void menuModifySkill(
+            Object::Character& character,
+            Object::Skill::Type type,
+            const Indent indent)
         {
             Indent ind1 = indent + Indent{};
             Indent ind2 = ind1 + Indent{};
+            auto width{ utf8Size(Global::Locator::getPlainText().skill(type)) + 2 };
 
             while (true)
             {
-                auto width{ utf8Size(Global::Locator::getPlainText().skill(type)) + 2 };
-
                 cout << endl << endl;
                 showSkillPoints(character, ind1);
                 cout << ind1 << "Skill: " << stringSkill(character, type, width, space) << endl;
@@ -129,7 +131,10 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        void showAllSkills(const Object::Character& character, const Indent indent, bool accepted)
+        void showAllSkills(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted)
         {
             using Game::Global::PlainText;
             const auto& text = Global::Locator::getPlainText();
@@ -197,33 +202,35 @@ namespace Game
                 skillWidth, space, accepted) << endl;
         }
 
-        Game::Common::Text stringSkill(const Object::Character& character, Object::Skill::Type type,
-            unsigned char width, char symbol, bool accepted)
+        Game::Common::Text stringSkill(
+            const Object::Character& character,
+            Object::Skill::Type type,
+            unsigned char width,
+            char placeholder,
+            bool accepted)
         {
-            Game::Common::Text t{ fillWithChars(Global::Locator::getPlainText().skill(type), width, symbol) };
+            Game::Common::Text t{
+                fillWithPlaseholders(
+                    Global::Locator::getPlainText().skill(type), width, placeholder)
+            };
             t += statLevel(character.skill().level(type), accepted);
             return t;
         }
 
-        void showSkillPoints(const Object::Character& character, const Indent indent, bool accepted)
+        void showSkillPoints(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted)
         {
             cout << indent << "Skill points";
             if (accepted) {
-                cout << " (accepted): " << static_cast<int>(character.skill().storage().getAccepted()) << endl;
+                cout << " (accepted): " << static_cast<int>(
+                    character.skill().storage().getAccepted()) << endl;
             }
             else {
-                cout << ": " << static_cast<int>(character.skill().storage().get()) << endl;
+                cout << ": " << static_cast<int>(
+                    character.skill().storage().get()) << endl;
             }
-        }
-
-        Game::Common::Text fillWithChars(const Game::Common::Text& source,
-            unsigned char width, char placeholder)
-        {
-            Game::Common::Text t{ source };
-            for (int i = utf8Size(source); i < width; ++i) {
-                t += placeholder;
-            }
-            return t;
         }
 
         Object::Skill::Type pickSkill(const Indent indent)
@@ -237,8 +244,7 @@ namespace Game
             Indent ind3 = ind2 + Indent{};
 
             for (int i = static_cast<int>(Object::Skill::Type::INVALID) + 1;
-                i < static_cast<int>(Object::Skill::Type::NUMBER_OF);
-                ++i)
+                i < static_cast<int>(Object::Skill::Type::NUMBER_OF); ++i)
             {
                 cout << ind2 << '\'' << i << "\' "
                     << text.skill(static_cast<Object::Skill::Type>(i)) << endl;

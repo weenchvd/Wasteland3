@@ -6,8 +6,8 @@
 
 namespace Game.Object.fbAttribute;
 
-file_identifier "@ATTRIBUTE_FB_FILE_IDENTIFIER@";
-file_extension "@ATTRIBUTE_FB_FILE_EXTENSION@";
+file_identifier "@ATTRIBUTE_REF_FB_FILE_IDENTIFIER@";
+file_extension "@ATTRIBUTE_REF_FB_FILE_EXTENSION@";
 
 //table FB_EnumStringPair {
 //  id:int32;

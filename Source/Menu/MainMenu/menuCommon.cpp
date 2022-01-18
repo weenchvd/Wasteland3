@@ -113,5 +113,17 @@ namespace Game
             return size;
         }
 
+        Game::Common::Text fillWithPlaseholders(
+            const Game::Common::Text& source,
+            unsigned char width,
+            char placeholder)
+        {
+            Game::Common::Text t{ source };
+            for (int i = utf8Size(source); i < width; ++i) {
+                t += placeholder;
+            }
+            return t;
+        }
+
     }
 }

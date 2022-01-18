@@ -39,7 +39,7 @@ namespace Game
                     showAllAttributes(character, ind1, true);
                     break;
                 case ActionAttribute::MODIFY: {
-                    Object::Attribute::Type type{ pickAttribute(ind1) };
+                    Object::Attribute::Type type{ pickAttribute(character, ind1) };
                     if (type != Object::Attribute::Type::INVALID) {
                         menuModifyAttribute(character, type, ind1);
                     }
@@ -77,16 +77,21 @@ namespace Game
             }
         }
 
-        void menuModifyAttribute(Object::Character& character, Object::Attribute::Type type, const Indent indent)
+        void menuModifyAttribute(
+            Object::Character& character,
+            Object::Attribute::Type type,
+            const Indent indent)
         {
             Indent ind1 = indent + Indent{};
             Indent ind2 = ind1 + Indent{};
+            auto width{ utf8Size(character.attribute().attributeText().name(type)) + 2 };
 
             while (true)
             {
                 cout << endl << endl;
                 showAttPoints(character, ind1);
-                showAttribute(character, type, ind1);
+                cout << ind1 << "Attribute: " << stringAttribute(character, type, width, space) << endl;
+                cout << ind2 << character.attribute().attributeText().descr(type) << endl;
                 cout << ind1 << "Actions:" << endl;
                 cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
                 cout << ind2 << '\'' << ActionModifyAttribute::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
@@ -95,7 +100,8 @@ namespace Game
 
                 switch (getAction()) {
                 case ActionModifyAttribute::SHOW_ACCEPTED:
-                    showAttribute(character, type, ind2, true);
+                    cout << ind2 << "Attribute (accepted): "
+                        << stringAttribute(character, type, width, space, true) << endl;
                     break;
                 case ActionModifyAttribute::INCREASE_LEVEL: {
                     int n = getPosNumber();
@@ -125,7 +131,10 @@ namespace Game
 
         ///------------------------------------------------------------------------------------------------
 
-        void showAllAttributes(const Object::Character& character, const Indent indent, bool accepted)
+        void showAllAttributes(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted)
         {
             Indent ind1 = indent + Indent{};
             showAttPoints(character, ind1, accepted);
@@ -133,92 +142,71 @@ namespace Game
             if (accepted) {
                 cout << " (accepted)";
             }
-            cout <<":" << endl;
+            cout << ":" << endl;
             Indent ind2 = ind1 + Indent{};
 
-            cout << ind2 << "COORDINATION   "
-                << statLevel(character.attribute().level(Object::Attribute::Type::COORDINATION), accepted) << endl;
-            cout << ind2 << "LUCK           "
-                << statLevel(character.attribute().level(Object::Attribute::Type::LUCK), accepted) << endl;
-            cout << ind2 << "AWARENESS      "
-                << statLevel(character.attribute().level(Object::Attribute::Type::AWARENESS), accepted) << endl;
-            cout << ind2 << "STRENGTH       "
-                << statLevel(character.attribute().level(Object::Attribute::Type::STRENGTH), accepted) << endl;
-            cout << ind2 << "SPEED          "
-                << statLevel(character.attribute().level(Object::Attribute::Type::SPEED), accepted) << endl;
-            cout << ind2 << "INTELLIGENCE   "
-                << statLevel(character.attribute().level(Object::Attribute::Type::INTELLIGENCE), accepted) << endl;
-            cout << ind2 << "CHARISMA       "
-                << statLevel(character.attribute().level(Object::Attribute::Type::CHARISMA), accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::COORDINATION,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::LUCK,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::AWARENESS,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::STRENGTH,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::SPEED,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::INTELLIGENCE,
+                attrWidth, space, accepted) << endl;
+            cout << ind2 << stringAttribute(character, Object::Attribute::Type::CHARISMA,
+                attrWidth, space, accepted) << endl;
         }
 
-        void showAttribute(Object::Character& character, Object::Attribute::Type type,
-            const Indent indent, bool accepted)
+        Game::Common::Text stringAttribute(
+            const Object::Character& character,
+            Object::Attribute::Type type,
+            unsigned char width,
+            char placeholder,
+            bool accepted)
         {
-            cout << indent << "Attribute";
-            if (accepted) {
-                cout << " (accepted)";
-            }
-            cout << " \'";
-            switch (type) {
-            case Object::Attribute::Type::COORDINATION:
-                cout << "COORDINATION\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::LUCK:
-                cout << "LUCK\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::AWARENESS:
-                cout << "AWARENESS\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::STRENGTH:
-                cout << "STRENGTH\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::SPEED:
-                cout << "SPEED\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::INTELLIGENCE:
-                cout << "INTELLIGENCE\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            case Object::Attribute::Type::CHARISMA:
-                cout << "CHARISMA\': "
-                    << statLevel(character.attribute().level(type), accepted) << endl;
-                break;
-            default:
-                cout << "UNKNOWN\'" << endl;
-                return;
-            }
+            Game::Common::Text t{
+                fillWithPlaseholders(
+                    character.attribute().attributeText().name(type), width, placeholder)
+            };
+            t += statLevel(character.attribute().level(type), accepted);
+            return t;
         }
 
-        void showAttPoints(const Object::Character& character, const Indent indent, bool accepted)
+        void showAttPoints(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted)
         {
             cout << indent << "Attribute points";
             if (accepted) {
-                cout << " (accepted): " << static_cast<int>(character.attribute().storage().getAccepted()) << endl;
+                cout << " (accepted): " << static_cast<int>(
+                    character.attribute().storage().getAccepted()) << endl;
             }
             else {
-                cout << ": " << static_cast<int>(character.attribute().storage().get()) << endl;
+                cout << ": " << static_cast<int>(
+                    character.attribute().storage().get()) << endl;
             }
         }
 
-        Object::Attribute::Type pickAttribute(const Indent indent)
+        Object::Attribute::Type pickAttribute(
+            const Object::Character& character,
+            const Indent indent)
         {
             Indent ind1 = indent + Indent{};
             cout << ind1 << "Attributes:" << endl;
             Indent ind2 = ind1 + Indent{};
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::COORDINATION) << "\' COORDINATION" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::LUCK)         << "\' LUCK" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::AWARENESS)    << "\' AWARENESS" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::STRENGTH)     << "\' STRENGTH" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::SPEED)        << "\' SPEED" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::INTELLIGENCE) << "\' INTELLIGENCE" << endl;
-            cout << ind2 << '\'' << static_cast<int>(Object::Attribute::Type::CHARISMA)     << "\' CHARISMA" << endl;
 
+            for (int i = static_cast<int>(Object::Attribute::Type::INVALID) + 1;
+                i < static_cast<int>(Object::Attribute::Type::NUMBER_OF); ++i)
+            {
+                cout << ind2 << '\'' << i << "\' "
+                    << character.attribute().attributeText().name(
+                        static_cast<Object::Attribute::Type>(i)) << endl;
+            }
             cout << ind1 << "Select an attribute:" << endl;
             Object::Attribute::Type t{ Object::Attribute::Type::INVALID };
             int n = getPosNumber();

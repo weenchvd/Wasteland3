@@ -19,6 +19,9 @@ namespace Game
         using namespace std;
         using Game::Common::Text;
 
+        const AttributeReference Attribute::ref_;
+        const AttributeText Attribute::text_;
+
         Attribute::Attribute(Character& character)
             :
             char_       { character },
@@ -34,6 +37,7 @@ namespace Game
             chaDist_    { ref_.chaDist_ }
         {
             assert(ref_.isInitialized());
+            assert(text_.isInitialized());
         }
 
         void Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
@@ -150,18 +154,6 @@ namespace Game
             }
         }
 
-        const Text& Attribute::name(Attribute::Type id) noexcept
-        {
-            assert(Common::isValidEnum(id));
-            return tName_[Common::toUnderlying(id)];
-        }
-
-        const Text& Attribute::descr(Attribute::Type id) noexcept
-        {
-            assert(Common::isValidEnum(id));
-            return tDescr_[Common::toUnderlying(id)];
-        }
-
         void Attribute::initialize()
         {
             initializeText();
@@ -182,11 +174,6 @@ namespace Game
             };
             return vector<Common::SpecStorage<Common::LevelStat>>(nAttributes, tempLevel);
         }
-
-        const AttributeReference Attribute::ref_;
-
-        array<Text, Attribute::sizeName_> Attribute::tName_;
-        array<Text, Attribute::sizeDescr_> Attribute::tDescr_;
 
     }
 }

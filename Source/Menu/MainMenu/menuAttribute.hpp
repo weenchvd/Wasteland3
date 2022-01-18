@@ -15,6 +15,8 @@ namespace Game
 {
     namespace Menu
     {
+        constexpr int attrWidth{ 20 };
+
         namespace ActionAttribute
         {
             enum ActionAttribute {
@@ -35,18 +37,33 @@ namespace Game
             };
         }
 
-        void menuModifyAttribute(Object::Character& character, Object::Attribute::Type type, const Indent indent);
+        void menuModifyAttribute(
+            Object::Character& character,
+            Object::Attribute::Type type,
+            const Indent indent);
 
         ///------------------------------------------------------------------------------------------------
 
-        void showAllAttributes(const Object::Character& character, const Indent indent, bool accepted = false);
+        void showAllAttributes(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted = false);
 
-        void showAttribute(Object::Character& character, Object::Attribute::Type type,
-            const Indent indent, bool accepted = false);
+        Game::Common::Text stringAttribute(
+            const Object::Character& character,
+            Object::Attribute::Type type,
+            unsigned char width,
+            char placeholder,
+            bool accepted = false);
 
-        void showAttPoints(const Object::Character& character, const Indent indent, bool accepted = false);
+        void showAttPoints(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted = false);
 
-        Object::Attribute::Type pickAttribute(const Indent indent);
+        Object::Attribute::Type pickAttribute(
+            const Object::Character& character,
+            const Indent indent);
 
     }
 }

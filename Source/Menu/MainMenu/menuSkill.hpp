@@ -37,19 +37,29 @@ namespace Game
             };
         }
 
-        void menuModifySkill(Object::Character& character, Object::Skill::Type type, const Indent indent);
+        void menuModifySkill(
+            Object::Character& character,
+            Object::Skill::Type type,
+            const Indent indent);
 
         ///------------------------------------------------------------------------------------------------
 
-        void showAllSkills(const Object::Character& character, const Indent indent, bool accepted = false);
+        void showAllSkills(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted = false);
 
-        Game::Common::Text stringSkill(const Object::Character& character, Object::Skill::Type type,
-            unsigned char width, char symbol, bool accepted = false);
+        Game::Common::Text stringSkill(
+            const Object::Character& character,
+            Object::Skill::Type type,
+            unsigned char width,
+            char placeholder,
+            bool accepted = false);
 
-        void showSkillPoints(const Object::Character& character, const Indent indent, bool accepted = false);
-
-        Game::Common::Text fillWithChars(const Game::Common::Text& source,
-            unsigned char width, char placeholder);
+        void showSkillPoints(
+            const Object::Character& character,
+            const Indent indent,
+            bool accepted = false);
 
         Object::Skill::Type pickSkill(const Indent indent);
 

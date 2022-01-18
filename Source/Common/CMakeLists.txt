@@ -15,7 +15,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(LIBRARY_NAME "common")
 set(HEADER_CXX_LIST "common.hpp"
                     "distribution.hpp"
-                    "flatbuffersAux.hpp"
                     "slot.hpp"
                     "specStorage.hpp"
                     )
@@ -25,3 +24,5 @@ add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
 target_include_directories(${LIBRARY_NAME}
                            INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
                            )
+
+add_subdirectory("FlatBuffersAux")

@@ -7,17 +7,13 @@
 #ifndef ATTRIBUTE_HPP
 #define ATTRIBUTE_HPP
 
-#include"attribute_generated.h"
 #include"attributeCommon.hpp"
 #include"attributeReference.hpp"
+#include"attributeText.hpp"
 #include"distribution.hpp"
 #include"effectAttribute.hpp"
 #include"specStorage.hpp"
-#include<array>
-#include<initializer_list>
-#include<limits>
-#include<memory>
-#include<type_traits>
+#include<assert.h>
 #include<vector>
 
 namespace Game
@@ -53,6 +49,7 @@ namespace Game
 
         public:
             const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
+                assert(Common::isValidEnum(type));
                 return levels_[Common::toUnderlying(type)];
             }
 
@@ -64,12 +61,9 @@ namespace Game
                 return ref_;
             }
 
-        public:
-            using Text = Game::Common::Text;
-
-            static const Text& name(Attribute::Type id) noexcept;
-
-            static const Text& descr(Attribute::Type id) noexcept;
+            static const AttributeText& attributeText() noexcept {
+                return text_;
+            }
 
         private:
             void apply() noexcept;
@@ -94,13 +88,7 @@ namespace Game
             Common::Distribution<EffectAttCha>                  chaDist_;
 
             static const AttributeReference                     ref_;
-
-        private:
-            static constexpr int sizeName_ = Common::toUnderlying(Attribute::Type::NUMBER_OF);
-            static constexpr int sizeDescr_ = Common::toUnderlying(Attribute::Type::NUMBER_OF);
-
-            static std::array<Text, sizeName_>                  tName_;
-            static std::array<Text, sizeDescr_>                 tDescr_;
+            static const AttributeText                          text_;
         };
 
     }

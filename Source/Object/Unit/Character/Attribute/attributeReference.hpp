@@ -7,7 +7,7 @@
 #ifndef ATTRIBUTE_REFERENCE_HPP
 #define ATTRIBUTE_REFERENCE_HPP
 
-#include"attribute_generated.h"
+#include"attribute-ref_generated.h"
 #include"common.hpp"
 #include"effectAttribute.hpp"
 #include<vector>

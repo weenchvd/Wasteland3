@@ -1,0 +1,42 @@
+{
+    "en": {
+        "name": {
+            "coordination": "Coordination",
+            "luck": "Luck",
+            "awareness": "Awareness",
+            "strength": "Strength",
+            "speed": "Speed",
+            "intelligence": "Intelligence",
+            "charisma": "Charisma"
+        },
+        "descr": {
+            "coordination": "Coordination is your physical condition, self-control, and health. Take care of your body and it will take care of you.",
+            "luck": "Luck is your guardian angel. Whether you're lining up that decisive attack, dodging incoming fire, or down to your bottom dollar, sometimes the winds of fortune blow your way.",
+            "awareness": "Awareness is your sense of your surroundings. A good Ranger knows that often it's your eyes and ears that keep you alive.",
+            "strength": "Strength is your raw physical power and ability to shrug off harm. It lets you hit harder, throw farther, and also serves as a requirement for the biggest, baddest heavy weapons and armor.",
+            "speed": "Speed is your physical quickness and reaction time. Strike first, strike true, then get out of there.",
+            "intelligence": "Intelligence is your ability to make mental connection and do tactical thinking.",
+            "charisma": "Charisma is your force of will and personality. A charismatic Ranger can unleash Strike abilities more often, learn and adapt more quickly, and can be a more effective leader."
+        }
+    },
+    "ru": {
+        "name": {
+            "coordination": "Координация",
+            "luck": "Удача",
+            "awareness": "Наблюдательность",
+            "strength": "Сила",
+            "speed": "Скорость",
+            "intelligence": "Интеллект",
+            "charisma": "Харизма"
+        },
+        "descr": {
+            "coordination": "Координация - это ваши физическая форма, самоконтроль и здоровье. Заботьтесь о своем теле, а оно будет заботиться о вас.",
+            "luck": "Удача - ваш ангел-хранитель. Готовите ли вы решающую атаку, уклоняетесь от огня противника или поиздержались до предела, иногда ветры дуют в попутном направлении.",
+            "awareness": "Наблюдательность - это способность чувствовать окружение. Хороший рейнджер знает, что зачастую жизнь спасают глаза и уши.",
+            "strength": "Сила - это грубая физическая мощь и способность переносить вредные воздействия. Она позволяет вам бить сильнее и бросать дальше. Также она требуется для использования самого мощного тяжелого вооружения и брони.",
+            "speed": "Скорость - это ваша расторопность и быстрота реакции. Бейте первым, бейте точнее и быстро уходите.",
+            "intelligence": "Интеллект - это ваша способность устанавливать логические связи и мыслить тактически.",
+            "charisma": "Харизма - это воплощение вашей силы воли и личности. Харизматичный рейнджер способен чаще выполнять спецатаки, быстрее учиться и адаптироваться, а также быть более эффективным лидером."
+        }
+    }
+}

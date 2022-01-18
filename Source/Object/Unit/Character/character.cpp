@@ -99,7 +99,6 @@ namespace Game
             attrib_             { make_unique<Attribute>(*this) },
             skill_              { make_unique<Skill>(*this) }
         {
-            assert(Attribute::attributeReference().isInitialized());
             attrib_->addPoint(Attribute::attributeReference().initAttrPoints_);
             attrib_->addLevelToAll(Attribute::attributeReference().initAttrLevel_);
             attrib_->accept();

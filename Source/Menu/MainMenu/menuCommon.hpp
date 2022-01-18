@@ -95,9 +95,16 @@ namespace Game
             };
         }
 
-        Common::Text statLevel(const Common::SpecStorage<Common::LevelStat>& level, bool accepted = false);
+        Game::Common::Text statLevel(
+            const Common::SpecStorage<Common::LevelStat>& level,
+            bool accepted = false);
 
         unsigned int utf8Size(const std::string& s);
+
+        Game::Common::Text fillWithPlaseholders(
+            const Game::Common::Text& source,
+            unsigned char width,
+            char placeholder);
 
     }
 }
