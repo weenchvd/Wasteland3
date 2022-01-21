@@ -7,8 +7,11 @@
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
+#include"common.hpp"
 #include"plainText.hpp"
+#include<assert.h>
 #include<memory>
+#include<utility>
 
 namespace Game
 {
@@ -18,24 +21,44 @@ namespace Game
 
         class Option {
         public:
+            using Language      = Game::Global::PlainText::Language;
+
             friend Factory;
 
         protected:
-            Option();
+            Option() noexcept;
 
         public:
             Option(const Option&) = delete;
             Option& operator=(const Option&) = delete;
 
-            ~Option() noexcept {}
+            bool isModified() const noexcept;
 
+            void accept() noexcept;
+
+            void reject() noexcept;
+
+        public:
             Game::Global::PlainText::Language getLanguage() const noexcept;
 
-            void setLanguage(Game::Global::PlainText::Language lang) const noexcept;
+            void setLanguage(Game::Global::PlainText::Language lang) noexcept;
 
         private:
-
+            std::pair<Language, bool>       lang_;
         };
+
+        ///------------------------------------------------------------------------------------------------
+
+        inline PlainText::Language Option::getLanguage() const noexcept
+        {
+            return lang_.first;
+        }
+
+        inline void Option::setLanguage(PlainText::Language lang) noexcept
+        {
+            assert(Common::isValidEnum(lang));
+            lang_ = { lang, true };
+        }
 
     }
 }

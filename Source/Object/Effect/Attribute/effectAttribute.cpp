@@ -16,7 +16,7 @@ namespace Game
         EffectAttCoord::EffectAttCoord(
             Common::Resistance statusEffect,
             Common::ActionPoint maximum,
-            Common::ActionPoint current)
+            Common::ActionPoint current) noexcept
             :
             resStatEff_ { statusEffect },
             apMax_      { maximum },
@@ -30,7 +30,7 @@ namespace Game
             character.actionPointCurrentAdd(apCur_);
         }
 
-        EffectAttCoord& EffectAttCoord::operator+=(const EffectAttCoord& other)
+        EffectAttCoord& EffectAttCoord::operator+=(const EffectAttCoord& other) noexcept
         {
             this->resStatEff_   += other.resStatEff_;
             this->apCur_        += other.apCur_;
@@ -38,7 +38,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttCoord& EffectAttCoord::operator-=(const EffectAttCoord& other)
+        EffectAttCoord& EffectAttCoord::operator-=(const EffectAttCoord& other) noexcept
         {
             this->resStatEff_   -= other.resStatEff_;
             this->apCur_        -= other.apCur_;
@@ -46,12 +46,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttCoord operator+(const EffectAttCoord& left, const EffectAttCoord& right)
+        EffectAttCoord operator+(const EffectAttCoord& left, const EffectAttCoord& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttCoord operator-(const EffectAttCoord& left, const EffectAttCoord& right)
+        EffectAttCoord operator-(const EffectAttCoord& left, const EffectAttCoord& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -67,7 +67,7 @@ namespace Game
             Common::Chance luckyCritResist,
             Common::Chance luckyDoubleHealing,
             Common::Chance luckyDoubleMoney,
-            Common::Chance luckyDoubleScrap)
+            Common::Chance luckyDoubleScrap) noexcept
             :
             armorPen_           { penetration },
             chaLuckAction_      { luckyAction },
@@ -93,7 +93,7 @@ namespace Game
             character.chanceLuckyDoubleScrapAdd(chaLuckDblScrap_);
         }
 
-        EffectAttLuck& EffectAttLuck::operator+=(const EffectAttLuck& other)
+        EffectAttLuck& EffectAttLuck::operator+=(const EffectAttLuck& other) noexcept
         {
             this->armorPen_             += other.armorPen_;
             this->chaLuckAction_        += other.chaLuckAction_;
@@ -107,7 +107,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttLuck& EffectAttLuck::operator-=(const EffectAttLuck& other)
+        EffectAttLuck& EffectAttLuck::operator-=(const EffectAttLuck& other) noexcept
         {
             this->armorPen_             -= other.armorPen_;
             this->chaLuckAction_        -= other.chaLuckAction_;
@@ -121,12 +121,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right)
+        EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right)
+        EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -136,7 +136,7 @@ namespace Game
         EffectAttAware::EffectAttAware(
             Common::Chance hit,
             Common::Perception perception,
-            Common::Bonus rangedDamage)
+            Common::Bonus rangedDamage) noexcept
             :
             chaHit_         { hit },
             percept_        { perception },
@@ -150,7 +150,7 @@ namespace Game
             character.bonusRangedDamageAdd(bonRangeDmg_);
         }
 
-        EffectAttAware& EffectAttAware::operator+=(const EffectAttAware& other)
+        EffectAttAware& EffectAttAware::operator+=(const EffectAttAware& other) noexcept
         {
             this->chaHit_       += other.chaHit_;
             this->percept_      += other.percept_;
@@ -158,7 +158,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttAware& EffectAttAware::operator-=(const EffectAttAware& other)
+        EffectAttAware& EffectAttAware::operator-=(const EffectAttAware& other) noexcept
         {
             this->chaHit_       -= other.chaHit_;
             this->percept_      -= other.percept_;
@@ -166,12 +166,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right)
+        EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right)
+        EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -182,7 +182,7 @@ namespace Game
             Common::Constitution maximum,
             Common::Constitution perLevel,
             Common::Bonus meleeDamage,
-            Common::Multiplier throwingRange)
+            Common::Multiplier throwingRange) noexcept
             :
             conMax_         { maximum },
             conPerLvl_      { perLevel },
@@ -201,7 +201,7 @@ namespace Game
             character.multiplierThrowingRangeAdd(mulThrow_);
         }
 
-        EffectAttStr& EffectAttStr::operator+=(const EffectAttStr& other)
+        EffectAttStr& EffectAttStr::operator+=(const EffectAttStr& other) noexcept
         {
             this->conMax_       += other.conMax_;
             this->conPerLvl_    += other.conPerLvl_;
@@ -210,7 +210,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttStr& EffectAttStr::operator-=(const EffectAttStr& other)
+        EffectAttStr& EffectAttStr::operator-=(const EffectAttStr& other) noexcept
         {
             this->conMax_       -= other.conMax_;
             this->conPerLvl_    -= other.conPerLvl_;
@@ -219,12 +219,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right)
+        EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right)
+        EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -234,7 +234,7 @@ namespace Game
         EffectAttSpeed::EffectAttSpeed(
             Common::Multiplier combatSpeed,
             Common::Evasion evasion,
-            Common::Initiative initiative)
+            Common::Initiative initiative) noexcept
             :
             mulSpeed_   { combatSpeed },
             evasion_    { evasion },
@@ -248,7 +248,7 @@ namespace Game
             character.initiativeAdd(initiat_);
         }
 
-        EffectAttSpeed& EffectAttSpeed::operator+=(const EffectAttSpeed& other)
+        EffectAttSpeed& EffectAttSpeed::operator+=(const EffectAttSpeed& other) noexcept
         {
             this->mulSpeed_     += other.mulSpeed_;
             this->evasion_      += other.evasion_;
@@ -256,7 +256,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttSpeed& EffectAttSpeed::operator-=(const EffectAttSpeed& other)
+        EffectAttSpeed& EffectAttSpeed::operator-=(const EffectAttSpeed& other) noexcept
         {
             this->mulSpeed_     -= other.mulSpeed_;
             this->evasion_      -= other.evasion_;
@@ -264,12 +264,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right)
+        EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right)
+        EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -281,7 +281,7 @@ namespace Game
             Common::Multiplier critDamageMult,
             Common::Chance critHealChance,
             Common::Bonus critHealBonus,
-            Common::PointSkill point)
+            Common::PointSkill point) noexcept
             :
             chaCritDmg_     { critDamageChance },
             mulCritDmg_     { critDamageMult },
@@ -299,7 +299,7 @@ namespace Game
             character.skill().addPoint(poSkill_);
         }
 
-        EffectAttInt& EffectAttInt::operator+=(const EffectAttInt& other)
+        EffectAttInt& EffectAttInt::operator+=(const EffectAttInt& other) noexcept
         {
             this->chaCritDmg_   += other.chaCritDmg_;
             this->mulCritDmg_   += other.mulCritDmg_;
@@ -309,7 +309,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttInt& EffectAttInt::operator-=(const EffectAttInt& other)
+        EffectAttInt& EffectAttInt::operator-=(const EffectAttInt& other) noexcept
         {
             this->chaCritDmg_   -= other.chaCritDmg_;
             this->mulCritDmg_   -= other.mulCritDmg_;
@@ -319,12 +319,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right)
+        EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right)
+        EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
@@ -335,7 +335,7 @@ namespace Game
             Common::Strike strikeRate,
             Common::Range leadershipRange,
             Common::Bonus experience,
-            Common::Bonus missionReward)
+            Common::Bonus missionReward) noexcept
             :
             strike_         { strikeRate },
             rangeLeader_    { leadershipRange },
@@ -351,7 +351,7 @@ namespace Game
             character.bonusMissionRewardAdd(bonMissionRew_);
         }
 
-        EffectAttCha& EffectAttCha::operator+=(const EffectAttCha& other)
+        EffectAttCha& EffectAttCha::operator+=(const EffectAttCha& other) noexcept
         {
             this->strike_           += other.strike_;
             this->rangeLeader_      += other.rangeLeader_;
@@ -360,7 +360,7 @@ namespace Game
             return *this;
         }
 
-        EffectAttCha& EffectAttCha::operator-=(const EffectAttCha& other)
+        EffectAttCha& EffectAttCha::operator-=(const EffectAttCha& other) noexcept
         {
             this->strike_           -= other.strike_;
             this->rangeLeader_      -= other.rangeLeader_;
@@ -369,12 +369,12 @@ namespace Game
             return *this;
         }
 
-        EffectAttCha operator+(const EffectAttCha& left, const EffectAttCha& right)
+        EffectAttCha operator+(const EffectAttCha& left, const EffectAttCha& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }
 
-        EffectAttCha operator-(const EffectAttCha& left, const EffectAttCha& right)
+        EffectAttCha operator-(const EffectAttCha& left, const EffectAttCha& right) noexcept
         {
             return Common::operatorPlus(left, right);
         }

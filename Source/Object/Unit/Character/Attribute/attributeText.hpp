@@ -21,41 +21,42 @@ namespace Game
         public:
             using Text              = Game::Common::Text;
 
-            AttributeText();
+            AttributeText() noexcept {}
 
             AttributeText(const AttributeText&) = delete;
             AttributeText& operator=(const AttributeText&) = delete;
-            AttributeText(AttributeText&&) = default;
-            AttributeText& operator=(AttributeText&&) = default;
 
-            bool isInitialized() const { return initialized_; }
+            static void initialize();
 
-            const Text& name(Attribute__Type id) const noexcept;
+            static bool isInitialized() { return initialized_; }
 
-            const Text& descr(Attribute__Type id) const noexcept;
+            static const Text& name(Attribute__Type id) noexcept;
+
+            static const Text& descr(Attribute__Type id) noexcept;
 
         private:
             static constexpr int sizeLang_      = Common::toUnderlying(
                 Game::Global::PlainText::Language::NUMBER_OF);
             static constexpr int sizeType_      = Common::toUnderlying(Attribute__Type::NUMBER_OF);
 
-            void initLanguage(
+            static void initLanguage(
                 const fbAttribute::FB_LanguageBundle* table,
                 Game::Global::PlainText::Language lang
             );
-            void initByType(
+
+            static void initByType(
                 const fbAttribute::FB_AttributeTextType* table,
                 std::array<Text, sizeType_>& ar
-                );
+            );
 
         private:
-            std::array<std::array<Text, sizeType_>, sizeLang_>  name_;
-            std::array<std::array<Text, sizeType_>, sizeLang_>  descr_;
+            static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
+            static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
 
-            std::array<Text, sizeType_>*    ptrName_;       // rem
-            std::array<Text, sizeType_>*    ptrDescr_;
+            static std::array<Text, sizeType_>*     ptrName_;       // rem
+            static std::array<Text, sizeType_>*     ptrDescr_;
 
-            bool                            initialized_;
+            static bool                             initialized_;
         };
 
     }

@@ -19,24 +19,27 @@ namespace Game
     {
         using namespace std;
 
-        AttributeReference::AttributeReference()
-            :
-            pDist_              {},
-            cooDist_            {},
-            lucDist_            {},
-            awaDist_            {},
-            strDist_            {},
-            spdDist_            {},
-            intDist_            {},
-            chaDist_            {},
-            minAttrPoints_      { 0 },
-            maxAttrPoints_      { 0 },
-            initAttrPoints_     { 0 },
-            minAttrLevel_       { 0 },
-            maxAttrLevel_       { 0 },
-            initAttrLevel_      { 0 },
-            initialized_        { false }
+        std::vector<Common::PointAttribute> AttributeReference::pDist_;
+        std::vector<EffectAttCoord>         AttributeReference::cooDist_;
+        std::vector<EffectAttLuck>          AttributeReference::lucDist_;
+        std::vector<EffectAttAware>         AttributeReference::awaDist_;
+        std::vector<EffectAttStr>           AttributeReference::strDist_;
+        std::vector<EffectAttSpeed>         AttributeReference::spdDist_;
+        std::vector<EffectAttInt>           AttributeReference::intDist_;
+        std::vector<EffectAttCha>           AttributeReference::chaDist_;
+
+        Common::PointAttribute  AttributeReference::minAttrPoints_  { 0 };
+        Common::PointAttribute  AttributeReference::maxAttrPoints_  { 0 };
+        Common::PointAttribute  AttributeReference::initAttrPoints_ { 0 };
+        Common::LevelStat       AttributeReference::minAttrLevel_   { 0 };
+        Common::LevelStat       AttributeReference::maxAttrLevel_   { 0 };
+        Common::LevelStat       AttributeReference::initAttrLevel_  { 0 };
+        bool                    AttributeReference::initialized_    { false };
+
+        void AttributeReference::initialize()
         {
+            if (isInitialized()) return;
+
             unique_ptr<char[]> buffer{
                 Common::getFlatBuffer(ATTRIBUTE_REF_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH)
             };

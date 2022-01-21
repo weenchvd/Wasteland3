@@ -118,6 +118,21 @@ namespace Game
 
         vector<CharacterReference> Character::ref_ = vector<CharacterReference>();
 
+        void Character::initialize()
+        {
+            Attribute::initialize();
+            //Skill::initialize();
+            initializeReference();
+        }
+
+        bool Character::isInitialized()
+        {
+            return Attribute::isInitialized()
+                ///&& Skill::isInitialized()
+                ///&& ref_.isInitialized()
+                ;
+        }
+
         void Character::initRef()
         {
             ref_.resize(static_cast<underlying_type_t<Character::Model>>(Character::Model::NUMBER_OF));

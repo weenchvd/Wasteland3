@@ -1,4 +1,4 @@
-﻿
+
 # Copyright (c) 2021 Vitaly Dikov
 # 
 # Distributed under the Boost Software License, Version 1.0.
@@ -16,13 +16,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(EXEC_NAME "main")
 set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
-                    "initialization.cpp"
+                    "initializationAux.cpp"
                     )
 
 # Add source to this project's executable.
 add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
 
 target_link_libraries(${EXEC_NAME}
+                      PRIVATE initialization
                       PRIVATE inventory
                       PRIVATE locator
                       PRIVATE menu

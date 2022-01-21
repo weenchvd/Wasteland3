@@ -43,10 +43,15 @@ namespace Game
 
             virtual ~Character() noexcept {}
 
+            static void initialize();
+
+            static bool isInitialized();
+
             static void initializeReference() {
                 if (ref_.size() == 0) initRef();
             }
 
+        public:
             virtual void accept(UnitVisitor& visitor) noexcept override {
                 visitor.visitCharacter(*this);
             }

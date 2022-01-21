@@ -4,8 +4,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"option.hpp"
 #include"locator.hpp"
+#include"option.hpp"
 #include<type_traits>
 
 namespace Game
@@ -13,18 +13,32 @@ namespace Game
     namespace Global
     {
         using namespace std;
+        using Game::Global::PlainText;
+        using Game::Global::Locator;
 
-        Option::Option()
+        Option::Option() noexcept
+            :
+            lang_           { Language::EN, false }
         {}
 
-        Game::Global::PlainText::Language Option::getLanguage() const noexcept
+        bool Option::isModified() const noexcept
         {
-            return Game::Global::Locator::getPlainText().getLanguage();
+            return lang_.second;
         }
 
-        void Option::setLanguage(Game::Global::PlainText::Language lang) const noexcept
+        void Option::accept() noexcept
         {
-            Game::Global::Locator::getPlainText().setLanguage(lang);
+            if (lang_.second) {
+                Locator::getPlainText().setLanguage(lang_.first);
+                lang_.second = false;
+            }
+        }
+
+        void Option::reject() noexcept
+        {
+            if (lang_.second) {
+                lang_ = { Locator::getPlainText().getLanguage(), false };
+            }
         }
 
     }

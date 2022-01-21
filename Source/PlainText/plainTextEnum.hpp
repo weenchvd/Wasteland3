@@ -16,8 +16,8 @@ namespace Game
         enum class PlainText__Language : char {
             INVALID = -1,                   /// invalid, must be the first
             
-            ENGLISH,
-            RUSSIAN,
+            EN,                             // english
+            RU,                             // russian
 
             NUMBER_OF                       /// must be the last
         };

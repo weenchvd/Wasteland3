@@ -27,12 +27,14 @@ namespace Game
 
             template<class T>
             std::unique_ptr<Game::Object::Unit> createUnit(typename T::Model model) const {
-                T::initializeReference();
+                T::initialize();
                 return std::unique_ptr<Game::Object::Unit>(new T(std::move(model)));
             }
 
         private:
             friend class Locator;
+
+            Factory() noexcept {}
 
             template<class T>
             std::unique_ptr<Game::Global::PlainText> createPlainText(typename T::Language lang) const {

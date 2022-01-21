@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"initialization.hpp"
+#include"initializationAux.hpp"
 #include"menuMain.hpp"
 #include"squad.hpp"
 #include"inventory.hpp"
@@ -44,6 +45,8 @@ int main()
 
     cout << "\tmain.exe Start!" << endl;
     cout << "----Welcome to Wasteland 3!----" << endl;
+
+    Game::Global::initializeGame();
 
     Game::Object::Squad squad;
     Init::initializeSquad(squad);

@@ -62,10 +62,10 @@ namespace Game
         {
             fill();
             switch (current_) {
-            case PlainText::Language::ENGLISH:
+            case PlainText::Language::EN:
                 initializeEN();
                 break;
-            case PlainText::Language::RUSSIAN:
+            case PlainText::Language::RU:
                 initializeRU();
                 break;
             default:
@@ -73,9 +73,9 @@ namespace Game
                 break;
             }
 
-            lang_[Common::toUnderlying(PlainText::Language::ENGLISH)]
+            lang_[Common::toUnderlying(PlainText::Language::EN)]
                 = Common::Text{ u8"ENGLISH" };
-            lang_[Common::toUnderlying(PlainText::Language::RUSSIAN)]
+            lang_[Common::toUnderlying(PlainText::Language::RU)]
                 = Common::Text{ u8"РУССКИЙ" };
 
             common_[Common::toUnderlying(PlainText::General::INVALID_ENUM)]
@@ -105,9 +105,9 @@ namespace Game
         const Game::Common::Text& PlainText::getDefault() const noexcept
         {
             switch (current_) {
-            case PlainText::Language::ENGLISH:
+            case PlainText::Language::EN:
                 return eng_NoData;
-            case PlainText::Language::RUSSIAN:
+            case PlainText::Language::RU:
                 return rus_NoData;
             default:
                 return eng_NoData;

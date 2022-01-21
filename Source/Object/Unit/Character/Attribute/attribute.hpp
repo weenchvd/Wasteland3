@@ -29,6 +29,14 @@ namespace Game
         public:
             Attribute(Character& character);
 
+            Attribute(const Attribute&) = delete;
+            Attribute& operator=(const Attribute&) = delete;
+
+            static void initialize();
+
+            static bool isInitialized();
+
+        public:
             void addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
 
             void addLevelToAll(Common::LevelStat shift) noexcept;
@@ -44,8 +52,6 @@ namespace Game
             void reject() noexcept;
 
             void reset() noexcept;
-
-            static void initialize();
 
         public:
             const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
@@ -69,8 +75,6 @@ namespace Game
             void apply() noexcept;
 
             void apply(Attribute::Type type) noexcept;
-
-            static void initializeText();
 
             static std::vector<Common::SpecStorage<Common::LevelStat>> initLevels();
 

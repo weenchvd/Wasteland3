@@ -20,43 +20,43 @@ namespace Game
             using PointAttribute    = Common::PointAttribute;
             using LevelStat         = Common::LevelStat;
 
-            AttributeReference();
+            AttributeReference() noexcept {}
 
             AttributeReference(const AttributeReference&) = delete;
             AttributeReference& operator=(const AttributeReference&) = delete;
-            AttributeReference(AttributeReference&&) = default;
-            AttributeReference& operator=(AttributeReference&&) = default;
 
-            bool isInitialized() const { return initialized_; }
+            static void initialize();
+
+            static bool isInitialized() { return initialized_; }
 
         private:
-            void initPointDist(const fbAttribute::FB_Attribute* attribute);
-            void initCoordDist(const fbAttribute::FB_Attribute* attribute);
-            void initLuckDist(const fbAttribute::FB_Attribute* attribute);
-            void initAwareDist(const fbAttribute::FB_Attribute* attribute);
-            void initStrDist(const fbAttribute::FB_Attribute* attribute);
-            void initSpeedDist(const fbAttribute::FB_Attribute* attribute);
-            void initIntDist(const fbAttribute::FB_Attribute* attribute);
-            void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
+            static void initPointDist(const fbAttribute::FB_Attribute* attribute);
+            static void initCoordDist(const fbAttribute::FB_Attribute* attribute);
+            static void initLuckDist(const fbAttribute::FB_Attribute* attribute);
+            static void initAwareDist(const fbAttribute::FB_Attribute* attribute);
+            static void initStrDist(const fbAttribute::FB_Attribute* attribute);
+            static void initSpeedDist(const fbAttribute::FB_Attribute* attribute);
+            static void initIntDist(const fbAttribute::FB_Attribute* attribute);
+            static void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
 
         public:
-            std::vector<PointAttribute>     pDist_;         // distribution of attribute points
-            std::vector<EffectAttCoord>     cooDist_;
-            std::vector<EffectAttLuck>      lucDist_;
-            std::vector<EffectAttAware>     awaDist_;
-            std::vector<EffectAttStr>       strDist_;
-            std::vector<EffectAttSpeed>     spdDist_;
-            std::vector<EffectAttInt>       intDist_;
-            std::vector<EffectAttCha>       chaDist_;
+            static std::vector<PointAttribute>      pDist_;             // distribution of attribute points
+            static std::vector<EffectAttCoord>      cooDist_;
+            static std::vector<EffectAttLuck>       lucDist_;
+            static std::vector<EffectAttAware>      awaDist_;
+            static std::vector<EffectAttStr>        strDist_;
+            static std::vector<EffectAttSpeed>      spdDist_;
+            static std::vector<EffectAttInt>        intDist_;
+            static std::vector<EffectAttCha>        chaDist_;
 
 
-            PointAttribute                  minAttrPoints_; // min attribute points
-            PointAttribute                  maxAttrPoints_; // max attribute points
-            PointAttribute                  initAttrPoints_;// initial attribute points
-            LevelStat                       minAttrLevel_;  // min attribute level
-            LevelStat                       maxAttrLevel_;  // max attribute level
-            LevelStat                       initAttrLevel_; // initial attribute level
-            bool                            initialized_;
+            static PointAttribute                   minAttrPoints_;     // min attribute points
+            static PointAttribute                   maxAttrPoints_;     // max attribute points
+            static PointAttribute                   initAttrPoints_;    // initial attribute points
+            static LevelStat                        minAttrLevel_;      // min attribute level
+            static LevelStat                        maxAttrLevel_;      // max attribute level
+            static LevelStat                        initAttrLevel_;     // initial attribute level
+            static bool                             initialized_;
         };
 
     }

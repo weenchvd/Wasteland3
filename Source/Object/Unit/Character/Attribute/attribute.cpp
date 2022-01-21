@@ -19,8 +19,8 @@ namespace Game
         using namespace std;
         using Game::Common::Text;
 
-        const AttributeReference Attribute::ref_;
-        const AttributeText Attribute::text_;
+        const AttributeReference    Attribute::ref_;
+        const AttributeText         Attribute::text_;
 
         Attribute::Attribute(Character& character)
             :
@@ -156,13 +156,14 @@ namespace Game
 
         void Attribute::initialize()
         {
-            initializeText();
+            AttributeReference::initialize();
+            AttributeText::initialize();
         }
 
-        void Attribute::initializeText()
+        bool Attribute::isInitialized()
         {
-            Game::Global::PlainText::Language lang =
-                Game::Global::Locator::getOption().getLanguage();
+            return ref_.isInitialized()
+                && text_.isInitialized();
         }
 
         vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()

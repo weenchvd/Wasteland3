@@ -18,14 +18,42 @@ namespace Game
         using namespace std;
         using Game::Common::Text;
 
-        AttributeText::AttributeText()
-            :
-            name_               {},
-            descr_              {},
-            ptrName_            { nullptr },
-            ptrDescr_           { nullptr },
-            initialized_        { false }
+        std::array<
+            std::array<Text, AttributeText::sizeType_>,
+            AttributeText::sizeLang_
+        >
+            AttributeText::name_;
+
+        std::array<
+            std::array<Text, AttributeText::sizeType_>,
+            AttributeText::sizeLang_
+        >
+            AttributeText::descr_;
+
+        std::array<Text, AttributeText::sizeType_>* AttributeText::ptrName_ { nullptr };
+        std::array<Text, AttributeText::sizeType_>* AttributeText::ptrDescr_{ nullptr };
+
+        bool AttributeText::initialized_{ false };
+
+
+        const Text& AttributeText::name(Attribute__Type id) noexcept
         {
+            assert(Common::isValidEnum(id));
+            assert(ptrName_ != nullptr);
+            return (*ptrName_)[Common::toUnderlying(id)];
+        }
+
+        const Text& AttributeText::descr(Attribute__Type id) noexcept
+        {
+            assert(Common::isValidEnum(id));
+            assert(ptrName_ != nullptr);
+            return (*ptrDescr_)[Common::toUnderlying(id)];
+        }
+
+        void AttributeText::initialize()
+        {
+            if (isInitialized()) return;
+
             assert(sizeLang_ > 0);
             assert(sizeType_ > 0);
             unique_ptr<char[]> buffer{
@@ -37,29 +65,15 @@ namespace Game
             };
             assert(table != nullptr);
 
-            initLanguage(table->en(), Game::Global::PlainText::Language::ENGLISH);
-            initLanguage(table->ru(), Game::Global::PlainText::Language::RUSSIAN);
+            initLanguage(table->en(), Game::Global::PlainText::Language::EN);
+            initLanguage(table->ru(), Game::Global::PlainText::Language::RU);
 
             ptrName_
-                = { &name_[Common::toUnderlying(Game::Global::PlainText::Language::ENGLISH)] };
+                = { &name_[Common::toUnderlying(Game::Global::PlainText::Language::EN)] };
             ptrDescr_
-                = { &descr_[Common::toUnderlying(Game::Global::PlainText::Language::ENGLISH)] };
+                = { &descr_[Common::toUnderlying(Game::Global::PlainText::Language::EN)] };
 
-            initialized_        = true;
-        }
-
-        const Text& AttributeText::name(Attribute__Type id) const noexcept
-        {
-            assert(Common::isValidEnum(id));
-            assert(ptrName_ != nullptr);
-            return (*ptrName_)[Common::toUnderlying(id)];
-        }
-
-        const Text& AttributeText::descr(Attribute__Type id) const noexcept
-        {
-            assert(Common::isValidEnum(id));
-            assert(ptrName_ != nullptr);
-            return (*ptrDescr_)[Common::toUnderlying(id)];
+            initialized_ = true;
         }
 
         void AttributeText::initLanguage(

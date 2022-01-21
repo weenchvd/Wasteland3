@@ -13,14 +13,23 @@ namespace Game
     {
         using namespace std;
 
-        Game::Global::Factory Locator::factory_ = Game::Global::Factory{};
+        Game::Global::Factory Locator::factory_;
 
-        unique_ptr<Game::Global::PlainText> Locator::plainText_
-            = Locator::getFactory().createPlainText<Game::Global::PlainText>(
-                Game::Global::PlainText::Language::ENGLISH);
+        unique_ptr<Game::Global::PlainText> Locator::plainText_;
+        unique_ptr<Game::Global::Option> Locator::option_;
 
-        unique_ptr<Game::Global::Option> Locator::option_
-            = Locator::getFactory().createOption();
+        bool Locator::initialized_{ false };
+
+        void Locator::initialize()
+        {
+            if (isInitialized()) return;
+
+            plainText_ = Locator::getFactory().createPlainText<Game::Global::PlainText>(
+                Game::Global::PlainText::Language::EN);
+            option_ = Locator::getFactory().createOption();
+
+            initialized_ = true;
+        }
 
     }
 }

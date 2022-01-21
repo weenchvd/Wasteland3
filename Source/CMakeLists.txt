@@ -1,4 +1,4 @@
-﻿
+
 # Copyright (c) 2021 Vitaly Dikov
 # 
 # Distributed under the Boost Software License, Version 1.0.
@@ -9,6 +9,7 @@ add_compile_options(/utf-8)
 add_subdirectory("Common")
 add_subdirectory("Error")
 add_subdirectory("Factory")
+add_subdirectory("Initialization")
 add_subdirectory("Locator")
 add_subdirectory("Main")
 add_subdirectory("Menu")
