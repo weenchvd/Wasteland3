@@ -18,6 +18,9 @@ namespace Game
         using namespace std;
         using Game::Common::Text;
 
+        Common::ObserverEnum<Game::Global::PlainText::Language>
+            AttributeText::langObs_{ AttributeText::changeLanguage };
+
         std::array<
             std::array<Text, AttributeText::sizeType_>,
             AttributeText::sizeLang_
@@ -35,6 +38,12 @@ namespace Game
 
         bool AttributeText::initialized_{ false };
 
+
+        void AttributeText::changeLanguage(Game::Global::PlainText::Language lang)
+        {
+            ptrName_    = { &name_[Common::toUnderlying(lang)] };
+            ptrDescr_   = { &descr_[Common::toUnderlying(lang)] };
+        }
 
         const Text& AttributeText::name(Attribute__Type id) noexcept
         {
@@ -68,10 +77,9 @@ namespace Game
             initLanguage(table->en(), Game::Global::PlainText::Language::EN);
             initLanguage(table->ru(), Game::Global::PlainText::Language::RU);
 
-            ptrName_
-                = { &name_[Common::toUnderlying(Game::Global::PlainText::Language::EN)] };
-            ptrDescr_
-                = { &descr_[Common::toUnderlying(Game::Global::PlainText::Language::EN)] };
+            assert(Game::Global::Locator::isInitialized());
+            changeLanguage(Game::Global::Locator::getOption().getLanguage());
+            Game::Global::Locator::getOption().languageSubject().addObserver(&langObs_);
 
             initialized_ = true;
         }

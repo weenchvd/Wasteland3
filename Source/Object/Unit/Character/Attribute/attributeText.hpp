@@ -11,6 +11,7 @@
 #include"attributeCommon.hpp"
 #include"common.hpp"
 #include"locator.hpp"
+#include"observerEnum.hpp"
 #include<array>
 
 namespace Game
@@ -39,6 +40,8 @@ namespace Game
                 Game::Global::PlainText::Language::NUMBER_OF);
             static constexpr int sizeType_      = Common::toUnderlying(Attribute__Type::NUMBER_OF);
 
+            static void changeLanguage(Game::Global::PlainText::Language lang);
+
             static void initLanguage(
                 const fbAttribute::FB_LanguageBundle* table,
                 Game::Global::PlainText::Language lang
@@ -50,6 +53,8 @@ namespace Game
             );
 
         private:
+            static Common::ObserverEnum<Game::Global::PlainText::Language>      langObs_;
+
             static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
             static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
 

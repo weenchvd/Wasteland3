@@ -19,7 +19,7 @@ set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Character/Attribute/attributeReference.cpp"
                     "Character/Attribute/attributeText.cpp"
                     "Character/Skill/skill.cpp"
-                    )
+)
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
@@ -28,7 +28,7 @@ target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character/Attribute"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Character/Skill"
-                           )
+)
 
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC common
@@ -37,6 +37,7 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC flatbuffersAux
                       PUBLIC item
                       PUBLIC locator
-                      )
+                      PUBLIC observer
+)
 
 add_subdirectory("Character/Attribute")

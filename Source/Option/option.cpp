@@ -30,6 +30,7 @@ namespace Game
         {
             if (lang_.second) {
                 Locator::getPlainText().setLanguage(lang_.first);
+                langSubj_.notify(lang_.first);
                 lang_.second = false;
             }
         }

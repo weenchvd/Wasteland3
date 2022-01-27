@@ -35,7 +35,24 @@ namespace Game
                     menuLanguage(ind1);
                     break;
                 case ActionCommon::EXIT:
-                    return;
+                    if (Game::Global::Locator::getOption().isModified()) {
+                        cout << ind1 << "Options have been changed. Do you want to save the changes?" << endl;
+                        switch (getYesNo()) {
+                        case YesNo::YES:
+                            Game::Global::Locator::getOption().accept();
+                            return;
+                        case YesNo::NO:
+                            Game::Global::Locator::getOption().reject();
+                            return;
+                        default:
+                            cout << "!Invalid input" << endl;
+                            break;
+                        }
+                    }
+                    else {
+                        return;
+                    }
+                    break;
                 case ActionCommon::INVALID:
                     cout << "!Invalid action" << endl;
                     break;

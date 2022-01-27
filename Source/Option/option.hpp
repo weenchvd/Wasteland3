@@ -8,6 +8,7 @@
 #define OPTION_HPP
 
 #include"common.hpp"
+#include"observerEnum.hpp"
 #include"plainText.hpp"
 #include<assert.h>
 #include<memory>
@@ -43,8 +44,13 @@ namespace Game
 
             void setLanguage(Game::Global::PlainText::Language lang) noexcept;
 
+            const Common::SubjectEnum<Language>& languageSubject() const noexcept;
+
+            Common::SubjectEnum<Language>& languageSubject() noexcept;
+
         private:
             std::pair<Language, bool>       lang_;
+            Common::SubjectEnum<Language>   langSubj_;
         };
 
         ///------------------------------------------------------------------------------------------------
@@ -58,6 +64,16 @@ namespace Game
         {
             assert(Common::isValidEnum(lang));
             lang_ = { lang, true };
+        }
+
+        inline const Common::SubjectEnum<Option::Language>& Option::languageSubject() const noexcept
+        {
+            return langSubj_;
+        }
+
+        inline Common::SubjectEnum<Option::Language>& Option::languageSubject() noexcept
+        {
+            return langSubj_;
         }
 
     }
