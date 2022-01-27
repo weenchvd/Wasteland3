@@ -13,7 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "observer")
-set(HEADER_CXX_LIST "observerEnum.hpp")
+set(HEADER_CXX_LIST "delegate.hpp"
+                    "observerDLL.hpp"
+)
 
 add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
 

@@ -11,60 +11,59 @@
 #include"attributeCommon.hpp"
 #include"common.hpp"
 #include"locator.hpp"
-#include"observerEnum.hpp"
+#include"observerDLL.hpp"
 #include<array>
 
-namespace Game
-{
-    namespace Object
-    {
-        class AttributeText {
-        public:
-            using Text              = Game::Common::Text;
+namespace Game {
+namespace Object {
 
-            AttributeText() noexcept {}
+class AttributeText {
+public:
+    using Text              = Game::Common::Text;
 
-            AttributeText(const AttributeText&) = delete;
-            AttributeText& operator=(const AttributeText&) = delete;
+    AttributeText() noexcept {}
 
-            static void initialize();
+    AttributeText(const AttributeText&) = delete;
+    AttributeText& operator=(const AttributeText&) = delete;
 
-            static bool isInitialized() { return initialized_; }
+    static void initialize();
 
-            static const Text& name(Attribute__Type id) noexcept;
+    static bool isInitialized() { return initialized_; }
 
-            static const Text& descr(Attribute__Type id) noexcept;
+    static const Text& name(Attribute__Type id) noexcept;
 
-        private:
-            static constexpr int sizeLang_      = Common::toUnderlying(
-                Game::Global::PlainText::Language::NUMBER_OF);
-            static constexpr int sizeType_      = Common::toUnderlying(Attribute__Type::NUMBER_OF);
+    static const Text& descr(Attribute__Type id) noexcept;
 
-            static void changeLanguage(Game::Global::PlainText::Language lang);
+private:
+    static constexpr int sizeLang_      = Common::toUnderlying(
+        Game::Global::PlainText::Language::NUMBER_OF);
+    static constexpr int sizeType_      = Common::toUnderlying(Attribute__Type::NUMBER_OF);
 
-            static void initLanguage(
-                const fbAttribute::FB_LanguageBundle* table,
-                Game::Global::PlainText::Language lang
-            );
+    static void setLanguage(Game::Global::PlainText::Language lang);
 
-            static void initByType(
-                const fbAttribute::FB_AttributeTextType* table,
-                std::array<Text, sizeType_>& ar
-            );
+    static void initLanguage(
+        const fbAttribute::FB_LanguageBundle* table,
+        Game::Global::PlainText::Language lang
+    );
 
-        private:
-            static Common::ObserverEnum<Game::Global::PlainText::Language>      langObs_;
+    static void initByType(
+        const fbAttribute::FB_AttributeTextType* table,
+        std::array<Text, sizeType_>& ar
+    );
 
-            static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
-            static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
+private:
+    static Game::Common::ObserverDLL<void, Game::Global::PlainText::Language>   langObs_;
 
-            static std::array<Text, sizeType_>*     ptrName_;       // rem
-            static std::array<Text, sizeType_>*     ptrDescr_;
+    static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
+    static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
 
-            static bool                             initialized_;
-        };
+    static std::array<Text, sizeType_>*     ptrName_;
+    static std::array<Text, sizeType_>*     ptrDescr_;
 
-    }
-}
+    static bool                             initialized_;
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !ATTRIBUTE_TEXT_HPP

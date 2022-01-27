@@ -27,4 +27,4 @@ indent_size = 4
 # C++
 [*.{c++,cc,cpp,cxx,h,h++,hh,hpp,hxx,inl,ipp,tlh,tli}]
 indent_size = 4
-
+cpp_indent_namespace_contents = false
