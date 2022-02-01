@@ -67,7 +67,7 @@ void AttributeText::initialize()
     assert(sizeLang_ > 0);
     assert(sizeType_ > 0);
     unique_ptr<char[]> buffer{
-        Game::Common::getFlatBuffer(ATTRIBUTE_TEXT_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH)
+        Game::Common::getFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
 
     const fbAttribute::FB_AttributeText* table{

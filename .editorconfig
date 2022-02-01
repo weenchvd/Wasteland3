@@ -22,7 +22,15 @@ indent_size = 2
 
 # JSON
 [*.json]
-indent_size = 4
+indent_size = 2
+
+# CMake
+[CMakeLists.txt,*.cmake]
+indent_size = 2
+
+# FlatBuffers
+[*.{fbs,fbs.in}]
+indent_size = 2
 
 # C++
 [*.{c++,cc,cpp,cxx,h,h++,hh,hpp,hxx,inl,ipp,tlh,tli}]

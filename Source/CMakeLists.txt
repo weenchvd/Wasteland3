@@ -4,7 +4,7 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-add_compile_options(/utf-8)
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 add_subdirectory("Common")
 add_subdirectory("Error")

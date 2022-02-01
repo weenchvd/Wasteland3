@@ -7,7 +7,7 @@
 #ifndef ATTRIBUTE_TEXT_HPP
 #define ATTRIBUTE_TEXT_HPP
 
-#include"attribute-text_generated.h"
+#include"attributeTextFB_generated.h"
 #include"attributeCommon.hpp"
 #include"common.hpp"
 #include"locator.hpp"

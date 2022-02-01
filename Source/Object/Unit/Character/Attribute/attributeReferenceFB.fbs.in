@@ -6,13 +6,8 @@
 
 namespace Game.Object.fbAttribute;
 
-file_identifier "@ATTRIBUTE_REF_FB_FILE_IDENTIFIER@";
-file_extension "@ATTRIBUTE_REF_FB_FILE_EXTENSION@";
-
-//table FB_EnumStringPair {
-//  id:int32;
-//  value:string;
-//}
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
 struct FB_PointAttributeDistribution {
   p:[int8:2];
@@ -106,9 +101,6 @@ table FB_Attribute {
   speed_distr:FB_SpeedDistribution;
   int_distr:FB_IntelligenceDistribution;
   cha_distr:FB_CharismaDistribution;
-
-//  name:[FB_EnumStringPair];
-//  descr:[FB_EnumStringPair];
 }
 
 root_type FB_Attribute;

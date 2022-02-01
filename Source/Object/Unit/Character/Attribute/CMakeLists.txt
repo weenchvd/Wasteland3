@@ -4,41 +4,72 @@
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.20)
 
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-set(RELATIVE_PATH_TO_ASSETS "W3_Data/Assets")
-
 #**********************************************************************
-set(ATTRIBUTE_REF_FB_FILE_IDENTIFIER "ATTR")
-set(ATTRIBUTE_REF_FB_FILE_STEM "attribute-ref")
-set(ATTRIBUTE_REF_FB_FILE_EXTENSION "bundle")
-set(ATTRIBUTE_REF_FB_FILENAME "${ATTRIBUTE_REF_FB_FILE_STEM}.${ATTRIBUTE_REF_FB_FILE_EXTENSION}")
+# create Flatbuffers files for AttributeReference
+set(ATTRIBUTE_REF_FB_FILE_STEM "attributeReferenceFB")
+set(ATTRIBUTE_REF_FB_BIN_FILE_IDENTIFIER "ATTR")
+set(ATTRIBUTE_REF_FB_BIN_FILE_EXTENSION "${FB_BIN_FILE_EXTENSION}")
+set(ATTRIBUTE_REF_FB_BIN_FILE_NAME "${ATTRIBUTE_REF_FB_FILE_STEM}.${ATTRIBUTE_REF_FB_BIN_FILE_EXTENSION}")
+file(REAL_PATH "${FB_DATA_FOLDER}/${ATTRIBUTE_REF_FB_BIN_FILE_NAME}" ATTRIBUTE_REF_FB_BIN_FILE)
 
-file(TO_NATIVE_PATH
-     "${RELATIVE_PATH_TO_ASSETS}/${ATTRIBUTE_REF_FB_FILENAME}"
-     ATTRIBUTE_REF_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH
+cmake_language(CALL create_flatbuffers_data_files
+  "${ATTRIBUTE_REF_FB_BIN_FILE_IDENTIFIER}"
+  "${ATTRIBUTE_REF_FB_BIN_FILE_EXTENSION}"
+  "${ATTRIBUTE_REF_FB_FILE_STEM}"
 )
-configure_file(${ATTRIBUTE_REF_FB_FILE_STEM}.fbs.in
-               "${CMAKE_CURRENT_SOURCE_DIR}/${ATTRIBUTE_REF_FB_FILE_STEM}.fbs")
-
-#**********************************************************************
-set(ATTRIBUTE_TEXT_FB_FILE_IDENTIFIER "ATTT")
-set(ATTRIBUTE_TEXT_FB_FILE_STEM "attribute-text")
-set(ATTRIBUTE_TEXT_FB_FILE_EXTENSION "bundle")
-set(ATTRIBUTE_TEXT_FB_FILENAME "${ATTRIBUTE_TEXT_FB_FILE_STEM}.${ATTRIBUTE_TEXT_FB_FILE_EXTENSION}")
-
 file(TO_NATIVE_PATH
-     "${RELATIVE_PATH_TO_ASSETS}/${ATTRIBUTE_TEXT_FB_FILENAME}"
-     ATTRIBUTE_TEXT_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH
+  "${REL_PATH__ASSETS}/${ATTRIBUTE_REF_FB_BIN_FILE_NAME}"
+  ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH
 )
-configure_file(${ATTRIBUTE_TEXT_FB_FILE_STEM}.fbs.in
-               "${CMAKE_CURRENT_SOURCE_DIR}/${ATTRIBUTE_TEXT_FB_FILE_STEM}.fbs")
+
+if (EXISTS ${ATTRIBUTE_REF_FB_BIN_FILE})
+  file(COPY "${ATTRIBUTE_REF_FB_BIN_FILE}"
+       DESTINATION "${BIN_DIR__W3EXECUTABLE}/${REL_PATH__ASSETS}"
+  )
+  install(FILES "${ATTRIBUTE_REF_FB_BIN_FILE}"
+          DESTINATION "${CMAKE_BUILD_TYPE}/${REL_PATH__ASSETS}"
+  )
+endif()
+
 
 #**********************************************************************
-configure_file(attributePath.hpp.in "${CMAKE_CURRENT_SOURCE_DIR}/attributePath.hpp")
+# create Flatbuffers files for AttributeText
+set(ATTRIBUTE_TEXT_FB_FILE_STEM "attributeTextFB")
+set(ATTRIBUTE_TEXT_FB_BIN_FILE_IDENTIFIER "ATTT")
+set(ATTRIBUTE_TEXT_FB_BIN_FILE_EXTENSION "${FB_BIN_FILE_EXTENSION}")
+set(ATTRIBUTE_TEXT_FB_BIN_FILE_NAME "${ATTRIBUTE_TEXT_FB_FILE_STEM}.${ATTRIBUTE_TEXT_FB_BIN_FILE_EXTENSION}")
+file(REAL_PATH "${FB_DATA_FOLDER}/${ATTRIBUTE_TEXT_FB_BIN_FILE_NAME}" ATTRIBUTE_TEXT_FB_BIN_FILE)
 
-add_subdirectory("data")
+cmake_language(CALL create_flatbuffers_data_files
+  "${ATTRIBUTE_TEXT_FB_BIN_FILE_IDENTIFIER}"
+  "${ATTRIBUTE_TEXT_FB_BIN_FILE_EXTENSION}"
+  "${ATTRIBUTE_TEXT_FB_FILE_STEM}"
+)
+file(TO_NATIVE_PATH
+  "${REL_PATH__ASSETS}/${ATTRIBUTE_TEXT_FB_BIN_FILE_NAME}"
+  ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH
+)
+
+if (EXISTS ${ATTRIBUTE_TEXT_FB_BIN_FILE})
+  file(COPY "${ATTRIBUTE_TEXT_FB_BIN_FILE}"
+       DESTINATION "${BIN_DIR__W3EXECUTABLE}/${REL_PATH__ASSETS}"
+  )
+  install(FILES "${ATTRIBUTE_TEXT_FB_BIN_FILE}"
+          DESTINATION "${CMAKE_BUILD_TYPE}/${REL_PATH__ASSETS}"
+  )
+endif()
+
+
+#**********************************************************************
+# create header file with paths
+set(ATTRIBUTE_PATH_FILE_NAME "attributePath.hpp")
+cmake_language(CALL create_file "${ATTRIBUTE_PATH_FILE_NAME}.in")
+configure_file("${ATTRIBUTE_PATH_FILE_NAME}.in"
+               "${CMAKE_CURRENT_SOURCE_DIR}/${ATTRIBUTE_PATH_FILE_NAME}"
+)

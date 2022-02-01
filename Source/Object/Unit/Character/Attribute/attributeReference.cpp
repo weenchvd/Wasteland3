@@ -41,7 +41,7 @@ namespace Game
             if (isInitialized()) return;
 
             unique_ptr<char[]> buffer{
-                Common::getFlatBuffer(ATTRIBUTE_REF_FB_FILENAME_WITH_NATIVE_RELATIVE_PATH)
+                Common::getFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
             };
 
             const fbAttribute::FB_Attribute* att =

@@ -6,8 +6,8 @@
 
 namespace Game.Object.fbAttribute;
 
-file_identifier "@ATTRIBUTE_TEXT_FB_FILE_IDENTIFIER@";
-file_extension "@ATTRIBUTE_TEXT_FB_FILE_EXTENSION@";
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
 table FB_AttributeTextType {
   coordination:string;

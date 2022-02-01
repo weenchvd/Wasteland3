@@ -1,0 +1,16 @@
+@ECHO OFF
+
+set FLATBUFFERS_COMPILER_FILE=$<SHELL_PATH:$<TARGET_FILE:flatc>>
+set FLATBUFFERS_SCHEMA_FILES=$<SHELL_PATH:${VAR_SCHEMA_FILES}>
+set OUTPUT_DIR=$<SHELL_PATH:${VAR_OUTPUT_DIR}>\
+set BIN_FILE=$<SHELL_PATH:${VAR_BIN_FILE}>
+
+echo Errors:
+echo.
+
+%FLATBUFFERS_COMPILER_FILE% --json --jsonschema --strict-json --defaults-json --natural-utf8 -o %OUTPUT_DIR% %FLATBUFFERS_SCHEMA_FILES% -- %BIN_FILE%
+
+echo.
+echo Done!
+
+pause
