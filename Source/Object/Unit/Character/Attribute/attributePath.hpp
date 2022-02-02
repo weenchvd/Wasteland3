@@ -7,7 +7,7 @@
 #ifndef ATTRIBUTE_PATH_HPP
 #define ATTRIBUTE_PATH_HPP
 
-#define ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\attributeReferenceFB.bundle)"
-#define ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\attributeTextFB.bundle)"
+#define ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\attributeReferenceFB_d72551368fda8edf.bundle)"
+#define ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\attributeTextFB_2d110885a164ae19.bundle)"
 
 #endif // !ATTRIBUTE_PATH_HPP

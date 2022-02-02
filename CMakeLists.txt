@@ -26,18 +26,18 @@ set(FB_BATCH_FILE_EXTENSION "bat")
 set(FB_SCHEMA_FILE_EXTENSION "fbs")
 
 #**********************************************************************
-set(TEMPLATE_FILES_FOLDER "Files")
+set(TEMPLATE_FILES_DIR "Files")
 set(FB_BATCH_FILE_STEM_SUFFIX_FBS_TO_CPP "build-fbs-to-cpp")
 set(FB_BATCH_FILE_STEM_SUFFIX_JSON_TO_BIN "build-json-to-bin")
 set(FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON "build-bin-to-json")
 
-file(REAL_PATH "${TEMPLATE_FILES_FOLDER}/build-fbs-to-cpp.bat" BUILD_FBS_TO_CPP_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-fbs-to-cpp.bat" BUILD_FBS_TO_CPP_REAL_PATH)
 set(TEMPLATE_BUILD_FBS_TO_CPP_BATCH_FILE ${BUILD_FBS_TO_CPP_REAL_PATH})
 
-file(REAL_PATH "${TEMPLATE_FILES_FOLDER}/build-json-to-bin.bat" BUILD_JSON_TO_BIN_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-json-to-bin.bat" BUILD_JSON_TO_BIN_REAL_PATH)
 set(TEMPLATE_BUILD_JSON_TO_BIN_BATCH_FILE ${BUILD_JSON_TO_BIN_REAL_PATH})
 
-file(REAL_PATH "${TEMPLATE_FILES_FOLDER}/build-bin-to-json.bat" BUILD_BIN_TO_JSON_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-bin-to-json.bat" BUILD_BIN_TO_JSON_REAL_PATH)
 set(TEMPLATE_BUILD_BIN_TO_JSON_BATCH_FILE ${BUILD_BIN_TO_JSON_REAL_PATH})
 
 #**********************************************************************
@@ -45,6 +45,19 @@ function(create_file _file_name)
   file(REAL_PATH "${_file_name}" file_)
   if (NOT EXISTS ${file_})
     file(WRITE ${file_} "")
+  endif()
+endfunction()
+
+function(distribute_file _file _relative_path _new_file_name)
+  if (EXISTS "${_file}")
+    configure_file("${_file}"
+                   "${BIN_DIR__W3EXECUTABLE}/${_relative_path}/${_new_file_name}"
+                   COPYONLY
+    )
+    install(FILES "${_file}"
+            DESTINATION "${CMAKE_BUILD_TYPE}/${_relative_path}"
+            RENAME "${_new_file_name}"
+    )
   endif()
 endfunction()
 
@@ -138,6 +151,7 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
   endif()
 endfunction()
 
+#**********************************************************************
 add_subdirectory("Source")
 
 if(GAME_ENABLE_TEST)
