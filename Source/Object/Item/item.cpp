@@ -6,22 +6,21 @@
 
 #include"item.hpp"
 
-namespace Game
+namespace Game {
+namespace Object {
+
+using namespace std;
+
+bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
 {
-    namespace Object
-    {
-        using namespace std;
-
-        bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
-        {
-            if (item1->itemType() < item2->itemType()) {
-                return true;
-            }
-            if (item1->itemType() == item2->itemType() && item1->itemModel() < item2->itemModel()) {
-                return true;
-            }
-            return false;
-        }
-
+    if (item1->itemType() < item2->itemType()) {
+        return true;
     }
+    if (item1->itemType() == item2->itemType() && item1->itemModel() < item2->itemModel()) {
+        return true;
+    }
+    return false;
 }
+
+} // namespace Object
+} // namespace Game

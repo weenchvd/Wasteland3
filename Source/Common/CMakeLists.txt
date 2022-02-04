@@ -17,13 +17,13 @@ set(HEADER_CXX_LIST "common.hpp"
                     "distribution.hpp"
                     "slot.hpp"
                     "specStorage.hpp"
-                    )
+)
 
 add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
 
 target_include_directories(${LIBRARY_NAME}
                            INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
-                           )
+)
 
 add_subdirectory("FlatBuffersAux")
 add_subdirectory("Observer")

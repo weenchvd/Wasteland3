@@ -7,23 +7,22 @@
 #ifndef DAMAGE_COMMON_HPP
 #define DAMAGE_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Damage__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
+namespace Game {
+namespace Object {
 
-            NORMAL,
-            FIRE,
-            COLD,
-            ENERGY,
-            EXPLOSIVE,
+enum class Damage__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    NORMAL,
+    FIRE,
+    COLD,
+    ENERGY,
+    EXPLOSIVE,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !DAMAGE_COMMON_HPP

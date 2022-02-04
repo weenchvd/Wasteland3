@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(EXEC_NAME "main")
 set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
                     "initializationAux.cpp"
-                    )
+)
 
 # Add source to this project's executable.
 add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
@@ -29,7 +29,7 @@ target_link_libraries(${EXEC_NAME}
                       PRIVATE menu
                       PRIVATE squad
                       PRIVATE unit
-                      )
+)
 
 # Add tests and install targets if needed.
 install(TARGETS ${EXEC_NAME} CONFIGURATIONS ${CMAKE_BUILD_TYPE} DESTINATION "${CMAKE_BUILD_TYPE}")

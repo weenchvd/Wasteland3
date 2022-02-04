@@ -13,41 +13,40 @@
 #include"unit.hpp"
 #include<memory>
 
-namespace Game
-{
-    namespace Global
-    {
-        class Factory {
-        public:
-            template<class T>
-            std::unique_ptr<Game::Object::Item> createItem(typename T::Model model) const {
-                T::initializeReference();
-                return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
-            }
+namespace Game {
+namespace Global {
 
-            template<class T>
-            std::unique_ptr<Game::Object::Unit> createUnit(typename T::Model model) const {
-                T::initialize();
-                return std::unique_ptr<Game::Object::Unit>(new T(std::move(model)));
-            }
-
-        private:
-            friend class Locator;
-
-            Factory() noexcept {}
-
-            template<class T>
-            std::unique_ptr<Game::Global::PlainText> createPlainText(typename T::Language lang) const {
-                return std::unique_ptr<Game::Global::PlainText>(new T(lang));
-            }
-
-            std::unique_ptr<Game::Global::Option> createOption() const {
-                return std::unique_ptr<Game::Global::Option>(new Game::Global::Option());
-            }
-
-        };
-
+class Factory {
+public:
+    template<class T>
+    std::unique_ptr<Game::Object::Item> createItem(typename T::Model model) const {
+        T::initializeReference();
+        return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
     }
-}
+
+    template<class T>
+    std::unique_ptr<Game::Object::Unit> createUnit(typename T::Model model) const {
+        T::initialize();
+        return std::unique_ptr<Game::Object::Unit>(new T(std::move(model)));
+    }
+
+private:
+    friend class Locator;
+
+    Factory() noexcept {}
+
+    template<class T>
+    std::unique_ptr<Game::Global::PlainText> createPlainText(typename T::Language lang) const {
+        return std::unique_ptr<Game::Global::PlainText>(new T(lang));
+    }
+
+    std::unique_ptr<Game::Global::Option> createOption() const {
+        return std::unique_ptr<Game::Global::Option>(new Game::Global::Option());
+    }
+
+};
+
+} // namespace Global
+} // namespace Game
 
 #endif // !FACTORY_HPP

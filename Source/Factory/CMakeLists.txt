@@ -1,4 +1,4 @@
-﻿
+
 # Copyright (c) 2021 Vitaly Dikov
 # 
 # Distributed under the Boost Software License, Version 1.0.
@@ -13,18 +13,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "factory")
-set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
-                    )
+set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp")
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
 target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
-                           )
+)
 
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC item
                       PUBLIC plainText
                       PUBLIC option
                       PUBLIC unit
-                      )
+)

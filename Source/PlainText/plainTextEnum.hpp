@@ -7,31 +7,30 @@
 #ifndef PLAINTEXT_ENUM_HPP
 #define PLAINTEXT_ENUM_HPP
 
-namespace Game
-{
-    namespace Global
-    {
-        using PlainTextBaseType             = int;
+namespace Game {
+namespace Global {
 
-        enum class PlainText__Language : char {
-            INVALID = -1,                   /// invalid, must be the first
+using PlainTextBaseType             = int;
+
+enum class PlainText__Language : char {
+    INVALID = -1,                   /// invalid, must be the first
             
-            EN,                             // english
-            RU,                             // russian
+    EN,                             // english
+    RU,                             // russian
 
-            NUMBER_OF                       /// must be the last
-        };
+    NUMBER_OF                       /// must be the last
+};
 
-        enum class PlainText__General : PlainTextBaseType {
-            INVALID = -1,                   /// invalid, must be the first
+enum class PlainText__General : PlainTextBaseType {
+    INVALID = -1,                   /// invalid, must be the first
             
-            INVALID_ENUM,
-            NO_DATA,
+    INVALID_ENUM,
+    NO_DATA,
 
-            NUMBER_OF                       /// must be the last
-        };
+    NUMBER_OF                       /// must be the last
+};
 
-    }
-}
+} // namespace Global
+} // namespace Game
 
 #endif // !PLAINTEXT_ENUM_HPP

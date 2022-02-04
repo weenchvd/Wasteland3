@@ -8,16 +8,15 @@
 #include"locator.hpp"
 #include<assert.h>
 
-namespace Game
+namespace Game {
+namespace Global {
+
+using namespace std;
+
+void initializeGame()
 {
-    namespace Global
-    {
-        using namespace std;
-
-        void initializeGame()
-        {
-            Game::Global::Locator::initialize();
-        }
-
-    }
+    Game::Global::Locator::initialize();
 }
+
+} // namespace Global
+} // namespace Game

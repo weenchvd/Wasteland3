@@ -11,57 +11,56 @@
 #include<list>
 #include<memory>
 
-namespace Game
-{
-    namespace Object
-    {
-        class Inventory {
-        public:
-            struct ItemRange {
-                std::list<std::unique_ptr<Item>>::const_iterator beg;   // beginning
-                std::list<std::unique_ptr<Item>>::const_iterator end;   // end
-            };
+namespace Game {
+namespace Object {
 
-            struct Roster {
-                ItemRange newItems;
-                ItemRange oldItems;
-            };
+class Inventory {
+public:
+    struct ItemRange {
+        std::list<std::unique_ptr<Item>>::const_iterator beg;   // beginning
+        std::list<std::unique_ptr<Item>>::const_iterator end;   // end
+    };
 
-        public:
-            Inventory()
-                : viewed_{ true } {}
+    struct Roster {
+        ItemRange newItems;
+        ItemRange oldItems;
+    };
+
+public:
+    Inventory()
+        : viewed_{ true } {}
             
-            Inventory(const Inventory&) = delete;
-            Inventory& operator=(const Inventory&) = delete;
+    Inventory(const Inventory&) = delete;
+    Inventory& operator=(const Inventory&) = delete;
 
-            // insert (put) an item into inventory 
-            void insert(std::unique_ptr<Item>& item, bool isNew = false);
+    // insert (put) an item into inventory 
+    void insert(std::unique_ptr<Item>& item, bool isNew = false);
 
-            std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+    std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
-            Inventory::Roster roster();
+    Inventory::Roster roster();
 
-            Inventory::Roster roster(Item::Type type);
+    Inventory::Roster roster(Item::Type type);
 
-            size_t size();
+    size_t size();
             
-        private:
-            void clean();
+private:
+    void clean();
 
-            void mergeLists();
+    void mergeLists();
 
-            void erase(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+    void erase(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
-            std::list<std::unique_ptr<Item>>::iterator
-                find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+    std::list<std::unique_ptr<Item>>::iterator
+        find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
-        private:
-            std::list<std::unique_ptr<Item>>    newItems_;
-            std::list<std::unique_ptr<Item>>    oldItems_;
-            bool                                viewed_;
-        };
+private:
+    std::list<std::unique_ptr<Item>>    newItems_;
+    std::list<std::unique_ptr<Item>>    oldItems_;
+    bool                                viewed_;
+};
 
-    }
-}
+} // namespace Object
+} // namespace Game
 
 #endif // !INVENTORY_HPP

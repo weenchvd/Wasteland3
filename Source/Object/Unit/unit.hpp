@@ -10,31 +10,30 @@
 #include"unitCommon.hpp"
 #include"unitVisitor.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        class Unit {
-        public:
-            using Type          = Unit__Type;
-            using Model         = Unit__Model;
+namespace Game {
+namespace Object {
 
-        public:
-            Unit() noexcept {}
+class Unit {
+public:
+    using Type          = Unit__Type;
+    using Model         = Unit__Model;
 
-            Unit(const Unit&) = delete;
-            Unit& operator=(const Unit&) = delete;
+public:
+    Unit() noexcept {}
 
-            virtual ~Unit() noexcept {}
+    Unit(const Unit&) = delete;
+    Unit& operator=(const Unit&) = delete;
 
-            virtual Unit::Type unitType() const noexcept = 0;
+    virtual ~Unit() noexcept {}
 
-            virtual Unit::Model unitModel() const noexcept = 0;
+    virtual Unit::Type unitType() const noexcept = 0;
 
-            virtual void accept(UnitVisitor& visitor) noexcept {};
-        };
+    virtual Unit::Model unitModel() const noexcept = 0;
 
-    }
-}
+    virtual void accept(UnitVisitor& visitor) noexcept {};
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !UNIT_HPP

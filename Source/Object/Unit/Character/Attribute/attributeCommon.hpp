@@ -7,25 +7,24 @@
 #ifndef ATTRIBUTE_COMMON_HPP
 #define ATTRIBUTE_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Attribute__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
+namespace Game {
+namespace Object {
 
-            COORDINATION,
-            LUCK,
-            AWARENESS,
-            STRENGTH,
-            SPEED,
-            INTELLIGENCE,
-            CHARISMA,
+enum class Attribute__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    COORDINATION,
+    LUCK,
+    AWARENESS,
+    STRENGTH,
+    SPEED,
+    INTELLIGENCE,
+    CHARISMA,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !ATTRIBUTE_COMMON_HPP

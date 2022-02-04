@@ -9,16 +9,16 @@
 
 #include"damageCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        class Damage {
-        public:
-            using Type          = Damage__Type;
+namespace Game {
+namespace Object {
 
-        };
-    }
-}
+class Damage {
+public:
+    using Type          = Damage__Type;
+
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !DAMAGE_HPP

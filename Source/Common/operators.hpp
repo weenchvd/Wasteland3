@@ -7,27 +7,26 @@
 #ifndef OPERATORS_HPP
 #define OPERATORS_HPP
 
-namespace Game
+namespace Game {
+namespace Common {
+
+template<class T>
+inline T operatorPlus(const T& left, const T& right)
 {
-    namespace Common
-    {
-        template<class T>
-        inline T operatorPlus(const T& left, const T& right)
-        {
-            T temp{ left };
-            temp += right;
-            return temp;
-        }
-
-        template<class T>
-        inline T operatorMinus(const T& left, const T& right)
-        {
-            T temp{ left };
-            temp -= right;
-            return temp;
-        }
-
-    }
+    T temp{ left };
+    temp += right;
+    return temp;
 }
+
+template<class T>
+inline T operatorMinus(const T& left, const T& right)
+{
+    T temp{ left };
+    temp -= right;
+    return temp;
+}
+
+} // namespace Common
+} // namespace Game
 
 #endif // !OPERATORS_HPP

@@ -9,45 +9,44 @@
 
 #include"itemCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Weapon__Model : ItemBaseType {
-            INVALID = -1,                   /// invalid, must be the first
-            MINIMUM,                        // minimum valid stats
+namespace Game {
+namespace Object {
 
-            AR_KALASH97,
-            AR_SOCOM,
+enum class Weapon__Model : ItemBaseType {
+    INVALID = -1,                   /// invalid, must be the first
+    MINIMUM,                        // minimum valid stats
 
-            SMG_RIPPER,
+    AR_KALASH97,
+    AR_SOCOM,
 
-            NUMBER_OF                       /// must be the last
-        };
+    SMG_RIPPER,
 
-        enum class Weapon__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
-            ANY,                            // any type
+    NUMBER_OF                       /// must be the last
+};
 
-            AR,
-            SMG,
-            SEMI_AUTO_PISTOL,
-            REVOLVER,
-            AUTO_SHOTGUN,
-            PUMP_SHOTGUN,
-            SNIPER,
-            FLAMETHROWER,
-            HMG,
-            EXPLOSIVE,
-            SCIENCE,
-            BLADED,
-            BLUNT,
-            BRAWLING,
+enum class Weapon__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
+    ANY,                            // any type
 
-            NUMBER_OF                       /// must be the last
-        };
+    AR,
+    SMG,
+    SEMI_AUTO_PISTOL,
+    REVOLVER,
+    AUTO_SHOTGUN,
+    PUMP_SHOTGUN,
+    SNIPER,
+    FLAMETHROWER,
+    HMG,
+    EXPLOSIVE,
+    SCIENCE,
+    BLADED,
+    BLUNT,
+    BRAWLING,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !WEAPON_COMMON_HPP

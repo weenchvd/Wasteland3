@@ -11,39 +11,38 @@
 #include<memory>
 #include<assert.h>
 
-namespace Game
-{
-    namespace Global
-    {
-        class Locator {
-        public:
-            static void initialize();
+namespace Game {
+namespace Global {
 
-            static bool isInitialized() { return initialized_; }
+class Locator {
+public:
+    static void initialize();
 
-            static const Game::Global::Factory& getFactory() noexcept {
-                return factory_;
-            }
+    static bool isInitialized() { return initialized_; }
 
-            static Game::Global::PlainText& getPlainText() noexcept {
-                assert(option_ != nullptr);
-                return *plainText_;
-            }
-
-            static Game::Global::Option& getOption() noexcept {
-                assert(option_ != nullptr);
-                return *option_;
-            }
-
-        private:
-            static Game::Global::Factory                            factory_;
-            static std::unique_ptr<Game::Global::PlainText>         plainText_;
-            static std::unique_ptr<Game::Global::Option>            option_;
-
-            static bool                                             initialized_;
-        };
-
+    static const Game::Global::Factory& getFactory() noexcept {
+        return factory_;
     }
-}
+
+    static Game::Global::PlainText& getPlainText() noexcept {
+        assert(option_ != nullptr);
+        return *plainText_;
+    }
+
+    static Game::Global::Option& getOption() noexcept {
+        assert(option_ != nullptr);
+        return *option_;
+    }
+
+private:
+    static Game::Global::Factory                            factory_;
+    static std::unique_ptr<Game::Global::PlainText>         plainText_;
+    static std::unique_ptr<Game::Global::Option>            option_;
+
+    static bool                                             initialized_;
+};
+
+} // namespace Global
+} // namespace Game
 
 #endif // !LOCATOR_HPP

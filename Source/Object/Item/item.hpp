@@ -11,35 +11,34 @@
 #include"itemVisitor.hpp"
 #include<memory>
 
-namespace Game
-{
-    namespace Object
-    {
-        class Item {
-        public:
-            using Type          = Item__Type;
-            using Model         = Item__Model;
+namespace Game {
+namespace Object {
 
-        public:
-            Item() noexcept {}
+class Item {
+public:
+    using Type          = Item__Type;
+    using Model         = Item__Model;
 
-            Item(const Item&) = delete;
-            Item& operator=(const Item&) = delete;
+public:
+    Item() noexcept {}
 
-            virtual ~Item() noexcept {}
+    Item(const Item&) = delete;
+    Item& operator=(const Item&) = delete;
 
-            virtual Item::Type itemType() const noexcept = 0;
+    virtual ~Item() noexcept {}
 
-            virtual Item::Model itemModel() const noexcept = 0;
+    virtual Item::Type itemType() const noexcept = 0;
 
-            virtual void accept(ItemVisitor& visitor) noexcept {};
-        };
+    virtual Item::Model itemModel() const noexcept = 0;
 
-        ///------------------------------------------------------------------------------------------------
+    virtual void accept(ItemVisitor& visitor) noexcept {};
+};
 
-        bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
+///------------------------------------------------------------------------------------------------
 
-    }
-}
+bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
+
+} // namespace Object
+} // namespace Game
 
 #endif // !ITEM_HPP

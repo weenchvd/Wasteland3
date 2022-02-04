@@ -16,86 +16,85 @@
 #include<assert.h>
 #include<vector>
 
-namespace Game
-{
-    namespace Object
-    {
-        class Character;
+namespace Game {
+namespace Object {
 
-        class Attribute {
-        public:
-            using Type          = Attribute__Type;
+class Character;
 
-        public:
-            Attribute(Character& character);
+class Attribute {
+public:
+    using Type          = Attribute__Type;
 
-            Attribute(const Attribute&) = delete;
-            Attribute& operator=(const Attribute&) = delete;
+public:
+    Attribute(Character& character);
 
-            static void initialize();
+    Attribute(const Attribute&) = delete;
+    Attribute& operator=(const Attribute&) = delete;
 
-            static bool isInitialized();
+    static void initialize();
 
-        public:
-            void addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
+    static bool isInitialized();
 
-            void addLevelToAll(Common::LevelStat shift) noexcept;
+public:
+    void addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
 
-            void addPoint(Common::PointAttribute shift) noexcept {
-                pStor_.add(shift);
-            }
+    void addLevelToAll(Common::LevelStat shift) noexcept;
 
-            bool isModified() const noexcept;
-
-            void accept() noexcept;
-
-            void reject() noexcept;
-
-            void reset() noexcept;
-
-        public:
-            const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
-                assert(Common::isValidEnum(type));
-                return levels_[Common::toUnderlying(type)];
-            }
-
-            const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
-                return pStor_;
-            }
-
-            static const AttributeReference& attributeReference() noexcept {
-                return ref_;
-            }
-
-            static const AttributeText& attributeText() noexcept {
-                return text_;
-            }
-
-        private:
-            void apply() noexcept;
-
-            void apply(Attribute::Type type) noexcept;
-
-            static std::vector<Common::SpecStorage<Common::LevelStat>> initLevels();
-
-        private:
-            Character&                                          char_;
-            std::vector<Common::SpecStorage<Common::LevelStat>> levels_;
-            Common::SpecStorage<Common::PointAttribute>         pStor_;
-            Common::Distribution<Common::PointAttribute>        pDist_;
-            Common::Distribution<EffectAttCoord>                cooDist_;
-            Common::Distribution<EffectAttLuck>                 lucDist_;
-            Common::Distribution<EffectAttAware>                awaDist_;
-            Common::Distribution<EffectAttStr>                  strDist_;
-            Common::Distribution<EffectAttSpeed>                spdDist_;
-            Common::Distribution<EffectAttInt>                  intDist_;
-            Common::Distribution<EffectAttCha>                  chaDist_;
-
-            static const AttributeReference                     ref_;
-            static const AttributeText                          text_;
-        };
-
+    void addPoint(Common::PointAttribute shift) noexcept {
+        pStor_.add(shift);
     }
-}
+
+    bool isModified() const noexcept;
+
+    void accept() noexcept;
+
+    void reject() noexcept;
+
+    void reset() noexcept;
+
+public:
+    const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
+        assert(Common::isValidEnum(type));
+        return levels_[Common::toUnderlying(type)];
+    }
+
+    const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
+        return pStor_;
+    }
+
+    static const AttributeReference& attributeReference() noexcept {
+        return ref_;
+    }
+
+    static const AttributeText& attributeText() noexcept {
+        return text_;
+    }
+
+private:
+    void apply() noexcept;
+
+    void apply(Attribute::Type type) noexcept;
+
+    static std::vector<Common::SpecStorage<Common::LevelStat>> initLevels();
+
+private:
+    Character&                                          char_;
+    std::vector<Common::SpecStorage<Common::LevelStat>> levels_;
+    Common::SpecStorage<Common::PointAttribute>         pStor_;
+    Common::Distribution<Common::PointAttribute>        pDist_;
+    Common::Distribution<EffectAttCoord>                cooDist_;
+    Common::Distribution<EffectAttLuck>                 lucDist_;
+    Common::Distribution<EffectAttAware>                awaDist_;
+    Common::Distribution<EffectAttStr>                  strDist_;
+    Common::Distribution<EffectAttSpeed>                spdDist_;
+    Common::Distribution<EffectAttInt>                  intDist_;
+    Common::Distribution<EffectAttCha>                  chaDist_;
+
+    static const AttributeReference                     ref_;
+    static const AttributeText                          text_;
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !ATTRIBUTE_HPP

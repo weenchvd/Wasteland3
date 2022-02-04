@@ -11,61 +11,62 @@
 #include"menuCommon.hpp"
 #include<iostream>
 
-namespace Game
-{
-    namespace Menu
-    {
-        constexpr int attrWidth{ 20 };
+namespace Game {
+namespace Menu {
 
-        namespace ActionAttribute
-        {
-            enum ActionAttribute {
-                SHOW_ALL = ActionCommon::NEXT,
-                SHOW_ALL_ACCEPTED,
-                MODIFY
-            };
-        }
+constexpr int attrWidth{ 20 };
 
-        void menuAttribute(Object::Character& character, const Indent indent);
+namespace ActionAttribute {
 
-        namespace ActionModifyAttribute
-        {
-            enum ActionModifyAttribute {
-                SHOW_ACCEPTED = ActionCommon::NEXT,
-                INCREASE_LEVEL,
-                DECREASE_LEVEL
-            };
-        }
+enum ActionAttribute {
+    SHOW_ALL = ActionCommon::NEXT,
+    SHOW_ALL_ACCEPTED,
+    MODIFY
+};
 
-        void menuModifyAttribute(
-            Object::Character& character,
-            Object::Attribute::Type type,
-            const Indent indent);
+} // namespace ActionAttribute
 
-        ///------------------------------------------------------------------------------------------------
+void menuAttribute(Object::Character& character, const Indent indent);
 
-        void showAllAttributes(
-            const Object::Character& character,
-            const Indent indent,
-            bool accepted = false);
+namespace ActionModifyAttribute {
 
-        Game::Common::Text stringAttribute(
-            const Object::Character& character,
-            Object::Attribute::Type type,
-            unsigned char width,
-            char placeholder,
-            bool accepted = false);
+enum ActionModifyAttribute {
+    SHOW_ACCEPTED = ActionCommon::NEXT,
+    INCREASE_LEVEL,
+    DECREASE_LEVEL
+};
 
-        void showAttPoints(
-            const Object::Character& character,
-            const Indent indent,
-            bool accepted = false);
+} // namespace ActionModifyAttribute
 
-        Object::Attribute::Type pickAttribute(
-            const Object::Character& character,
-            const Indent indent);
+void menuModifyAttribute(
+    Object::Character& character,
+    Object::Attribute::Type type,
+    const Indent indent);
 
-    }
-}
+///------------------------------------------------------------------------------------------------
+
+void showAllAttributes(
+    const Object::Character& character,
+    const Indent indent,
+    bool accepted = false);
+
+Game::Common::Text stringAttribute(
+    const Object::Character& character,
+    Object::Attribute::Type type,
+    unsigned char width,
+    char placeholder,
+    bool accepted = false);
+
+void showAttPoints(
+    const Object::Character& character,
+    const Indent indent,
+    bool accepted = false);
+
+Object::Attribute::Type pickAttribute(
+    const Object::Character& character,
+    const Indent indent);
+
+} // namespace Menu
+} // namespace Game
 
 #endif // !MENU_ATTRIBUTE_HPP

@@ -6,22 +6,21 @@
 
 #include"effect.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        using namespace std;
+namespace Game {
+namespace Object {
 
-        //bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
-        //{
-        //    if (item1->type() < item2->type()) {
-        //        return true;
-        //    }
-        //    if (item1->type() == item2->type() && item1->model() < item2->model()) {
-        //        return true;
-        //    }
-        //    return false;
-        //}
+using namespace std;
 
-    }
-}
+//bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
+//{
+//    if (item1->type() < item2->type()) {
+//        return true;
+//    }
+//    if (item1->type() == item2->type() && item1->model() < item2->model()) {
+//        return true;
+//    }
+//    return false;
+//}
+
+} // namespace Object
+} // namespace Game

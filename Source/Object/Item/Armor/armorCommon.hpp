@@ -9,30 +9,29 @@
 
 #include"itemCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Armor__Model : ItemBaseType {
-            INVALID = -1,                   /// invalid, must be the first
+namespace Game {
+namespace Object {
+
+enum class Armor__Model : ItemBaseType {
+    INVALID = -1,                   /// invalid, must be the first
 
 
 
-            NUMBER_OF                       /// must be the last
-        };
+    NUMBER_OF                       /// must be the last
+};
 
-        enum class Armor__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
+enum class Armor__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
 
-            HEAD,
-            CHEST,
-            LEG,
-            UTILITY,
+    HEAD,
+    CHEST,
+    LEG,
+    UTILITY,
 
-            NUMBER_OF                       /// must be the last
-        };
+    NUMBER_OF                       /// must be the last
+};
 
-    }
-}
+} // namespace Object
+} // namespace Game
 
 #endif // !ARMOR_COMMON_HPP

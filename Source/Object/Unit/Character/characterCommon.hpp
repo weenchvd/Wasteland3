@@ -9,29 +9,28 @@
 
 #include"unitCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Character__Model : UnitBaseType {
-            INVALID = -1,                   /// invalid, must be the first
-            MINIMUM,                        // minimum valid stats
+namespace Game {
+namespace Object {
 
-            RANGER_COMMON,
+enum class Character__Model : UnitBaseType {
+    INVALID = -1,                   /// invalid, must be the first
+    MINIMUM,                        // minimum valid stats
 
-            NUMBER_OF                       /// must be the last
-        };
+    RANGER_COMMON,
 
-        enum class Character__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
+    NUMBER_OF                       /// must be the last
+};
 
-            RANGER,
-            COMPANION,
+enum class Character__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    RANGER,
+    COMPANION,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !CHARACTER_COMMON_HPP

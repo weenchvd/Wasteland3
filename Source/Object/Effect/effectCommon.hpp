@@ -7,19 +7,18 @@
 #ifndef EFFECT_COMMON_HPP
 #define EFFECT_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        //using CommonEffectBase              = unsigned short int;
-        //using EffectModel                   = CommonEffectBase;
+namespace Game {
+namespace Object {
 
-        //enum class EffectType : CommonEffectBase {
-        //    ATTRIBUTE,
-        //    SKILL
-        //};
+//using CommonEffectBase              = unsigned short int;
+//using EffectModel                   = CommonEffectBase;
 
-    }
-}
+//enum class EffectType : CommonEffectBase {
+//    ATTRIBUTE,
+//    SKILL
+//};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !EFFECT_COMMON_HPP

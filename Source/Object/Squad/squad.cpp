@@ -6,13 +6,10 @@
 
 #include"squad.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        using namespace std;
+namespace Game {
+namespace Object {
 
+using namespace std;
 
-
-    }
-}
+} // namespace Object
+} // namespace Game

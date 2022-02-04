@@ -7,27 +7,26 @@
 #ifndef ITEM_COMMON_HPP
 #define ITEM_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        using ItemBaseType                  = short int;
-        using Item__Model                   = ItemBaseType;
+namespace Game {
+namespace Object {
 
-        enum class Item__Type : ItemBaseType {
-            INVALID = -1,                   /// invalid, must be the first
+using ItemBaseType                  = short int;
+using Item__Model                   = ItemBaseType;
 
-            WEAPON,
-            WEAPONMOD,
-            ARMOR,
-            ARMORMOD,
-            AMMO,
-            JUNK,
+enum class Item__Type : ItemBaseType {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    WEAPON,
+    WEAPONMOD,
+    ARMOR,
+    ARMORMOD,
+    AMMO,
+    JUNK,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !ITEM_COMMON_HPP

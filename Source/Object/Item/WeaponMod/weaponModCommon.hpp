@@ -9,48 +9,47 @@
 
 #include"itemCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class WeaponMod__Model : ItemBaseType {
-            INVALID = -1,                   /// invalid, must be the first
+namespace Game {
+namespace Object {
 
-            BARREL_SHORTENED,
-            BARREL_LIGHTWEIGHT,
-            BARREL_HAMMERFORGE_RIFLED,
-            BARREL_TITANIUM_COBALT,
-            BARREL_BROACH_RIFLED,
-            BARREL_COLUMBIUM,
-            BARREL_CUT_RIFLED,
-            BARREL_ALLOY,
+enum class WeaponMod__Model : ItemBaseType {
+    INVALID = -1,                   /// invalid, must be the first
 
-            MAG_QUICKFIRE,
-            MAG_ADVANCED_MATERIALS,
-            MAG_OVERSIZED,
-            MAG_MAX_CAPACITY,
-            MAG_EXTENDED,
-            MAG_LONG,
+    BARREL_SHORTENED,
+    BARREL_LIGHTWEIGHT,
+    BARREL_HAMMERFORGE_RIFLED,
+    BARREL_TITANIUM_COBALT,
+    BARREL_BROACH_RIFLED,
+    BARREL_COLUMBIUM,
+    BARREL_CUT_RIFLED,
+    BARREL_ALLOY,
 
-            NUMBER_OF                       /// must be the last
-        };
+    MAG_QUICKFIRE,
+    MAG_ADVANCED_MATERIALS,
+    MAG_OVERSIZED,
+    MAG_MAX_CAPACITY,
+    MAG_EXTENDED,
+    MAG_LONG,
+
+    NUMBER_OF                       /// must be the last
+};
         
-        enum class WeaponMod__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
-            ANY,                            // any type
+enum class WeaponMod__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
+    ANY,                            // any type
 
-            CHOKE,
-            BARREL,
-            UNDERBARREL,
-            SCOPE,
-            MAGAZINE,
-            WEIGHT,
-            HANDLE,
+    CHOKE,
+    BARREL,
+    UNDERBARREL,
+    SCOPE,
+    MAGAZINE,
+    WEIGHT,
+    HANDLE,
 
-            NUMBER_OF                       /// must be the last
-        };
+    NUMBER_OF                       /// must be the last
+};
 
-    }
-}
+} // namespace Object
+} // namespace Game
 
 #endif // !WEAPON_MOD_COMMON_HPP

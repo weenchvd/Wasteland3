@@ -7,21 +7,20 @@
 #ifndef AMMO_COMMON_HPP
 #define AMMO_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        enum class Ammo__Type : char {
-            INVALID = -1,                   /// invalid, must be the first
+namespace Game {
+namespace Object {
 
-            NONE,                           // without ammo
-            A_5_56,                         // 5.56
-            A_7_62,                         // 7.62
+enum class Ammo__Type : char {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    NONE,                           // without ammo
+    A_5_56,                         // 5.56
+    A_7_62,                         // 7.62
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !AMMO_COMMON_HPP

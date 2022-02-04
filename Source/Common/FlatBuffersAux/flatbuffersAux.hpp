@@ -10,28 +10,27 @@
 #include<memory>
 #include<vector>
 
-namespace Game
+namespace Game {
+namespace Common {
+
+// @brief Get std::vector<T> from flatbuffers::Array or flatbuffers::Vector.
+// @param "a" - flatbuffers::Array or flatbuffers::Vector.
+template<class T, class U>
+std::vector<T> convertToVector(const U* a)
 {
-    namespace Common
-    {
-        // @brief Get std::vector<T> from flatbuffers::Array or flatbuffers::Vector.
-        // @param "a" - flatbuffers::Array or flatbuffers::Vector.
-        template<class T, class U>
-        std::vector<T> convertToVector(const U* a)
-        {
-            std::vector<T> v;
-            v.reserve(a->size());
-            for (size_t i = 0; i < a->size(); ++i) {
-                v.push_back(
-                    T{ a->Get(i) }
-                );
-            }
-            return v;
-        }
-
-        std::unique_ptr<char[]> getFlatBuffer(const char* fileName);
-
+    std::vector<T> v;
+    v.reserve(a->size());
+    for (size_t i = 0; i < a->size(); ++i) {
+        v.push_back(
+            T{ a->Get(i) }
+        );
     }
+    return v;
 }
+
+std::unique_ptr<char[]> getFlatBuffer(const char* fileName);
+
+} // namespace Common
+} // namespace Game
 
 #endif // !FLATBUFFERS_AUX_HPP

@@ -10,45 +10,44 @@
 #include<stdexcept>
 #include<string>
 
-namespace Game
-{
-    namespace Error
-    {
-        enum class Level {
-            EXCEPTION,
-            ERROR,
-            WARNING,
-            NOTICE,
-        };
+namespace Game {
+namespace Error {
 
-        enum class Type {
-            STD,
-            RUNTIME,
-            INFILE,
-            OUTFILE
-        };
+enum class Level {
+    EXCEPTION,
+    ERROR,
+    WARNING,
+    NOTICE,
+};
 
-        void errPrint(std::ostream& os, Level errLevel, const std::string& message);
-        void errPrint(std::ostream& os, Level errLevel, Type errType);
-        void errPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message);
+enum class Type {
+    STD,
+    RUNTIME,
+    INFILE,
+    OUTFILE
+};
 
-        class RuntimeError : public std::exception {
-        public:
-            using ExceptionBase = std::exception;
+void errPrint(std::ostream& os, Level errLevel, const std::string& message);
+void errPrint(std::ostream& os, Level errLevel, Type errType);
+void errPrint(std::ostream& os, Level errLevel, Type errType, const std::string& message);
 
-            explicit RuntimeError(const std::string& message) : ExceptionBase(message.c_str()) {}
-            explicit RuntimeError(const char* message) : ExceptionBase(message) {}
-        };
+class RuntimeError : public std::exception {
+public:
+    using ExceptionBase = std::exception;
 
-        class OutOfRangeError : public RuntimeError {
-        public:
-            using ExceptionBase = RuntimeError;
+    explicit RuntimeError(const std::string& message) : ExceptionBase(message.c_str()) {}
+    explicit RuntimeError(const char* message) : ExceptionBase(message) {}
+};
 
-            explicit OutOfRangeError(const std::string& message) : ExceptionBase(message.c_str()) {}
-            explicit OutOfRangeError(const char* message) : ExceptionBase(message) {}
-        };
+class OutOfRangeError : public RuntimeError {
+public:
+    using ExceptionBase = RuntimeError;
 
-    }
-}
+    explicit OutOfRangeError(const std::string& message) : ExceptionBase(message.c_str()) {}
+    explicit OutOfRangeError(const char* message) : ExceptionBase(message) {}
+};
+
+} // namespace Error
+} // namespace Game
 
 #endif // ERROR_HPP

@@ -7,28 +7,27 @@
 #ifndef UNIT_COMMON_HPP
 #define UNIT_COMMON_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        using UnitBaseType                  = short int;
-        using Unit__Model                   = UnitBaseType;
+namespace Game {
+namespace Object {
 
-        enum class Unit__Type : UnitBaseType {
-            INVALID = -1,                   /// invalid, must be the first
+using UnitBaseType                  = short int;
+using Unit__Model                   = UnitBaseType;
 
-            CHARACTER,
-            HUMAN,
-            MUTANT,
-            ANIMAL,
-            VEHICLE,
-            ROBOT,
-            SYNTH,
+enum class Unit__Type : UnitBaseType {
+    INVALID = -1,                   /// invalid, must be the first
 
-            NUMBER_OF                       /// must be the last
-        };
+    CHARACTER,
+    HUMAN,
+    MUTANT,
+    ANIMAL,
+    VEHICLE,
+    ROBOT,
+    SYNTH,
 
-    }
-}
+    NUMBER_OF                       /// must be the last
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !UNIT_COMMON_HPP

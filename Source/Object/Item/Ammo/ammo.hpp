@@ -9,18 +9,18 @@
 
 #include"ammoCommon.hpp"
 
-namespace Game
-{
-    namespace Object
-    {
-        class Ammo {
-        public:
-            using Type          = Ammo__Type;
+namespace Game {
+namespace Object {
 
-        public:
+class Ammo {
+public:
+    using Type          = Ammo__Type;
 
-        };
-    }
-}
+public:
+
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !AMMO_HPP

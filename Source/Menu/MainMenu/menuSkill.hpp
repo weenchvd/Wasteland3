@@ -16,25 +16,27 @@ namespace Menu {
 
 constexpr int skillWidth{ 30 };
 
-namespace ActionSkill
-{
-    enum ActionSkill {
-        SHOW_ALL = ActionCommon::NEXT,
-        SHOW_ALL_ACCEPTED,
-        MODIFY
-    };
-}
+namespace ActionSkill {
+
+enum ActionSkill {
+    SHOW_ALL = ActionCommon::NEXT,
+    SHOW_ALL_ACCEPTED,
+    MODIFY
+};
+
+} // namespace ActionSkill
 
 void menuSkill(Object::Character& character, const Indent indent);
 
-namespace ActionModifySkill
-{
-    enum ActionModifySkill {
-        SHOW_ACCEPTED = ActionCommon::NEXT,
-        INCREASE_LEVEL,
-        DECREASE_LEVEL
-    };
-}
+namespace ActionModifySkill {
+
+enum ActionModifySkill {
+    SHOW_ACCEPTED = ActionCommon::NEXT,
+    INCREASE_LEVEL,
+    DECREASE_LEVEL
+};
+
+} // namespace ActionModifySkill
 
 void menuModifySkill(
     Object::Character& character,

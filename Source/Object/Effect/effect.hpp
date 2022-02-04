@@ -12,43 +12,42 @@
 //#include<memory>
 //#include<vector>
 
-namespace Game
-{
-    namespace Object
-    {
-        class Character;
+namespace Game {
+namespace Object {
 
-        class Effect {
-        public:
-            //Effect(const Effect&) = default;
-            //Effect& operator=(const Effect&) = default;
+class Character;
 
-            virtual ~Effect() noexcept {}
+class Effect {
+public:
+    //Effect(const Effect&) = default;
+    //Effect& operator=(const Effect&) = default;
 
-            //const EffectType type() const noexcept {
-            //    return type_;
-            //}
+    virtual ~Effect() noexcept {}
 
-            //const EffectModel model() const noexcept {
-            //    return model_;
-            //}
+    //const EffectType type() const noexcept {
+    //    return type_;
+    //}
 
-            //virtual void accept(EffectVisitor& visitor) noexcept {};
+    //const EffectModel model() const noexcept {
+    //    return model_;
+    //}
 
-            virtual void apply(Character& character) noexcept {};
+    //virtual void accept(EffectVisitor& visitor) noexcept {};
 
-        protected:
-            /*explicit*/ Effect(/*EffectType type, EffectModel model*/) noexcept
-                /*: type_{ type }, model_{ model }*/ {}
+    virtual void apply(Character& character) noexcept {};
 
-        private:
-            //const EffectType        type_;          // type of Effect
-            //const EffectModel       model_;         // model of Effect
-        };
+protected:
+    /*explicit*/ Effect(/*EffectType type, EffectModel model*/) noexcept
+        /*: type_{ type }, model_{ model }*/ {}
 
-        ///------------------------------------------------------------------------------------------------
+private:
+    //const EffectType        type_;          // type of Effect
+    //const EffectModel       model_;         // model of Effect
+};
 
-    }
-}
+///------------------------------------------------------------------------------------------------
+
+} // namespace Object
+} // namespace Game
 
 #endif // !EFFECT_HPP

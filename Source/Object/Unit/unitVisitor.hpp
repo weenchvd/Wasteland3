@@ -7,47 +7,46 @@
 #ifndef UNIT_VISITOR_HPP
 #define UNIT_VISITOR_HPP
 
-namespace Game
-{
-    namespace Object
-    {
-        class Character;
+namespace Game {
+namespace Object {
 
-        class UnitVisitor {
-        public:
-            UnitVisitor(const UnitVisitor&) = delete;
-            UnitVisitor& operator=(const UnitVisitor&) = delete;
+class Character;
 
-            virtual ~UnitVisitor() noexcept {}
+class UnitVisitor {
+public:
+    UnitVisitor(const UnitVisitor&) = delete;
+    UnitVisitor& operator=(const UnitVisitor&) = delete;
 
-            virtual void visitCharacter(Character& character) = 0;
+    virtual ~UnitVisitor() noexcept {}
 
-        protected:
-            UnitVisitor() noexcept {}
-        };
+    virtual void visitCharacter(Character& character) = 0;
 
-        class TypeUnitVisitor : public UnitVisitor {
-        public:
-            TypeUnitVisitor() noexcept {}
+protected:
+    UnitVisitor() noexcept {}
+};
 
-            virtual ~TypeUnitVisitor() noexcept {}
+class TypeUnitVisitor : public UnitVisitor {
+public:
+    TypeUnitVisitor() noexcept {}
 
-            virtual void visitCharacter(Character& character) noexcept override {
-                reset(); isChar_ = true;
-            }
+    virtual ~TypeUnitVisitor() noexcept {}
 
-            bool isCharacter()     const noexcept { return isChar_; }
-
-        private:
-            void reset() noexcept {
-                isChar_ = false;
-            }
-
-        private:
-            bool isChar_        { false };
-        };
-
+    virtual void visitCharacter(Character& character) noexcept override {
+        reset(); isChar_ = true;
     }
-}
+
+    bool isCharacter()     const noexcept { return isChar_; }
+
+private:
+    void reset() noexcept {
+        isChar_ = false;
+    }
+
+private:
+    bool isChar_        { false };
+};
+
+} // namespace Object
+} // namespace Game
 
 #endif // !UNIT_VISITOR_HPP
