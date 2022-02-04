@@ -1,0 +1,180 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace Game.Object.fbSkill;
+
+file_identifier "SKLR";
+file_extension "bundle";
+
+struct FB_PointSkillDistribution {
+  p:[int16:11];
+}
+
+/// --------------------Combat skills--------------------
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_AutomaticWeaponsDistribution {
+  ar_hit:[int16:11];
+  smg_hit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_BigGunsDistribution {
+  hmg_hit:[int16:11];
+  ft_hit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_BrawlingDistribution {
+  combat_speed:[int16:11];
+  weapon_hit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_MeleeCombatDistribution {
+  blunt_hit:[int16:11];
+  bladed_hit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_SmallArmsDistribution {
+  sa_pistol_hit:[int16:11];
+  revolver_hit:[int16:11];
+  pump_sg_hit:[int16:11];
+  auto_sg_hit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_SniperDistribution {
+  sr_hit:[int16:11];
+}
+
+/// --------------------General skills--------------------
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_AnimalWhispererDistribution {
+  animal_dmg:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_ExplosivesDistribution {
+  expl_dmg_resist:[int16:11];
+  expl_dmg_bonus:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_FirstAidDistribution {
+  healing_item:[int16:11];
+  healing_revive:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_SneakyShitDistribution {
+  percep:[int8:11];
+  initiative:[int16:11];
+  detection_time:[int32:11];
+  attack_dmg:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_WeirdScienceDistribution {
+  energy_dmg:[int16:11];
+  fire_dmg:[int16:11];
+  cold_dmg:[int16:11];
+}
+
+/// --------------------Exploration skills--------------------
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_MechanicsDistribution {
+  robot_dmg:[int16:11];
+  vehicle_dmg:[int16:11];
+  synth_dmg:[int16:11];
+  repair_kit:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_SurvivalDistribution {
+  animal_dmg:[int16:11];
+  mutant_dmg:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_WeaponModdingDistribution {
+  scrap:[int16:11];
+}
+
+/// --------------------Social skills--------------------
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_BarterDistribution {
+  sell_value:[int16:11];
+  buy_cost:[int16:11];
+}
+
+/// SKILL LEVEL:
+/// 0     1     2     3     4     5     6     7     8     9    10
+
+struct FB_LeadershipDistribution {
+  hit_chance:[int16:11];
+  boss_kill_dmg:[int16:11];
+  multi_kill_crit_chance:[int16:11];
+  revive_con_healed:[int16:11];
+}
+
+table FB_Skill {
+  min_skill_points:int16;
+  max_skill_points:int16;
+  init_skill_points:int16;
+  min_skill_level:int8;
+  max_skill_level:int8;
+  init_skill_level:int8;
+  point_skill_distr:FB_PointSkillDistribution;
+  automatic_distr:FB_AutomaticWeaponsDistribution;
+  big_guns_distr:FB_BigGunsDistribution;
+  brawling_distr:FB_BrawlingDistribution;
+  melee_distr:FB_MeleeCombatDistribution;
+  small_arms_distr:FB_SmallArmsDistribution;
+  sniper_distr:FB_SniperDistribution;
+  animal_whisperer_disrt:FB_AnimalWhispererDistribution;
+  explosives_distr:FB_ExplosivesDistribution;
+  first_aid_distr:FB_FirstAidDistribution;
+  sneaky_shit_distr:FB_SneakyShitDistribution;
+  weird_science_distr:FB_WeirdScienceDistribution;
+  mechanics_distr:FB_MechanicsDistribution;
+  survival_distr:FB_SurvivalDistribution;
+  weapon_modding_distr:FB_WeaponModdingDistribution;
+  barter_distr:FB_BarterDistribution;
+  leadership_distr:FB_LeadershipDistribution;
+}
+
+root_type FB_Skill;

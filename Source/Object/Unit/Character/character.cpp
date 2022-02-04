@@ -102,7 +102,7 @@ namespace Game
             attrib_->addPoint(Attribute::attributeReference().initAttrPoints_);
             attrib_->addLevelToAll(Attribute::attributeReference().initAttrLevel_);
             attrib_->accept();
-            skill_->addPoint(initSkillPoints);
+            skill_->addPoint(Skill::skillReference().initSkillPoints_);
             skill_->accept();
         }
 
@@ -121,14 +121,14 @@ namespace Game
         void Character::initialize()
         {
             Attribute::initialize();
-            //Skill::initialize();
+            Skill::initialize();
             initializeReference();
         }
 
         bool Character::isInitialized()
         {
             return Attribute::isInitialized()
-                ///&& Skill::isInitialized()
+                && Skill::isInitialized()
                 ///&& ref_.isInitialized()
                 ;
         }

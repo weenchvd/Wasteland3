@@ -9,8 +9,7 @@
 #include"distribution.hpp"
 #include"flatbuffersAux.hpp"
 #include<assert.h>
-#include<iostream>
-#include<fstream>
+#include<memory>
 #include<type_traits>
 
 namespace Game
@@ -19,14 +18,14 @@ namespace Game
     {
         using namespace std;
 
-        std::vector<Common::PointAttribute> AttributeReference::pDist_;
-        std::vector<EffectAttCoord>         AttributeReference::cooDist_;
-        std::vector<EffectAttLuck>          AttributeReference::lucDist_;
-        std::vector<EffectAttAware>         AttributeReference::awaDist_;
-        std::vector<EffectAttStr>           AttributeReference::strDist_;
-        std::vector<EffectAttSpeed>         AttributeReference::spdDist_;
-        std::vector<EffectAttInt>           AttributeReference::intDist_;
-        std::vector<EffectAttCha>           AttributeReference::chaDist_;
+        std::vector<AttributeReference::PointAttribute> AttributeReference::pDist_;
+        std::vector<EffectAttCoord>                     AttributeReference::cooDist_;
+        std::vector<EffectAttLuck>                      AttributeReference::lucDist_;
+        std::vector<EffectAttAware>                     AttributeReference::awaDist_;
+        std::vector<EffectAttStr>                       AttributeReference::strDist_;
+        std::vector<EffectAttSpeed>                     AttributeReference::spdDist_;
+        std::vector<EffectAttInt>                       AttributeReference::intDist_;
+        std::vector<EffectAttCha>                       AttributeReference::chaDist_;
 
         Common::PointAttribute  AttributeReference::minAttrPoints_  { 0 };
         Common::PointAttribute  AttributeReference::maxAttrPoints_  { 0 };
@@ -70,9 +69,7 @@ namespace Game
         void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* attribute)
         {
             pDist_ = move(
-                Common::convertToVector<Common::PointAttribute>(
-                    attribute->point_attr_distr()->p()
-                    )
+                Common::convertToVector<Common::PointAttribute>(attribute->point_attr_distr()->p())
             );
         }
 

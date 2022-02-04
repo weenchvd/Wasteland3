@@ -16,28 +16,28 @@ option(GAME_ENABLE_TEST "Enable tests for game" OFF)
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/Install")
 
 #**********************************************************************
-set(BIN_DIR__W3EXECUTABLE "${CMAKE_BINARY_DIR}/Source/Main")
-set(REL_PATH__W3_DATA "W3_data")
-set(REL_PATH__ASSETS "${REL_PATH__W3_DATA}/Assets")
+set(W3EXEC__BIN_DIR "${CMAKE_BINARY_DIR}/Source/Main")
+set(W3DATA__DIR__REL_PATH_FROM_W3EXEC "W3_data")
+set(ASSETS__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/Assets")
 
-set(FB_DATA_FOLDER "data")
+set(FB_DATA_DIR_NAME "data")
 set(FB_BIN_FILE_EXTENSION "bundle")
 set(FB_BATCH_FILE_EXTENSION "bat")
 set(FB_SCHEMA_FILE_EXTENSION "fbs")
 
 #**********************************************************************
-set(TEMPLATE_FILES_DIR "Files")
+set(TEMPLATE_FILES_DIR_NAME "Files")
 set(FB_BATCH_FILE_STEM_SUFFIX_FBS_TO_CPP "build-fbs-to-cpp")
 set(FB_BATCH_FILE_STEM_SUFFIX_JSON_TO_BIN "build-json-to-bin")
 set(FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON "build-bin-to-json")
 
-file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-fbs-to-cpp.bat" BUILD_FBS_TO_CPP_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR_NAME}/build-fbs-to-cpp.bat" BUILD_FBS_TO_CPP_REAL_PATH)
 set(TEMPLATE_BUILD_FBS_TO_CPP_BATCH_FILE ${BUILD_FBS_TO_CPP_REAL_PATH})
 
-file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-json-to-bin.bat" BUILD_JSON_TO_BIN_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR_NAME}/build-json-to-bin.bat" BUILD_JSON_TO_BIN_REAL_PATH)
 set(TEMPLATE_BUILD_JSON_TO_BIN_BATCH_FILE ${BUILD_JSON_TO_BIN_REAL_PATH})
 
-file(REAL_PATH "${TEMPLATE_FILES_DIR}/build-bin-to-json.bat" BUILD_BIN_TO_JSON_REAL_PATH)
+file(REAL_PATH "${TEMPLATE_FILES_DIR_NAME}/build-bin-to-json.bat" BUILD_BIN_TO_JSON_REAL_PATH)
 set(TEMPLATE_BUILD_BIN_TO_JSON_BATCH_FILE ${BUILD_BIN_TO_JSON_REAL_PATH})
 
 #**********************************************************************
@@ -51,7 +51,7 @@ endfunction()
 function(distribute_file _file _relative_path _new_file_name)
   if (EXISTS "${_file}")
     configure_file("${_file}"
-                   "${BIN_DIR__W3EXECUTABLE}/${_relative_path}/${_new_file_name}"
+                   "${W3EXEC__BIN_DIR}/${_relative_path}/${_new_file_name}"
                    COPYONLY
     )
     install(FILES "${_file}"
@@ -96,8 +96,8 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
   set(fb_bin_file_name_ "${_fb_file_stem}.${_bin_file_extension}")
 
   file(REAL_PATH "${fb_schema_file_name_}" fb_schema_file_)
-  file(REAL_PATH "${FB_DATA_FOLDER}/${fb_json_file_name_}" fb_json_file_)
-  file(REAL_PATH "${FB_DATA_FOLDER}/${fb_bin_file_name_}" fb_bin_file_)
+  file(REAL_PATH "${FB_DATA_DIR_NAME}/${fb_json_file_name_}" fb_json_file_)
+  file(REAL_PATH "${FB_DATA_DIR_NAME}/${fb_bin_file_name_}" fb_bin_file_)
 
   # create Flatbuffers Schema files
   cmake_language(CALL create_file "${fb_schema_file_name_}.in")
@@ -105,7 +105,7 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
                  "${CMAKE_CURRENT_SOURCE_DIR}/${fb_schema_file_name_}"
   )
   # create json data file
-  cmake_language(CALL create_file "${FB_DATA_FOLDER}/${fb_json_file_name_}")
+  cmake_language(CALL create_file "${FB_DATA_DIR_NAME}/${fb_json_file_name_}")
   # create batch file Schema-to-CPP
   file(REAL_PATH "${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_FBS_TO_CPP}.${FB_BATCH_FILE_EXTENSION}"
                  fb_batch_fbs_to_cpp_file_
@@ -120,10 +120,10 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
     )
   endif()
   # create batch file JSON-to-binary
-  file(REAL_PATH "${FB_DATA_FOLDER}/${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_JSON_TO_BIN}.${FB_BATCH_FILE_EXTENSION}"
+  file(REAL_PATH "${FB_DATA_DIR_NAME}/${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_JSON_TO_BIN}.${FB_BATCH_FILE_EXTENSION}"
                  fb_batch_json_to_bin_file_
   )
-  file(REAL_PATH "${FB_DATA_FOLDER}" fb_bin_output_dir_)
+  file(REAL_PATH "${FB_DATA_DIR_NAME}" fb_bin_output_dir_)
   if(WIN32)
     cmake_language(CALL create_batch_json_to_bin
       "${fb_batch_json_to_bin_file_}"
@@ -134,10 +134,10 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
     )
   endif()
   # create batch file Binary-to-JSON
-  file(REAL_PATH "${FB_DATA_FOLDER}/${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON}.${FB_BATCH_FILE_EXTENSION}"
+  file(REAL_PATH "${FB_DATA_DIR_NAME}/${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON}.${FB_BATCH_FILE_EXTENSION}"
                  fb_batch_bin_to_json_file_
   )
-  file(REAL_PATH "${FB_DATA_FOLDER}/${FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON}"
+  file(REAL_PATH "${FB_DATA_DIR_NAME}/${FB_BATCH_FILE_STEM_SUFFIX_BIN_TO_JSON}"
                  fb_json_output_dir_
   )
   if(WIN32)

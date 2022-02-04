@@ -11,59 +11,60 @@
 #include"menuCommon.hpp"
 #include<iostream>
 
-namespace Game
+namespace Game {
+namespace Menu {
+
+constexpr int skillWidth{ 30 };
+
+namespace ActionSkill
 {
-    namespace Menu
-    {
-        constexpr int skillWidth{ 30 };
-
-        namespace ActionSkill
-        {
-            enum ActionSkill {
-                SHOW_ALL = ActionCommon::NEXT,
-                SHOW_ALL_ACCEPTED,
-                MODIFY
-            };
-        }
-
-        void menuSkill(Object::Character& character, const Indent indent);
-
-        namespace ActionModifySkill
-        {
-            enum ActionModifySkill {
-                SHOW_ACCEPTED = ActionCommon::NEXT,
-                INCREASE_LEVEL,
-                DECREASE_LEVEL
-            };
-        }
-
-        void menuModifySkill(
-            Object::Character& character,
-            Object::Skill::Type type,
-            const Indent indent);
-
-        ///------------------------------------------------------------------------------------------------
-
-        void showAllSkills(
-            const Object::Character& character,
-            const Indent indent,
-            bool accepted = false);
-
-        Game::Common::Text stringSkill(
-            const Object::Character& character,
-            Object::Skill::Type type,
-            unsigned char width,
-            char placeholder,
-            bool accepted = false);
-
-        void showSkillPoints(
-            const Object::Character& character,
-            const Indent indent,
-            bool accepted = false);
-
-        Object::Skill::Type pickSkill(const Indent indent);
-
-    }
+    enum ActionSkill {
+        SHOW_ALL = ActionCommon::NEXT,
+        SHOW_ALL_ACCEPTED,
+        MODIFY
+    };
 }
+
+void menuSkill(Object::Character& character, const Indent indent);
+
+namespace ActionModifySkill
+{
+    enum ActionModifySkill {
+        SHOW_ACCEPTED = ActionCommon::NEXT,
+        INCREASE_LEVEL,
+        DECREASE_LEVEL
+    };
+}
+
+void menuModifySkill(
+    Object::Character& character,
+    Object::Skill::Type type,
+    const Indent indent);
+
+///------------------------------------------------------------------------------------------------
+
+void showAllSkills(
+    const Object::Character& character,
+    const Indent indent,
+    bool accepted = false);
+
+Common::Text stringSkill(
+    const Object::Character& character,
+    Object::Skill::Type type,
+    unsigned char width,
+    char placeholder,
+    bool accepted = false);
+
+void showSkillPoints(
+    const Object::Character& character,
+    const Indent indent,
+    bool accepted = false);
+
+Object::Skill::Type pickSkill(
+    const Object::Character& character,
+    const Indent indent);
+
+} // namespace Menu
+} // namespace Game
 
 #endif // !MENU_SKILL_HPP

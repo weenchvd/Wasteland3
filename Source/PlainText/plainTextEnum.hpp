@@ -31,18 +31,6 @@ namespace Game
             NUMBER_OF                       /// must be the last
         };
 
-        enum class PlainText__Skill : PlainTextBaseType {
-            INVALID = -1,                   /// invalid, must be the first
-
-            GROUP_COMBAT,
-            GROUP_GENERAL,
-            GROUP_EXPLORATION,
-            GROUP_SOCIAL,
-
-            NUMBER_OF                       /// must be the last
-        };
-        
-
     }
 }
 

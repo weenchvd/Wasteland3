@@ -9,7 +9,6 @@
 
 #include"plainTextEnum.hpp"
 #include"common.hpp"
-#include"skill.hpp"
 #include<array>
 
 namespace Game
@@ -33,7 +32,6 @@ namespace Game
         public:
             using Language      = PlainText__Language;
             using General       = PlainText__General;
-            using Skill         = PlainText__Skill;
 
             friend class Factory;
 
@@ -57,10 +55,6 @@ namespace Game
 
             const Game::Common::Text& common(PlainText::General id) const noexcept;
 
-            const Game::Common::Text& skill(PlainText::Skill id) const noexcept;
-
-            const Game::Common::Text& skill(Game::Object::Skill::Type id) const noexcept;
-
         private:
             void initialize();
             void initializeEN();
@@ -71,25 +65,19 @@ namespace Game
             const Game::Common::Text& getDefault() const noexcept;
 
             void initCommonEN();
-            void initSkillEN();
 
             void initCommonRU();
-            void initSkillRU();
 
         private:
             using Text = Game::Common::Text;
 
             static constexpr int sizeLang_ = Common::toUnderlying(PlainText::Language::NUMBER_OF);
             static constexpr int sizeCommon_ = Common::toUnderlying(PlainText::General::NUMBER_OF);
-            static constexpr int sizeSkill_ = Common::toUnderlying(PlainText::Skill::NUMBER_OF);
-            static constexpr int sizeSkillType_ = Common::toUnderlying(Game::Object::Skill::Type::NUMBER_OF);
 
         protected:
             PlainText::Language                                 current_;
             std::array<Text, sizeLang_>                         lang_;
             std::array<Text, sizeCommon_>                       common_;
-            std::array<Text, sizeSkill_>                        skill_;
-            std::array<Text, sizeSkillType_>                    skillType_;
 
         };
 

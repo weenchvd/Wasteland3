@@ -19,6 +19,8 @@ set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Character/Attribute/attributeReference.cpp"
                     "Character/Attribute/attributeText.cpp"
                     "Character/Skill/skill.cpp"
+                    "Character/Skill/skillReference.cpp"
+                    "Character/Skill/skillText.cpp"
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
@@ -41,3 +43,4 @@ target_link_libraries(${LIBRARY_NAME}
 )
 
 add_subdirectory("Character/Attribute")
+add_subdirectory("Character/Skill")

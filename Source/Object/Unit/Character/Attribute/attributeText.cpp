@@ -42,6 +42,7 @@ bool AttributeText::initialized_{ false };
 
 void AttributeText::setLanguage(PlainText::Language lang)
 {
+    assert(Game::Common::isValidEnum(lang));
     ptrName_    = { &name_[Game::Common::toUnderlying(lang)] };
     ptrDescr_   = { &descr_[Game::Common::toUnderlying(lang)] };
 }
@@ -56,7 +57,7 @@ const Text& AttributeText::name(Attribute__Type id) noexcept
 const Text& AttributeText::descr(Attribute__Type id) noexcept
 {
     assert(Game::Common::isValidEnum(id));
-    assert(ptrName_ != nullptr);
+    assert(ptrDescr_ != nullptr);
     return (*ptrDescr_)[Game::Common::toUnderlying(id)];
 }
 

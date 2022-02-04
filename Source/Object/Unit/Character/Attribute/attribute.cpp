@@ -8,8 +8,6 @@
 #include"character.hpp"
 #include"locator.hpp"
 #include<assert.h>
-#include<iostream>
-#include<fstream>
 #include<type_traits>
 
 namespace Game
@@ -17,7 +15,6 @@ namespace Game
     namespace Object
     {
         using namespace std;
-        using Game::Common::Text;
 
         const AttributeReference    Attribute::ref_;
         const AttributeText         Attribute::text_;
