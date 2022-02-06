@@ -7,8 +7,8 @@
 #ifndef EFFECT_COMMON_HPP
 #define EFFECT_COMMON_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 //using CommonEffectBase              = unsigned short int;
 //using EffectModel                   = CommonEffectBase;
@@ -18,7 +18,7 @@ namespace Object {
 //    SKILL
 //};
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !EFFECT_COMMON_HPP

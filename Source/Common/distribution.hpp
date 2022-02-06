@@ -13,8 +13,8 @@
 #include<memory>
 #include<vector>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 template<class T> class Distribution {
 public:
@@ -202,7 +202,7 @@ std::vector<E> initializeDistribution(
     return dist;
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !DISTRIBUTION_HPP

@@ -7,8 +7,8 @@
 #ifndef ITEM_COMMON_HPP
 #define ITEM_COMMON_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using ItemBaseType                  = short int;
 using Item__Model                   = ItemBaseType;
@@ -26,7 +26,7 @@ enum class Item__Type : ItemBaseType {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ITEM_COMMON_HPP

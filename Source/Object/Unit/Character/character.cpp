@@ -6,8 +6,8 @@
 
 #include"character.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -325,5 +325,5 @@ void Character::initRef()
 
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

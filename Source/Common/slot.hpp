@@ -10,8 +10,8 @@
 #include<array>
 #include<memory>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 template<class T, unsigned int N>
 class Slot {
@@ -106,7 +106,7 @@ private:
     std::array<Type, N>                 type_;
 };
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !SLOT_HPP

@@ -9,13 +9,13 @@
 #include<sstream>
 #include<string>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 using namespace std;
 
 
-void menuAttribute(Object::Character& character, const Indent indent)
+void menuAttribute(object::Character& character, const Indent indent)
 {
     Indent ind1 = indent + Indent{};
     Indent ind2 = ind1 + Indent{};
@@ -25,21 +25,21 @@ void menuAttribute(Object::Character& character, const Indent indent)
         cout << endl << endl;
         cout << ind1 << "Attribute menu (" << character.name() << ")" << endl;
         cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionAttribute::SHOW_ALL << "\' Show attributes" << endl;
-        cout << ind2 << '\'' << ActionAttribute::SHOW_ALL_ACCEPTED << "\' Show attributes (accepted)" << endl;
-        cout << ind2 << '\'' << ActionAttribute::MODIFY << "\' Modify attribute" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionAttribute::SHOW_ALL << "\' Show attributes" << endl;
+        cout << ind2 << '\'' << actionAttribute::SHOW_ALL_ACCEPTED << "\' Show attributes (accepted)" << endl;
+        cout << ind2 << '\'' << actionAttribute::MODIFY << "\' Modify attribute" << endl;
 
         switch (getAction()) {
-        case ActionAttribute::SHOW_ALL:
+        case actionAttribute::SHOW_ALL:
             showAllAttributes(character, ind1);
             break;
-        case ActionAttribute::SHOW_ALL_ACCEPTED:
+        case actionAttribute::SHOW_ALL_ACCEPTED:
             showAllAttributes(character, ind1, true);
             break;
-        case ActionAttribute::MODIFY: {
-            Object::Attribute::Type type{ pickAttribute(character, ind1) };
-            if (type != Object::Attribute::Type::INVALID) {
+        case actionAttribute::MODIFY: {
+            object::Attribute::Type type{ pickAttribute(character, ind1) };
+            if (type != object::Attribute::Type::INVALID) {
                 menuModifyAttribute(character, type, ind1);
             }
             else {
@@ -47,7 +47,7 @@ void menuAttribute(Object::Character& character, const Indent indent)
             }
             break;
         }
-        case ActionCommon::EXIT:
+        case actionCommon::EXIT:
             if (character.attribute().isModified()) {
                 cout << ind1 << "Attributes have been changed. Do you want to save the changes?" << endl;
                 switch (getYesNo()) {
@@ -66,7 +66,7 @@ void menuAttribute(Object::Character& character, const Indent indent)
                 return;
             }
             break;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -77,8 +77,8 @@ void menuAttribute(Object::Character& character, const Indent indent)
 }
 
 void menuModifyAttribute(
-    Object::Character& character,
-    Object::Attribute::Type type,
+    object::Character& character,
+    object::Attribute::Type type,
     const Indent indent)
 {
     Indent ind1 = indent + Indent{};
@@ -92,33 +92,33 @@ void menuModifyAttribute(
         cout << ind1 << "Attribute: " << stringAttribute(character, type, width, space) << endl;
         cout << ind2 << character.attribute().attributeText().descr(type) << endl;
         cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionModifyAttribute::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
-        cout << ind2 << '\'' << ActionModifyAttribute::INCREASE_LEVEL << "\' Increase level" << endl;
-        cout << ind2 << '\'' << ActionModifyAttribute::DECREASE_LEVEL << "\' Decrease level" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionModifyAttribute::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
+        cout << ind2 << '\'' << actionModifyAttribute::INCREASE_LEVEL << "\' Increase level" << endl;
+        cout << ind2 << '\'' << actionModifyAttribute::DECREASE_LEVEL << "\' Decrease level" << endl;
 
         switch (getAction()) {
-        case ActionModifyAttribute::SHOW_ACCEPTED:
+        case actionModifyAttribute::SHOW_ACCEPTED:
             cout << ind2 << "Attribute (accepted): "
                 << stringAttribute(character, type, width, space, true) << endl;
             break;
-        case ActionModifyAttribute::INCREASE_LEVEL: {
+        case actionModifyAttribute::INCREASE_LEVEL: {
             int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<Common::LevelStat>::max()) {
+            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
                 character.attribute().addLevel(type, n);
             }
             break;
         }
-        case ActionModifyAttribute::DECREASE_LEVEL: {
+        case actionModifyAttribute::DECREASE_LEVEL: {
             int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<Common::LevelStat>::max()) {
+            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
                 character.attribute().addLevel(type, -n);
             }
             break;
         }
-        case ActionCommon::EXIT:
+        case actionCommon::EXIT:
             return;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -131,7 +131,7 @@ void menuModifyAttribute(
 ///------------------------------------------------------------------------------------------------
 
 void showAllAttributes(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted)
 {
@@ -144,30 +144,30 @@ void showAllAttributes(
     cout << ":" << endl;
     Indent ind2 = ind1 + Indent{};
 
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::COORDINATION,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::COORDINATION,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::LUCK,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::LUCK,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::AWARENESS,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::AWARENESS,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::STRENGTH,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::STRENGTH,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::SPEED,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::SPEED,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::INTELLIGENCE,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::INTELLIGENCE,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, Object::Attribute::Type::CHARISMA,
+    cout << ind2 << stringAttribute(character, object::Attribute::Type::CHARISMA,
         attrWidth, space, accepted) << endl;
 }
 
-Game::Common::Text stringAttribute(
-    const Object::Character& character,
-    Object::Attribute::Type type,
+common::Text stringAttribute(
+    const object::Character& character,
+    object::Attribute::Type type,
     unsigned char width,
     char placeholder,
     bool accepted)
 {
-    Game::Common::Text t{
+    common::Text t{
         fillWithPlaseholders(
             character.attribute().attributeText().name(type), width, placeholder)
     };
@@ -176,7 +176,7 @@ Game::Common::Text stringAttribute(
 }
 
 void showAttPoints(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted)
 {
@@ -191,30 +191,30 @@ void showAttPoints(
     }
 }
 
-Object::Attribute::Type pickAttribute(
-    const Object::Character& character,
+object::Attribute::Type pickAttribute(
+    const object::Character& character,
     const Indent indent)
 {
     Indent ind1 = indent + Indent{};
     cout << ind1 << "Attributes:" << endl;
     Indent ind2 = ind1 + Indent{};
 
-    for (int i = static_cast<int>(Object::Attribute::Type::INVALID) + 1;
-        i < static_cast<int>(Object::Attribute::Type::NUMBER_OF); ++i)
+    for (int i = static_cast<int>(object::Attribute::Type::INVALID) + 1;
+        i < static_cast<int>(object::Attribute::Type::NUMBER_OF); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
             << character.attribute().attributeText().name(
-                static_cast<Object::Attribute::Type>(i)) << endl;
+                static_cast<object::Attribute::Type>(i)) << endl;
     }
     cout << ind1 << "Select an attribute:" << endl;
-    Object::Attribute::Type t{ Object::Attribute::Type::INVALID };
+    object::Attribute::Type t{ object::Attribute::Type::INVALID };
     int n = getPosNumber();
-    if (n > static_cast<int>(Object::Attribute::Type::INVALID) &&
-        n < static_cast<int>(Object::Attribute::Type::NUMBER_OF)) {
-        t = static_cast<Object::Attribute::Type>(n);
+    if (n > static_cast<int>(object::Attribute::Type::INVALID) &&
+        n < static_cast<int>(object::Attribute::Type::NUMBER_OF)) {
+        t = static_cast<object::Attribute::Type>(n);
     }
     return t;
 }
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game

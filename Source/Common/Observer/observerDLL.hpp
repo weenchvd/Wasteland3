@@ -10,8 +10,8 @@
 #include"delegate.hpp"
 #include<assert.h>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 template<class R, class... Ts>
 class SubjectDLL;
@@ -107,7 +107,7 @@ inline R SubjectDLL<R, Ts...>::notify(Ts... args) const
     }
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !OBSERVERDLL_HPP

@@ -43,37 +43,37 @@ int main()
     // Enable buffering to prevent VS from chopping up UTF-8 byte sequences
     setvbuf(stdout, nullptr, _IOFBF, 1000);
 
-    cout << "\tmain.exe Start!" << endl;
+    cout << "\twl3.exe Start!" << endl;
     cout << "----Welcome to Wasteland 3!----" << endl;
 
-    Game::Global::initializeGame();
+    game::global::initializeGame();
 
-    Game::Object::Squad squad;
-    Init::initializeSquad(squad);
+    game::object::Squad squad;
+    init::initializeSquad(squad);
 
-    Game::Object::Inventory shop;
-    Init::initializeShop(shop);
+    game::object::Inventory shop;
+    init::initializeShop(shop);
 
-    Game::Menu::menuMain(squad, shop);
+    game::menu::menuMain(squad, shop);
 
-    //sizeof(Game::Object::Character);
-    //sizeof(Game::Common::Text);
-    //sizeof(Game::Common::Slot<Game::Object::Weapon, Game::Object::nWSlots>);
-    //sizeof(std::unique_ptr<Game::Object::Attribute>);
+    //sizeof(game::object::Character);
+    //sizeof(game::common::Text);
+    //sizeof(game::common::Slot<game::object::Weapon, game::object::nWSlots>);
+    //sizeof(std::unique_ptr<game::object::Attribute>);
 
 #if SHOW
-    using namespace Game;
-    using namespace Game::Object;
+    using namespace game;
+    using namespace game::object;
 
     sizeof(ItemType);
     sizeof(ItemModel);
     sizeof(Item);
     sizeof(WeaponReference);
-    sizeof(Common::Text);
+    sizeof(common::Text);
     sizeof(WeaponModType);
     sizeof(array<WeaponModType, 4>);
     sizeof(array<unique_ptr<WeaponMod>, 4>);
-    sizeof(Common::Slot<WeaponMod, 4>);
+    sizeof(common::Slot<WeaponMod, 4>);
     sizeof(Weapon);
 
     unique_ptr<Item> socom1 = Weapon::create(WeaponModel::AR_SOCOM);
@@ -151,6 +151,6 @@ int main()
     inv.insert(mod);
 #endif
 
-    cout << "\tmain.exe Done!" << endl;
+    cout << "\twl3.exe Done!" << endl;
     return 0;
 }

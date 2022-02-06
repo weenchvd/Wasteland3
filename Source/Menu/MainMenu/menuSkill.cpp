@@ -10,13 +10,13 @@
 #include<sstream>
 #include<string>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 using namespace std;
 
 
-void menuSkill(Object::Character& character, const Indent indent)
+void menuSkill(object::Character& character, const Indent indent)
 {
     Indent ind1 = indent + Indent{};
     Indent ind2 = ind1 + Indent{};
@@ -26,21 +26,21 @@ void menuSkill(Object::Character& character, const Indent indent)
         cout << endl << endl;
         cout << ind1 << "Skill menu (" << character.name() << ")" << endl;
         cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionSkill::SHOW_ALL << "\' Show skills" << endl;
-        cout << ind2 << '\'' << ActionSkill::SHOW_ALL_ACCEPTED << "\' Show skills (accepted)" << endl;
-        cout << ind2 << '\'' << ActionSkill::MODIFY << "\' Modify skill" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionSkill::SHOW_ALL << "\' Show skills" << endl;
+        cout << ind2 << '\'' << actionSkill::SHOW_ALL_ACCEPTED << "\' Show skills (accepted)" << endl;
+        cout << ind2 << '\'' << actionSkill::MODIFY << "\' Modify skill" << endl;
 
         switch (getAction()) {
-        case ActionSkill::SHOW_ALL:
+        case actionSkill::SHOW_ALL:
             showAllSkills(character, ind1);
             break;
-        case ActionSkill::SHOW_ALL_ACCEPTED:
+        case actionSkill::SHOW_ALL_ACCEPTED:
             showAllSkills(character, ind1, true);
             break;
-        case ActionSkill::MODIFY: {
-            Object::Skill::Type type{ pickSkill(character, ind1) };
-            if (type != Object::Skill::Type::INVALID) {
+        case actionSkill::MODIFY: {
+            object::Skill::Type type{ pickSkill(character, ind1) };
+            if (type != object::Skill::Type::INVALID) {
                 menuModifySkill(character, type, ind1);
             }
             else {
@@ -48,7 +48,7 @@ void menuSkill(Object::Character& character, const Indent indent)
             }
             break;
         }
-        case ActionCommon::EXIT:
+        case actionCommon::EXIT:
             if (character.skill().isModified()) {
                 cout << ind1 << "Skills have been changed. Do you want to save the changes?" << endl;
                 switch (getYesNo()) {
@@ -67,7 +67,7 @@ void menuSkill(Object::Character& character, const Indent indent)
                 return;
             }
             break;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -78,8 +78,8 @@ void menuSkill(Object::Character& character, const Indent indent)
 }
 
 void menuModifySkill(
-    Object::Character& character,
-    Object::Skill::Type type,
+    object::Character& character,
+    object::Skill::Type type,
     const Indent indent)
 {
     Indent ind1 = indent + Indent{};
@@ -93,33 +93,33 @@ void menuModifySkill(
         cout << ind1 << "Skill: " << stringSkill(character, type, width, space) << endl;
         cout << ind2 << character.skill().skillText().descr(type) << endl;
         cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionModifySkill::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
-        cout << ind2 << '\'' << ActionModifySkill::INCREASE_LEVEL << "\' Increase level" << endl;
-        cout << ind2 << '\'' << ActionModifySkill::DECREASE_LEVEL << "\' Decrease level" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionModifySkill::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
+        cout << ind2 << '\'' << actionModifySkill::INCREASE_LEVEL << "\' Increase level" << endl;
+        cout << ind2 << '\'' << actionModifySkill::DECREASE_LEVEL << "\' Decrease level" << endl;
 
         switch (getAction()) {
-        case ActionModifySkill::SHOW_ACCEPTED:
+        case actionModifySkill::SHOW_ACCEPTED:
             cout << ind2 << "Skill (accepted): "
                 << stringSkill(character, type, width, space, true) << endl;
             break;
-        case ActionModifySkill::INCREASE_LEVEL: {
+        case actionModifySkill::INCREASE_LEVEL: {
             int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<Common::LevelStat>::max()) {
+            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
                 character.skill().addLevel(type, n);
             }
             break;
         }
-        case ActionModifySkill::DECREASE_LEVEL: {
+        case actionModifySkill::DECREASE_LEVEL: {
             int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<Common::LevelStat>::max()) {
+            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
                 character.skill().addLevel(type, -n);
             }
             break;
         }
-        case ActionCommon::EXIT:
+        case actionCommon::EXIT:
             return;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -132,7 +132,7 @@ void menuModifySkill(
 ///------------------------------------------------------------------------------------------------
 
 void showAllSkills(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted)
 {
@@ -146,67 +146,67 @@ void showAllSkills(
     Indent ind2 = ind1 + Indent{};
     Indent ind3 = ind2 + Indent{};
 
-    cout << ind2 << character.skill().skillText().group(Object::Skill::Group::COMBAT) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::AUTOMATIC_WEAPONS,
+    cout << ind2 << character.skill().skillText().group(object::Skill::Group::COMBAT) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::AUTOMATIC_WEAPONS,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::BIG_GUNS,
+    cout << ind3 << stringSkill(character, object::Skill::Type::BIG_GUNS,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::BRAWLING,
+    cout << ind3 << stringSkill(character, object::Skill::Type::BRAWLING,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::MELEE_COMBAT,
+    cout << ind3 << stringSkill(character, object::Skill::Type::MELEE_COMBAT,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::SMALL_ARMS,
+    cout << ind3 << stringSkill(character, object::Skill::Type::SMALL_ARMS,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::SNIPER_RIFLES,
-        skillWidth, space, accepted) << endl;
-
-    cout << ind2 << character.skill().skillText().group(Object::Skill::Group::GENERAL) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::ANIMAL_WHISPERER,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::EXPLOSIVES,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::FIRST_AID,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::SNEAKY_SHIT,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::WEIRD_SCIENCE,
+    cout << ind3 << stringSkill(character, object::Skill::Type::SNIPER_RIFLES,
         skillWidth, space, accepted) << endl;
 
-    cout << ind2 << character.skill().skillText().group(Object::Skill::Group::EXPLORATION) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::ARMOR_MODDING,
+    cout << ind2 << character.skill().skillText().group(object::Skill::Group::GENERAL) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::ANIMAL_WHISPERER,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::LOCKPICKING,
+    cout << ind3 << stringSkill(character, object::Skill::Type::EXPLOSIVES,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::NERD_STUFF,
+    cout << ind3 << stringSkill(character, object::Skill::Type::FIRST_AID,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::MECHANICS,
+    cout << ind3 << stringSkill(character, object::Skill::Type::SNEAKY_SHIT,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::SURVIVAL,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::TOASTER_REPAIR,
-        skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::WEAPON_MODDING,
+    cout << ind3 << stringSkill(character, object::Skill::Type::WEIRD_SCIENCE,
         skillWidth, space, accepted) << endl;
 
-    cout << ind2 << character.skill().skillText().group(Object::Skill::Group::SOCIAL) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::BARTER,
+    cout << ind2 << character.skill().skillText().group(object::Skill::Group::EXPLORATION) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::ARMOR_MODDING,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::HARD_ASS,
+    cout << ind3 << stringSkill(character, object::Skill::Type::LOCKPICKING,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::KISS_ASS,
+    cout << ind3 << stringSkill(character, object::Skill::Type::NERD_STUFF,
         skillWidth, space, accepted) << endl;
-    cout << ind3 << stringSkill(character, Object::Skill::Type::LEADERSHIP,
+    cout << ind3 << stringSkill(character, object::Skill::Type::MECHANICS,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::SURVIVAL,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::TOASTER_REPAIR,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::WEAPON_MODDING,
+        skillWidth, space, accepted) << endl;
+
+    cout << ind2 << character.skill().skillText().group(object::Skill::Group::SOCIAL) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::BARTER,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::HARD_ASS,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::KISS_ASS,
+        skillWidth, space, accepted) << endl;
+    cout << ind3 << stringSkill(character, object::Skill::Type::LEADERSHIP,
         skillWidth, space, accepted) << endl;
 }
 
-Common::Text stringSkill(
-    const Object::Character& character,
-    Object::Skill::Type type,
+common::Text stringSkill(
+    const object::Character& character,
+    object::Skill::Type type,
     unsigned char width,
     char placeholder,
     bool accepted)
 {
-    Common::Text t{
+    common::Text t{
         fillWithPlaseholders(
             character.skill().skillText().name(type), width, placeholder)
     };
@@ -215,7 +215,7 @@ Common::Text stringSkill(
 }
 
 void showSkillPoints(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted)
 {
@@ -230,31 +230,31 @@ void showSkillPoints(
     }
 }
 
-Object::Skill::Type pickSkill(
-    const Object::Character& character,
+object::Skill::Type pickSkill(
+    const object::Character& character,
     const Indent indent)
 {
     Indent ind1 = indent + Indent{};
     cout << ind1 << "Skills:" << endl;
     Indent ind2 = ind1 + Indent{};
 
-    for (int i = static_cast<int>(Object::Skill::Type::INVALID) + 1;
-        i < static_cast<int>(Object::Skill::Type::NUMBER_OF); ++i)
+    for (int i = static_cast<int>(object::Skill::Type::INVALID) + 1;
+        i < static_cast<int>(object::Skill::Type::NUMBER_OF); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
             << character.skill().skillText().name(
-                static_cast<Object::Skill::Type>(i)) << endl;
+                static_cast<object::Skill::Type>(i)) << endl;
     }
 
     cout << ind1 << "Select a skill:" << endl;
-    Object::Skill::Type t{ Object::Skill::Type::INVALID };
+    object::Skill::Type t{ object::Skill::Type::INVALID };
     int n = getPosNumber();
-    if (n > static_cast<int>(Object::Skill::Type::INVALID) &&
-        n < static_cast<int>(Object::Skill::Type::NUMBER_OF)) {
-        t = static_cast<Object::Skill::Type>(n);
+    if (n > static_cast<int>(object::Skill::Type::INVALID) &&
+        n < static_cast<int>(object::Skill::Type::NUMBER_OF)) {
+        t = static_cast<object::Skill::Type>(n);
     }
     return t;
 }
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game

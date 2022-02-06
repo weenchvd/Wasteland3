@@ -14,12 +14,12 @@
 #include"skillTextFB_generated.h"
 #include<array>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class SkillText {
 public:
-    using Text              = Common::Text;
+    using Text              = common::Text;
 
     SkillText() noexcept {}
 
@@ -37,16 +37,16 @@ public:
     static const Text& group(Skill__Group id) noexcept;
 
 private:
-    static constexpr int sizeLang_      = Common::toUnderlying(
-        Global::PlainText::Language::NUMBER_OF);
-    static constexpr int sizeType_      = Common::toUnderlying(Skill__Type::NUMBER_OF);
-    static constexpr int sizeGroup_     = Common::toUnderlying(Skill__Group::NUMBER_OF);
+    static constexpr int sizeLang_      = common::toUnderlying(
+        global::PlainText::Language::NUMBER_OF);
+    static constexpr int sizeType_      = common::toUnderlying(Skill__Type::NUMBER_OF);
+    static constexpr int sizeGroup_     = common::toUnderlying(Skill__Group::NUMBER_OF);
 
-    static void setLanguage(Global::PlainText::Language lang);
+    static void setLanguage(global::PlainText::Language lang);
 
     static void initLanguage(
         const fbSkill::FB_LanguageBundle* table,
-        Global::PlainText::Language lang
+        global::PlainText::Language lang
     );
 
     static void initByType(
@@ -60,7 +60,7 @@ private:
     );
 
 private:
-    static Common::ObserverDLL<void, Global::PlainText::Language>   langObs_;
+    static common::ObserverDLL<void, global::PlainText::Language>   langObs_;
 
     static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
     static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
@@ -73,7 +73,7 @@ private:
     static bool                             initialized_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !SKILL_TEXT_HPP

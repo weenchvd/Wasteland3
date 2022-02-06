@@ -6,8 +6,8 @@
 
 #include"item.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -22,5 +22,5 @@ bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noe
     return false;
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

@@ -11,8 +11,8 @@
 #include"common.hpp"
 #include<array>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 template<class T, size_t size>
 void fillAll(std::array<T, size> a, const T& filler) {
@@ -21,9 +21,9 @@ void fillAll(std::array<T, size> a, const T& filler) {
     }
 }
 
-const Game::Common::Text invalidEnum{ u8"INVALID ENUM" };
-const Game::Common::Text eng_NoData{ u8"NO DATA" };
-const Game::Common::Text rus_NoData{ u8"НЕТ ДАННЫХ" };
+const common::Text invalidEnum{ u8"INVALID ENUM" };
+const common::Text eng_NoData{ u8"NO DATA" };
+const common::Text rus_NoData{ u8"НЕТ ДАННЫХ" };
 
 ///------------------------------------------------------------------------------------------------
 
@@ -50,9 +50,9 @@ public:
     void setLanguage(PlainText::Language lang);
 
 public:
-    const Game::Common::Text& language(PlainText::Language id) const noexcept;
+    const common::Text& language(PlainText::Language id) const noexcept;
 
-    const Game::Common::Text& common(PlainText::General id) const noexcept;
+    const common::Text& common(PlainText::General id) const noexcept;
 
 private:
     void initialize();
@@ -61,17 +61,17 @@ private:
 
     void fill();
 
-    const Game::Common::Text& getDefault() const noexcept;
+    const common::Text& getDefault() const noexcept;
 
     void initCommonEN();
 
     void initCommonRU();
 
 private:
-    using Text = Game::Common::Text;
+    using Text = common::Text;
 
-    static constexpr int sizeLang_ = Common::toUnderlying(PlainText::Language::NUMBER_OF);
-    static constexpr int sizeCommon_ = Common::toUnderlying(PlainText::General::NUMBER_OF);
+    static constexpr int sizeLang_ = common::toUnderlying(PlainText::Language::NUMBER_OF);
+    static constexpr int sizeCommon_ = common::toUnderlying(PlainText::General::NUMBER_OF);
 
 protected:
     PlainText::Language                                 current_;
@@ -80,7 +80,7 @@ protected:
 
 };
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !PLAINTEXT_HPP

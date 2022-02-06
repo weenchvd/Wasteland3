@@ -11,8 +11,8 @@
 #include<memory>
 #include<assert.h>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 class Locator {
 public:
@@ -20,29 +20,29 @@ public:
 
     static bool isInitialized() { return initialized_; }
 
-    static const Game::Global::Factory& getFactory() noexcept {
+    static const global::Factory& getFactory() noexcept {
         return factory_;
     }
 
-    static Game::Global::PlainText& getPlainText() noexcept {
+    static global::PlainText& getPlainText() noexcept {
         assert(option_ != nullptr);
         return *plainText_;
     }
 
-    static Game::Global::Option& getOption() noexcept {
+    static global::Option& getOption() noexcept {
         assert(option_ != nullptr);
         return *option_;
     }
 
 private:
-    static Game::Global::Factory                            factory_;
-    static std::unique_ptr<Game::Global::PlainText>         plainText_;
-    static std::unique_ptr<Game::Global::Option>            option_;
+    static global::Factory                                  factory_;
+    static std::unique_ptr<global::PlainText>               plainText_;
+    static std::unique_ptr<global::Option>                  option_;
 
     static bool                                             initialized_;
 };
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !LOCATOR_HPP

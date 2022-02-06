@@ -11,62 +11,62 @@
 #include"menuCommon.hpp"
 #include<iostream>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 constexpr int skillWidth{ 30 };
 
-namespace ActionSkill {
+namespace actionSkill {
 
 enum ActionSkill {
-    SHOW_ALL = ActionCommon::NEXT,
+    SHOW_ALL = actionCommon::NEXT,
     SHOW_ALL_ACCEPTED,
     MODIFY
 };
 
-} // namespace ActionSkill
+} // namespace actionSkill
 
-void menuSkill(Object::Character& character, const Indent indent);
+void menuSkill(object::Character& character, const Indent indent);
 
-namespace ActionModifySkill {
+namespace actionModifySkill {
 
 enum ActionModifySkill {
-    SHOW_ACCEPTED = ActionCommon::NEXT,
+    SHOW_ACCEPTED = actionCommon::NEXT,
     INCREASE_LEVEL,
     DECREASE_LEVEL
 };
 
-} // namespace ActionModifySkill
+} // namespace actionModifySkill
 
 void menuModifySkill(
-    Object::Character& character,
-    Object::Skill::Type type,
+    object::Character& character,
+    object::Skill::Type type,
     const Indent indent);
 
 ///------------------------------------------------------------------------------------------------
 
 void showAllSkills(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted = false);
 
-Common::Text stringSkill(
-    const Object::Character& character,
-    Object::Skill::Type type,
+common::Text stringSkill(
+    const object::Character& character,
+    object::Skill::Type type,
     unsigned char width,
     char placeholder,
     bool accepted = false);
 
 void showSkillPoints(
-    const Object::Character& character,
+    const object::Character& character,
     const Indent indent,
     bool accepted = false);
 
-Object::Skill::Type pickSkill(
-    const Object::Character& character,
+object::Skill::Type pickSkill(
+    const object::Character& character,
     const Indent indent);
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game
 
 #endif // !MENU_SKILL_HPP

@@ -9,8 +9,8 @@
 
 #include"unitCommon.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 enum class Character__Model : UnitBaseType {
     INVALID = -1,                   /// invalid, must be the first
@@ -30,7 +30,7 @@ enum class Character__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !CHARACTER_COMMON_HPP

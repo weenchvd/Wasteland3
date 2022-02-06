@@ -11,36 +11,36 @@
 #include"plainText.hpp"
 #include<iostream>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 constexpr int optionWidth{ 30 };
 
-namespace ActionOption {
+namespace actionOption {
 
 enum ActionOption {
-    LANGUAGE = ActionCommon::NEXT
+    LANGUAGE = actionCommon::NEXT
 };
 
-} // namespace ActionOption
+} // namespace actionOption
 
 void menuOption(const Indent indent);
 
-namespace ActionLanguage {
+namespace actionLanguage {
 
 enum ActionLanguage {
-    CHANGE_LANGUAGE = ActionCommon::NEXT
+    CHANGE_LANGUAGE = actionCommon::NEXT
 };
 
-} // namespace ActionLanguage
+} // namespace actionLanguage
 
 void menuLanguage(const Indent indent);
 
 ///------------------------------------------------------------------------------------------------
 
-Game::Global::PlainText::Language pickLanguage(const Indent indent);
+global::PlainText::Language pickLanguage(const Indent indent);
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game
 
 #endif // !MENU_OPTION_HPP

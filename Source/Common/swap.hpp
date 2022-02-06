@@ -10,8 +10,8 @@
 #include<memory>
 #include<type_traits>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 template<class Base, class Derived>
 inline void swapUP(std::unique_ptr<Base>& base, std::unique_ptr<Derived>& derived)
@@ -21,7 +21,7 @@ inline void swapUP(std::unique_ptr<Base>& base, std::unique_ptr<Derived>& derive
     base = std::move(temp);
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !SWAP_HPP

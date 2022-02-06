@@ -12,8 +12,8 @@
 //#include<memory>
 //#include<vector>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Character;
 
@@ -47,7 +47,7 @@ private:
 
 ///------------------------------------------------------------------------------------------------
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !EFFECT_HPP

@@ -6,8 +6,8 @@
 
 #include"effect.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -22,5 +22,5 @@ using namespace std;
 //    return false;
 //}
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

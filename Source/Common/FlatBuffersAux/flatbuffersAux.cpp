@@ -9,8 +9,8 @@
 #include<fstream>
 #include<stdlib.h>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 using namespace std;
 
@@ -36,5 +36,5 @@ std::unique_ptr<char[]> getFlatBuffer(const char* fileName)
     return buffer;
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game

@@ -6,8 +6,8 @@
 
 #include"plainText.hpp"
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 using namespace std;
 
@@ -24,20 +24,20 @@ void PlainText::setLanguage(PlainText::Language lang)
     initialize();
 }
 
-const Game::Common::Text& PlainText::language(PlainText::Language id) const noexcept
+const common::Text& PlainText::language(PlainText::Language id) const noexcept
 {
-    if (Common::isValidEnum(id)) {
-        return lang_[Common::toUnderlying(id)];
+    if (common::isValidEnum(id)) {
+        return lang_[common::toUnderlying(id)];
     }
-    return common_[Common::toUnderlying(PlainText::General::INVALID_ENUM)];
+    return common_[common::toUnderlying(PlainText::General::INVALID_ENUM)];
 }
 
-const Game::Common::Text& PlainText::common(PlainText::General id) const noexcept
+const common::Text& PlainText::common(PlainText::General id) const noexcept
 {
-    if (Common::isValidEnum(id)) {
-        return common_[Common::toUnderlying(id)];
+    if (common::isValidEnum(id)) {
+        return common_[common::toUnderlying(id)];
     }
-    return common_[Common::toUnderlying(PlainText::General::INVALID_ENUM)];
+    return common_[common::toUnderlying(PlainText::General::INVALID_ENUM)];
 }
 
 void PlainText::initialize()
@@ -55,12 +55,12 @@ void PlainText::initialize()
         break;
     }
 
-    lang_[Common::toUnderlying(PlainText::Language::EN)]
-        = Common::Text{ u8"ENGLISH" };
-    lang_[Common::toUnderlying(PlainText::Language::RU)]
-        = Common::Text{ u8"РУССКИЙ" };
+    lang_[common::toUnderlying(PlainText::Language::EN)]
+        = common::Text{ u8"ENGLISH" };
+    lang_[common::toUnderlying(PlainText::Language::RU)]
+        = common::Text{ u8"РУССКИЙ" };
 
-    common_[Common::toUnderlying(PlainText::General::INVALID_ENUM)]
+    common_[common::toUnderlying(PlainText::General::INVALID_ENUM)]
         = invalidEnum;
 }
 
@@ -80,7 +80,7 @@ void PlainText::fill()
     fillAll(common_, getDefault());
 }
 
-const Game::Common::Text& PlainText::getDefault() const noexcept
+const common::Text& PlainText::getDefault() const noexcept
 {
     switch (current_) {
     case PlainText::Language::EN:
@@ -94,15 +94,15 @@ const Game::Common::Text& PlainText::getDefault() const noexcept
 
 void PlainText::initCommonEN()
 {
-    common_[Common::toUnderlying(PlainText::General::NO_DATA)]
+    common_[common::toUnderlying(PlainText::General::NO_DATA)]
         = eng_NoData;
 }
 
 void PlainText::initCommonRU()
 {
-    common_[Common::toUnderlying(PlainText::General::NO_DATA)]
+    common_[common::toUnderlying(PlainText::General::NO_DATA)]
         = rus_NoData;
 }
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game

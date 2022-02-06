@@ -12,12 +12,12 @@
 #include"effectAttribute.hpp"
 #include<vector>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 struct AttributeReference {
-    using PointAttribute    = Common::PointAttribute;
-    using LevelStat         = Common::LevelStat;
+    using PointAttribute    = common::PointAttribute;
+    using LevelStat         = common::LevelStat;
 
     AttributeReference() noexcept {}
 
@@ -58,7 +58,7 @@ public:
     static bool                             initialized_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ATTRIBUTE_REFERENCE_HPP

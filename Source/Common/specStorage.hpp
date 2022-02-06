@@ -10,8 +10,8 @@
 #include"distribution.hpp"
 #include<vector>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 // special storage
 template<class T> class SpecStorage {
@@ -86,7 +86,7 @@ bool changeLevel(
     return false;
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !SPECSTORAGE_HPP

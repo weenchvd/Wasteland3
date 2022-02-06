@@ -7,8 +7,8 @@
 #ifndef ARMOR_HPP
 #define ARMOR_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Armor {
 public:
@@ -90,7 +90,7 @@ private:
 
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ARMOR_HPP

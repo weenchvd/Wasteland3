@@ -9,8 +9,8 @@
 
 #include"damageCommon.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Damage {
 public:
@@ -18,7 +18,7 @@ public:
 
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !DAMAGE_HPP

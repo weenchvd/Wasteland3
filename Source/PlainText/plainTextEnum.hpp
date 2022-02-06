@@ -7,8 +7,8 @@
 #ifndef PLAINTEXT_ENUM_HPP
 #define PLAINTEXT_ENUM_HPP
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 using PlainTextBaseType             = int;
 
@@ -30,7 +30,7 @@ enum class PlainText__General : PlainTextBaseType {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !PLAINTEXT_ENUM_HPP

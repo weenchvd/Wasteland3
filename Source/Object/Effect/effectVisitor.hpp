@@ -7,8 +7,8 @@
 #ifndef EFFECT_VISITOR_HPP
 #define EFFECT_VISITOR_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 /*class Weapon;
 class WeaponMod;
@@ -91,7 +91,7 @@ private:
     bool isJunk_        { false };
 };*/
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !EFFECT_VISITOR_HPP

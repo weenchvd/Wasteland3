@@ -10,8 +10,8 @@
 #include<assert.h>
 #include<utility>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 // @brief Generic, type-safe callback/delegate without dynamic memory allocation.
 // @param "R" - the return type of the function to be bound to;
@@ -74,7 +74,7 @@ private:
     std::pair<InstancePtr, FunctionPtr> data_;
 };
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !DELEGATE_HPP

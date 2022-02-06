@@ -12,8 +12,8 @@
 #include<memory>
 #include<type_traits>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -26,12 +26,12 @@ std::vector<EffectAttSpeed>                     AttributeReference::spdDist_;
 std::vector<EffectAttInt>                       AttributeReference::intDist_;
 std::vector<EffectAttCha>                       AttributeReference::chaDist_;
 
-Common::PointAttribute  AttributeReference::minAttrPoints_  { 0 };
-Common::PointAttribute  AttributeReference::maxAttrPoints_  { 0 };
-Common::PointAttribute  AttributeReference::initAttrPoints_ { 0 };
-Common::LevelStat       AttributeReference::minAttrLevel_   { 0 };
-Common::LevelStat       AttributeReference::maxAttrLevel_   { 0 };
-Common::LevelStat       AttributeReference::initAttrLevel_  { 0 };
+common::PointAttribute  AttributeReference::minAttrPoints_  { 0 };
+common::PointAttribute  AttributeReference::maxAttrPoints_  { 0 };
+common::PointAttribute  AttributeReference::initAttrPoints_ { 0 };
+common::LevelStat       AttributeReference::minAttrLevel_   { 0 };
+common::LevelStat       AttributeReference::maxAttrLevel_   { 0 };
+common::LevelStat       AttributeReference::initAttrLevel_  { 0 };
 bool                    AttributeReference::initialized_    { false };
 
 void AttributeReference::initialize()
@@ -39,7 +39,7 @@ void AttributeReference::initialize()
     if (isInitialized()) return;
 
     unique_ptr<char[]> buffer{
-        Common::getFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
+        common::getFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
 
     const fbAttribute::FB_Attribute* att =
@@ -68,7 +68,7 @@ void AttributeReference::initialize()
 void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* attribute)
 {
     pDist_ = move(
-        Common::convertToVector<Common::PointAttribute>(attribute->point_attr_distr()->p())
+        common::convertToVector<common::PointAttribute>(attribute->point_attr_distr()->p())
     );
 }
 
@@ -76,14 +76,14 @@ void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* attribut
 {
     const auto* dist = attribute->coord_distr();
 
-    cooDist_ = Common::initializeDistribution<EffectAttCoord,
-        Common::Resistance,
-        Common::ActionPoint,
-        Common::ActionPoint
+    cooDist_ = common::initializeDistribution<EffectAttCoord,
+        common::Resistance,
+        common::ActionPoint,
+        common::ActionPoint
     >(
-        Common::convertToVector<Common::Resistance>(dist->status_effect()),
-        Common::convertToVector<Common::ActionPoint>(dist->ap_max()),
-        Common::convertToVector<Common::ActionPoint>(dist->ap())
+        common::convertToVector<common::Resistance>(dist->status_effect()),
+        common::convertToVector<common::ActionPoint>(dist->ap_max()),
+        common::convertToVector<common::ActionPoint>(dist->ap())
         );
 }
 
@@ -91,26 +91,26 @@ void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* attribute
 {
     const auto* dist = attribute->luck_distr();
 
-    lucDist_ = Common::initializeDistribution<EffectAttLuck,
-        Common::Armor,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance,
-        Common::Chance
+    lucDist_ = common::initializeDistribution<EffectAttLuck,
+        common::Armor,
+        common::Chance,
+        common::Chance,
+        common::Chance,
+        common::Chance,
+        common::Chance,
+        common::Chance,
+        common::Chance,
+        common::Chance
     >(
-        Common::convertToVector<Common::Armor>(dist->penet()),
-        Common::convertToVector<Common::Chance>(dist->action()),
-        Common::convertToVector<Common::Chance>(dist->crit_damage()),
-        Common::convertToVector<Common::Chance>(dist->mega_crit_damage()),
-        Common::convertToVector<Common::Chance>(dist->evade()),
-        Common::convertToVector<Common::Chance>(dist->crit_resist()),
-        Common::convertToVector<Common::Chance>(dist->double_healing()),
-        Common::convertToVector<Common::Chance>(dist->double_money()),
-        Common::convertToVector<Common::Chance>(dist->double_scrap())
+        common::convertToVector<common::Armor>(dist->penet()),
+        common::convertToVector<common::Chance>(dist->action()),
+        common::convertToVector<common::Chance>(dist->crit_damage()),
+        common::convertToVector<common::Chance>(dist->mega_crit_damage()),
+        common::convertToVector<common::Chance>(dist->evade()),
+        common::convertToVector<common::Chance>(dist->crit_resist()),
+        common::convertToVector<common::Chance>(dist->double_healing()),
+        common::convertToVector<common::Chance>(dist->double_money()),
+        common::convertToVector<common::Chance>(dist->double_scrap())
         );
 }
 
@@ -118,14 +118,14 @@ void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* attribut
 {
     const auto* dist = attribute->aware_distr();
 
-    awaDist_ = Common::initializeDistribution<EffectAttAware,
-        Common::Chance,
-        Common::Perception,
-        Common::Bonus
+    awaDist_ = common::initializeDistribution<EffectAttAware,
+        common::Chance,
+        common::Perception,
+        common::Bonus
     >(
-        Common::convertToVector<Common::Chance>(dist->hit()),
-        Common::convertToVector<Common::Perception>(dist->percep()),
-        Common::convertToVector<Common::Bonus>(dist->ranged_damage())
+        common::convertToVector<common::Chance>(dist->hit()),
+        common::convertToVector<common::Perception>(dist->percep()),
+        common::convertToVector<common::Bonus>(dist->ranged_damage())
         );
 }
 
@@ -133,16 +133,16 @@ void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* attribute)
 {
     const auto* dist = attribute->str_distr();
 
-    strDist_ = Common::initializeDistribution<EffectAttStr,
-        Common::Constitution,
-        Common::Constitution,
-        Common::Bonus,
-        Common::Multiplier
+    strDist_ = common::initializeDistribution<EffectAttStr,
+        common::Constitution,
+        common::Constitution,
+        common::Bonus,
+        common::Multiplier
     >(
-        Common::convertToVector<Common::Constitution>(dist->con_max()),
-        Common::convertToVector<Common::Constitution>(dist->con_per_lvl()),
-        Common::convertToVector<Common::Bonus>(dist->melee_damage()),
-        Common::convertToVector<Common::Multiplier>(dist->throwing_range())
+        common::convertToVector<common::Constitution>(dist->con_max()),
+        common::convertToVector<common::Constitution>(dist->con_per_lvl()),
+        common::convertToVector<common::Bonus>(dist->melee_damage()),
+        common::convertToVector<common::Multiplier>(dist->throwing_range())
         );
 }
 
@@ -150,14 +150,14 @@ void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* attribut
 {
     const auto* dist = attribute->speed_distr();
 
-    spdDist_ = Common::initializeDistribution<EffectAttSpeed,
-        Common::Multiplier,
-        Common::Evasion,
-        Common::Initiative
+    spdDist_ = common::initializeDistribution<EffectAttSpeed,
+        common::Multiplier,
+        common::Evasion,
+        common::Initiative
     >(
-        Common::convertToVector<Common::Multiplier>(dist->combat_speed()),
-        Common::convertToVector<Common::Evasion>(dist->evasion()),
-        Common::convertToVector<Common::Initiative>(dist->initiative())
+        common::convertToVector<common::Multiplier>(dist->combat_speed()),
+        common::convertToVector<common::Evasion>(dist->evasion()),
+        common::convertToVector<common::Initiative>(dist->initiative())
         );
 }
 
@@ -165,18 +165,18 @@ void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* attribute)
 {
     const auto* dist = attribute->int_distr();
 
-    intDist_ = Common::initializeDistribution<EffectAttInt,
-        Common::Chance,
-        Common::Multiplier,
-        Common::Chance,
-        Common::Bonus,
-        Common::PointSkill
+    intDist_ = common::initializeDistribution<EffectAttInt,
+        common::Chance,
+        common::Multiplier,
+        common::Chance,
+        common::Bonus,
+        common::PointSkill
     >(
-        Common::convertToVector<Common::Chance>(dist->crit_damage_chance()),
-        Common::convertToVector<Common::Multiplier>(dist->crit_damage_mult()),
-        Common::convertToVector<Common::Chance>(dist->crit_healing_chance()),
-        Common::convertToVector<Common::Bonus>(dist->crit_healing_bonus()),
-        Common::convertToVector<Common::PointSkill>(dist->skill_point())
+        common::convertToVector<common::Chance>(dist->crit_damage_chance()),
+        common::convertToVector<common::Multiplier>(dist->crit_damage_mult()),
+        common::convertToVector<common::Chance>(dist->crit_healing_chance()),
+        common::convertToVector<common::Bonus>(dist->crit_healing_bonus()),
+        common::convertToVector<common::PointSkill>(dist->skill_point())
         );
 }
 
@@ -184,18 +184,18 @@ void AttributeReference::initCharismaDist(const fbAttribute::FB_Attribute* attri
 {
     const auto* dist = attribute->cha_distr();
 
-    chaDist_ = Common::initializeDistribution<EffectAttCha,
-        Common::Strike,
-        Common::Range,
-        Common::Bonus,
-        Common::Bonus
+    chaDist_ = common::initializeDistribution<EffectAttCha,
+        common::Strike,
+        common::Range,
+        common::Bonus,
+        common::Bonus
     >(
-        Common::convertToVector<Common::Strike>(dist->strike_rate()),
-        Common::convertToVector<Common::Range>(dist->leadership_range()),
-        Common::convertToVector<Common::Bonus>(dist->experience()),
-        Common::convertToVector<Common::Bonus>(dist->mission_reward())
+        common::convertToVector<common::Strike>(dist->strike_rate()),
+        common::convertToVector<common::Range>(dist->leadership_range()),
+        common::convertToVector<common::Bonus>(dist->experience()),
+        common::convertToVector<common::Bonus>(dist->mission_reward())
         );
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

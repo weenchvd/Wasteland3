@@ -7,8 +7,8 @@
 #ifndef ATTRIBUTE_COMMON_HPP
 #define ATTRIBUTE_COMMON_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 enum class Attribute__Type : char {
     INVALID = -1,                   /// invalid, must be the first
@@ -24,7 +24,7 @@ enum class Attribute__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ATTRIBUTE_COMMON_HPP

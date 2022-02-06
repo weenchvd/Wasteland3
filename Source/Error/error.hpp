@@ -10,8 +10,8 @@
 #include<stdexcept>
 #include<string>
 
-namespace Game {
-namespace Error {
+namespace game {
+namespace error {
 
 enum class Level {
     EXCEPTION,
@@ -47,7 +47,7 @@ public:
     explicit OutOfRangeError(const char* message) : ExceptionBase(message) {}
 };
 
-} // namespace Error
-} // namespace Game
+} // namespace error
+} // namespace game
 
 #endif // ERROR_HPP

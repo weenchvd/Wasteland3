@@ -14,12 +14,12 @@
 #include"observerDLL.hpp"
 #include<array>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class AttributeText {
 public:
-    using Text              = Game::Common::Text;
+    using Text              = common::Text;
 
     AttributeText() noexcept {}
 
@@ -35,15 +35,15 @@ public:
     static const Text& descr(Attribute__Type id) noexcept;
 
 private:
-    static constexpr int sizeLang_      = Common::toUnderlying(
-        Game::Global::PlainText::Language::NUMBER_OF);
-    static constexpr int sizeType_      = Common::toUnderlying(Attribute__Type::NUMBER_OF);
+    static constexpr int sizeLang_      = common::toUnderlying(
+        global::PlainText::Language::NUMBER_OF);
+    static constexpr int sizeType_      = common::toUnderlying(Attribute__Type::NUMBER_OF);
 
-    static void setLanguage(Game::Global::PlainText::Language lang);
+    static void setLanguage(global::PlainText::Language lang);
 
     static void initLanguage(
         const fbAttribute::FB_LanguageBundle* table,
-        Game::Global::PlainText::Language lang
+        global::PlainText::Language lang
     );
 
     static void initByType(
@@ -52,7 +52,7 @@ private:
     );
 
 private:
-    static Game::Common::ObserverDLL<void, Game::Global::PlainText::Language>   langObs_;
+    static common::ObserverDLL<void, global::PlainText::Language>   langObs_;
 
     static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
     static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
@@ -63,7 +63,7 @@ private:
     static bool                             initialized_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ATTRIBUTE_TEXT_HPP

@@ -12,12 +12,12 @@
 #include"effectSkill.hpp"
 #include"skillReferenceFB_generated.h"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 struct SkillReference {
-    using PointSkill        = Common::PointSkill;
-    using LevelStat         = Common::LevelStat;
+    using PointSkill        = common::PointSkill;
+    using LevelStat         = common::LevelStat;
 
     SkillReference() noexcept {}
 
@@ -48,23 +48,23 @@ private:
     static void initLeadershipDist(const fbSkill::FB_Skill* skill);
 
 public:
-    static Common::Distribution<PointSkill>                 pDist_;             // distribution of skill points
-    static Common::Distribution<EffectSkillAutomatic>       automDist_;
-    static Common::Distribution<EffectSkillBigGuns>         bigGunsDist_;
-    static Common::Distribution<EffectSkillBrawling>        brawlDist_;
-    static Common::Distribution<EffectSkillMelee>           meleeDist_;
-    static Common::Distribution<EffectSkillSmallArms>       smallDist_;
-    static Common::Distribution<EffectSkillSniper>          sniperDist_;
-    static Common::Distribution<EffectSkillAnimal>          animalDist_;
-    static Common::Distribution<EffectSkillExplosive>       explosDist_;
-    static Common::Distribution<EffectSkillFirstAid>        aidDist_;
-    static Common::Distribution<EffectSkillSneakyShit>      sneakyDist_;
-    static Common::Distribution<EffectSkillWeirdScience>    weirdDist_;
-    static Common::Distribution<EffectSkillMechanics>       mechDist_;
-    static Common::Distribution<EffectSkillSurvival>        survDist_;
-    static Common::Distribution<EffectSkillWeaponMod>       weaponModDist_;
-    static Common::Distribution<EffectSkillBarter>          barterDist_;
-    static Common::Distribution<EffectSkillLeadership>      leaderDist_;
+    static common::Distribution<PointSkill>                 pDist_;             // distribution of skill points
+    static common::Distribution<EffectSkillAutomatic>       automDist_;
+    static common::Distribution<EffectSkillBigGuns>         bigGunsDist_;
+    static common::Distribution<EffectSkillBrawling>        brawlDist_;
+    static common::Distribution<EffectSkillMelee>           meleeDist_;
+    static common::Distribution<EffectSkillSmallArms>       smallDist_;
+    static common::Distribution<EffectSkillSniper>          sniperDist_;
+    static common::Distribution<EffectSkillAnimal>          animalDist_;
+    static common::Distribution<EffectSkillExplosive>       explosDist_;
+    static common::Distribution<EffectSkillFirstAid>        aidDist_;
+    static common::Distribution<EffectSkillSneakyShit>      sneakyDist_;
+    static common::Distribution<EffectSkillWeirdScience>    weirdDist_;
+    static common::Distribution<EffectSkillMechanics>       mechDist_;
+    static common::Distribution<EffectSkillSurvival>        survDist_;
+    static common::Distribution<EffectSkillWeaponMod>       weaponModDist_;
+    static common::Distribution<EffectSkillBarter>          barterDist_;
+    static common::Distribution<EffectSkillLeadership>      leaderDist_;
 
     static PointSkill                       minSkillPoints_;    // min skill points
     static PointSkill                       maxSkillPoints_;    // max skill points
@@ -75,7 +75,7 @@ public:
     static bool                             initialized_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !SKILL_REFERENCE_HPP

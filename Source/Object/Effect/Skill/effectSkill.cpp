@@ -9,12 +9,12 @@
 #include"operators.hpp"
 #include<cmath>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 EffectSkillAutomatic::EffectSkillAutomatic(
-    Common::Chance arHitChance,
-    Common::Chance smgHitChance)
+    common::Chance arHitChance,
+    common::Chance smgHitChance)
     :
     chaHitAR_   { arHitChance },
     chaHitSMG_  { smgHitChance }
@@ -42,19 +42,19 @@ EffectSkillAutomatic& EffectSkillAutomatic::operator-=(const EffectSkillAutomati
 
 EffectSkillAutomatic operator+(const EffectSkillAutomatic& left, const EffectSkillAutomatic& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillAutomatic operator-(const EffectSkillAutomatic& left, const EffectSkillAutomatic& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillBigGuns::EffectSkillBigGuns(
-    Common::Chance hmgHitChance,
-    Common::Chance flamethrowerHitChance)
+    common::Chance hmgHitChance,
+    common::Chance flamethrowerHitChance)
     :
     chaHitHMG_  { hmgHitChance },
     chaHitFT_   { flamethrowerHitChance }
@@ -82,19 +82,19 @@ EffectSkillBigGuns& EffectSkillBigGuns::operator-=(const EffectSkillBigGuns& oth
 
 EffectSkillBigGuns operator+(const EffectSkillBigGuns& left, const EffectSkillBigGuns& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillBigGuns operator-(const EffectSkillBigGuns& left, const EffectSkillBigGuns& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillBrawling::EffectSkillBrawling(
-    Common::Multiplier combatSpeed,
-    Common::Chance brawlingHitChance)
+    common::Multiplier combatSpeed,
+    common::Chance brawlingHitChance)
     :
     mulSpeed_       { combatSpeed },
     chaHitBrawl_    { brawlingHitChance }
@@ -122,19 +122,19 @@ EffectSkillBrawling& EffectSkillBrawling::operator-=(const EffectSkillBrawling& 
 
 EffectSkillBrawling operator+(const EffectSkillBrawling& left, const EffectSkillBrawling& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillBrawling operator-(const EffectSkillBrawling& left, const EffectSkillBrawling& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillMelee::EffectSkillMelee(
-    Common::Chance bluntHitChance,
-    Common::Chance bladedHitChance)
+    common::Chance bluntHitChance,
+    common::Chance bladedHitChance)
     :
     chaHitBlunt_   { bluntHitChance },
     chaHitBladed_  { bladedHitChance }
@@ -162,21 +162,21 @@ EffectSkillMelee& EffectSkillMelee::operator-=(const EffectSkillMelee& other)
 
 EffectSkillMelee operator+(const EffectSkillMelee& left, const EffectSkillMelee& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillMelee operator-(const EffectSkillMelee& left, const EffectSkillMelee& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillSmallArms::EffectSkillSmallArms(
-    Common::Chance semiAutoPistolHitChance,
-    Common::Chance revolverHitChance,
-    Common::Chance pumpShotgunHitChance,
-    Common::Chance autoShotgunHitChance)
+    common::Chance semiAutoPistolHitChance,
+    common::Chance revolverHitChance,
+    common::Chance pumpShotgunHitChance,
+    common::Chance autoShotgunHitChance)
     :
     chaHitSAPistol_ { semiAutoPistolHitChance },
     chaHitRevolver_ { revolverHitChance },
@@ -212,18 +212,18 @@ EffectSkillSmallArms& EffectSkillSmallArms::operator-=(const EffectSkillSmallArm
 
 EffectSkillSmallArms operator+(const EffectSkillSmallArms& left, const EffectSkillSmallArms& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillSmallArms operator-(const EffectSkillSmallArms& left, const EffectSkillSmallArms& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillSniper::EffectSkillSniper(
-    Common::Chance sniperRifleHitChance)
+    common::Chance sniperRifleHitChance)
     :
     chaHitSR_{ sniperRifleHitChance }
 {}
@@ -247,18 +247,18 @@ EffectSkillSniper& EffectSkillSniper::operator-=(const EffectSkillSniper& other)
 
 EffectSkillSniper operator+(const EffectSkillSniper& left, const EffectSkillSniper& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillSniper operator-(const EffectSkillSniper& left, const EffectSkillSniper& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillAnimal::EffectSkillAnimal(
-    Common::Bonus animalCompanionDamageBonus)
+    common::Bonus animalCompanionDamageBonus)
     :
     bonAnimalDmg_{ animalCompanionDamageBonus }
 {}
@@ -282,19 +282,19 @@ EffectSkillAnimal& EffectSkillAnimal::operator-=(const EffectSkillAnimal& other)
 
 EffectSkillAnimal operator+(const EffectSkillAnimal& left, const EffectSkillAnimal& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillAnimal operator-(const EffectSkillAnimal& left, const EffectSkillAnimal& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillExplosive::EffectSkillExplosive(
-    Common::Resistance explosiveDamageResistance,
-    Common::Bonus explosiveDamageBonus)
+    common::Resistance explosiveDamageResistance,
+    common::Bonus explosiveDamageBonus)
     :
     resExplDmg_{ explosiveDamageResistance },
     bonExplDmg_{ explosiveDamageBonus }
@@ -322,19 +322,19 @@ EffectSkillExplosive& EffectSkillExplosive::operator-=(const EffectSkillExplosiv
 
 EffectSkillExplosive operator+(const EffectSkillExplosive& left, const EffectSkillExplosive& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillExplosive operator-(const EffectSkillExplosive& left, const EffectSkillExplosive& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillFirstAid::EffectSkillFirstAid(
-    Common::Bonus healingBonus,
-    Common::Bonus healingWhenRevivingAlliesBonus)
+    common::Bonus healingBonus,
+    common::Bonus healingWhenRevivingAlliesBonus)
     :
     bonHeal_        { healingBonus },
     bonHealRevive_  { healingWhenRevivingAlliesBonus }
@@ -362,21 +362,21 @@ EffectSkillFirstAid& EffectSkillFirstAid::operator-=(const EffectSkillFirstAid& 
 
 EffectSkillFirstAid operator+(const EffectSkillFirstAid& left, const EffectSkillFirstAid& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillFirstAid operator-(const EffectSkillFirstAid& left, const EffectSkillFirstAid& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillSneakyShit::EffectSkillSneakyShit(
-    Common::Time detectionTime,
-    Common::Initiative initiative,
-    Common::Bonus sneakAttackDamageBonus,
-    Common::Perception perception)
+    common::Time detectionTime,
+    common::Initiative initiative,
+    common::Bonus sneakAttackDamageBonus,
+    common::Perception perception)
     :
     timeDetect_     { detectionTime },
     initiat_        { initiative },
@@ -412,20 +412,20 @@ EffectSkillSneakyShit& EffectSkillSneakyShit::operator-=(const EffectSkillSneaky
 
 EffectSkillSneakyShit operator+(const EffectSkillSneakyShit& left, const EffectSkillSneakyShit& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillSneakyShit operator-(const EffectSkillSneakyShit& left, const EffectSkillSneakyShit& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillWeirdScience::EffectSkillWeirdScience(
-    Common::Bonus energyDamageBonus,
-    Common::Bonus fireDamageBonus,
-    Common::Bonus coldDamageBonus)
+    common::Bonus energyDamageBonus,
+    common::Bonus fireDamageBonus,
+    common::Bonus coldDamageBonus)
     :
     bonEnerDmg_{ energyDamageBonus },
     bonFireDmg_{ fireDamageBonus },
@@ -457,21 +457,21 @@ EffectSkillWeirdScience& EffectSkillWeirdScience::operator-=(const EffectSkillWe
 
 EffectSkillWeirdScience operator+(const EffectSkillWeirdScience& left, const EffectSkillWeirdScience& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillWeirdScience operator-(const EffectSkillWeirdScience& left, const EffectSkillWeirdScience& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillMechanics::EffectSkillMechanics(
-    Common::Bonus damageBonusVsRobots,
-    Common::Bonus damageBonusVsVehicles,
-    Common::Bonus damageBonusVsSynths,
-    Common::Bonus repairBonus)
+    common::Bonus damageBonusVsRobots,
+    common::Bonus damageBonusVsVehicles,
+    common::Bonus damageBonusVsSynths,
+    common::Bonus repairBonus)
     :
     bonDmgVsRobot_  { damageBonusVsRobots },
     bonDmgVsVehic_  { damageBonusVsVehicles },
@@ -507,19 +507,19 @@ EffectSkillMechanics& EffectSkillMechanics::operator-=(const EffectSkillMechanic
 
 EffectSkillMechanics operator+(const EffectSkillMechanics& left, const EffectSkillMechanics& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillMechanics operator-(const EffectSkillMechanics& left, const EffectSkillMechanics& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillSurvival::EffectSkillSurvival(
-    Common::Bonus damageBonusVsAnimals,
-    Common::Bonus damageBonusVsMutants)
+    common::Bonus damageBonusVsAnimals,
+    common::Bonus damageBonusVsMutants)
     :
     bonDmgVsAnimal_{ damageBonusVsAnimals },
     bonDmgVsMutant_{ damageBonusVsMutants }
@@ -547,18 +547,18 @@ EffectSkillSurvival& EffectSkillSurvival::operator-=(const EffectSkillSurvival& 
 
 EffectSkillSurvival operator+(const EffectSkillSurvival& left, const EffectSkillSurvival& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillSurvival operator-(const EffectSkillSurvival& left, const EffectSkillSurvival& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillWeaponMod::EffectSkillWeaponMod(
-    Common::Bonus fieldStrippingScrapBonus)
+    common::Bonus fieldStrippingScrapBonus)
     :
     bonScrap_{ fieldStrippingScrapBonus }
 {}
@@ -582,19 +582,19 @@ EffectSkillWeaponMod& EffectSkillWeaponMod::operator-=(const EffectSkillWeaponMo
 
 EffectSkillWeaponMod operator+(const EffectSkillWeaponMod& left, const EffectSkillWeaponMod& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillWeaponMod operator-(const EffectSkillWeaponMod& left, const EffectSkillWeaponMod& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillBarter::EffectSkillBarter(
-    Common::Bonus sellValueBonus,
-    Common::Bonus buyCostBonus)
+    common::Bonus sellValueBonus,
+    common::Bonus buyCostBonus)
     :
     bonSellValue_   { sellValueBonus },
     bonBuyCost_     { buyCostBonus }
@@ -622,21 +622,21 @@ EffectSkillBarter& EffectSkillBarter::operator-=(const EffectSkillBarter& other)
 
 EffectSkillBarter operator+(const EffectSkillBarter& left, const EffectSkillBarter& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillBarter operator-(const EffectSkillBarter& left, const EffectSkillBarter& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectSkillLeadership::EffectSkillLeadership(
-    Common::Chance baseHitChanceOfNearbyAllies,
-    Common::Bonus normalDamageBonusOnBossKill,
-    Common::Chance baseCriticalDamageChanceOnMultiKill,
-    Common::Bonus conHealedBonusOnRevive)
+    common::Chance baseHitChanceOfNearbyAllies,
+    common::Bonus normalDamageBonusOnBossKill,
+    common::Chance baseCriticalDamageChanceOnMultiKill,
+    common::Bonus conHealedBonusOnRevive)
     :
     chaHitNearbyAllies_     { baseHitChanceOfNearbyAllies },
     bonNormDmgBossKill_     { normalDamageBonusOnBossKill },
@@ -672,13 +672,13 @@ EffectSkillLeadership& EffectSkillLeadership::operator-=(const EffectSkillLeader
 
 EffectSkillLeadership operator+(const EffectSkillLeadership& left, const EffectSkillLeadership& right)
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectSkillLeadership operator-(const EffectSkillLeadership& left, const EffectSkillLeadership& right)
 {
-    return Common::operatorMinus(left, right);
+    return common::operatorMinus(left, right);
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

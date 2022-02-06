@@ -11,8 +11,8 @@
 #include<list>
 #include<memory>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Inventory {
 public:
@@ -60,7 +60,7 @@ private:
     bool                                viewed_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !INVENTORY_HPP

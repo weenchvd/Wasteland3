@@ -7,8 +7,8 @@
 #ifndef SKILL_COMMON_HPP
 #define SKILL_COMMON_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 enum class Skill__Type : char {
     INVALID = -1,                   /// invalid, must be the first
@@ -57,7 +57,7 @@ enum class Skill__Group : char {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !SKILL_COMMON_HPP

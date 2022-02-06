@@ -9,8 +9,8 @@
 
 #include"ammoCommon.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Ammo {
 public:
@@ -20,7 +20,7 @@ public:
 
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !AMMO_HPP

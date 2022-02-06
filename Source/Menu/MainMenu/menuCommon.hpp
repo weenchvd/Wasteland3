@@ -11,8 +11,8 @@
 #include"specStorage.hpp"
 #include<iostream>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 constexpr char space{ ' ' };
 
@@ -36,35 +36,35 @@ Indent operator+(const Indent& left, const Indent& right);
 
 std::ostream& operator<<(std::ostream& os, const Indent& indent);
 
-inline double secondTime(Common::Time time) {
+inline double secondTime(common::Time time) {
     return static_cast<double>(time) / 1000;
 }
 
-inline double multiplier(Common::Multiplier mult) {
+inline double multiplier(common::Multiplier mult) {
     return static_cast<double>(mult) / 100;
 }
 
-inline double percentChance(Common::Chance chance) {
+inline double percentChance(common::Chance chance) {
     return static_cast<double>(chance) / 10;
 }
 
-inline double percentBonus(Common::Bonus bonus) {
+inline double percentBonus(common::Bonus bonus) {
     return static_cast<double>(bonus) / 10;
 }
 
-inline double percentEvasion(Common::Evasion evasion) {
+inline double percentEvasion(common::Evasion evasion) {
     return static_cast<double>(evasion) / 10;
 }
 
-inline double percentResistance(Common::Resistance res) {
+inline double percentResistance(common::Resistance res) {
     return static_cast<double>(res) / 10;
 }
 
-inline double percentInitiative(Common::Initiative init) {
+inline double percentInitiative(common::Initiative init) {
     return static_cast<double>(init) / 10;
 }
 
-inline double percentStrike(Common::Strike strike) {
+inline double percentStrike(common::Strike strike) {
     return static_cast<double>(strike) / 10;
 }
 
@@ -85,7 +85,7 @@ enum class YesNo {
 
 YesNo getYesNo();
 
-namespace ActionCommon {
+namespace actionCommon {
 
 enum ActionCommon {
     INVALID = -1,
@@ -93,20 +93,20 @@ enum ActionCommon {
     NEXT
 };
 
-} // namespace ActionCommon
+} // namespace actionCommon
 
-Game::Common::Text statLevel(
-    const Common::SpecStorage<Common::LevelStat>& level,
+common::Text statLevel(
+    const common::SpecStorage<common::LevelStat>& level,
     bool accepted = false);
 
 unsigned int utf8Size(const std::string& s);
 
-Game::Common::Text fillWithPlaseholders(
-    const Game::Common::Text& source,
+common::Text fillWithPlaseholders(
+    const common::Text& source,
     unsigned char width,
     char placeholder);
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game
 
 #endif // !MENU_COMMON_HPP

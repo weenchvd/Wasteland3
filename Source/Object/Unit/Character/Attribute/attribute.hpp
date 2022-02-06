@@ -16,8 +16,8 @@
 #include<assert.h>
 #include<vector>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Character;
 
@@ -36,11 +36,11 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Attribute::Type type, Common::LevelStat shift) noexcept;
+    void addLevel(Attribute::Type type, common::LevelStat shift) noexcept;
 
-    void addLevelToAll(Common::LevelStat shift) noexcept;
+    void addLevelToAll(common::LevelStat shift) noexcept;
 
-    void addPoint(Common::PointAttribute shift) noexcept {
+    void addPoint(common::PointAttribute shift) noexcept {
         pStor_.add(shift);
     }
 
@@ -53,12 +53,12 @@ public:
     void reset() noexcept;
 
 public:
-    const Common::SpecStorage<Common::LevelStat>& level(Attribute::Type type) const noexcept {
-        assert(Common::isValidEnum(type));
-        return levels_[Common::toUnderlying(type)];
+    const common::SpecStorage<common::LevelStat>& level(Attribute::Type type) const noexcept {
+        assert(common::isValidEnum(type));
+        return levels_[common::toUnderlying(type)];
     }
 
-    const Common::SpecStorage<Common::PointAttribute>& storage() const noexcept {
+    const common::SpecStorage<common::PointAttribute>& storage() const noexcept {
         return pStor_;
     }
 
@@ -75,26 +75,26 @@ private:
 
     void apply(Attribute::Type type) noexcept;
 
-    static std::vector<Common::SpecStorage<Common::LevelStat>> initLevels();
+    static std::vector<common::SpecStorage<common::LevelStat>> initLevels();
 
 private:
     Character&                                          char_;
-    std::vector<Common::SpecStorage<Common::LevelStat>> levels_;
-    Common::SpecStorage<Common::PointAttribute>         pStor_;
-    Common::Distribution<Common::PointAttribute>        pDist_;
-    Common::Distribution<EffectAttCoord>                cooDist_;
-    Common::Distribution<EffectAttLuck>                 lucDist_;
-    Common::Distribution<EffectAttAware>                awaDist_;
-    Common::Distribution<EffectAttStr>                  strDist_;
-    Common::Distribution<EffectAttSpeed>                spdDist_;
-    Common::Distribution<EffectAttInt>                  intDist_;
-    Common::Distribution<EffectAttCha>                  chaDist_;
+    std::vector<common::SpecStorage<common::LevelStat>> levels_;
+    common::SpecStorage<common::PointAttribute>         pStor_;
+    common::Distribution<common::PointAttribute>        pDist_;
+    common::Distribution<EffectAttCoord>                cooDist_;
+    common::Distribution<EffectAttLuck>                 lucDist_;
+    common::Distribution<EffectAttAware>                awaDist_;
+    common::Distribution<EffectAttStr>                  strDist_;
+    common::Distribution<EffectAttSpeed>                spdDist_;
+    common::Distribution<EffectAttInt>                  intDist_;
+    common::Distribution<EffectAttCha>                  chaDist_;
 
     static const AttributeReference                     ref_;
     static const AttributeText                          text_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ATTRIBUTE_HPP

@@ -10,8 +10,8 @@
 #include<string>
 #include<type_traits>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 using Text                  = std::string;
 using Time                  = int;          // 0.001s (1s == 1000 Time)
@@ -60,7 +60,7 @@ constexpr bool isValidEnum(Enum e) noexcept
     return (e > Enum::INVALID && e < Enum::NUMBER_OF);
 }
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !COMMON_HPP

@@ -8,25 +8,25 @@
 #include"locator.hpp"
 #include"character.hpp"
 
-namespace Init {
+namespace init {
 
 using namespace std;
 
 constexpr int initialMoney = 50'000;
 
-void initializeSquad(Game::Object::Squad& squad)
+void initializeSquad(game::object::Squad& squad)
 {
     initializeInventory(squad.inventory());
     initializeMembers(squad.members());
     squad.moneyAdd(initialMoney);
 }
 
-void initializeInventory(Game::Object::Inventory& inventory)
+void initializeInventory(game::object::Inventory& inventory)
 {
-    using Game::Object::Weapon;
-    using Game::Object::WeaponMod;
+    using game::object::Weapon;
+    using game::object::WeaponMod;
         
-    const Game::Global::Factory& f = Game::Global::Locator::getFactory();
+    const game::global::Factory& f = game::global::Locator::getFactory();
 
     /// weapons
     inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -38,12 +38,12 @@ void initializeInventory(Game::Object::Inventory& inventory)
 
 }
 
-void initializeShop(Game::Object::Inventory& inventory)
+void initializeShop(game::object::Inventory& inventory)
 {
-    using Game::Object::Weapon;
-    using Game::Object::WeaponMod;
+    using game::object::Weapon;
+    using game::object::WeaponMod;
 
-    const Game::Global::Factory& f = Game::Global::Locator::getFactory();
+    const game::global::Factory& f = game::global::Locator::getFactory();
 
     /// weapons
     inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
@@ -62,11 +62,11 @@ void initializeShop(Game::Object::Inventory& inventory)
 
 }
 
-void initializeMembers(array<unique_ptr<Game::Object::Unit>, Game::Object::nMembers>& members)
+void initializeMembers(array<unique_ptr<game::object::Unit>, game::object::nMembers>& members)
 {
-    using Game::Object::Character;
+    using game::object::Character;
 
-    const Game::Global::Factory& f = Game::Global::Locator::getFactory();
+    const game::global::Factory& f = game::global::Locator::getFactory();
 
     int i = 0;
     /// member 1
@@ -89,4 +89,4 @@ void initializeMembers(array<unique_ptr<Game::Object::Unit>, Game::Object::nMemb
     }
 }
 
-} // namespace Init
+} // namespace init

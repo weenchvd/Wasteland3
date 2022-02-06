@@ -6,16 +6,14 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-project("Main" VERSION 0.1)
-
 # specify the C++ standard
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 
-set(EXEC_NAME "main")
-set(SOURCE_CXX_LIST "${EXEC_NAME}.cpp"
+set(EXEC_NAME "wl3")
+set(SOURCE_CXX_LIST "main.cpp"
                     "initializationAux.cpp"
 )
 

@@ -10,8 +10,8 @@
 #include<assert.h>
 #include<type_traits>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -36,13 +36,13 @@ Attribute::Attribute(Character& character)
     assert(text_.isInitialized());
 }
 
-void Attribute::addLevel(Attribute::Type type, Common::LevelStat shift) noexcept
+void Attribute::addLevel(Attribute::Type type, common::LevelStat shift) noexcept
 {
-    auto index = Common::toUnderlying(type);
-    Common::changeLevel(levels_[index], pStor_, pDist_, shift);
+    auto index = common::toUnderlying(type);
+    common::changeLevel(levels_[index], pStor_, pDist_, shift);
 }
         
-void Attribute::addLevelToAll(Common::LevelStat shift) noexcept
+void Attribute::addLevelToAll(common::LevelStat shift) noexcept
 {
     addLevel(Attribute::Type::COORDINATION, shift);
     addLevel(Attribute::Type::LUCK,         shift);
@@ -58,7 +58,7 @@ bool Attribute::isModified() const noexcept
     if (pStor_.get() != pStor_.getAccepted()) {
         return true;
     }
-    for (const Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (const common::SpecStorage<common::LevelStat>& level : levels_) {
         if (level.get() != level.getAccepted()) {
             return true;
         }
@@ -69,7 +69,7 @@ bool Attribute::isModified() const noexcept
 void Attribute::accept() noexcept
 {
     apply();
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.accept();
     }
     pStor_.accept();
@@ -77,7 +77,7 @@ void Attribute::accept() noexcept
 
 void Attribute::reject() noexcept
 {
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.reject();
     }
     pStor_.reject();
@@ -85,7 +85,7 @@ void Attribute::reject() noexcept
 
 void Attribute::reset() noexcept
 {
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.reset();
     }
     pStor_.reset();
@@ -104,7 +104,7 @@ void Attribute::apply() noexcept
 
 void Attribute::apply(Attribute::Type type) noexcept
 {
-    auto index = Common::toUnderlying(type);
+    auto index = common::toUnderlying(type);
     auto accLevel = levels_[index].getAccepted();
     auto curLevel = levels_[index].get();
     if (accLevel != curLevel) {
@@ -162,15 +162,15 @@ bool Attribute::isInitialized()
         && text_.isInitialized();
 }
 
-vector<Common::SpecStorage<Common::LevelStat>> Attribute::initLevels()
+vector<common::SpecStorage<common::LevelStat>> Attribute::initLevels()
 {
-    constexpr auto nAttributes = Common::toUnderlying(Attribute::Type::NUMBER_OF);
-    const Common::SpecStorage<Common::LevelStat> tempLevel{
+    constexpr auto nAttributes = common::toUnderlying(Attribute::Type::NUMBER_OF);
+    const common::SpecStorage<common::LevelStat> tempLevel{
         ref_.minAttrLevel_,
         ref_.maxAttrLevel_
     };
-    return vector<Common::SpecStorage<Common::LevelStat>>(nAttributes, tempLevel);
+    return vector<common::SpecStorage<common::LevelStat>>(nAttributes, tempLevel);
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

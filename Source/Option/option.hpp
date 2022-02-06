@@ -14,14 +14,14 @@
 #include<memory>
 #include<utility>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 class Factory;
 
 class Option {
 public:
-    using Language      = Game::Global::PlainText::Language;
+    using Language      = global::PlainText::Language;
 
     friend Factory;
 
@@ -39,45 +39,45 @@ public:
     void reject() noexcept;
 
 public:
-    Game::Global::PlainText::Language getLanguage() const noexcept;
+    global::PlainText::Language getLanguage() const noexcept;
 
-    void setLanguage(Game::Global::PlainText::Language lang) noexcept;
+    void setLanguage(global::PlainText::Language lang) noexcept;
 
-    const Game::Common::SubjectDLL<void, Language>& languageSubject() const noexcept;
+    const common::SubjectDLL<void, Language>& languageSubject() const noexcept;
 
-    Game::Common::SubjectDLL<void, Language>& languageSubject() noexcept;
+    common::SubjectDLL<void, Language>& languageSubject() noexcept;
 
 private:
     std::pair<Language, bool>                   lang_;
-    Game::Common::SubjectDLL<void, Language>    langSubj_;
+    common::SubjectDLL<void, Language>    langSubj_;
 };
 
 ///------------------------------------------------------------------------------------------------
 
-inline Game::Global::PlainText::Language Option::getLanguage() const noexcept
+inline global::PlainText::Language Option::getLanguage() const noexcept
 {
     return lang_.first;
 }
 
-inline void Option::setLanguage(Game::Global::PlainText::Language lang) noexcept
+inline void Option::setLanguage(global::PlainText::Language lang) noexcept
 {
-    assert(Game::Common::isValidEnum(lang));
+    assert(common::isValidEnum(lang));
     lang_ = { lang, true };
 }
 
-inline const Game::Common::SubjectDLL<void, Game::Global::PlainText::Language>&
+inline const common::SubjectDLL<void, global::PlainText::Language>&
     Option::languageSubject() const noexcept
 {
     return langSubj_;
 }
 
-inline Game::Common::SubjectDLL<void, Game::Global::PlainText::Language>&
+inline common::SubjectDLL<void, global::PlainText::Language>&
     Option::languageSubject() noexcept
 {
     return langSubj_;
 }
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !OPTION_HPP

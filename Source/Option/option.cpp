@@ -8,12 +8,12 @@
 #include"option.hpp"
 #include<type_traits>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 using namespace std;
-using Game::Global::PlainText;
-using Game::Global::Locator;
+using global::PlainText;
+using global::Locator;
 
 Option::Option() noexcept
     :
@@ -41,5 +41,5 @@ void Option::reject() noexcept
     }
 }
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game

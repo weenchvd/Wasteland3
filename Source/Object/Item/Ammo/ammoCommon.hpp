@@ -7,8 +7,8 @@
 #ifndef AMMO_COMMON_HPP
 #define AMMO_COMMON_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 enum class Ammo__Type : char {
     INVALID = -1,                   /// invalid, must be the first
@@ -20,7 +20,7 @@ enum class Ammo__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !AMMO_COMMON_HPP

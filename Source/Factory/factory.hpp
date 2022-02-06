@@ -13,21 +13,21 @@
 #include"unit.hpp"
 #include<memory>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 class Factory {
 public:
     template<class T>
-    std::unique_ptr<Game::Object::Item> createItem(typename T::Model model) const {
+    std::unique_ptr<object::Item> createItem(typename T::Model model) const {
         T::initializeReference();
-        return std::unique_ptr<Game::Object::Item>(new T(std::move(model)));
+        return std::unique_ptr<object::Item>(new T(std::move(model)));
     }
 
     template<class T>
-    std::unique_ptr<Game::Object::Unit> createUnit(typename T::Model model) const {
+    std::unique_ptr<object::Unit> createUnit(typename T::Model model) const {
         T::initialize();
-        return std::unique_ptr<Game::Object::Unit>(new T(std::move(model)));
+        return std::unique_ptr<object::Unit>(new T(std::move(model)));
     }
 
 private:
@@ -36,17 +36,17 @@ private:
     Factory() noexcept {}
 
     template<class T>
-    std::unique_ptr<Game::Global::PlainText> createPlainText(typename T::Language lang) const {
-        return std::unique_ptr<Game::Global::PlainText>(new T(lang));
+    std::unique_ptr<global::PlainText> createPlainText(typename T::Language lang) const {
+        return std::unique_ptr<global::PlainText>(new T(lang));
     }
 
-    std::unique_ptr<Game::Global::Option> createOption() const {
-        return std::unique_ptr<Game::Global::Option>(new Game::Global::Option());
+    std::unique_ptr<global::Option> createOption() const {
+        return std::unique_ptr<global::Option>(new global::Option());
     }
 
 };
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !FACTORY_HPP

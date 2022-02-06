@@ -10,8 +10,8 @@
 #include<algorithm>
 #include<type_traits>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -39,7 +39,7 @@ unique_ptr<Item> Inventory::extract(list<unique_ptr<Item>>::const_iterator itera
     try {
         iter = find(iterator);
     }
-    catch (const Error::OutOfRangeError& e) {
+    catch (const error::OutOfRangeError& e) {
         return unique_ptr<Item>{};
     }
     unique_ptr<Item> item = move(*iter);
@@ -151,8 +151,8 @@ list<unique_ptr<Item>>::iterator Inventory::find(list<unique_ptr<Item>>::const_i
             return iter;
         }
     }
-    throw Error::OutOfRangeError{"Inventory::find()"};
+    throw error::OutOfRangeError{"Inventory::find()"};
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

@@ -11,8 +11,8 @@
 #include"effect.hpp"
 #include<memory>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class EffectSkillAutomatic : public Effect {
 public:
@@ -23,8 +23,8 @@ public:
     {}
 
     EffectSkillAutomatic(
-        Common::Chance arHitChance,
-        Common::Chance smgHitChance);
+        common::Chance arHitChance,
+        common::Chance smgHitChance);
 
     virtual ~EffectSkillAutomatic() noexcept {}
 
@@ -34,8 +34,8 @@ public:
     EffectSkillAutomatic& operator-=(const EffectSkillAutomatic& other);
 
 private:
-    Common::Chance              chaHitAR_;      // assault rifle hit chance
-    Common::Chance              chaHitSMG_;     // submachine gun hit chance
+    common::Chance              chaHitAR_;      // assault rifle hit chance
+    common::Chance              chaHitSMG_;     // submachine gun hit chance
 };
 
 EffectSkillAutomatic operator+(const EffectSkillAutomatic& left, const EffectSkillAutomatic& right);
@@ -52,8 +52,8 @@ public:
     {}
 
     EffectSkillBigGuns(
-        Common::Chance hmgHitChance,
-        Common::Chance flamethrowerHitChance);
+        common::Chance hmgHitChance,
+        common::Chance flamethrowerHitChance);
 
     virtual ~EffectSkillBigGuns() noexcept {}
 
@@ -63,8 +63,8 @@ public:
     EffectSkillBigGuns& operator-=(const EffectSkillBigGuns& other);
 
 private:
-    Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
-    Common::Chance              chaHitFT_;      // flamethrower hit chance
+    common::Chance              chaHitHMG_;     // heavy machine gun hit chance
+    common::Chance              chaHitFT_;      // flamethrower hit chance
 };
 
 EffectSkillBigGuns operator+(const EffectSkillBigGuns& left, const EffectSkillBigGuns& right);
@@ -81,8 +81,8 @@ public:
     {}
 
     EffectSkillBrawling(
-        Common::Multiplier combatSpeed,
-        Common::Chance brawlingHitChance);
+        common::Multiplier combatSpeed,
+        common::Chance brawlingHitChance);
 
     virtual ~EffectSkillBrawling() noexcept {}
 
@@ -92,8 +92,8 @@ public:
     EffectSkillBrawling& operator-=(const EffectSkillBrawling& other);
 
 private:
-    Common::Multiplier          mulSpeed_;      // combat speed multiplier
-    Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
+    common::Multiplier          mulSpeed_;      // combat speed multiplier
+    common::Chance              chaHitBrawl_;   // brawling weapon hit chance
 };
 
 EffectSkillBrawling operator+(const EffectSkillBrawling& left, const EffectSkillBrawling& right);
@@ -110,8 +110,8 @@ public:
     {}
 
     EffectSkillMelee(
-        Common::Chance bluntHitChance,
-        Common::Chance bladedHitChance);
+        common::Chance bluntHitChance,
+        common::Chance bladedHitChance);
 
     virtual ~EffectSkillMelee() noexcept {}
 
@@ -121,8 +121,8 @@ public:
     EffectSkillMelee& operator-=(const EffectSkillMelee& other);
 
 private:
-    Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
-    Common::Chance              chaHitBladed_;  // bladed weapon hit chance
+    common::Chance              chaHitBlunt_;   // blunt weapon hit chance
+    common::Chance              chaHitBladed_;  // bladed weapon hit chance
 };
 
 EffectSkillMelee operator+(const EffectSkillMelee& left, const EffectSkillMelee& right);
@@ -141,10 +141,10 @@ public:
     {}
 
     EffectSkillSmallArms(
-        Common::Chance semiAutoPistolHitChance,
-        Common::Chance revolverHitChance,
-        Common::Chance pumpShotgunHitChance,
-        Common::Chance autoShotgunHitChance);
+        common::Chance semiAutoPistolHitChance,
+        common::Chance revolverHitChance,
+        common::Chance pumpShotgunHitChance,
+        common::Chance autoShotgunHitChance);
 
     virtual ~EffectSkillSmallArms() noexcept {}
 
@@ -154,10 +154,10 @@ public:
     EffectSkillSmallArms& operator-=(const EffectSkillSmallArms& other);
 
 private:
-    Common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
-    Common::Chance              chaHitRevolver_;    // revolver hit chance
-    Common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
-    Common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
+    common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
+    common::Chance              chaHitRevolver_;    // revolver hit chance
+    common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
+    common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
 };
 
 EffectSkillSmallArms operator+(const EffectSkillSmallArms& left, const EffectSkillSmallArms& right);
@@ -173,7 +173,7 @@ public:
     {}
 
     EffectSkillSniper(
-        Common::Chance sniperRifleHitChance);
+        common::Chance sniperRifleHitChance);
 
     virtual ~EffectSkillSniper() noexcept {}
 
@@ -183,7 +183,7 @@ public:
     EffectSkillSniper& operator-=(const EffectSkillSniper& other);
 
 private:
-    Common::Chance              chaHitSR_;      // sniper rifle hit chance
+    common::Chance              chaHitSR_;      // sniper rifle hit chance
 };
 
 EffectSkillSniper operator+(const EffectSkillSniper& left, const EffectSkillSniper& right);
@@ -199,7 +199,7 @@ public:
     {}
 
     EffectSkillAnimal(
-        Common::Bonus animalCompanionDamageBonus);
+        common::Bonus animalCompanionDamageBonus);
 
     virtual ~EffectSkillAnimal() noexcept {}
 
@@ -209,7 +209,7 @@ public:
     EffectSkillAnimal& operator-=(const EffectSkillAnimal& other);
 
 private:
-    Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
+    common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
 };
 
 EffectSkillAnimal operator+(const EffectSkillAnimal& left, const EffectSkillAnimal& right);
@@ -226,8 +226,8 @@ public:
     {}
 
     EffectSkillExplosive(
-        Common::Resistance explosiveDamageResistance,
-        Common::Bonus explosiveDamageBonus);
+        common::Resistance explosiveDamageResistance,
+        common::Bonus explosiveDamageBonus);
 
     virtual ~EffectSkillExplosive() noexcept {}
 
@@ -237,8 +237,8 @@ public:
     EffectSkillExplosive& operator-=(const EffectSkillExplosive& other);
 
 private:
-    Common::Resistance          resExplDmg_;    // explosive damage resistance
-    Common::Bonus               bonExplDmg_;    // explosive damage bonus
+    common::Resistance          resExplDmg_;    // explosive damage resistance
+    common::Bonus               bonExplDmg_;    // explosive damage bonus
 };
 
 EffectSkillExplosive operator+(const EffectSkillExplosive& left, const EffectSkillExplosive& right);
@@ -255,8 +255,8 @@ public:
     {}
 
     EffectSkillFirstAid(
-        Common::Bonus healingBonus,
-        Common::Bonus healingWhenRevivingAlliesBonus);
+        common::Bonus healingBonus,
+        common::Bonus healingWhenRevivingAlliesBonus);
 
     virtual ~EffectSkillFirstAid() noexcept {}
 
@@ -266,8 +266,8 @@ public:
     EffectSkillFirstAid& operator-=(const EffectSkillFirstAid& other);
 
 private:
-    Common::Bonus               bonHeal_;       // healing bonus
-    Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
+    common::Bonus               bonHeal_;       // healing bonus
+    common::Bonus               bonHealRevive_; // healing when reviving allies bonus
 };
 
 EffectSkillFirstAid operator+(const EffectSkillFirstAid& left, const EffectSkillFirstAid& right);
@@ -286,10 +286,10 @@ public:
     {}
 
     EffectSkillSneakyShit(
-        Common::Time detectionTime,
-        Common::Initiative initiative,
-        Common::Bonus sneakAttackDamageBonus,
-        Common::Perception perception);
+        common::Time detectionTime,
+        common::Initiative initiative,
+        common::Bonus sneakAttackDamageBonus,
+        common::Perception perception);
 
     virtual ~EffectSkillSneakyShit() noexcept {}
 
@@ -299,10 +299,10 @@ public:
     EffectSkillSneakyShit& operator-=(const EffectSkillSneakyShit& other);
 
 private:
-    Common::Time                timeDetect_;    // detection time
-    Common::Initiative          initiat_;       // initiative
-    Common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
-    Common::Perception          percept_;       // perception
+    common::Time                timeDetect_;    // detection time
+    common::Initiative          initiat_;       // initiative
+    common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
+    common::Perception          percept_;       // perception
 };
 
 EffectSkillSneakyShit operator+(const EffectSkillSneakyShit& left, const EffectSkillSneakyShit& right);
@@ -320,9 +320,9 @@ public:
     {}
 
     EffectSkillWeirdScience(
-        Common::Bonus energyDamageBonus,
-        Common::Bonus fireDamageBonus,
-        Common::Bonus coldDamageBonus);
+        common::Bonus energyDamageBonus,
+        common::Bonus fireDamageBonus,
+        common::Bonus coldDamageBonus);
 
     virtual ~EffectSkillWeirdScience() noexcept {}
 
@@ -332,9 +332,9 @@ public:
     EffectSkillWeirdScience& operator-=(const EffectSkillWeirdScience& other);
 
 private:
-    Common::Bonus               bonEnerDmg_;    // energy damage bonus
-    Common::Bonus               bonFireDmg_;    // fire damage bonus
-    Common::Bonus               bonColdDmg_;    // cold damage bonus
+    common::Bonus               bonEnerDmg_;    // energy damage bonus
+    common::Bonus               bonFireDmg_;    // fire damage bonus
+    common::Bonus               bonColdDmg_;    // cold damage bonus
 };
 
 EffectSkillWeirdScience operator+(const EffectSkillWeirdScience& left, const EffectSkillWeirdScience& right);
@@ -353,10 +353,10 @@ public:
     {}
 
     EffectSkillMechanics(
-        Common::Bonus damageBonusVsRobots,
-        Common::Bonus damageBonusVsVehicles,
-        Common::Bonus damageBonusVsSynths,
-        Common::Bonus repairBonus);
+        common::Bonus damageBonusVsRobots,
+        common::Bonus damageBonusVsVehicles,
+        common::Bonus damageBonusVsSynths,
+        common::Bonus repairBonus);
 
     virtual ~EffectSkillMechanics() noexcept {}
 
@@ -366,10 +366,10 @@ public:
     EffectSkillMechanics& operator-=(const EffectSkillMechanics& other);
 
 private:
-    Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
-    Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
-    Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
-    Common::Bonus               bonRepair_;     // repair bonus
+    common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+    common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+    common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+    common::Bonus               bonRepair_;     // repair bonus
 };
 
 EffectSkillMechanics operator+(const EffectSkillMechanics& left, const EffectSkillMechanics& right);
@@ -386,8 +386,8 @@ public:
     {}
 
     EffectSkillSurvival(
-        Common::Bonus damageBonusVsAnimals,
-        Common::Bonus damageBonusVsMutants);
+        common::Bonus damageBonusVsAnimals,
+        common::Bonus damageBonusVsMutants);
 
     virtual ~EffectSkillSurvival() noexcept {}
 
@@ -397,8 +397,8 @@ public:
     EffectSkillSurvival& operator-=(const EffectSkillSurvival& other);
 
 private:
-    Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
-    Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
+    common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
+    common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
 };
 
 EffectSkillSurvival operator+(const EffectSkillSurvival& left, const EffectSkillSurvival& right);
@@ -414,7 +414,7 @@ public:
     {}
 
     EffectSkillWeaponMod(
-        Common::Bonus fieldStrippingScrapBonus);
+        common::Bonus fieldStrippingScrapBonus);
 
     virtual ~EffectSkillWeaponMod() noexcept {}
 
@@ -424,7 +424,7 @@ public:
     EffectSkillWeaponMod& operator-=(const EffectSkillWeaponMod& other);
 
 private:
-    Common::Bonus               bonScrap_;      // field stripping scrap bonus
+    common::Bonus               bonScrap_;      // field stripping scrap bonus
 };
 
 EffectSkillWeaponMod operator+(const EffectSkillWeaponMod& left, const EffectSkillWeaponMod& right);
@@ -441,8 +441,8 @@ public:
     {}
 
     EffectSkillBarter(
-        Common::Bonus sellValueBonus,
-        Common::Bonus buyCostBonus);
+        common::Bonus sellValueBonus,
+        common::Bonus buyCostBonus);
 
     virtual ~EffectSkillBarter() noexcept {}
 
@@ -452,8 +452,8 @@ public:
     EffectSkillBarter& operator-=(const EffectSkillBarter& other);
 
 private:
-    Common::Bonus               bonSellValue_;  // sell value bonus
-    Common::Bonus               bonBuyCost_;    // buy cost bonus
+    common::Bonus               bonSellValue_;  // sell value bonus
+    common::Bonus               bonBuyCost_;    // buy cost bonus
 };
 
 EffectSkillBarter operator+(const EffectSkillBarter& left, const EffectSkillBarter& right);
@@ -472,10 +472,10 @@ public:
     {}
 
     EffectSkillLeadership(
-        Common::Chance baseHitChanceOfNearbyAllies,
-        Common::Bonus normalDamageBonusOnBossKill,
-        Common::Chance baseCriticalDamageChanceOnMultiKill,
-        Common::Bonus conHealedBonusOnRevive);
+        common::Chance baseHitChanceOfNearbyAllies,
+        common::Bonus normalDamageBonusOnBossKill,
+        common::Chance baseCriticalDamageChanceOnMultiKill,
+        common::Bonus conHealedBonusOnRevive);
 
     virtual ~EffectSkillLeadership() noexcept {}
 
@@ -485,16 +485,16 @@ public:
     EffectSkillLeadership& operator-=(const EffectSkillLeadership& other);
 
 private:
-    Common::Chance              chaHitNearbyAllies_;    // base hit chance of nearby allies
-    Common::Bonus               bonNormDmgBossKill_;    // normal damage bonus on boss kill
-    Common::Chance              chaCritDmgMultiKill_;   // base critical damage chance on multi-kill
-    Common::Bonus               bonCONHealedRevive_;    // CON healed bonus on revive
+    common::Chance              chaHitNearbyAllies_;    // base hit chance of nearby allies
+    common::Bonus               bonNormDmgBossKill_;    // normal damage bonus on boss kill
+    common::Chance              chaCritDmgMultiKill_;   // base critical damage chance on multi-kill
+    common::Bonus               bonCONHealedRevive_;    // CON healed bonus on revive
 };
 
 EffectSkillLeadership operator+(const EffectSkillLeadership& left, const EffectSkillLeadership& right);
 EffectSkillLeadership operator-(const EffectSkillLeadership& left, const EffectSkillLeadership& right);
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !EFFECT_SKILL_HPP

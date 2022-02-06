@@ -11,15 +11,15 @@
 #include<memory>
 #include<type_traits>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
-using Game::Common::Text;
-using Game::Global::PlainText;
-using Game::Global::Locator;
+using common::Text;
+using global::PlainText;
+using global::Locator;
 
-Game::Common::ObserverDLL<void, PlainText::Language>
+common::ObserverDLL<void, PlainText::Language>
     AttributeText::langObs_;
 
 std::array<
@@ -42,23 +42,23 @@ bool AttributeText::initialized_{ false };
 
 void AttributeText::setLanguage(PlainText::Language lang)
 {
-    assert(Game::Common::isValidEnum(lang));
-    ptrName_    = { &name_[Game::Common::toUnderlying(lang)] };
-    ptrDescr_   = { &descr_[Game::Common::toUnderlying(lang)] };
+    assert(common::isValidEnum(lang));
+    ptrName_    = { &name_[common::toUnderlying(lang)] };
+    ptrDescr_   = { &descr_[common::toUnderlying(lang)] };
 }
 
 const Text& AttributeText::name(Attribute__Type id) noexcept
 {
-    assert(Game::Common::isValidEnum(id));
+    assert(common::isValidEnum(id));
     assert(ptrName_ != nullptr);
-    return (*ptrName_)[Game::Common::toUnderlying(id)];
+    return (*ptrName_)[common::toUnderlying(id)];
 }
 
 const Text& AttributeText::descr(Attribute__Type id) noexcept
 {
-    assert(Game::Common::isValidEnum(id));
+    assert(common::isValidEnum(id));
     assert(ptrDescr_ != nullptr);
-    return (*ptrDescr_)[Game::Common::toUnderlying(id)];
+    return (*ptrDescr_)[common::toUnderlying(id)];
 }
 
 void AttributeText::initialize()
@@ -68,7 +68,7 @@ void AttributeText::initialize()
     assert(sizeLang_ > 0);
     assert(sizeType_ > 0);
     unique_ptr<char[]> buffer{
-        Game::Common::getFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
+        common::getFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
 
     const fbAttribute::FB_AttributeText* table{
@@ -91,31 +91,31 @@ void AttributeText::initLanguage(
     const fbAttribute::FB_LanguageBundle* table,
     PlainText::Language lang)
 {
-    assert(Game::Common::isValidEnum(lang));
-    assert(Game::Common::toUnderlying(lang) >= 0 && Game::Common::toUnderlying(lang) < sizeLang_);
-    initByType(table->name(), name_[Game::Common::toUnderlying(lang)]);
-    initByType(table->descr(), descr_[Game::Common::toUnderlying(lang)]);
+    assert(common::isValidEnum(lang));
+    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
+    initByType(table->name(), name_[common::toUnderlying(lang)]);
+    initByType(table->descr(), descr_[common::toUnderlying(lang)]);
 }
 
 void AttributeText::initByType(
     const fbAttribute::FB_AttributeTextType* table,
     std::array<Text, sizeType_>& ar)
 {
-    ar[Game::Common::toUnderlying(Attribute__Type::COORDINATION)] =
+    ar[common::toUnderlying(Attribute__Type::COORDINATION)] =
         move(Text{ table->coordination()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::LUCK)] =
+    ar[common::toUnderlying(Attribute__Type::LUCK)] =
         move(Text{ table->luck()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::AWARENESS)] =
+    ar[common::toUnderlying(Attribute__Type::AWARENESS)] =
         move(Text{ table->awareness()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::STRENGTH)] =
+    ar[common::toUnderlying(Attribute__Type::STRENGTH)] =
         move(Text{ table->strength()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::SPEED)] =
+    ar[common::toUnderlying(Attribute__Type::SPEED)] =
         move(Text{ table->speed()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::INTELLIGENCE)] =
+    ar[common::toUnderlying(Attribute__Type::INTELLIGENCE)] =
         move(Text{ table->intelligence()->c_str() });
-    ar[Game::Common::toUnderlying(Attribute__Type::CHARISMA)] =
+    ar[common::toUnderlying(Attribute__Type::CHARISMA)] =
         move(Text{ table->charisma()->c_str() });
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

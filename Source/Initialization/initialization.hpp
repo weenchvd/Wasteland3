@@ -7,12 +7,12 @@
 #ifndef INITIALIZATION_HPP
 #define INITIALIZATION_HPP
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 void initializeGame();
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game
 
 #endif // !INITIALIZATION_HPP

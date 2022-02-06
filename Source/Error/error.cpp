@@ -8,8 +8,8 @@
 #include<iostream>
 #include<vector>
 
-namespace Game {
-namespace Error {
+namespace game {
+namespace error {
 
 const std::string prefixLevel{ "\t[ " };
 const std::string suffixLevel{ " ] " };
@@ -48,5 +48,5 @@ void errPrint(std::ostream& os, Level errLevel, Type errType, const std::string&
     os << std::endl;
 }
 
-} // namespace Error
-} // namespace Game
+} // namespace error
+} // namespace game

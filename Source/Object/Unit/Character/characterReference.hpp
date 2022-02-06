@@ -12,8 +12,8 @@
 #include"characterCommon.hpp"
 #include<array>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 constexpr unsigned int nASlots = 4; // number of armor slots
 constexpr unsigned int nWSlots = 2; // number of weapon slots
@@ -129,84 +129,84 @@ struct CharacterReference {
     //void slotArmorTypes(Slot_ArmorTypes types) noexcept                 { armorTypes_ = types; }
     void slotWeaponTypes(Slot_WeaponTypes types) noexcept               { weaponTypes_ = types; }
     //void slotConsumableTypes(Slot_ConsumableTypes types) noexcept       { consumTypes_ = types; }
-    void name(Common::Text name) noexcept                               { name_ = name; }
-    void timeDetection(Common::Time time) noexcept                      { timeDetect_ = time; }
-    void experience(Common::Experience xp) noexcept                     { xp_ = xp; }
-    void experienceReward(Common::Experience xp) noexcept               { xpReward_ = xp; }
-    void rangeLeadership(Common::Range range) noexcept                  { rangeLeader_ = range; }
-    void constitutionMaximum(Common::Constitution con) noexcept         { conMax_ = con; }
-    void constitutionCurrent(Common::Constitution con) noexcept         { conCur_ = con; }
-    void constitutionPerLevel(Common::Constitution con) noexcept        { conPerLvl_ = con; }
-    void multiplierCritDamage(Common::Multiplier mul) noexcept          { mulCritDmg_ = mul; }
-    void multiplierCombatSpeed(Common::Multiplier mul) noexcept         { mulSpeed_ = mul; }
-    void multiplierThrowingRange(Common::Multiplier mul) noexcept       { mulThrow_ = mul; }
-    void chanceHit(Common::Chance chance) noexcept                      { chaHit_ = chance; }
-    void chanceHitAssaultRifle(Common::Chance chance) noexcept          { chaHitAR_ = chance; }
-    void chanceHitSubMachineGun(Common::Chance chance) noexcept         { chaHitSMG_ = chance; }
-    void chanceHitHeavyMachineGun(Common::Chance chance) noexcept       { chaHitHMG_ = chance; }
-    void chanceHitFlameThrower(Common::Chance chance) noexcept          { chaHitFT_ = chance; }
-    void chanceHitBrawlingWeapon(Common::Chance chance) noexcept        { chaHitBrawl_ = chance; }
-    void chanceHitBluntWeapon(Common::Chance chance) noexcept           { chaHitBlunt_ = chance; }
-    void chanceHitBladedWeapon(Common::Chance chance) noexcept          { chaHitBladed_ = chance; }
-    void chanceHitSemiAutoPistol(Common::Chance chance) noexcept        { chaHitSAPistol_ = chance; }
-    void chanceHitRevolver(Common::Chance chance) noexcept              { chaHitRevolver_ = chance; }
-    void chanceHitPumpShotgun(Common::Chance chance) noexcept           { chaHitPumpSG_ = chance; }
-    void chanceHitAutoShotgun(Common::Chance chance) noexcept           { chaHitAutoSG_ = chance; }
-    void chanceHitSniperRifle(Common::Chance chance) noexcept           { chaHitSR_ = chance; }
-    void chanceHitOfNearbyAllies(Common::Chance chance) noexcept        { chaHitNearbyAllies_ = chance; }
-    void chanceCritDamageOnMultiKill(Common::Chance chance) noexcept    { chaCritDmgMultiKill_ = chance; }
-    void chanceCritDamage(Common::Chance chance) noexcept               { chaCritDmg_ = chance; }
-    void chanceCritHealing(Common::Chance chance) noexcept              { chaCritHeal_ = chance; }
-    void chanceLuckyAction(Common::Chance chance) noexcept              { chaLuckAction_ = chance; }
-    void chanceLuckyCritDamage(Common::Chance chance) noexcept          { chaLuckCritDmg_ = chance; }
-    void chanceLuckyMegaCritDamage(Common::Chance chance) noexcept      { chaLuckMegaCritDmg_ = chance; }
-    void chanceLuckyEvade(Common::Chance chance) noexcept               { chaLuckEvade_ = chance; }
-    void chanceLuckyCritResist(Common::Chance chance) noexcept          { chaLuckCritRes_ = chance; }
-    void chanceLuckyDoubleHealing(Common::Chance chance) noexcept       { chaLuckDblHeal_ = chance; }
-    void chanceLuckyDoubleMoney(Common::Chance chance) noexcept         { chaLuckDblMoney_ = chance; }
-    void chanceLuckyDoubleScrap(Common::Chance chance) noexcept         { chaLuckDblScrap_ = chance; }
-    void bonusHealing(Common::Bonus bonus) noexcept                     { bonHeal_ = bonus; }
-    void bonusCritHealing(Common::Bonus bonus) noexcept                 { bonCritHeal_ = bonus; }
-    void bonusHealingWhenRevivingAllies(Common::Bonus bonus) noexcept   { bonHealRevive_ = bonus; }
-    void bonusRepair(Common::Bonus bonus) noexcept                      { bonRepair_ = bonus; }
-    void bonusExperience(Common::Bonus bonus) noexcept                  { bonXP_ = bonus; }
-    void bonusMissionReward(Common::Bonus bonus) noexcept               { bonMissionRew_ = bonus; }
-    void bonusFieldStrippingScrap(Common::Bonus bonus) noexcept         { bonScrap_ = bonus; }
-    void bonusSellValue(Common::Bonus bonus) noexcept                   { bonSellValue_ = bonus; }
-    void bonusBuyCost(Common::Bonus bonus) noexcept                     { bonBuyCost_ = bonus; }
-    void bonusSneakAttackDamage(Common::Bonus bonus) noexcept           { bonSneakDmg_ = bonus; }
-    void bonusNormalDamage(Common::Bonus bonus) noexcept                { bonNormDmg_ = bonus; }
-    void bonusMeleeDamage(Common::Bonus bonus) noexcept                 { bonMeleeDmg_ = bonus; }
-    void bonusRangedDamage(Common::Bonus bonus) noexcept                { bonRangeDmg_ = bonus; }
-    void bonusFireDamage(Common::Bonus bonus) noexcept                  { bonFireDmg_ = bonus; }
-    void bonusColdDamage(Common::Bonus bonus) noexcept                  { bonColdDmg_ = bonus; }
-    void bonusEnergyDamage(Common::Bonus bonus) noexcept                { bonEnerDmg_ = bonus; }
-    void bonusExplosiveDamage(Common::Bonus bonus) noexcept             { bonExplDmg_ = bonus; }
-    void bonusAnimalCompanionDamage(Common::Bonus bonus) noexcept       { bonAnimalDmg_ = bonus; }
-    void bonusDamageVsRobots(Common::Bonus bonus) noexcept              { bonDmgVsRobot_ = bonus; }
-    void bonusDamageVsVehicles(Common::Bonus bonus) noexcept            { bonDmgVsVehic_ = bonus; }
-    void bonusDamageVsSynths(Common::Bonus bonus) noexcept              { bonDmgVsSynth_ = bonus; }
-    void bonusDamageVsAnimals(Common::Bonus bonus) noexcept             { bonDmgVsAnimal_ = bonus; }
-    void bonusDamageVsMutants(Common::Bonus bonus) noexcept             { bonDmgVsMutant_ = bonus; }
-    void bonusNormalDamageOnBossKill(Common::Bonus bonus) noexcept      { bonNormDmgBossKill_ = bonus; }
-    void bonusCONHealedOnRevive(Common::Bonus bonus) noexcept           { bonCONHealedRevive_ = bonus; }
-    void resistanceStatusEffect(Common::Resistance res) noexcept        { resStatEff_ = res; }
-    void resistanceCritDamage(Common::Resistance res) noexcept          { resCritDmg_ = res; }
-    void resistanceFireDamage(Common::Resistance res) noexcept          { resFireDmg_ = res; }
-    void resistanceColdDamage(Common::Resistance res) noexcept          { resColdDmg_ = res; }
-    void resistanceEnergyDamage(Common::Resistance res) noexcept        { resEnerDmg_ = res; }
-    void resistanceExplosiveDamage(Common::Resistance res) noexcept     { resExplDmg_ = res; }
-    void evasion(Common::Evasion ev) noexcept                           { evasion_ = ev; }
-    void initiative(Common::Initiative init) noexcept                   { initiat_ = init; }
-    void strikeRate(Common::Strike strike) noexcept                     { strike_ = strike; }
-    void level(Common::Level lvl) noexcept                              { level_ = lvl; }
-    void armor(Common::Armor ar) noexcept                               { armor_ = ar; }
-    void armorPenetration(Common::Armor ar) noexcept                    { armorPen_ = ar; }
-    void actionPointMaximum(Common::ActionPoint ap) noexcept            { apMax_ = ap; }
-    void actionPointCurrent(Common::ActionPoint ap) noexcept            { apCur_ = ap; }
-    void downedTime(Common::NumberMoves num) noexcept                   { movDowned_ = num; }
-    void perception(Common::Perception perc) noexcept                   { percept_ = perc; }
-    void radiationResistance(Common::Radiation rad) noexcept            { radRes_ = rad; }
+    void name(common::Text name) noexcept                               { name_ = name; }
+    void timeDetection(common::Time time) noexcept                      { timeDetect_ = time; }
+    void experience(common::Experience xp) noexcept                     { xp_ = xp; }
+    void experienceReward(common::Experience xp) noexcept               { xpReward_ = xp; }
+    void rangeLeadership(common::Range range) noexcept                  { rangeLeader_ = range; }
+    void constitutionMaximum(common::Constitution con) noexcept         { conMax_ = con; }
+    void constitutionCurrent(common::Constitution con) noexcept         { conCur_ = con; }
+    void constitutionPerLevel(common::Constitution con) noexcept        { conPerLvl_ = con; }
+    void multiplierCritDamage(common::Multiplier mul) noexcept          { mulCritDmg_ = mul; }
+    void multiplierCombatSpeed(common::Multiplier mul) noexcept         { mulSpeed_ = mul; }
+    void multiplierThrowingRange(common::Multiplier mul) noexcept       { mulThrow_ = mul; }
+    void chanceHit(common::Chance chance) noexcept                      { chaHit_ = chance; }
+    void chanceHitAssaultRifle(common::Chance chance) noexcept          { chaHitAR_ = chance; }
+    void chanceHitSubMachineGun(common::Chance chance) noexcept         { chaHitSMG_ = chance; }
+    void chanceHitHeavyMachineGun(common::Chance chance) noexcept       { chaHitHMG_ = chance; }
+    void chanceHitFlameThrower(common::Chance chance) noexcept          { chaHitFT_ = chance; }
+    void chanceHitBrawlingWeapon(common::Chance chance) noexcept        { chaHitBrawl_ = chance; }
+    void chanceHitBluntWeapon(common::Chance chance) noexcept           { chaHitBlunt_ = chance; }
+    void chanceHitBladedWeapon(common::Chance chance) noexcept          { chaHitBladed_ = chance; }
+    void chanceHitSemiAutoPistol(common::Chance chance) noexcept        { chaHitSAPistol_ = chance; }
+    void chanceHitRevolver(common::Chance chance) noexcept              { chaHitRevolver_ = chance; }
+    void chanceHitPumpShotgun(common::Chance chance) noexcept           { chaHitPumpSG_ = chance; }
+    void chanceHitAutoShotgun(common::Chance chance) noexcept           { chaHitAutoSG_ = chance; }
+    void chanceHitSniperRifle(common::Chance chance) noexcept           { chaHitSR_ = chance; }
+    void chanceHitOfNearbyAllies(common::Chance chance) noexcept        { chaHitNearbyAllies_ = chance; }
+    void chanceCritDamageOnMultiKill(common::Chance chance) noexcept    { chaCritDmgMultiKill_ = chance; }
+    void chanceCritDamage(common::Chance chance) noexcept               { chaCritDmg_ = chance; }
+    void chanceCritHealing(common::Chance chance) noexcept              { chaCritHeal_ = chance; }
+    void chanceLuckyAction(common::Chance chance) noexcept              { chaLuckAction_ = chance; }
+    void chanceLuckyCritDamage(common::Chance chance) noexcept          { chaLuckCritDmg_ = chance; }
+    void chanceLuckyMegaCritDamage(common::Chance chance) noexcept      { chaLuckMegaCritDmg_ = chance; }
+    void chanceLuckyEvade(common::Chance chance) noexcept               { chaLuckEvade_ = chance; }
+    void chanceLuckyCritResist(common::Chance chance) noexcept          { chaLuckCritRes_ = chance; }
+    void chanceLuckyDoubleHealing(common::Chance chance) noexcept       { chaLuckDblHeal_ = chance; }
+    void chanceLuckyDoubleMoney(common::Chance chance) noexcept         { chaLuckDblMoney_ = chance; }
+    void chanceLuckyDoubleScrap(common::Chance chance) noexcept         { chaLuckDblScrap_ = chance; }
+    void bonusHealing(common::Bonus bonus) noexcept                     { bonHeal_ = bonus; }
+    void bonusCritHealing(common::Bonus bonus) noexcept                 { bonCritHeal_ = bonus; }
+    void bonusHealingWhenRevivingAllies(common::Bonus bonus) noexcept   { bonHealRevive_ = bonus; }
+    void bonusRepair(common::Bonus bonus) noexcept                      { bonRepair_ = bonus; }
+    void bonusExperience(common::Bonus bonus) noexcept                  { bonXP_ = bonus; }
+    void bonusMissionReward(common::Bonus bonus) noexcept               { bonMissionRew_ = bonus; }
+    void bonusFieldStrippingScrap(common::Bonus bonus) noexcept         { bonScrap_ = bonus; }
+    void bonusSellValue(common::Bonus bonus) noexcept                   { bonSellValue_ = bonus; }
+    void bonusBuyCost(common::Bonus bonus) noexcept                     { bonBuyCost_ = bonus; }
+    void bonusSneakAttackDamage(common::Bonus bonus) noexcept           { bonSneakDmg_ = bonus; }
+    void bonusNormalDamage(common::Bonus bonus) noexcept                { bonNormDmg_ = bonus; }
+    void bonusMeleeDamage(common::Bonus bonus) noexcept                 { bonMeleeDmg_ = bonus; }
+    void bonusRangedDamage(common::Bonus bonus) noexcept                { bonRangeDmg_ = bonus; }
+    void bonusFireDamage(common::Bonus bonus) noexcept                  { bonFireDmg_ = bonus; }
+    void bonusColdDamage(common::Bonus bonus) noexcept                  { bonColdDmg_ = bonus; }
+    void bonusEnergyDamage(common::Bonus bonus) noexcept                { bonEnerDmg_ = bonus; }
+    void bonusExplosiveDamage(common::Bonus bonus) noexcept             { bonExplDmg_ = bonus; }
+    void bonusAnimalCompanionDamage(common::Bonus bonus) noexcept       { bonAnimalDmg_ = bonus; }
+    void bonusDamageVsRobots(common::Bonus bonus) noexcept              { bonDmgVsRobot_ = bonus; }
+    void bonusDamageVsVehicles(common::Bonus bonus) noexcept            { bonDmgVsVehic_ = bonus; }
+    void bonusDamageVsSynths(common::Bonus bonus) noexcept              { bonDmgVsSynth_ = bonus; }
+    void bonusDamageVsAnimals(common::Bonus bonus) noexcept             { bonDmgVsAnimal_ = bonus; }
+    void bonusDamageVsMutants(common::Bonus bonus) noexcept             { bonDmgVsMutant_ = bonus; }
+    void bonusNormalDamageOnBossKill(common::Bonus bonus) noexcept      { bonNormDmgBossKill_ = bonus; }
+    void bonusCONHealedOnRevive(common::Bonus bonus) noexcept           { bonCONHealedRevive_ = bonus; }
+    void resistanceStatusEffect(common::Resistance res) noexcept        { resStatEff_ = res; }
+    void resistanceCritDamage(common::Resistance res) noexcept          { resCritDmg_ = res; }
+    void resistanceFireDamage(common::Resistance res) noexcept          { resFireDmg_ = res; }
+    void resistanceColdDamage(common::Resistance res) noexcept          { resColdDmg_ = res; }
+    void resistanceEnergyDamage(common::Resistance res) noexcept        { resEnerDmg_ = res; }
+    void resistanceExplosiveDamage(common::Resistance res) noexcept     { resExplDmg_ = res; }
+    void evasion(common::Evasion ev) noexcept                           { evasion_ = ev; }
+    void initiative(common::Initiative init) noexcept                   { initiat_ = init; }
+    void strikeRate(common::Strike strike) noexcept                     { strike_ = strike; }
+    void level(common::Level lvl) noexcept                              { level_ = lvl; }
+    void armor(common::Armor ar) noexcept                               { armor_ = ar; }
+    void armorPenetration(common::Armor ar) noexcept                    { armorPen_ = ar; }
+    void actionPointMaximum(common::ActionPoint ap) noexcept            { apMax_ = ap; }
+    void actionPointCurrent(common::ActionPoint ap) noexcept            { apCur_ = ap; }
+    void downedTime(common::NumberMoves num) noexcept                   { movDowned_ = num; }
+    void perception(common::Perception perc) noexcept                   { percept_ = perc; }
+    void radiationResistance(common::Radiation rad) noexcept            { radRes_ = rad; }
 
     Character__Model            model_;         // character model
     Character__Type             type_;          // character type
@@ -214,90 +214,90 @@ struct CharacterReference {
     Slot_WeaponTypes            weaponTypes_;   // list of slot types
     //Slot_ConsumableTypes        consumTypes_;   // list of slot types
 
-    Common::Text                name_;          // name
+    common::Text                name_;          // name
 
-    Common::Time                timeDetect_;    // detection time
-    Common::Experience          xp_;            // experience
-    Common::Experience          xpReward_;      // experience reward for killing
+    common::Time                timeDetect_;    // detection time
+    common::Experience          xp_;            // experience
+    common::Experience          xpReward_;      // experience reward for killing
             
-    Common::Range               rangeLeader_;   // leadership range
-    Common::Constitution        conMax_;        // constitution max value
-    Common::Constitution        conCur_;        // constitution current value
-    Common::Constitution        conPerLvl_;     // constitution per level
-    Common::Multiplier          mulCritDmg_;    // critical damage multiplier
-    Common::Multiplier          mulSpeed_;      // combat speed multiplier
-    Common::Multiplier          mulThrow_;      // throwing range multiplier
-    Common::Chance              chaHit_;        // base hit chance
-    Common::Chance              chaHitAR_;      // assault rifle hit chance
-    Common::Chance              chaHitSMG_;     // submachine gun hit chance
-    Common::Chance              chaHitHMG_;     // heavy machine gun hit chance
-    Common::Chance              chaHitFT_;      // flamethrower hit chance
-    Common::Chance              chaHitBrawl_;   // brawling weapon hit chance
-    Common::Chance              chaHitBlunt_;   // blunt weapon hit chance
-    Common::Chance              chaHitBladed_;  // bladed weapon hit chance
-    Common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
-    Common::Chance              chaHitRevolver_;    // revolver hit chance
-    Common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
-    Common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
-    Common::Chance              chaHitSR_;      // sniper rifle hit chance
-    Common::Chance              chaHitNearbyAllies_;  // base hit chance of nearby allies
-    Common::Chance              chaCritDmgMultiKill_; // base critical damage chance on multi-kill
-    Common::Chance              chaCritDmg_;    // base critical damage chance
-    Common::Chance              chaCritHeal_;   // base critical healing chance
-    Common::Chance              chaLuckAction_;     // lucky action chance
-    Common::Chance              chaLuckCritDmg_;    // lucky critical damage chance
-    Common::Chance              chaLuckMegaCritDmg_;// lucky mega critical damage chance
-    Common::Chance              chaLuckEvade_;      // lucky evade chance
-    Common::Chance              chaLuckCritRes_;    // lucky critical resist chance
-    Common::Chance              chaLuckDblHeal_;    // lucky double healing chance
-    Common::Chance              chaLuckDblMoney_;   // lucky double money chance
-    Common::Chance              chaLuckDblScrap_;   // lucky double scrap chance
-    Common::Bonus               bonHeal_;       // healing bonus
-    Common::Bonus               bonCritHeal_;   // critical healing bonus
-    Common::Bonus               bonHealRevive_; // healing when reviving allies bonus
-    Common::Bonus               bonRepair_;     // repair bonus
-    Common::Bonus               bonXP_;         // experience bonus
-    Common::Bonus               bonMissionRew_; // mission reward bonus
-    Common::Bonus               bonScrap_;      // field stripping scrap bonus
-    Common::Bonus               bonSellValue_;  // sell value bonus
-    Common::Bonus               bonBuyCost_;    // buy cost bonus
-    Common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
-    Common::Bonus               bonNormDmg_;    // normal damage bonus
-    Common::Bonus               bonMeleeDmg_;   // melee damage bonus
-    Common::Bonus               bonRangeDmg_;   // ranged damage bonus
-    Common::Bonus               bonFireDmg_;    // fire damage bonus
-    Common::Bonus               bonColdDmg_;    // cold damage bonus
-    Common::Bonus               bonEnerDmg_;    // energy damage bonus
-    Common::Bonus               bonExplDmg_;    // explosive damage bonus
-    Common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
-    Common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
-    Common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
-    Common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
-    Common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
-    Common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
-    Common::Bonus               bonNormDmgBossKill_;  // normal damage bonus on boss kill
-    Common::Bonus               bonCONHealedRevive_;  // CON healed bonus on revive
-    Common::Resistance          resStatEff_;    // status effect resistance
-    Common::Resistance          resCritDmg_;    // critical damage resistance
-    Common::Resistance          resFireDmg_;    // fire damage resistance
-    Common::Resistance          resColdDmg_;    // cold damage resistance
-    Common::Resistance          resEnerDmg_;    // energy damage resistance
-    Common::Resistance          resExplDmg_;    // explosive damage resistance
-    Common::Evasion             evasion_;       // evasion
-    Common::Initiative          initiat_;       // initiative
-    Common::Strike              strike_;        // strike rate
+    common::Range               rangeLeader_;   // leadership range
+    common::Constitution        conMax_;        // constitution max value
+    common::Constitution        conCur_;        // constitution current value
+    common::Constitution        conPerLvl_;     // constitution per level
+    common::Multiplier          mulCritDmg_;    // critical damage multiplier
+    common::Multiplier          mulSpeed_;      // combat speed multiplier
+    common::Multiplier          mulThrow_;      // throwing range multiplier
+    common::Chance              chaHit_;        // base hit chance
+    common::Chance              chaHitAR_;      // assault rifle hit chance
+    common::Chance              chaHitSMG_;     // submachine gun hit chance
+    common::Chance              chaHitHMG_;     // heavy machine gun hit chance
+    common::Chance              chaHitFT_;      // flamethrower hit chance
+    common::Chance              chaHitBrawl_;   // brawling weapon hit chance
+    common::Chance              chaHitBlunt_;   // blunt weapon hit chance
+    common::Chance              chaHitBladed_;  // bladed weapon hit chance
+    common::Chance              chaHitSAPistol_;    // semi-auto pistol hit chance
+    common::Chance              chaHitRevolver_;    // revolver hit chance
+    common::Chance              chaHitPumpSG_;      // pump shotgun hit chance
+    common::Chance              chaHitAutoSG_;      // auto shotgun hit chance
+    common::Chance              chaHitSR_;      // sniper rifle hit chance
+    common::Chance              chaHitNearbyAllies_;  // base hit chance of nearby allies
+    common::Chance              chaCritDmgMultiKill_; // base critical damage chance on multi-kill
+    common::Chance              chaCritDmg_;    // base critical damage chance
+    common::Chance              chaCritHeal_;   // base critical healing chance
+    common::Chance              chaLuckAction_;     // lucky action chance
+    common::Chance              chaLuckCritDmg_;    // lucky critical damage chance
+    common::Chance              chaLuckMegaCritDmg_;// lucky mega critical damage chance
+    common::Chance              chaLuckEvade_;      // lucky evade chance
+    common::Chance              chaLuckCritRes_;    // lucky critical resist chance
+    common::Chance              chaLuckDblHeal_;    // lucky double healing chance
+    common::Chance              chaLuckDblMoney_;   // lucky double money chance
+    common::Chance              chaLuckDblScrap_;   // lucky double scrap chance
+    common::Bonus               bonHeal_;       // healing bonus
+    common::Bonus               bonCritHeal_;   // critical healing bonus
+    common::Bonus               bonHealRevive_; // healing when reviving allies bonus
+    common::Bonus               bonRepair_;     // repair bonus
+    common::Bonus               bonXP_;         // experience bonus
+    common::Bonus               bonMissionRew_; // mission reward bonus
+    common::Bonus               bonScrap_;      // field stripping scrap bonus
+    common::Bonus               bonSellValue_;  // sell value bonus
+    common::Bonus               bonBuyCost_;    // buy cost bonus
+    common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
+    common::Bonus               bonNormDmg_;    // normal damage bonus
+    common::Bonus               bonMeleeDmg_;   // melee damage bonus
+    common::Bonus               bonRangeDmg_;   // ranged damage bonus
+    common::Bonus               bonFireDmg_;    // fire damage bonus
+    common::Bonus               bonColdDmg_;    // cold damage bonus
+    common::Bonus               bonEnerDmg_;    // energy damage bonus
+    common::Bonus               bonExplDmg_;    // explosive damage bonus
+    common::Bonus               bonAnimalDmg_;  // animal companion damage bonus
+    common::Bonus               bonDmgVsRobot_; // damage bonus vs robots
+    common::Bonus               bonDmgVsVehic_; // damage bonus vs vehicles
+    common::Bonus               bonDmgVsSynth_; // damage bonus vs synths
+    common::Bonus               bonDmgVsAnimal_;    // damage bonus vs animals
+    common::Bonus               bonDmgVsMutant_;    // damage bonus vs mutants
+    common::Bonus               bonNormDmgBossKill_;  // normal damage bonus on boss kill
+    common::Bonus               bonCONHealedRevive_;  // CON healed bonus on revive
+    common::Resistance          resStatEff_;    // status effect resistance
+    common::Resistance          resCritDmg_;    // critical damage resistance
+    common::Resistance          resFireDmg_;    // fire damage resistance
+    common::Resistance          resColdDmg_;    // cold damage resistance
+    common::Resistance          resEnerDmg_;    // energy damage resistance
+    common::Resistance          resExplDmg_;    // explosive damage resistance
+    common::Evasion             evasion_;       // evasion
+    common::Initiative          initiat_;       // initiative
+    common::Strike              strike_;        // strike rate
             
-    Common::Level               level_;         // character level
-    Common::Armor               armor_;         // armor
-    Common::Armor               armorPen_;      // penetration
-    Common::ActionPoint         apMax_;         // action points (maximum)
-    Common::ActionPoint         apCur_;         // action points (current)
-    Common::NumberMoves         movDowned_;     // downed time
-    Common::Perception          percept_;       // perception
-    Common::Radiation           radRes_;        // radiation resistance
+    common::Level               level_;         // character level
+    common::Armor               armor_;         // armor
+    common::Armor               armorPen_;      // penetration
+    common::ActionPoint         apMax_;         // action points (maximum)
+    common::ActionPoint         apCur_;         // action points (current)
+    common::NumberMoves         movDowned_;     // downed time
+    common::Perception          percept_;       // perception
+    common::Radiation           radRes_;        // radiation resistance
 };
         
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !CHARACTER_REFERENCE_HPP

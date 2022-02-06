@@ -7,8 +7,8 @@
 #ifndef DESTROYABLE_HPP
 #define DESTROYABLE_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -159,7 +159,7 @@ private:
     char                    xpBon;          // experience bonus, default: 0
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !DESTROYABLE_HPP

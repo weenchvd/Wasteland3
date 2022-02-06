@@ -7,8 +7,8 @@
 #include"weapon.hpp"
 #include<string>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -231,5 +231,5 @@ void Weapon::initRef()
 
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

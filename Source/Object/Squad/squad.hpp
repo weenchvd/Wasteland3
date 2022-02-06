@@ -13,8 +13,8 @@
 #include<array>
 #include<memory>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 constexpr unsigned int nMembers = 6;            // number of members
 
@@ -28,8 +28,8 @@ public:
     Squad(const Squad&) = delete;
     Squad& operator=(const Squad&) = delete;
 
-    Common::Money money() const noexcept { return money_; }
-    void moneyAdd(Common::Money shift) noexcept { money_ += shift; }
+    common::Money money() const noexcept { return money_; }
+    void moneyAdd(common::Money shift) noexcept { money_ += shift; }
 
 /// members
 public:
@@ -44,10 +44,10 @@ public:
 private:
     std::array<std::unique_ptr<Unit>, nMembers>     members_;
     std::unique_ptr<Inventory>                      invent_;
-    Common::Money                                   money_;
+    common::Money                                   money_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !SQUAD_HPP

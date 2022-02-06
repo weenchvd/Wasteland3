@@ -7,8 +7,8 @@
 #include"menuCommon.hpp"
 #include<string>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 using namespace std;
 
@@ -33,7 +33,7 @@ int getAction()
         return stoi(input);
     }
     catch (...) {
-        return ActionCommon::INVALID;
+        return actionCommon::INVALID;
     }
 }
 
@@ -75,11 +75,11 @@ YesNo getYesNo()
     }
 }
 
-Common::Text statLevel(const Common::SpecStorage<Common::LevelStat>& level, bool accepted)
+common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool accepted)
 {
-    Common::Text s;
+    common::Text s;
     if (accepted) {
-        for (Common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
             if (i <= level.getAccepted()) {
                 s += '+';
             }
@@ -89,7 +89,7 @@ Common::Text statLevel(const Common::SpecStorage<Common::LevelStat>& level, bool
         }
     }
     else {
-        for (Common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
             if (i <= level.get()) {
                 s += '+';
             }
@@ -112,17 +112,17 @@ unsigned int utf8Size(const std::string& s)
     return size;
 }
 
-Game::Common::Text fillWithPlaseholders(
-    const Game::Common::Text& source,
+common::Text fillWithPlaseholders(
+    const common::Text& source,
     unsigned char width,
     char placeholder)
 {
-    Game::Common::Text t{ source };
+    common::Text t{ source };
     for (int i = utf8Size(source); i < width; ++i) {
         t += placeholder;
     }
     return t;
 }
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game

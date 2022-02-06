@@ -7,8 +7,8 @@
 #ifndef UNIT_VISITOR_HPP
 #define UNIT_VISITOR_HPP
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Character;
 
@@ -46,7 +46,7 @@ private:
     bool isChar_        { false };
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !UNIT_VISITOR_HPP

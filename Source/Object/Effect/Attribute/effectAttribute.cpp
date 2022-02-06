@@ -9,13 +9,13 @@
 #include"operators.hpp"
 #include<cmath>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 EffectAttCoord::EffectAttCoord(
-    Common::Resistance statusEffect,
-    Common::ActionPoint maximum,
-    Common::ActionPoint current) noexcept
+    common::Resistance statusEffect,
+    common::ActionPoint maximum,
+    common::ActionPoint current) noexcept
     :
     resStatEff_ { statusEffect },
     apMax_      { maximum },
@@ -47,26 +47,26 @@ EffectAttCoord& EffectAttCoord::operator-=(const EffectAttCoord& other) noexcept
 
 EffectAttCoord operator+(const EffectAttCoord& left, const EffectAttCoord& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttCoord operator-(const EffectAttCoord& left, const EffectAttCoord& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttLuck::EffectAttLuck(
-    Common::Armor penetration,
-    Common::Chance luckyAction,
-    Common::Chance luckyCritDamage,
-    Common::Chance luckyMegaCritDamage,
-    Common::Chance luckyEvade,
-    Common::Chance luckyCritResist,
-    Common::Chance luckyDoubleHealing,
-    Common::Chance luckyDoubleMoney,
-    Common::Chance luckyDoubleScrap) noexcept
+    common::Armor penetration,
+    common::Chance luckyAction,
+    common::Chance luckyCritDamage,
+    common::Chance luckyMegaCritDamage,
+    common::Chance luckyEvade,
+    common::Chance luckyCritResist,
+    common::Chance luckyDoubleHealing,
+    common::Chance luckyDoubleMoney,
+    common::Chance luckyDoubleScrap) noexcept
     :
     armorPen_           { penetration },
     chaLuckAction_      { luckyAction },
@@ -122,20 +122,20 @@ EffectAttLuck& EffectAttLuck::operator-=(const EffectAttLuck& other) noexcept
 
 EffectAttLuck operator+(const EffectAttLuck& left, const EffectAttLuck& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttLuck operator-(const EffectAttLuck& left, const EffectAttLuck& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttAware::EffectAttAware(
-    Common::Chance hit,
-    Common::Perception perception,
-    Common::Bonus rangedDamage) noexcept
+    common::Chance hit,
+    common::Perception perception,
+    common::Bonus rangedDamage) noexcept
     :
     chaHit_         { hit },
     percept_        { perception },
@@ -167,21 +167,21 @@ EffectAttAware& EffectAttAware::operator-=(const EffectAttAware& other) noexcept
 
 EffectAttAware operator+(const EffectAttAware& left, const EffectAttAware& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttAware operator-(const EffectAttAware& left, const EffectAttAware& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttStr::EffectAttStr(
-    Common::Constitution maximum,
-    Common::Constitution perLevel,
-    Common::Bonus meleeDamage,
-    Common::Multiplier throwingRange) noexcept
+    common::Constitution maximum,
+    common::Constitution perLevel,
+    common::Bonus meleeDamage,
+    common::Multiplier throwingRange) noexcept
     :
     conMax_         { maximum },
     conPerLvl_      { perLevel },
@@ -192,7 +192,7 @@ EffectAttStr::EffectAttStr(
 void EffectAttStr::apply(Character& character) noexcept
 {
     auto ratio = static_cast<double>(character.constitutionCurrent()) / character.constitutionMaximum();
-    auto conCurrent = static_cast<Common::Constitution>(round(ratio * conMax_));
+    auto conCurrent = static_cast<common::Constitution>(round(ratio * conMax_));
     character.constitutionCurrentAdd(conCurrent);
     character.constitutionMaximumAdd(conMax_);
     character.constitutionPerLevelAdd(conPerLvl_);
@@ -220,20 +220,20 @@ EffectAttStr& EffectAttStr::operator-=(const EffectAttStr& other) noexcept
 
 EffectAttStr operator+(const EffectAttStr& left, const EffectAttStr& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttStr operator-(const EffectAttStr& left, const EffectAttStr& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttSpeed::EffectAttSpeed(
-    Common::Multiplier combatSpeed,
-    Common::Evasion evasion,
-    Common::Initiative initiative) noexcept
+    common::Multiplier combatSpeed,
+    common::Evasion evasion,
+    common::Initiative initiative) noexcept
     :
     mulSpeed_   { combatSpeed },
     evasion_    { evasion },
@@ -265,22 +265,22 @@ EffectAttSpeed& EffectAttSpeed::operator-=(const EffectAttSpeed& other) noexcept
 
 EffectAttSpeed operator+(const EffectAttSpeed& left, const EffectAttSpeed& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttSpeed operator-(const EffectAttSpeed& left, const EffectAttSpeed& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttInt::EffectAttInt(
-    Common::Chance critDamageChance,
-    Common::Multiplier critDamageMult,
-    Common::Chance critHealChance,
-    Common::Bonus critHealBonus,
-    Common::PointSkill point) noexcept
+    common::Chance critDamageChance,
+    common::Multiplier critDamageMult,
+    common::Chance critHealChance,
+    common::Bonus critHealBonus,
+    common::PointSkill point) noexcept
     :
     chaCritDmg_     { critDamageChance },
     mulCritDmg_     { critDamageMult },
@@ -320,21 +320,21 @@ EffectAttInt& EffectAttInt::operator-=(const EffectAttInt& other) noexcept
 
 EffectAttInt operator+(const EffectAttInt& left, const EffectAttInt& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttInt operator-(const EffectAttInt& left, const EffectAttInt& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 ///------------------------------------------------------------------------------------------------
 
 EffectAttCha::EffectAttCha(
-    Common::Strike strikeRate,
-    Common::Range leadershipRange,
-    Common::Bonus experience,
-    Common::Bonus missionReward) noexcept
+    common::Strike strikeRate,
+    common::Range leadershipRange,
+    common::Bonus experience,
+    common::Bonus missionReward) noexcept
     :
     strike_         { strikeRate },
     rangeLeader_    { leadershipRange },
@@ -370,13 +370,13 @@ EffectAttCha& EffectAttCha::operator-=(const EffectAttCha& other) noexcept
 
 EffectAttCha operator+(const EffectAttCha& left, const EffectAttCha& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
 EffectAttCha operator-(const EffectAttCha& left, const EffectAttCha& right) noexcept
 {
-    return Common::operatorPlus(left, right);
+    return common::operatorPlus(left, right);
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

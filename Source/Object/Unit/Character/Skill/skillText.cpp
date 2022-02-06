@@ -11,15 +11,15 @@
 #include<memory>
 #include<type_traits>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
-using Common::Text;
-using Global::PlainText;
-using Global::Locator;
+using common::Text;
+using global::PlainText;
+using global::Locator;
 
-Common::ObserverDLL<void, PlainText::Language>
+common::ObserverDLL<void, PlainText::Language>
     SkillText::langObs_;
 
 std::array<
@@ -49,31 +49,31 @@ bool SkillText::initialized_{ false };
 
 void SkillText::setLanguage(PlainText::Language lang)
 {
-    assert(Common::isValidEnum(lang));
-    ptrName_    = { &name_[Common::toUnderlying(lang)] };
-    ptrDescr_   = { &descr_[Common::toUnderlying(lang)] };
-    ptrGroup_   = { &group_[Common::toUnderlying(lang)] };
+    assert(common::isValidEnum(lang));
+    ptrName_    = { &name_[common::toUnderlying(lang)] };
+    ptrDescr_   = { &descr_[common::toUnderlying(lang)] };
+    ptrGroup_   = { &group_[common::toUnderlying(lang)] };
 }
 
 const Text& SkillText::name(Skill__Type id) noexcept
 {
-    assert(Common::isValidEnum(id));
+    assert(common::isValidEnum(id));
     assert(ptrName_ != nullptr);
-    return (*ptrName_)[Common::toUnderlying(id)];
+    return (*ptrName_)[common::toUnderlying(id)];
 }
 
 const Text& SkillText::descr(Skill__Type id) noexcept
 {
-    assert(Common::isValidEnum(id));
+    assert(common::isValidEnum(id));
     assert(ptrDescr_ != nullptr);
-    return (*ptrDescr_)[Common::toUnderlying(id)];
+    return (*ptrDescr_)[common::toUnderlying(id)];
 }
 
 const Text& SkillText::group(Skill__Group id) noexcept
 {
-    assert(Common::isValidEnum(id));
+    assert(common::isValidEnum(id));
     assert(ptrGroup_ != nullptr);
-    return (*ptrGroup_)[Common::toUnderlying(id)];
+    return (*ptrGroup_)[common::toUnderlying(id)];
 }
 
 void SkillText::initialize()
@@ -84,7 +84,7 @@ void SkillText::initialize()
     assert(sizeType_ > 0);
     assert(sizeGroup_ > 0);
     unique_ptr<char[]> buffer{
-        Common::getFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
+        common::getFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
 
     const fbSkill::FB_SkillText* table{
@@ -107,60 +107,60 @@ void SkillText::initLanguage(
     const fbSkill::FB_LanguageBundle* table,
     PlainText::Language lang)
 {
-    assert(Common::isValidEnum(lang));
-    assert(Common::toUnderlying(lang) >= 0 && Common::toUnderlying(lang) < sizeLang_);
-    initByType(table->name(), name_[Common::toUnderlying(lang)]);
-    initByType(table->descr(), descr_[Common::toUnderlying(lang)]);
-    initByGroup(table->group(), group_[Common::toUnderlying(lang)]);
+    assert(common::isValidEnum(lang));
+    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
+    initByType(table->name(), name_[common::toUnderlying(lang)]);
+    initByType(table->descr(), descr_[common::toUnderlying(lang)]);
+    initByGroup(table->group(), group_[common::toUnderlying(lang)]);
 }
 
 void SkillText::initByType(
     const fbSkill::FB_SkillTextType* table,
     std::array<Text, sizeType_>& ar)
 {
-    ar[Common::toUnderlying(Skill__Type::AUTOMATIC_WEAPONS)] =
+    ar[common::toUnderlying(Skill__Type::AUTOMATIC_WEAPONS)] =
         move(Text{ table->automatic_weapons()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::BIG_GUNS)] =
+    ar[common::toUnderlying(Skill__Type::BIG_GUNS)] =
         move(Text{ table->big_guns()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::BRAWLING)] =
+    ar[common::toUnderlying(Skill__Type::BRAWLING)] =
         move(Text{ table->brawling()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::MELEE_COMBAT)] =
+    ar[common::toUnderlying(Skill__Type::MELEE_COMBAT)] =
         move(Text{ table->melee_combat()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::SMALL_ARMS)] =
+    ar[common::toUnderlying(Skill__Type::SMALL_ARMS)] =
         move(Text{ table->small_arms()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::SNIPER_RIFLES)] =
+    ar[common::toUnderlying(Skill__Type::SNIPER_RIFLES)] =
         move(Text{ table->sniper_rifles()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::ANIMAL_WHISPERER)] =
+    ar[common::toUnderlying(Skill__Type::ANIMAL_WHISPERER)] =
         move(Text{ table->animal_whisperer()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::EXPLOSIVES)] =
+    ar[common::toUnderlying(Skill__Type::EXPLOSIVES)] =
         move(Text{ table->explosives()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::FIRST_AID)] =
+    ar[common::toUnderlying(Skill__Type::FIRST_AID)] =
         move(Text{ table->first_aid()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::SNEAKY_SHIT)] =
+    ar[common::toUnderlying(Skill__Type::SNEAKY_SHIT)] =
         move(Text{ table->sneaky_shit()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::WEIRD_SCIENCE)] =
+    ar[common::toUnderlying(Skill__Type::WEIRD_SCIENCE)] =
         move(Text{ table->weird_science()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::ARMOR_MODDING)] =
+    ar[common::toUnderlying(Skill__Type::ARMOR_MODDING)] =
         move(Text{ table->armor_modding()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::LOCKPICKING)] =
+    ar[common::toUnderlying(Skill__Type::LOCKPICKING)] =
         move(Text{ table->lockpicking()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::NERD_STUFF)] =
+    ar[common::toUnderlying(Skill__Type::NERD_STUFF)] =
         move(Text{ table->nerd_stuff()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::MECHANICS)] =
+    ar[common::toUnderlying(Skill__Type::MECHANICS)] =
         move(Text{ table->mechanics()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::SURVIVAL)] =
+    ar[common::toUnderlying(Skill__Type::SURVIVAL)] =
         move(Text{ table->survival()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::TOASTER_REPAIR)] =
+    ar[common::toUnderlying(Skill__Type::TOASTER_REPAIR)] =
         move(Text{ table->toaster_repair()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::WEAPON_MODDING)] =
+    ar[common::toUnderlying(Skill__Type::WEAPON_MODDING)] =
         move(Text{ table->weapon_modding()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::BARTER)] =
+    ar[common::toUnderlying(Skill__Type::BARTER)] =
         move(Text{ table->barter()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::HARD_ASS)] =
+    ar[common::toUnderlying(Skill__Type::HARD_ASS)] =
         move(Text{ table->hard_ass()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::KISS_ASS)] =
+    ar[common::toUnderlying(Skill__Type::KISS_ASS)] =
         move(Text{ table->kiss_ass()->c_str() });
-    ar[Common::toUnderlying(Skill__Type::LEADERSHIP)] =
+    ar[common::toUnderlying(Skill__Type::LEADERSHIP)] =
         move(Text{ table->leadership()->c_str() });
 }
 
@@ -168,15 +168,15 @@ void SkillText::initByGroup(
     const fbSkill::FB_SkillTextGroup* table,
     std::array<Text, sizeGroup_>& ar)
 {
-    ar[Common::toUnderlying(Skill__Group::COMBAT)] =
+    ar[common::toUnderlying(Skill__Group::COMBAT)] =
         move(Text{ table->combat()->c_str() });
-    ar[Common::toUnderlying(Skill__Group::GENERAL)] =
+    ar[common::toUnderlying(Skill__Group::GENERAL)] =
         move(Text{ table->general()->c_str() });
-    ar[Common::toUnderlying(Skill__Group::EXPLORATION)] =
+    ar[common::toUnderlying(Skill__Group::EXPLORATION)] =
         move(Text{ table->exploration()->c_str() });
-    ar[Common::toUnderlying(Skill__Group::SOCIAL)] =
+    ar[common::toUnderlying(Skill__Group::SOCIAL)] =
         move(Text{ table->social()->c_str() });
 }
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game

@@ -10,8 +10,8 @@
 #include<memory>
 #include<vector>
 
-namespace Game {
-namespace Common {
+namespace game {
+namespace common {
 
 // @brief Get std::vector<T> from flatbuffers::Array or flatbuffers::Vector.
 // @param "a" - flatbuffers::Array or flatbuffers::Vector.
@@ -30,7 +30,7 @@ std::vector<T> convertToVector(const U* a)
 
 std::unique_ptr<char[]> getFlatBuffer(const char* fileName);
 
-} // namespace Common
-} // namespace Game
+} // namespace common
+} // namespace game
 
 #endif // !FLATBUFFERS_AUX_HPP

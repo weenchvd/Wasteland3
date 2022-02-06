@@ -10,8 +10,8 @@
 #include<sstream>
 #include<string>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
 using namespace std;
 
@@ -26,22 +26,22 @@ void menuOption(const Indent indent)
         cout << endl << endl;
         cout << ind1 << "Option menu" << endl;
         cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionOption::LANGUAGE << "\' Enter the language menu" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionOption::LANGUAGE << "\' Enter the language menu" << endl;
 
         switch (getAction()) {
-        case ActionOption::LANGUAGE:
+        case actionOption::LANGUAGE:
             menuLanguage(ind1);
             break;
-        case ActionCommon::EXIT:
-            if (Game::Global::Locator::getOption().isModified()) {
+        case actionCommon::EXIT:
+            if (global::Locator::getOption().isModified()) {
                 cout << ind1 << "Options have been changed. Do you want to save the changes?" << endl;
                 switch (getYesNo()) {
                 case YesNo::YES:
-                    Game::Global::Locator::getOption().accept();
+                    global::Locator::getOption().accept();
                     return;
                 case YesNo::NO:
-                    Game::Global::Locator::getOption().reject();
+                    global::Locator::getOption().reject();
                     return;
                 default:
                     cout << "!Invalid input" << endl;
@@ -52,7 +52,7 @@ void menuOption(const Indent indent)
                 return;
             }
             break;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -64,8 +64,8 @@ void menuOption(const Indent indent)
 
 void menuLanguage(const Indent indent)
 {
-    using Game::Global::PlainText;
-    using Game::Global::Locator;
+    using global::PlainText;
+    using global::Locator;
 
     Indent ind1 = indent + Indent{};
     Indent ind2 = ind1 + Indent{};
@@ -76,23 +76,23 @@ void menuLanguage(const Indent indent)
         cout << ind1 << "Language menu" << endl;
         cout << ind1 << "Current language: "
             << Locator::getPlainText().language(Locator::getOption().getLanguage()) << endl;
-        cout << ind2 << '\'' << ActionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << ActionLanguage::CHANGE_LANGUAGE << "\' Change language" << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
+        cout << ind2 << '\'' << actionLanguage::CHANGE_LANGUAGE << "\' Change language" << endl;
 
         switch (getAction()) {
-        case ActionLanguage::CHANGE_LANGUAGE: {
+        case actionLanguage::CHANGE_LANGUAGE: {
             PlainText::Language lang{ pickLanguage(ind1) };
             if (lang != PlainText::Language::INVALID) {
-                Game::Global::Locator::getOption().setLanguage(lang);
+                global::Locator::getOption().setLanguage(lang);
             }
             else {
                 cout << "!Invalid type" << endl;
             }
             break;
         }
-        case ActionCommon::EXIT:
+        case actionCommon::EXIT:
             return;
-        case ActionCommon::INVALID:
+        case actionCommon::INVALID:
             cout << "!Invalid action" << endl;
             break;
         default:
@@ -104,10 +104,10 @@ void menuLanguage(const Indent indent)
 
 ///------------------------------------------------------------------------------------------------
 
-Game::Global::PlainText::Language pickLanguage(const Indent indent)
+global::PlainText::Language pickLanguage(const Indent indent)
 {
-    using Game::Global::PlainText;
-    using Game::Global::Locator;
+    using global::PlainText;
+    using global::Locator;
 
     Indent ind1 = indent + Indent{};
     cout << ind1 << "Languages:" << endl;
@@ -132,5 +132,5 @@ Game::Global::PlainText::Language pickLanguage(const Indent indent)
     return t;
 }
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game

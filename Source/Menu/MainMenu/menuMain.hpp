@@ -14,70 +14,70 @@
 #include"squad.hpp"
 #include<iostream>
 
-namespace Game {
-namespace Menu {
+namespace game {
+namespace menu {
 
-namespace ActionMain {
+namespace actionMain {
 
 enum ActionMain {
-    MENU_OPTION = ActionCommon::NEXT,
+    MENU_OPTION = actionCommon::NEXT,
     MENU_SQUAD,
     MENU_INVENTORY,
     MENU_SHOP,
     MENU_TRADE
 };
 
-} // namespace ActionMain
+} // namespace actionMain
 
-void menuMain(Object::Squad& squad, Object::Inventory& shop);
+void menuMain(object::Squad& squad, object::Inventory& shop);
 
-namespace ActionTrade {
+namespace actionTrade {
 
 enum ActionTrade {
-    BUY_ITEM = ActionCommon::NEXT,
+    BUY_ITEM = actionCommon::NEXT,
     SELL_ITEM
 };
 
-} // namespace ActionTrade
+} // namespace actionTrade
 
-void menuTrade(Object::Squad& squad, Object::Inventory& shop, const Indent indent);
+void menuTrade(object::Squad& squad, object::Inventory& shop, const Indent indent);
 
-namespace ActionShop {
+namespace actionShop {
 
 enum ActionShop {
-    ALL_ITEMS = ActionCommon::NEXT
+    ALL_ITEMS = actionCommon::NEXT
 };
 
-} // namespace ActionShop
+} // namespace actionShop
 
-void menuShop(Object::Inventory& shop, const Indent indent);
+void menuShop(object::Inventory& shop, const Indent indent);
 
-namespace ActionInventory {
+namespace actionInventory {
 
 enum ActionInventory {
-    MONEY = ActionCommon::NEXT,
+    MONEY = actionCommon::NEXT,
     ALL_ITEMS
 };
 
-} // namespace ActionInventory
+} // namespace actionInventory
 
-void menuInventory(Object::Squad& squad, const Indent indent);
+void menuInventory(object::Squad& squad, const Indent indent);
 
-namespace ActionSquad {
+namespace actionSquad {
 
 enum ActionSquad {
-    SHOW_SQUAD = ActionCommon::NEXT,
+    SHOW_SQUAD = actionCommon::NEXT,
     MENU_CHARACTER
 };
 
-} // namespace ActionSquad
+} // namespace actionSquad
 
-void menuSquad(Object::Squad& squad, const Indent indent);
+void menuSquad(object::Squad& squad, const Indent indent);
 
-namespace ActionCharacter {
+namespace actionCharacter {
 
 enum ActionCharacter {
-    SHOW_STATS = ActionCommon::NEXT,
+    SHOW_STATS = actionCommon::NEXT,
     SHOW_GEAR,
     SHOW_ATTRIBUTES,
     MENU_ATTRIBUTE,
@@ -85,25 +85,25 @@ enum ActionCharacter {
     MENU_SKILL
 };
 
-} // namespace ActionCharacter
+} // namespace actionCharacter
 
-void menuCharacter(Object::Character& character, const Indent indent);
+void menuCharacter(object::Character& character, const Indent indent);
 
 ///------------------------------------------------------------------------------------------------
 
-Common::Text itemName(const std::unique_ptr<Object::Item>& item);
+common::Text itemName(const std::unique_ptr<object::Item>& item);
 
-void showAll(Object::Inventory& inventory, const Indent indent, bool squad = true);
+void showAll(object::Inventory& inventory, const Indent indent, bool squad = true);
 
-Object::Character* pickCharacter(Object::Squad& squad, const Indent indent);
+object::Character* pickCharacter(object::Squad& squad, const Indent indent);
 
-void showSquad(const Object::Squad& squad, const Indent indent);
+void showSquad(const object::Squad& squad, const Indent indent);
 
-void showStats(const Object::Character& character, const Indent indent);
+void showStats(const object::Character& character, const Indent indent);
 
-void showGear(const Object::Character& character, const Indent indent);
+void showGear(const object::Character& character, const Indent indent);
 
-} // namespace Menu
-} // namespace Game
+} // namespace menu
+} // namespace game
 
 #endif // !MENU_MAIN_HPP

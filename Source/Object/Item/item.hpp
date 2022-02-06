@@ -11,8 +11,8 @@
 #include"itemVisitor.hpp"
 #include<memory>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Item {
 public:
@@ -38,7 +38,7 @@ public:
 
 bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !ITEM_HPP

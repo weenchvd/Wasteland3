@@ -13,16 +13,16 @@
 #include<array>
 #include<memory>
 
-namespace Init {
+namespace init {
 
-void initializeSquad(Game::Object::Squad& squad);
+void initializeSquad(game::object::Squad& squad);
 
-void initializeInventory(Game::Object::Inventory& inventory);
+void initializeInventory(game::object::Inventory& inventory);
 
-void initializeShop(Game::Object::Inventory& inventory);
+void initializeShop(game::object::Inventory& inventory);
 
-void initializeMembers(std::array<std::unique_ptr<Game::Object::Unit>, Game::Object::nMembers>& members);
+void initializeMembers(std::array<std::unique_ptr<game::object::Unit>, game::object::nMembers>& members);
 
-} // namespace Init
+} // namespace init
 
 #endif // !INITIALIZATION_AUX_HPP

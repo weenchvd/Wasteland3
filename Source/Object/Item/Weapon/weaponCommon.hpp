@@ -9,8 +9,8 @@
 
 #include"itemCommon.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 enum class Weapon__Model : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
@@ -46,7 +46,7 @@ enum class Weapon__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !WEAPON_COMMON_HPP

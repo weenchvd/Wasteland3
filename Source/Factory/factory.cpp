@@ -6,10 +6,10 @@
 
 #include"factory.hpp"
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 
 
-} // namespace Global
-} // namespace Game
+} // namespace global
+} // namespace game

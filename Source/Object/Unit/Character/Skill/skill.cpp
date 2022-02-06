@@ -9,8 +9,8 @@
 #include"skill.hpp"
 #include<assert.h>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 using namespace std;
 
@@ -44,10 +44,10 @@ Skill::Skill(Character& character)
     assert(text_.isInitialized());
 }
 
-void Skill::addLevel(Skill::Type type, Common::LevelStat shift) noexcept
+void Skill::addLevel(Skill::Type type, common::LevelStat shift) noexcept
 {
-    auto index = Common::toUnderlying(type);
-    Common::changeLevel(levels_[index], pStor_, pDist_, shift);
+    auto index = common::toUnderlying(type);
+    common::changeLevel(levels_[index], pStor_, pDist_, shift);
 }
 
 bool Skill::isModified() const noexcept
@@ -55,7 +55,7 @@ bool Skill::isModified() const noexcept
     if (pStor_.get() != pStor_.getAccepted()) {
         return true;
     }
-    for (const Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (const common::SpecStorage<common::LevelStat>& level : levels_) {
         if (level.get() != level.getAccepted()) {
             return true;
         }
@@ -66,7 +66,7 @@ bool Skill::isModified() const noexcept
 void Skill::accept() noexcept
 {
     apply();
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.accept();
     }
     pStor_.accept();
@@ -74,7 +74,7 @@ void Skill::accept() noexcept
 
 void Skill::reject() noexcept
 {
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.reject();
     }
     pStor_.reject();
@@ -82,7 +82,7 @@ void Skill::reject() noexcept
 
 void Skill::reset() noexcept
 {
-    for (Common::SpecStorage<Common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<common::LevelStat>& level : levels_) {
         level.reset();
     }
     pStor_.reset();
@@ -116,7 +116,7 @@ void Skill::apply() noexcept
 
 void Skill::apply(Skill::Type type) noexcept
 {
-    auto index = Common::toUnderlying(type);
+    auto index = common::toUnderlying(type);
     auto accLevel = levels_[index].getAccepted();
     auto curLevel = levels_[index].get();
     if (accLevel != curLevel) {
@@ -219,15 +219,15 @@ bool Skill::isInitialized()
         && text_.isInitialized();
 }
 
-vector<Common::SpecStorage<Common::LevelStat>> Skill::initLevels()
+vector<common::SpecStorage<common::LevelStat>> Skill::initLevels()
 {
-    constexpr auto nSkills = Common::toUnderlying(Skill::Type::NUMBER_OF);
-    const Common::SpecStorage<Common::LevelStat> tempLevel{
+    constexpr auto nSkills = common::toUnderlying(Skill::Type::NUMBER_OF);
+    const common::SpecStorage<common::LevelStat> tempLevel{
         ref_.minSkillLevel_,
         ref_.maxSkillLevel_
     };
-    return vector<Common::SpecStorage<Common::LevelStat>>(nSkills, tempLevel);
+    return vector<common::SpecStorage<common::LevelStat>>(nSkills, tempLevel);
 }
 
-} //namespace Object
-} // namespace Game
+} //namespace object
+} // namespace game

@@ -14,14 +14,14 @@
 #include<type_traits>
 #include<vector>
 
-namespace Game {
-namespace Global {
+namespace game {
+namespace global {
 
 class Factory; // TODO delete?
 
-} // namespace Global
+} // namespace global
 
-namespace Object {
+namespace object {
 
 class Weapon;
 
@@ -30,7 +30,7 @@ public:
     using Model         = WeaponMod__Model;
     using Type          = WeaponMod__Type;
 
-    friend Game::Global::Factory;
+    friend global::Factory;
 
 protected:
     explicit WeaponMod(WeaponMod::Model model) noexcept;
@@ -69,7 +69,7 @@ public:
         return base_.type_;
     }
 
-    Common::Text name() const noexcept {
+    common::Text name() const noexcept {
         return base_.name_;
     }
 
@@ -86,7 +86,7 @@ private:
     static std::vector<WeaponModReference>  ref_;           // references
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !WEAPON_MOD_HPP

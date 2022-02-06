@@ -10,8 +10,8 @@
 #include"unitCommon.hpp"
 #include"unitVisitor.hpp"
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Unit {
 public:
@@ -33,7 +33,7 @@ public:
     virtual void accept(UnitVisitor& visitor) noexcept {};
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !UNIT_HPP

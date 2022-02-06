@@ -15,8 +15,8 @@
 #include"skillText.hpp"
 #include<vector>
 
-namespace Game {
-namespace Object {
+namespace game {
+namespace object {
 
 class Character;
 
@@ -36,9 +36,9 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Skill::Type type, Common::LevelStat shift) noexcept;
+    void addLevel(Skill::Type type, common::LevelStat shift) noexcept;
 
-    void addPoint(Common::PointSkill shift) noexcept {
+    void addPoint(common::PointSkill shift) noexcept {
         pStor_.add(shift);
     }
 
@@ -51,12 +51,12 @@ public:
     void reset() noexcept;
 
 public:
-    const Common::SpecStorage<Common::LevelStat>& level(Skill::Type type) const noexcept {
-        assert(Common::isValidEnum(type));
-        return levels_[Common::toUnderlying(type)];
+    const common::SpecStorage<common::LevelStat>& level(Skill::Type type) const noexcept {
+        assert(common::isValidEnum(type));
+        return levels_[common::toUnderlying(type)];
     }
 
-    const Common::SpecStorage<Common::PointSkill>& storage() const noexcept {
+    const common::SpecStorage<common::PointSkill>& storage() const noexcept {
         return pStor_;
     }
 
@@ -73,35 +73,35 @@ private:
 
     void apply(Skill::Type type) noexcept;
 
-    static std::vector<Common::SpecStorage<Common::LevelStat>>  initLevels();
+    static std::vector<common::SpecStorage<common::LevelStat>>  initLevels();
 
 private:
     Character&                                              char_;
-    std::vector<Common::SpecStorage<Common::LevelStat>>     levels_;
-    Common::SpecStorage<Common::PointSkill>                 pStor_;
-    Common::Distribution<Common::PointSkill>                pDist_;
-    Common::Distribution<EffectSkillAutomatic>              automDist_;
-    Common::Distribution<EffectSkillBigGuns>                bigGunsDist_;
-    Common::Distribution<EffectSkillBrawling>               brawlDist_;
-    Common::Distribution<EffectSkillMelee>                  meleeDist_;
-    Common::Distribution<EffectSkillSmallArms>              smallDist_;
-    Common::Distribution<EffectSkillSniper>                 sniperDist_;
-    Common::Distribution<EffectSkillAnimal>                 animalDist_;
-    Common::Distribution<EffectSkillExplosive>              explosDist_;
-    Common::Distribution<EffectSkillFirstAid>               aidDist_;
-    Common::Distribution<EffectSkillSneakyShit>             sneakyDist_;
-    Common::Distribution<EffectSkillWeirdScience>           weirdDist_;
-    Common::Distribution<EffectSkillMechanics>              mechDist_;
-    Common::Distribution<EffectSkillSurvival>               survDist_;
-    Common::Distribution<EffectSkillWeaponMod>              weaponModDist_;
-    Common::Distribution<EffectSkillBarter>                 barterDist_;
-    Common::Distribution<EffectSkillLeadership>             leaderDist_;
+    std::vector<common::SpecStorage<common::LevelStat>>     levels_;
+    common::SpecStorage<common::PointSkill>                 pStor_;
+    common::Distribution<common::PointSkill>                pDist_;
+    common::Distribution<EffectSkillAutomatic>              automDist_;
+    common::Distribution<EffectSkillBigGuns>                bigGunsDist_;
+    common::Distribution<EffectSkillBrawling>               brawlDist_;
+    common::Distribution<EffectSkillMelee>                  meleeDist_;
+    common::Distribution<EffectSkillSmallArms>              smallDist_;
+    common::Distribution<EffectSkillSniper>                 sniperDist_;
+    common::Distribution<EffectSkillAnimal>                 animalDist_;
+    common::Distribution<EffectSkillExplosive>              explosDist_;
+    common::Distribution<EffectSkillFirstAid>               aidDist_;
+    common::Distribution<EffectSkillSneakyShit>             sneakyDist_;
+    common::Distribution<EffectSkillWeirdScience>           weirdDist_;
+    common::Distribution<EffectSkillMechanics>              mechDist_;
+    common::Distribution<EffectSkillSurvival>               survDist_;
+    common::Distribution<EffectSkillWeaponMod>              weaponModDist_;
+    common::Distribution<EffectSkillBarter>                 barterDist_;
+    common::Distribution<EffectSkillLeadership>             leaderDist_;
 
     static const SkillReference                             ref_;
     static const SkillText                                  text_;
 };
 
-} // namespace Object
-} // namespace Game
+} // namespace object
+} // namespace game
 
 #endif // !SKILL_HPP
