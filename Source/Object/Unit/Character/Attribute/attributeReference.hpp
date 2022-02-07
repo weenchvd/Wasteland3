@@ -9,8 +9,8 @@
 
 #include"attributeReferenceFB_generated.h"
 #include"common.hpp"
+#include"distribution.hpp"
 #include"effectAttribute.hpp"
-#include<vector>
 
 namespace game {
 namespace object {
@@ -39,14 +39,14 @@ private:
     static void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
 
 public:
-    static std::vector<PointAttribute>      pDist_;             // distribution of attribute points
-    static std::vector<EffectAttCoord>      cooDist_;
-    static std::vector<EffectAttLuck>       lucDist_;
-    static std::vector<EffectAttAware>      awaDist_;
-    static std::vector<EffectAttStr>        strDist_;
-    static std::vector<EffectAttSpeed>      spdDist_;
-    static std::vector<EffectAttInt>        intDist_;
-    static std::vector<EffectAttCha>        chaDist_;
+    static common::Distribution<PointAttribute>     pDist_;             // distribution of attribute points
+    static common::Distribution<EffectAttCoord>     cooDist_;
+    static common::Distribution<EffectAttLuck>      lucDist_;
+    static common::Distribution<EffectAttAware>     awaDist_;
+    static common::Distribution<EffectAttStr>       strDist_;
+    static common::Distribution<EffectAttSpeed>     spdDist_;
+    static common::Distribution<EffectAttInt>       intDist_;
+    static common::Distribution<EffectAttCha>       chaDist_;
 
 
     static PointAttribute                   minAttrPoints_;     // min attribute points
