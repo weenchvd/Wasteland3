@@ -20,13 +20,13 @@ class Factory {
 public:
     template<class T>
     std::unique_ptr<object::Item> createItem(typename T::Model model) const {
-        T::initializeReference();
+        //T::initialize();
         return std::unique_ptr<object::Item>(new T(std::move(model)));
     }
 
     template<class T>
     std::unique_ptr<object::Unit> createUnit(typename T::Model model) const {
-        T::initialize();
+        //T::initialize();
         return std::unique_ptr<object::Unit>(new T(std::move(model)));
     }
 

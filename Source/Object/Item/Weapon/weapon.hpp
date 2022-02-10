@@ -43,9 +43,13 @@ public:
 
     virtual ~Weapon() noexcept {}
 
-    static void initializeReference() {
-        if (ref_.size() == 0) initRef();
-    }
+    static void initialize();
+
+    static bool isInitialized();
+
+    //static void initializeReference() {
+    //    if (ref_.size() == 0) initRef();
+    //}
 
     virtual void accept(ItemVisitor& visitor) noexcept override {
         visitor.visitWeapon(*this);
@@ -74,12 +78,12 @@ public:
         return base_.type_;
     }
 
-    common::Text name() const noexcept {
-        return base_.name_;
+    const common::Text& name() const noexcept {
+        return base_.name();
     }
 
-    common::Text description() const noexcept {
-        return base_.descrip_;
+    const common::Text& description() const noexcept {
+        return base_.descr();
     }
 
     common::Price price() const noexcept {
@@ -200,20 +204,20 @@ public:
 
 /// slots
 public:
-    const common::Slot<WeaponMod, nWMSlots>& slotMod() const noexcept {
+    const common::Slot<WeaponMod, WeaponReference::nWMSlots_>& slotMod() const noexcept {
         return slotWeaponMod_;
     }
 
-    common::Slot<WeaponMod, nWMSlots>& slotMod() noexcept {
+    common::Slot<WeaponMod, WeaponReference::nWMSlots_>& slotMod() noexcept {
         return slotWeaponMod_;
     }
 
 private:
-    static void initRef();
+    //static void initRef();
 
-    static void add(WeaponReference common) {
-        ref_[static_cast<std::underlying_type_t<Weapon::Model>>(common.model_)] = std::move(common);
-    }
+    //static void add(WeaponReference common) {
+    //    ref_[static_cast<std::underlying_type_t<Weapon::Model>>(common.model_)] = std::move(common);
+    //}
 
 private:
     const WeaponReference&      base_;          // reference, sample, template
@@ -232,9 +236,9 @@ private:
     Ammo::Type                  tyAmmo_;        // ammo type
     Damage::Type                tyDmg_;         // damage type
 
-    common::Slot<WeaponMod, nWMSlots>   slotWeaponMod_; // weapon mod slots
+    common::Slot<WeaponMod, WeaponReference::nWMSlots_> slotWeaponMod_; // weapon mod slots
 
-    static std::vector<WeaponReference> ref_;           // references
+    static const WeaponReferenceContainer               ref_;           // references
 };
 
 } // namespace object

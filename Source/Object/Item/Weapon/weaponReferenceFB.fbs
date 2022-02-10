@@ -1,0 +1,46 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbWeapon;
+
+file_identifier "WPNR";
+file_extension "bundle";
+
+table FB_LanguageBundle {
+  en:string;
+  ru:string;
+}
+
+table FB_WeaponReference {
+  weapon_model:string;
+  weapon_type:string;
+  weapon_mod_types:[string];
+  name:FB_LanguageBundle;
+  descrip:FB_LanguageBundle;
+  dmg_min:int16;
+  dmg_max:int16;
+  price:int16;
+  range_attack:int16;
+  capacity_ammo:int16;
+  multiplier_crit_dmg:int16;
+  chance_hit:int16;
+  chance_crit_dmg:int16;
+  weapon_level:int8;
+  level_of_skill:int8;
+  armor_penetration:int8;
+  ap_per_attack:int8;
+  ap_per_reload:int8;
+  shots_per_attack:int8;
+  ammo_type:string;
+  dmg_type:string;
+}
+
+table FB_WeaponReferenceContainer {
+  refs:[FB_WeaponReference];
+  ref_minimal:FB_WeaponReference;
+}
+
+root_type FB_WeaponReferenceContainer;

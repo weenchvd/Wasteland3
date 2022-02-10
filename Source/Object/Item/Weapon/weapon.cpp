@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"weapon.hpp"
+#include<assert.h>
 #include<string>
 
 namespace game {
@@ -12,9 +13,12 @@ namespace object {
 
 using namespace std;
 
+const WeaponReferenceContainer Weapon::ref_;
+
+
 Weapon::Weapon(Weapon::Model model) noexcept
     :
-    base_           { ref_[static_cast<underlying_type_t<Weapon::Model>>(model)] },
+    base_           { ref_.weaponReference(model) },
     dmgMin_         { base_.dmgMin_ },
     dmgMax_         { base_.dmgMax_ },
     rangeAttack_    { base_.rangeAttack_ },
@@ -29,7 +33,9 @@ Weapon::Weapon(Weapon::Model model) noexcept
     tyAmmo_         { base_.tyAmmo_ },
     tyDmg_          { base_.tyDmg_ },
     slotWeaponMod_  { base_.weaponModTypes_ }
-{}
+{
+    assert(base_.isInitialized() == true);
+}
 
 void Weapon::apply() noexcept
 {
@@ -56,8 +62,7 @@ void Weapon::apply() noexcept
 
 void Weapon::check() noexcept
 {
-    WeaponReference& refMin
-        = ref_[static_cast<underlying_type_t<Weapon::Model>>(Weapon::Model::MINIMUM)];
+    const WeaponReference& refMin = ref_.weaponReferenceMinimal();
     if (dmgMin_         < refMin.dmgMin_)           dmgMin_         = refMin.dmgMin_;
     if (dmgMax_         < refMin.dmgMax_)           dmgMax_         = refMin.dmgMax_;
     if (rangeAttack_    < refMin.rangeAttack_)      rangeAttack_    = refMin.rangeAttack_;
@@ -71,8 +76,17 @@ void Weapon::check() noexcept
     if (shoPerAttack_   < refMin.shoPerAttack_)     shoPerAttack_   = refMin.shoPerAttack_;
 }
 
-vector<WeaponReference> Weapon::ref_ = vector<WeaponReference>();
+void Weapon::initialize()
+{
+    ref_.initialize();
+}
 
+bool Weapon::isInitialized()
+{
+    return ref_.isInitialized();
+}
+
+/*
 void Weapon::initRef()
 {
     ref_.resize(static_cast<underlying_type_t<Weapon::Model>>(Weapon::Model::NUMBER_OF));
@@ -230,6 +244,7 @@ void Weapon::initRef()
     }
 
 }
+*/
 
 } // namespace object
 } // namespace game

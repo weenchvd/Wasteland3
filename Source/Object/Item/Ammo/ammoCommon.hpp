@@ -7,18 +7,22 @@
 #ifndef AMMO_COMMON_HPP
 #define AMMO_COMMON_HPP
 
+#include<string>
+
 namespace game {
 namespace object {
 
 enum class Ammo__Type : char {
     INVALID = -1,                   /// invalid, must be the first
-
+    // vvv TYPES vvv
     NONE,                           // without ammo
     A_5_56,                         // 5.56
     A_7_62,                         // 7.62
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
+
+Ammo__Type toAmmoType(std::string& key);
 
 } // namespace object
 } // namespace game

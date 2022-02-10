@@ -1,0 +1,140 @@
+{
+  "refs": [
+    {
+      "weapon_model": "Kalash97",
+      "weapon_type": "AR",
+      "weapon_mod_types": [
+        "Bar",
+        "UndBar",
+        "Scope",
+        "Mag"
+      ],
+      "name": {
+        "en": "KALASH 97",
+        "ru": "КАЛАШ 97"
+      },
+      "descrip": {
+        "en": "~~ Description ~~",
+        "ru": "~~ Описание ~~"
+      },
+      "dmg_min": 26,
+      "dmg_max": 32,
+      "price": 1175,
+      "range_attack": 18,
+      "capacity_ammo": 25,
+      "multiplier_crit_dmg": 150,
+      "chance_hit": 750,
+      "chance_crit_dmg": 0,
+      "weapon_level": 17,
+      "level_of_skill": 6,
+      "armor_penetration": 18,
+      "ap_per_attack": 4,
+      "ap_per_reload": 2,
+      "shots_per_attack": 3,
+      "ammo_type": "7.62",
+      "dmg_type": "Norm"
+    },
+    {
+      "weapon_model": "Socom",
+      "weapon_type": "AR",
+      "weapon_mod_types": [
+        "Bar",
+        "UndBar",
+        "Scope",
+        "Mag"
+      ],
+      "name": {
+        "en": "SOCOM ASSAULT RIFLE",
+        "ru": "ШТУРМОВАЯ ВИНТОВКА SOCOM"
+      },
+      "descrip": {
+        "en": "The only flaw in this sophisticated weapon is its tendency to overheat. Shouldn't be a problem in Colorado.",
+        "ru": "Единственный недостаток этого сложного оружия - склонность к перегреву. В Колорадо такой проблемы быть не должно."
+      },
+      "dmg_min": 40,
+      "dmg_max": 48,
+      "price": 1800,
+      "range_attack": 18,
+      "capacity_ammo": 30,
+      "multiplier_crit_dmg": 150,
+      "chance_hit": 750,
+      "chance_crit_dmg": 0,
+      "weapon_level": 21,
+      "level_of_skill": 7,
+      "armor_penetration": 22,
+      "ap_per_attack": 4,
+      "ap_per_reload": 2,
+      "shots_per_attack": 3,
+      "ammo_type": "5.56",
+      "dmg_type": "Norm"
+    },
+    {
+      "weapon_model": "Ripper",
+      "weapon_type": "SMG",
+      "weapon_mod_types": [
+        "Bar",
+        "UndBar",
+        "Scope",
+        "Mag"
+      ],
+      "name": {
+        "en": "RIPPER",
+        "ru": "Потрошитель"
+      },
+      "descrip": {
+        "en": "~~ Description ~~",
+        "ru": "~~ Описание ~~"
+      },
+      "dmg_min": 2,
+      "dmg_max": 2,
+      "price": 10,
+      "range_attack": 2,
+      "capacity_ammo": 2,
+      "multiplier_crit_dmg": 150,
+      "chance_hit": 750,
+      "chance_crit_dmg": 0,
+      "weapon_level": 21,
+      "level_of_skill": 7,
+      "armor_penetration": 2,
+      "ap_per_attack": 4,
+      "ap_per_reload": 2,
+      "shots_per_attack": 10,
+      "ammo_type": "5.56",
+      "dmg_type": "Norm"
+    }
+  ],
+  "ref_minimal": {
+    "weapon_model": "INVALID",
+    "weapon_type": "INVALID",
+    "weapon_mod_types": [
+      "INVALID",
+      "INVALID",
+      "INVALID",
+      "INVALID"
+    ],
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    },
+    "dmg_min": 1,
+    "dmg_max": 1,
+    "price": 0,
+    "range_attack": 1,
+    "capacity_ammo": 1,
+    "multiplier_crit_dmg": 0,
+    "chance_hit": 0,
+    "chance_crit_dmg": 0,
+    "weapon_level": 1,
+    "level_of_skill": 0,
+    "armor_penetration": 0,
+    "ap_per_attack": 1,
+    "ap_per_reload": 1,
+    "shots_per_attack": 1,
+    "ammo_type": "INVALID",
+    "dmg_type": "INVALID"
+  }
+}

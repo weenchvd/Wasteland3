@@ -8,13 +8,14 @@
 #define WEAPON_MOD_COMMON_HPP
 
 #include"itemCommon.hpp"
+#include<string>
 
 namespace game {
 namespace object {
 
 enum class WeaponMod__Model : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
-
+    // vvv TYPES vvv
     BARREL_SHORTENED,
     BARREL_LIGHTWEIGHT,
     BARREL_HAMMERFORGE_RIFLED,
@@ -30,14 +31,13 @@ enum class WeaponMod__Model : ItemBaseType {
     MAG_MAX_CAPACITY,
     MAG_EXTENDED,
     MAG_LONG,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
-        
+
 enum class WeaponMod__Type : char {
     INVALID = -1,                   /// invalid, must be the first
-    ANY,                            // any type
-
+    // vvv TYPES vvv
     CHOKE,
     BARREL,
     UNDERBARREL,
@@ -45,9 +45,13 @@ enum class WeaponMod__Type : char {
     MAGAZINE,
     WEIGHT,
     HANDLE,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
+
+WeaponMod__Model toWeaponModModel(std::string& key);
+
+WeaponMod__Type toWeaponModType(std::string& key);
 
 } // namespace object
 } // namespace game

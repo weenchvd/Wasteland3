@@ -8,26 +8,26 @@
 #define WEAPON_COMMON_HPP
 
 #include"itemCommon.hpp"
+#include<string>
 
 namespace game {
 namespace object {
 
 enum class Weapon__Model : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
-    MINIMUM,                        // minimum valid stats
-
+    //MINIMUM,                        // minimum valid stats
+    // vvv TYPES vvv
     AR_KALASH97,
     AR_SOCOM,
 
     SMG_RIPPER,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
 
 enum class Weapon__Type : char {
     INVALID = -1,                   /// invalid, must be the first
-    ANY,                            // any type
-
+    // vvv TYPES vvv
     AR,
     SMG,
     SEMI_AUTO_PISTOL,
@@ -42,9 +42,24 @@ enum class Weapon__Type : char {
     BLADED,
     BLUNT,
     BRAWLING,
+    // ^^^ TYPES ^^^
+    NUMBER_OF,                      /// must be the last
+    // vvv GROUPS vvv
+    GROUP_ANY                       // any type
 
-    NUMBER_OF                       /// must be the last
 };
+
+// @brief Check if the type are valid.
+inline bool isAny(Weapon__Type id);
+
+// @brief Check if the types are compatible.
+// @param "id1" - must be a type or a group;
+// @param "id2" - must be a type;
+bool isCompatible(Weapon__Type id1, Weapon__Type id2);
+
+Weapon__Model toWeaponModel(std::string& key);
+
+Weapon__Type toWeaponType(std::string& key);
 
 } // namespace object
 } // namespace game

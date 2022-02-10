@@ -7,20 +7,24 @@
 #ifndef DAMAGE_COMMON_HPP
 #define DAMAGE_COMMON_HPP
 
+#include<string>
+
 namespace game {
 namespace object {
 
 enum class Damage__Type : char {
     INVALID = -1,                   /// invalid, must be the first
-
+    // vvv TYPES vvv
     NORMAL,
     FIRE,
     COLD,
     ENERGY,
     EXPLOSIVE,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
+
+Damage__Type toDamageType(std::string& key);
 
 } // namespace object
 } // namespace game
