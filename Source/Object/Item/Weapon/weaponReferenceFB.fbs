@@ -4,22 +4,19 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+include "languageBundleFB.fbs";
+
 namespace fbWeapon;
 
 file_identifier "WPNR";
 file_extension "bundle";
 
-table FB_LanguageBundle {
-  en:string;
-  ru:string;
-}
-
 table FB_WeaponReference {
   weapon_model:string;
   weapon_type:string;
   weapon_mod_types:[string];
-  name:FB_LanguageBundle;
-  descrip:FB_LanguageBundle;
+  name:fbCommon.FB_LanguageBundle;
+  descrip:fbCommon.FB_LanguageBundle;
   dmg_min:int16;
   dmg_max:int16;
   price:int16;

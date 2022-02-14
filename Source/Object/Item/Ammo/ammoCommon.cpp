@@ -14,11 +14,12 @@ using namespace std;
 
 Ammo__Type toAmmoType(std::string& key)
 {
-    static unordered_map<string, Ammo__Type> map;
-    map.emplace("INVALID", Ammo__Type::INVALID);
-    map.emplace("None", Ammo__Type::NONE);
-    map.emplace("5.56", Ammo__Type::A_5_56);
-    map.emplace("7.62", Ammo__Type::A_7_62);
+    static unordered_map<string, Ammo__Type> map{
+        { "INVALID", Ammo__Type::INVALID },
+        { "None", Ammo__Type::NONE },
+        { "5.56", Ammo__Type::A_5_56 },
+        { "7.62", Ammo__Type::A_7_62 },
+    };
     return map.at(key);
 }
 

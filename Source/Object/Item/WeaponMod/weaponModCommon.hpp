@@ -49,6 +49,8 @@ enum class WeaponMod__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
+///************************************************************************************************
+
 WeaponMod__Model toWeaponModModel(std::string& key);
 
 WeaponMod__Type toWeaponModType(std::string& key);

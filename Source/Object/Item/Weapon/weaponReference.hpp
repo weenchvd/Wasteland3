@@ -10,61 +10,31 @@
 #include"ammo.hpp"
 #include"common.hpp"
 #include"damage.hpp"
-//#include"item.hpp"
-#include"locator.hpp"
 #include"observerDLL.hpp"
+#include"plainText.hpp"
 #include"weaponCommon.hpp"
 #include"weaponMod.hpp"
 #include"weaponReferenceFB_generated.h"
 #include<array>
+#include<assert.h>
 #include<vector>
 
 namespace game {
 namespace object {
 
-class WeaponReferenceContainer;
-
 struct WeaponReference {
 public:
-    using text = common::Text;
+    static constexpr unsigned char nWMSlots_{ 4 }; // number of weapon mod slots
 
-    static constexpr unsigned int nWMSlots_{ 4 }; // number of weapon mod slots
-    using Slot_WeaponModTypes = std::array<WeaponMod::Type, nWMSlots_>;
-
-    static constexpr unsigned char sizeLang_{
-        common::toUnderlying(global::PlainText::Language::NUMBER_OF)
-    };
+private:
+    using text                  = common::Text;
+    using weapon_mod_types      = std::array<WeaponMod::Type, nWMSlots_>;
+    using language_bundle       = std::array<text, global::PlainText::sizeLang_>;
 
     friend class WeaponReferenceContainer;
 
-    WeaponReference() noexcept
-        :
-        model_          { Weapon__Model::INVALID },
-        type_           { Weapon__Type::INVALID },
-        weaponModTypes_ { WeaponMod::Type::INVALID,
-                          WeaponMod::Type::INVALID,
-                          WeaponMod::Type::INVALID,
-                          WeaponMod::Type::INVALID },
-        name_           {},
-        descrip_        {},
-        dmgMin_         { 0 },
-        dmgMax_         { 0 },
-        price_          { 0 },
-        rangeAttack_    { 0 },
-        capAmmo_        { 0 },
-        mulCritDmg_     { 0 },
-        chaHit_         { 0 },
-        chaCritDmg_     { 0 },
-        level_          { 0 },
-        levSkill_       { 0 },
-        armorPen_       { 0 },
-        apAttack_       { 0 },
-        apReload_       { 0 },
-        shoPerAttack_   { 0 },
-        tyAmmo_         { Ammo::Type::INVALID },
-        tyDmg_          { Damage::Type::INVALID },
-        initialized_    { false }
-    {}
+public:
+    WeaponReference() noexcept;
 
     WeaponReference(const WeaponReference&) = delete;
     WeaponReference& operator=(const WeaponReference&) = delete;
@@ -80,7 +50,7 @@ public:
 public:
     Weapon__Model           model_;         // weapon model
     Weapon__Type            type_;          // weapon type (kind)
-    Slot_WeaponModTypes     weaponModTypes_;// list of slot types
+    weapon_mod_types        weaponModTypes_;// list of slot types
 
     common::Damage          dmgMin_;        // min damage per hit
     common::Damage          dmgMax_;        // max damage per hit
@@ -100,20 +70,21 @@ public:
     Damage::Type            tyDmg_;         // damage type
 
 private:
-    std::array<text, sizeLang_>     name_;      // weapon name
-    std::array<text, sizeLang_>     descrip_;   // description
+    language_bundle         name_;          // weapon name
+    language_bundle         descrip_;       // description
 
     bool                    initialized_;
 };
 
+///************************************************************************************************
 
 class WeaponReferenceContainer {
-public:
-    using text          = common::Text;
+private:
     using language      = global::PlainText::Language;
 
-    static constexpr unsigned char sizeLang_{ common::toUnderlying(language::NUMBER_OF) };
+    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
 
+public:
     WeaponReferenceContainer() noexcept {}
 
     WeaponReferenceContainer(const WeaponReferenceContainer&) = delete;
@@ -125,24 +96,17 @@ public:
 
     static bool languageIndex() noexcept { return langIndex_; }
 
-    static const WeaponReference& weaponReference(Weapon__Model id) noexcept {
-        return refs_[common::toUnderlying(id)];
-    }
+    static const WeaponReference& weaponReference(Weapon__Model id) noexcept;
 
-    static const WeaponReference& weaponReferenceMinimal() noexcept {
-        return refMinimal_;
-    }
+    static const WeaponReference& weaponReferenceMinimal() noexcept;
 
 private:
     static void setLanguage(language lang);
 
     static void initContainer(const fbWeapon::FB_WeaponReferenceContainer* container);
+
     static WeaponReference initWeaponReference(
         const fbWeapon::FB_WeaponReference* reference
-    );
-    static void initLanguageBundle(
-        const fbWeapon::FB_LanguageBundle* bundle,
-        std::array<text, sizeLang_>& target
     );
 
 private:
@@ -153,6 +117,36 @@ private:
     static unsigned char                            langIndex_;
     static bool                                     initialized_;
 };
+
+///************************************************************************************************
+
+inline const WeaponReference::text& WeaponReference::name() const noexcept
+{
+    return name_[WeaponReferenceContainer::languageIndex()];
+}
+
+inline const WeaponReference::text& WeaponReference::descr() const noexcept
+{
+    return descrip_[WeaponReferenceContainer::languageIndex()];
+}
+
+///************************************************************************************************
+
+inline const WeaponReference& WeaponReferenceContainer::weaponReference(Weapon__Model id) noexcept {
+    assert(common::isValidEnum(id));
+    return refs_[common::toUnderlying(id)];
+}
+
+inline const WeaponReference& WeaponReferenceContainer::weaponReferenceMinimal() noexcept {
+    return refMinimal_;
+}
+
+inline void WeaponReferenceContainer::setLanguage(WeaponReferenceContainer::language lang)
+{
+    assert(common::isValidEnum(lang));
+    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
+    langIndex_ = common::toUnderlying(lang);
+}
 
 } // namespace object
 } // namespace game

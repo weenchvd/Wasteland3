@@ -15,7 +15,6 @@ namespace object {
 
 enum class Weapon__Model : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
-    //MINIMUM,                        // minimum valid stats
     // vvv TYPES vvv
     AR_KALASH97,
     AR_SOCOM,
@@ -49,8 +48,13 @@ enum class Weapon__Type : char {
 
 };
 
+///************************************************************************************************
+
 // @brief Check if the type are valid.
-inline bool isAny(Weapon__Type id);
+inline bool isAny(Weapon__Type id)
+{
+    return common::isValidEnum(id);
+}
 
 // @brief Check if the types are compatible.
 // @param "id1" - must be a type or a group;

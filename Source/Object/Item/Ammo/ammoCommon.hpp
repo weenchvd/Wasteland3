@@ -22,6 +22,8 @@ enum class Ammo__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
+///************************************************************************************************
+
 Ammo__Type toAmmoType(std::string& key);
 
 } // namespace object

@@ -20,6 +20,7 @@ set(W3EXEC__BIN_DIR "${CMAKE_BINARY_DIR}/Source/Main")
 set(W3DATA__DIR__REL_PATH_FROM_W3EXEC "W3_data")
 set(ASSETS__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/Assets")
 
+set(FB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Source/Common/FlatBuffersCommon")
 set(FB_DATA_DIR_NAME "data")
 set(FB_BIN_FILE_EXTENSION "bundle")
 set(FB_BATCH_FILE_EXTENSION "bat")
@@ -61,7 +62,8 @@ function(distribute_file _file _relative_path _new_file_name)
   endif()
 endfunction()
 
-function(create_batch_fbs_to_cpp _output_file _template_file _schema_files _output_dir)
+function(create_batch_fbs_to_cpp _output_file _template_file _schema_files _include_dir _output_dir)
+  set(VAR_INCLUDE_DIR "${_include_dir}")
   set(VAR_OUTPUT_DIR "${_output_dir}")
   set(VAR_SCHEMA_FILES "${_schema_files}")
   file(READ "${_template_file}" content_temp_)
@@ -69,7 +71,8 @@ function(create_batch_fbs_to_cpp _output_file _template_file _schema_files _outp
   file(GENERATE OUTPUT "${_output_file}" CONTENT "${content_temp_}")
 endfunction()
 
-function(create_batch_json_to_bin _output_file _template_file _schema_files _output_dir _json_file)
+function(create_batch_json_to_bin _output_file _template_file _schema_files _include_dir _output_dir _json_file)
+  set(VAR_INCLUDE_DIR "${_include_dir}")
   set(VAR_OUTPUT_DIR "${_output_dir}")
   set(VAR_SCHEMA_FILES "${_schema_files}")
   set(VAR_JSON_FILE "${_json_file}")
@@ -78,7 +81,8 @@ function(create_batch_json_to_bin _output_file _template_file _schema_files _out
   file(GENERATE OUTPUT "${_output_file}" CONTENT "${content_temp_}")
 endfunction()
 
-function(create_batch_bin_to_json _output_file _template_file _schema_files _output_dir _binary_file)
+function(create_batch_bin_to_json _output_file _template_file _schema_files _include_dir _output_dir _binary_file)
+  set(VAR_INCLUDE_DIR "${_include_dir}")
   set(VAR_OUTPUT_DIR "${_output_dir}")
   set(VAR_SCHEMA_FILES "${_schema_files}")
   set(VAR_BIN_FILE "${_binary_file}")
@@ -96,6 +100,7 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
   set(fb_bin_file_name_ "${_fb_file_stem}.${_bin_file_extension}")
 
   file(REAL_PATH "${fb_schema_file_name_}" fb_schema_file_)
+  file(REAL_PATH "${FB_INCLUDE_DIR}" fb_include_dir_)
   file(REAL_PATH "${FB_DATA_DIR_NAME}/${fb_json_file_name_}" fb_json_file_)
   file(REAL_PATH "${FB_DATA_DIR_NAME}/${fb_bin_file_name_}" fb_bin_file_)
 
@@ -116,6 +121,7 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
       "${fb_batch_fbs_to_cpp_file_}"
       "${TEMPLATE_BUILD_FBS_TO_CPP_BATCH_FILE}"
       "${fb_schema_file_}"
+      "${fb_include_dir_}"
       "${fb_cpp_output_dir_}"
     )
   endif()
@@ -129,6 +135,7 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
       "${fb_batch_json_to_bin_file_}"
       "${TEMPLATE_BUILD_JSON_TO_BIN_BATCH_FILE}"
       "${fb_schema_file_}"
+      "${fb_include_dir_}"
       "${fb_bin_output_dir_}"
       "${fb_json_file_}"
     )
@@ -145,8 +152,31 @@ function(create_flatbuffers_data_files _bin_file_identifier _bin_file_extension 
       "${fb_batch_bin_to_json_file_}"
       "${TEMPLATE_BUILD_BIN_TO_JSON_BATCH_FILE}"
       "${fb_schema_file_}"
+      "${fb_include_dir_}"
       "${fb_json_output_dir_}"
       "${fb_bin_file_}"
+    )
+  endif()
+endfunction()
+
+function(create_flatbuffers_schema_file _fb_file_stem)
+  set(fb_schema_file_name_ "${_fb_file_stem}.${FB_SCHEMA_FILE_EXTENSION}")
+  file(REAL_PATH "${fb_schema_file_name_}" fb_schema_file_)
+  # create Flatbuffers Schema file
+  cmake_language(CALL create_file "${fb_schema_file_name_}")
+  # create batch file Schema-to-CPP
+  file(REAL_PATH "${_fb_file_stem}_${FB_BATCH_FILE_STEM_SUFFIX_FBS_TO_CPP}.${FB_BATCH_FILE_EXTENSION}"
+                 fb_batch_fbs_to_cpp_file_
+  )
+  file(REAL_PATH "${FB_INCLUDE_DIR}" fb_include_dir_)
+  file(REAL_PATH "${CMAKE_CURRENT_SOURCE_DIR}" fb_cpp_output_dir_)
+  if(WIN32)
+    cmake_language(CALL create_batch_fbs_to_cpp
+      "${fb_batch_fbs_to_cpp_file_}"
+      "${TEMPLATE_BUILD_FBS_TO_CPP_BATCH_FILE}"
+      "${fb_schema_file_}"
+      "${fb_include_dir_}"
+      "${fb_cpp_output_dir_}"
     )
   endif()
 endfunction()

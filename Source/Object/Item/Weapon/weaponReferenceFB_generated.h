@@ -6,81 +6,15 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-namespace fbWeapon {
+#include "languageBundleFB_generated.h"
 
-struct FB_LanguageBundle;
-struct FB_LanguageBundleBuilder;
+namespace fbWeapon {
 
 struct FB_WeaponReference;
 struct FB_WeaponReferenceBuilder;
 
 struct FB_WeaponReferenceContainer;
 struct FB_WeaponReferenceContainerBuilder;
-
-struct FB_LanguageBundle FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_LanguageBundleBuilder Builder;
-  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_EN = 4,
-    VT_RU = 6
-  };
-  const flatbuffers::String *en() const {
-    return GetPointer<const flatbuffers::String *>(VT_EN);
-  }
-  const flatbuffers::String *ru() const {
-    return GetPointer<const flatbuffers::String *>(VT_RU);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_EN) &&
-           verifier.VerifyString(en()) &&
-           VerifyOffset(verifier, VT_RU) &&
-           verifier.VerifyString(ru()) &&
-           verifier.EndTable();
-  }
-};
-
-struct FB_LanguageBundleBuilder {
-  typedef FB_LanguageBundle Table;
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_en(flatbuffers::Offset<flatbuffers::String> en) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_EN, en);
-  }
-  void add_ru(flatbuffers::Offset<flatbuffers::String> ru) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_RU, ru);
-  }
-  explicit FB_LanguageBundleBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  flatbuffers::Offset<FB_LanguageBundle> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<FB_LanguageBundle>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<FB_LanguageBundle> CreateFB_LanguageBundle(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::String> en = 0,
-    flatbuffers::Offset<flatbuffers::String> ru = 0) {
-  FB_LanguageBundleBuilder builder_(_fbb);
-  builder_.add_ru(ru);
-  builder_.add_en(en);
-  return builder_.Finish();
-}
-
-inline flatbuffers::Offset<FB_LanguageBundle> CreateFB_LanguageBundleDirect(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    const char *en = nullptr,
-    const char *ru = nullptr) {
-  auto en__ = en ? _fbb.CreateString(en) : 0;
-  auto ru__ = ru ? _fbb.CreateString(ru) : 0;
-  return fbWeapon::CreateFB_LanguageBundle(
-      _fbb,
-      en__,
-      ru__);
-}
 
 struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef FB_WeaponReferenceBuilder Builder;
@@ -116,11 +50,11 @@ struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *weapon_mod_types() const {
     return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>> *>(VT_WEAPON_MOD_TYPES);
   }
-  const fbWeapon::FB_LanguageBundle *name() const {
-    return GetPointer<const fbWeapon::FB_LanguageBundle *>(VT_NAME);
+  const fbCommon::FB_LanguageBundle *name() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_NAME);
   }
-  const fbWeapon::FB_LanguageBundle *descrip() const {
-    return GetPointer<const fbWeapon::FB_LanguageBundle *>(VT_DESCRIP);
+  const fbCommon::FB_LanguageBundle *descrip() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DESCRIP);
   }
   int16_t dmg_min() const {
     return GetField<int16_t>(VT_DMG_MIN, 0);
@@ -218,10 +152,10 @@ struct FB_WeaponReferenceBuilder {
   void add_weapon_mod_types(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> weapon_mod_types) {
     fbb_.AddOffset(FB_WeaponReference::VT_WEAPON_MOD_TYPES, weapon_mod_types);
   }
-  void add_name(flatbuffers::Offset<fbWeapon::FB_LanguageBundle> name) {
+  void add_name(flatbuffers::Offset<fbCommon::FB_LanguageBundle> name) {
     fbb_.AddOffset(FB_WeaponReference::VT_NAME, name);
   }
-  void add_descrip(flatbuffers::Offset<fbWeapon::FB_LanguageBundle> descrip) {
+  void add_descrip(flatbuffers::Offset<fbCommon::FB_LanguageBundle> descrip) {
     fbb_.AddOffset(FB_WeaponReference::VT_DESCRIP, descrip);
   }
   void add_dmg_min(int16_t dmg_min) {
@@ -288,8 +222,8 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReference(
     flatbuffers::Offset<flatbuffers::String> weapon_model = 0,
     flatbuffers::Offset<flatbuffers::String> weapon_type = 0,
     flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<flatbuffers::String>>> weapon_mod_types = 0,
-    flatbuffers::Offset<fbWeapon::FB_LanguageBundle> name = 0,
-    flatbuffers::Offset<fbWeapon::FB_LanguageBundle> descrip = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> name = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> descrip = 0,
     int16_t dmg_min = 0,
     int16_t dmg_max = 0,
     int16_t price = 0,
@@ -336,8 +270,8 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReferenceDirect(
     const char *weapon_model = nullptr,
     const char *weapon_type = nullptr,
     const std::vector<flatbuffers::Offset<flatbuffers::String>> *weapon_mod_types = nullptr,
-    flatbuffers::Offset<fbWeapon::FB_LanguageBundle> name = 0,
-    flatbuffers::Offset<fbWeapon::FB_LanguageBundle> descrip = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> name = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> descrip = 0,
     int16_t dmg_min = 0,
     int16_t dmg_max = 0,
     int16_t price = 0,

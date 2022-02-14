@@ -24,6 +24,8 @@ enum class Damage__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
+///************************************************************************************************
+
 Damage__Type toDamageType(std::string& key);
 
 } // namespace object

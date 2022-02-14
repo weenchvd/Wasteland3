@@ -4,8 +4,8 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef PLAINTEXT_ENUM_HPP
-#define PLAINTEXT_ENUM_HPP
+#ifndef PLAINTEXT_COMMON_HPP
+#define PLAINTEXT_COMMON_HPP
 
 namespace game {
 namespace global {
@@ -14,23 +14,23 @@ using PlainTextBaseType             = int;
 
 enum class PlainText__Language : char {
     INVALID = -1,                   /// invalid, must be the first
-            
+    // vvv TYPES vvv
     EN,                             // english
     RU,                             // russian
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
 
 enum class PlainText__General : PlainTextBaseType {
     INVALID = -1,                   /// invalid, must be the first
-            
+    // vvv TYPES vvv
     INVALID_ENUM,
     NO_DATA,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
 
 } // namespace global
 } // namespace game
 
-#endif // !PLAINTEXT_ENUM_HPP
+#endif // !PLAINTEXT_COMMON_HPP

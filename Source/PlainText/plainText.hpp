@@ -7,8 +7,8 @@
 #ifndef PLAINTEXT_HPP
 #define PLAINTEXT_HPP
 
-#include"plainTextEnum.hpp"
 #include"common.hpp"
+#include"plainTextCommon.hpp"
 #include<array>
 
 namespace game {
@@ -25,14 +25,21 @@ const common::Text invalidEnum{ u8"INVALID ENUM" };
 const common::Text eng_NoData{ u8"NO DATA" };
 const common::Text rus_NoData{ u8"НЕТ ДАННЫХ" };
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 class PlainText {
 public:
     using Language      = PlainText__Language;
     using General       = PlainText__General;
 
+    static constexpr unsigned char sizeLang_{ common::toUnderlying(PlainText::Language::NUMBER_OF) };
+
+private:
+    using text          = common::Text;
+
     friend class Factory;
+
+    static constexpr unsigned int sizeCommon_{ common::toUnderlying(PlainText::General::NUMBER_OF) };
 
 protected:
     PlainText(PlainText::Language lang);
@@ -50,9 +57,9 @@ public:
     void setLanguage(PlainText::Language lang);
 
 public:
-    const common::Text& language(PlainText::Language id) const noexcept;
+    const text& language(PlainText::Language id) const noexcept;
 
-    const common::Text& common(PlainText::General id) const noexcept;
+    const text& common(PlainText::General id) const noexcept;
 
 private:
     void initialize();
@@ -61,22 +68,18 @@ private:
 
     void fill();
 
-    const common::Text& getDefault() const noexcept;
+    const text& getDefault() const noexcept;
 
     void initCommonEN();
 
     void initCommonRU();
 
 private:
-    using Text = common::Text;
-
-    static constexpr int sizeLang_ = common::toUnderlying(PlainText::Language::NUMBER_OF);
-    static constexpr int sizeCommon_ = common::toUnderlying(PlainText::General::NUMBER_OF);
 
 protected:
     PlainText::Language                                 current_;
-    std::array<Text, sizeLang_>                         lang_;
-    std::array<Text, sizeCommon_>                       common_;
+    std::array<text, sizeLang_>                         lang_;
+    std::array<text, sizeCommon_>                       common_;
 
 };
 

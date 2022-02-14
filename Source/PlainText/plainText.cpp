@@ -24,7 +24,7 @@ void PlainText::setLanguage(PlainText::Language lang)
     initialize();
 }
 
-const common::Text& PlainText::language(PlainText::Language id) const noexcept
+const PlainText::text& PlainText::language(PlainText::Language id) const noexcept
 {
     if (common::isValidEnum(id)) {
         return lang_[common::toUnderlying(id)];
@@ -32,7 +32,7 @@ const common::Text& PlainText::language(PlainText::Language id) const noexcept
     return common_[common::toUnderlying(PlainText::General::INVALID_ENUM)];
 }
 
-const common::Text& PlainText::common(PlainText::General id) const noexcept
+const PlainText::text& PlainText::common(PlainText::General id) const noexcept
 {
     if (common::isValidEnum(id)) {
         return common_[common::toUnderlying(id)];
@@ -56,9 +56,9 @@ void PlainText::initialize()
     }
 
     lang_[common::toUnderlying(PlainText::Language::EN)]
-        = common::Text{ u8"ENGLISH" };
+        = text{ u8"ENGLISH" };
     lang_[common::toUnderlying(PlainText::Language::RU)]
-        = common::Text{ u8"РУССКИЙ" };
+        = text{ u8"РУССКИЙ" };
 
     common_[common::toUnderlying(PlainText::General::INVALID_ENUM)]
         = invalidEnum;
@@ -80,7 +80,7 @@ void PlainText::fill()
     fillAll(common_, getDefault());
 }
 
-const common::Text& PlainText::getDefault() const noexcept
+const PlainText::text& PlainText::getDefault() const noexcept
 {
     switch (current_) {
     case PlainText::Language::EN:

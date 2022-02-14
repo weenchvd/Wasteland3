@@ -26,4 +26,5 @@ target_include_directories(${LIBRARY_NAME}
 )
 
 add_subdirectory("FlatBuffersAux")
+add_subdirectory("FlatBuffersCommon")
 add_subdirectory("Observer")

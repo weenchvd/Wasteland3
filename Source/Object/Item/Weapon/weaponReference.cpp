@@ -5,12 +5,12 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"flatbuffersAux.hpp"
+#include"flatbuffersLanguageBundle.hpp"
+#include"locator.hpp"
 #include"weaponPath.hpp"
 #include"weaponReference.hpp"
-#include<assert.h>
 #include<memory>
 #include<type_traits>
-#include<vector>
 
 namespace game {
 namespace object {
@@ -27,17 +27,38 @@ WeaponReference                 WeaponReferenceContainer::refMinimal_;
 unsigned char                   WeaponReferenceContainer::langIndex_    { 0 };
 bool                            WeaponReferenceContainer::initialized_  { false };
 
+///************************************************************************************************
 
-const WeaponReference::text& WeaponReference::name() const noexcept
-{
-    return name_[WeaponReferenceContainer::languageIndex()];
-}
+WeaponReference::WeaponReference() noexcept
+    :
+    model_          { Weapon__Model::INVALID },
+    type_           { Weapon__Type::INVALID },
+    weaponModTypes_ { WeaponMod::Type::INVALID,
+                      WeaponMod::Type::INVALID,
+                      WeaponMod::Type::INVALID,
+                      WeaponMod::Type::INVALID },
+    name_           {},
+    descrip_        {},
+    dmgMin_         { 0 },
+    dmgMax_         { 0 },
+    price_          { 0 },
+    rangeAttack_    { 0 },
+    capAmmo_        { 0 },
+    mulCritDmg_     { 0 },
+    chaHit_         { 0 },
+    chaCritDmg_     { 0 },
+    level_          { 0 },
+    levSkill_       { 0 },
+    armorPen_       { 0 },
+    apAttack_       { 0 },
+    apReload_       { 0 },
+    shoPerAttack_   { 0 },
+    tyAmmo_         { Ammo::Type::INVALID },
+    tyDmg_          { Damage::Type::INVALID },
+    initialized_    { false }
+{}
 
-const WeaponReference::text& WeaponReference::descr() const noexcept
-{
-    return descrip_[WeaponReferenceContainer::languageIndex()];
-}
-
+///************************************************************************************************
 
 void WeaponReferenceContainer::initialize()
 {
@@ -46,11 +67,11 @@ void WeaponReferenceContainer::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
+    const fbWeapon::FB_WeaponReferenceContainer* container{
+        fbWeapon::GetFB_WeaponReferenceContainer(buffer.get())
+    };
 
-    const fbWeapon::FB_WeaponReferenceContainer* container =
-        fbWeapon::GetFB_WeaponReferenceContainer(buffer.get());
     assert(container != nullptr);
-
     initContainer(container);
 
     assert(Locator::isInitialized());
@@ -58,25 +79,19 @@ void WeaponReferenceContainer::initialize()
     langObs_.getDelegate().bind<&WeaponReferenceContainer::setLanguage>();
     Locator::getOption().languageSubject().addObserver(&langObs_);
 
-    initialized_        = true;
+    initialized_ = true;
 }
 
-void WeaponReferenceContainer::setLanguage(WeaponReferenceContainer::language lang)
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
-}
-
-void WeaponReferenceContainer::initContainer(const fbWeapon::FB_WeaponReferenceContainer* container)
+void WeaponReferenceContainer::initContainer(
+    const fbWeapon::FB_WeaponReferenceContainer* container)
 {
     assert(common::toUnderlying(Weapon__Model::NUMBER_OF) >= 0);
     refs_.resize(common::toUnderlying(Weapon__Model::NUMBER_OF));
-    auto v = container->refs();
+    auto v{ container->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
-        WeaponReference ref = initWeaponReference(v->Get(i));
-        size_t pos = common::toUnderlying(ref.model_);
+        WeaponReference ref{ initWeaponReference(v->Get(i)) };
+        auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
     refMinimal_ = initWeaponReference(container->ref_minimal());
@@ -90,14 +105,14 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.model_  = toWeaponModel(reference->weapon_model()->str());
     ref.type_   = toWeaponType(reference->weapon_type()->str());
 
-    auto modTypes = reference->weapon_mod_types();
+    auto modTypes{ reference->weapon_mod_types() };
     assert(ref.weaponModTypes_.size() == modTypes->size());
-    for (int i = 0; i < ref.weaponModTypes_.size(); ++i) {
+    for (size_t i = 0; i < ref.weaponModTypes_.size(); ++i) {
         ref.weaponModTypes_[i] = toWeaponModType(modTypes->Get(i)->str());
     }
 
-    initLanguageBundle(reference->name(), ref.name_);
-    initLanguageBundle(reference->descrip(), ref.descrip_);
+    common::initLanguageBundle(reference->name(), ref.name_);
+    common::initLanguageBundle(reference->descrip(), ref.descrip_);
 
     ref.dmgMin_         = { reference->dmg_min() };
     ref.dmgMax_         = { reference->dmg_max() };
@@ -119,17 +134,6 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.initialized_    = true;
 
     return ref;
-}
-
-void WeaponReferenceContainer::initLanguageBundle(
-    const fbWeapon::FB_LanguageBundle* bundle,
-    std::array<WeaponReferenceContainer::text, sizeLang_>& target
-)
-{
-    using lang = WeaponReferenceContainer::language; // TODO delete?
-    using text = WeaponReferenceContainer::text; // TODO delete?
-    target[common::toUnderlying(lang::EN)] = move(text{ bundle->en()->c_str() });
-    target[common::toUnderlying(lang::RU)] = move(text{ bundle->ru()->c_str() });
 }
 
 } // namespace object
