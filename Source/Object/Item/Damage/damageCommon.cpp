@@ -12,17 +12,17 @@ namespace object {
 
 using namespace std;
 
-Damage__Type toDamageType(std::string& key)
+Damage__Type toDamageType(fbDamage::FB_DamageType id)
 {
-    static unordered_map<string, Damage__Type> map{
-        { "INVALID", Damage__Type::INVALID },
-        { "Norm", Damage__Type::NORMAL },
-        { "Fire", Damage__Type::FIRE },
-        { "Cold", Damage__Type::COLD },
-        { "Ener", Damage__Type::ENERGY },
-        { "Expl", Damage__Type::EXPLOSIVE },
+    static unordered_map<fbDamage::FB_DamageType, Damage__Type> map{
+        { fbDamage::FB_DamageType_INVALID, Damage__Type::INVALID },
+        { fbDamage::FB_DamageType_NORMAL, Damage__Type::NORMAL },
+        { fbDamage::FB_DamageType_FIRE, Damage__Type::FIRE },
+        { fbDamage::FB_DamageType_COLD, Damage__Type::COLD },
+        { fbDamage::FB_DamageType_ENERGY, Damage__Type::ENERGY },
+        { fbDamage::FB_DamageType_EXPLOSIVE, Damage__Type::EXPLOSIVE }
     };
-    return map.at(key);
+    return map.at(id);
 }
 
 } // namespace object

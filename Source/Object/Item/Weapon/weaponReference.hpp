@@ -8,19 +8,50 @@
 #define WEAPON_REFERENCE_HPP
 
 #include"ammo.hpp"
+#include"attribute.hpp"
 #include"common.hpp"
 #include"damage.hpp"
 #include"observerDLL.hpp"
 #include"plainText.hpp"
+#include"skill.hpp"
 #include"weaponCommon.hpp"
 #include"weaponMod.hpp"
 #include"weaponReferenceFB_generated.h"
 #include<array>
 #include<assert.h>
+#include<utility>
 #include<vector>
 
 namespace game {
 namespace object {
+
+struct WeaponRequirements {
+public:
+    using skill_requirement         = std::pair<Skill::Type, common::LevelSkill>;
+    using attribute_requirement     = std::pair<Attribute::Type, common::LevelStat>;
+
+public:
+    WeaponRequirements() noexcept;
+
+public:
+    std::array<skill_requirement, 2>        skillReq_;
+    std::array<attribute_requirement, 2>    attrReq_;
+};
+
+///************************************************************************************************
+
+struct WeaponPenalties {
+public:
+    WeaponPenalties() noexcept;
+
+public:
+    common::Multiplier      mulCritDmg_;    // critical damage multiplier
+    common::Chance          chaHit_;        // base hit chance
+    common::Chance          chaCritDmg_;    // base critical damage chance
+    common::Strike          strike_;        // strike rate
+};
+
+///************************************************************************************************
 
 struct WeaponReference {
 public:
@@ -51,6 +82,8 @@ public:
     Weapon__Model           model_;         // weapon model
     Weapon__Type            type_;          // weapon type (kind)
     weapon_mod_types        weaponModTypes_;// list of slot types
+    WeaponRequirements      requirements_;
+    WeaponPenalties         penalties_;
 
     common::Damage          dmgMin_;        // min damage per hit
     common::Damage          dmgMax_;        // max damage per hit
@@ -61,7 +94,6 @@ public:
     common::Chance          chaHit_;        // base hit chance
     common::Chance          chaCritDmg_;    // base critical damage chance
     common::Level           level_;         // weapon level
-    common::Level           levSkill_;      // min level of skill
     common::Armor           armorPen_;      // penetration
     common::ActionPoint     apAttack_;      // action points per attack
     common::ActionPoint     apReload_;      // action points per reload

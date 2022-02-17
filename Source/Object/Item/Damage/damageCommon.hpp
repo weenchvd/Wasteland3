@@ -7,7 +7,7 @@
 #ifndef DAMAGE_COMMON_HPP
 #define DAMAGE_COMMON_HPP
 
-#include<string>
+#include"damageTypeFB_generated.h"
 
 namespace game {
 namespace object {
@@ -26,7 +26,7 @@ enum class Damage__Type : char {
 
 ///************************************************************************************************
 
-Damage__Type toDamageType(std::string& key);
+Damage__Type toDamageType(fbDamage::FB_DamageType id);
 
 } // namespace object
 } // namespace game

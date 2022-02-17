@@ -1,14 +1,27 @@
 {
   "refs": [
     {
-      "weapon_model": "Kalash97",
+      "weapon_model": "AR_KALASH97",
       "weapon_type": "AR",
       "weapon_mod_types": [
-        "Bar",
-        "UndBar",
-        "Scope",
-        "Mag"
+        "BARREL",
+        "UNDERBARREL",
+        "SCOPE",
+        "MAGAZINE"
       ],
+      "weapon_requirements": {
+        "skill": [
+          {
+            "type": "AUTOMATIC_WEAPONS",
+            "level": 6
+          }
+        ]
+      },
+      "weapon_penalties": {
+        "chance_hit": -100,
+        "chance_crit_dmg": -1000,
+        "strike_rate": -1000
+      },
       "name": {
         "en": "KALASH 97",
         "ru": "КАЛАШ 97"
@@ -26,23 +39,35 @@
       "chance_hit": 750,
       "chance_crit_dmg": 0,
       "weapon_level": 17,
-      "level_of_skill": 6,
       "armor_penetration": 18,
       "ap_per_attack": 4,
       "ap_per_reload": 2,
       "shots_per_attack": 3,
-      "ammo_type": "7.62",
-      "dmg_type": "Norm"
+      "ammo_type": "A_7_62",
+      "dmg_type": "NORMAL"
     },
     {
-      "weapon_model": "Socom",
+      "weapon_model": "AR_SOCOM",
       "weapon_type": "AR",
       "weapon_mod_types": [
-        "Bar",
-        "UndBar",
-        "Scope",
-        "Mag"
+        "BARREL",
+        "UNDERBARREL",
+        "SCOPE",
+        "MAGAZINE"
       ],
+      "weapon_requirements": {
+        "skill": [
+          {
+            "type": "AUTOMATIC_WEAPONS",
+            "level": 7
+          }
+        ]
+      },
+      "weapon_penalties": {
+        "chance_hit": -100,
+        "chance_crit_dmg": -1000,
+        "strike_rate": -1000
+      },
       "name": {
         "en": "SOCOM ASSAULT RIFLE",
         "ru": "ШТУРМОВАЯ ВИНТОВКА SOCOM"
@@ -60,23 +85,35 @@
       "chance_hit": 750,
       "chance_crit_dmg": 0,
       "weapon_level": 21,
-      "level_of_skill": 7,
       "armor_penetration": 22,
       "ap_per_attack": 4,
       "ap_per_reload": 2,
       "shots_per_attack": 3,
-      "ammo_type": "5.56",
-      "dmg_type": "Norm"
+      "ammo_type": "A_5_56",
+      "dmg_type": "NORMAL"
     },
     {
-      "weapon_model": "Ripper",
+      "weapon_model": "SMG_RIPPER",
       "weapon_type": "SMG",
       "weapon_mod_types": [
-        "Bar",
-        "UndBar",
-        "Scope",
-        "Mag"
+        "BARREL",
+        "UNDERBARREL",
+        "SCOPE",
+        "MAGAZINE"
       ],
+      "weapon_requirements": {
+        "skill": [
+          {
+            "type": "AUTOMATIC_WEAPONS",
+            "level": 7
+          }
+        ]
+      },
+      "weapon_penalties": {
+        "chance_hit": -100,
+        "chance_crit_dmg": -1000,
+        "strike_rate": -1000
+      },
       "name": {
         "en": "RIPPER",
         "ru": "Потрошитель"
@@ -94,13 +131,12 @@
       "chance_hit": 750,
       "chance_crit_dmg": 0,
       "weapon_level": 21,
-      "level_of_skill": 7,
       "armor_penetration": 2,
       "ap_per_attack": 4,
       "ap_per_reload": 2,
       "shots_per_attack": 10,
-      "ammo_type": "5.56",
-      "dmg_type": "Norm"
+      "ammo_type": "A_5_56",
+      "dmg_type": "NORMAL"
     }
   ],
   "ref_minimal": {
@@ -112,6 +148,8 @@
       "INVALID",
       "INVALID"
     ],
+    "weapon_requirements": {},
+    "weapon_penalties": {},
     "name": {
       "en": "",
       "ru": ""
@@ -129,7 +167,6 @@
     "chance_hit": 0,
     "chance_crit_dmg": 0,
     "weapon_level": 1,
-    "level_of_skill": 0,
     "armor_penetration": 0,
     "ap_per_attack": 1,
     "ap_per_reload": 1,

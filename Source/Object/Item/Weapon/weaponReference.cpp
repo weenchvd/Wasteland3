@@ -29,6 +29,26 @@ bool                            WeaponReferenceContainer::initialized_  { false 
 
 ///************************************************************************************************
 
+WeaponRequirements::WeaponRequirements() noexcept
+    :
+    skillReq_       { skill_requirement{ Skill::Type::INVALID, 0 },
+                      skill_requirement{ Skill::Type::INVALID, 0 }, },
+    attrReq_        { attribute_requirement{ Attribute::Type::INVALID, 0 },
+                      attribute_requirement{ Attribute::Type::INVALID, 0 } }
+{}
+
+///************************************************************************************************
+
+WeaponPenalties::WeaponPenalties() noexcept
+    :
+    mulCritDmg_     { 0 },
+    chaHit_         { 0 },
+    chaCritDmg_     { 0 },
+    strike_         { 0 }
+{}
+
+///************************************************************************************************
+
 WeaponReference::WeaponReference() noexcept
     :
     model_          { Weapon__Model::INVALID },
@@ -37,6 +57,8 @@ WeaponReference::WeaponReference() noexcept
                       WeaponMod::Type::INVALID,
                       WeaponMod::Type::INVALID,
                       WeaponMod::Type::INVALID },
+    requirements_   {},
+    penalties_      {},
     name_           {},
     descrip_        {},
     dmgMin_         { 0 },
@@ -48,7 +70,6 @@ WeaponReference::WeaponReference() noexcept
     chaHit_         { 0 },
     chaCritDmg_     { 0 },
     level_          { 0 },
-    levSkill_       { 0 },
     armorPen_       { 0 },
     apAttack_       { 0 },
     apReload_       { 0 },
@@ -102,14 +123,44 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
 {
     assert(reference != nullptr);
     WeaponReference ref;
-    ref.model_  = toWeaponModel(reference->weapon_model()->str());
-    ref.type_   = toWeaponType(reference->weapon_type()->str());
+
+    ref.model_  = toWeaponModel(reference->weapon_model());
+    ref.type_   = toWeaponType(reference->weapon_type());
 
     auto modTypes{ reference->weapon_mod_types() };
-    assert(ref.weaponModTypes_.size() == modTypes->size());
-    for (size_t i = 0; i < ref.weaponModTypes_.size(); ++i) {
-        ref.weaponModTypes_[i] = toWeaponModType(modTypes->Get(i)->str());
+    assert(modTypes != nullptr);
+    assert(modTypes->size() <= ref.weaponModTypes_.size());
+    for (size_t i = 0; i < modTypes->size(); ++i) {
+        ref.weaponModTypes_[i] = toWeaponModType(
+            static_cast<fbWeaponMod::FB_WeaponModType>(modTypes->Get(i))
+        );
     }
+
+    auto requirements{ reference->weapon_requirements() };
+    assert(requirements != nullptr);
+    if (requirements->skill() != nullptr) {
+        auto ptr{ requirements->skill() };
+        assert(ptr->size() <= ref.requirements_.skillReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            ref.requirements_.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
+            ref.requirements_.skillReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
+    if (requirements->attr() != nullptr) {
+        auto ptr{ requirements->attr() };
+        assert(ptr->size() <= ref.requirements_.attrReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            ref.requirements_.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
+            ref.requirements_.attrReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
+
+    auto penalties{ reference->weapon_penalties() };
+    assert(penalties != nullptr);
+    ref.penalties_.mulCritDmg_  = { penalties->multiplier_crit_dmg() };
+    ref.penalties_.chaHit_      = { penalties->chance_hit() };
+    ref.penalties_.chaCritDmg_  = { penalties->chance_crit_dmg() };
+    ref.penalties_.strike_      = { penalties->strike_rate() };
 
     common::initLanguageBundle(reference->name(), ref.name_);
     common::initLanguageBundle(reference->descrip(), ref.descrip_);
@@ -123,13 +174,12 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.chaHit_         = { reference->chance_hit() };
     ref.chaCritDmg_     = { reference->chance_crit_dmg() };
     ref.level_          = { reference->weapon_level() };
-    ref.levSkill_       = { reference->level_of_skill() };
     ref.armorPen_       = { reference->armor_penetration() };
     ref.apAttack_       = { reference->ap_per_attack() };
     ref.apReload_       = { reference->ap_per_reload() };
     ref.shoPerAttack_   = { reference->shots_per_attack() };
-    ref.tyAmmo_         = toAmmoType(reference->ammo_type()->str());
-    ref.tyDmg_          = toDamageType(reference->dmg_type()->str());
+    ref.tyAmmo_         = toAmmoType(reference->ammo_type());
+    ref.tyDmg_          = toDamageType(reference->dmg_type());
 
     ref.initialized_    = true;
 

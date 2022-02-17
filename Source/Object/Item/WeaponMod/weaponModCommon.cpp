@@ -12,39 +12,41 @@ namespace object {
 
 using namespace std;
 
-WeaponMod__Model toWeaponModModel(std::string& key)
+WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id)
 {
-    static unordered_map<string, WeaponMod__Model> map;
-    map.emplace("INVALID", WeaponMod__Model::INVALID);
-    map.emplace("BarShort", WeaponMod__Model::BARREL_SHORTENED);
-    map.emplace("BarLight", WeaponMod__Model::BARREL_LIGHTWEIGHT);
-    map.emplace("BarHamRifled", WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED);
-    map.emplace("BarTitCobalt", WeaponMod__Model::BARREL_TITANIUM_COBALT);
-    map.emplace("BarBroachRifled", WeaponMod__Model::BARREL_BROACH_RIFLED);
-    map.emplace("BarColumbium", WeaponMod__Model::BARREL_COLUMBIUM);
-    map.emplace("BarCutRifled", WeaponMod__Model::BARREL_CUT_RIFLED);
-    map.emplace("BarAlloy", WeaponMod__Model::BARREL_ALLOY);
-    map.emplace("MagQuickfire", WeaponMod__Model::MAG_QUICKFIRE);
-    map.emplace("MagAdvMaterials", WeaponMod__Model::MAG_ADVANCED_MATERIALS);
-    map.emplace("MagOversized", WeaponMod__Model::MAG_OVERSIZED);
-    map.emplace("MagMaxCapacity", WeaponMod__Model::MAG_MAX_CAPACITY);
-    map.emplace("MagExtended", WeaponMod__Model::MAG_EXTENDED);
-    map.emplace("MagLong", WeaponMod__Model::MAG_LONG);
-    return map.at(key);
+    static unordered_map<fbWeaponMod::FB_WeaponModModel, WeaponMod__Model> map{
+        { fbWeaponMod::FB_WeaponModModel_INVALID, WeaponMod__Model::INVALID },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_SHORTENED, WeaponMod__Model::BARREL_SHORTENED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_LIGHTWEIGHT, WeaponMod__Model::BARREL_LIGHTWEIGHT },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_ALLOY, WeaponMod__Model::BARREL_ALLOY },
+        { fbWeaponMod::FB_WeaponModModel_MAG_QUICKFIRE, WeaponMod__Model::MAG_QUICKFIRE },
+        { fbWeaponMod::FB_WeaponModModel_MAG_ADVANCED_MATERIALS, WeaponMod__Model::MAG_ADVANCED_MATERIALS },
+        { fbWeaponMod::FB_WeaponModModel_MAG_OVERSIZED, WeaponMod__Model::MAG_OVERSIZED },
+        { fbWeaponMod::FB_WeaponModModel_MAG_MAX_CAPACITY, WeaponMod__Model::MAG_MAX_CAPACITY },
+        { fbWeaponMod::FB_WeaponModModel_MAG_EXTENDED, WeaponMod__Model::MAG_EXTENDED },
+        { fbWeaponMod::FB_WeaponModModel_MAG_LONG, WeaponMod__Model::MAG_LONG }
+    };
+    return map.at(id);
 }
 
-WeaponMod__Type toWeaponModType(std::string& key)
+WeaponMod__Type toWeaponModType(fbWeaponMod::FB_WeaponModType id)
 {
-    static unordered_map<string, WeaponMod__Type> map;
-    map.emplace("INVALID", WeaponMod__Type::INVALID);
-    map.emplace("Choke", WeaponMod__Type::CHOKE);
-    map.emplace("Bar", WeaponMod__Type::BARREL);
-    map.emplace("UndBar", WeaponMod__Type::UNDERBARREL);
-    map.emplace("Scope", WeaponMod__Type::SCOPE);
-    map.emplace("Mag", WeaponMod__Type::MAGAZINE);
-    map.emplace("Weight", WeaponMod__Type::WEIGHT);
-    map.emplace("Handle", WeaponMod__Type::HANDLE);
-    return map.at(key);
+    static unordered_map<fbWeaponMod::FB_WeaponModType, WeaponMod__Type> map{
+        { fbWeaponMod::FB_WeaponModType_INVALID, WeaponMod__Type::INVALID },
+        { fbWeaponMod::FB_WeaponModType_CHOKE, WeaponMod__Type::CHOKE },
+        { fbWeaponMod::FB_WeaponModType_BARREL, WeaponMod__Type::BARREL },
+        { fbWeaponMod::FB_WeaponModType_UNDERBARREL, WeaponMod__Type::UNDERBARREL },
+        { fbWeaponMod::FB_WeaponModType_SCOPE, WeaponMod__Type::SCOPE },
+        { fbWeaponMod::FB_WeaponModType_MAGAZINE, WeaponMod__Type::MAGAZINE },
+        { fbWeaponMod::FB_WeaponModType_WEIGHT, WeaponMod__Type::WEIGHT },
+        { fbWeaponMod::FB_WeaponModType_HANDLE, WeaponMod__Type::HANDLE }
+    };
+    return map.at(id);
 }
 
 } // namespace object

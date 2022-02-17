@@ -8,7 +8,8 @@
 #define WEAPON_MOD_COMMON_HPP
 
 #include"itemCommon.hpp"
-#include<string>
+#include"weaponModModelFB_generated.h"
+#include"weaponModTypeFB_generated.h"
 
 namespace game {
 namespace object {
@@ -51,9 +52,9 @@ enum class WeaponMod__Type : char {
 
 ///************************************************************************************************
 
-WeaponMod__Model toWeaponModModel(std::string& key);
+WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id);
 
-WeaponMod__Type toWeaponModType(std::string& key);
+WeaponMod__Type toWeaponModType(fbWeaponMod::FB_WeaponModType id);
 
 } // namespace object
 } // namespace game

@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"flatbuffersLanguageBundle.hpp"
+#include<assert.h>
 #include<type_traits>
 
 namespace game {
@@ -19,7 +20,11 @@ void initLanguageBundle(
 {
     using lang = global::PlainText::Language;
     using text = common::Text;
+    assert(bundle != nullptr);
+
+    assert(bundle->en() != nullptr);
     target[common::toUnderlying(lang::EN)] = move(text{ bundle->en()->c_str() });
+    assert(bundle->ru() != nullptr);
     target[common::toUnderlying(lang::RU)] = move(text{ bundle->ru()->c_str() });
 }
 

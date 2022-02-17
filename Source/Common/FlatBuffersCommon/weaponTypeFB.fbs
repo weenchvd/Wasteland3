@@ -1,0 +1,28 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbWeapon;
+
+enum FB_WeaponType:int8 {
+  INVALID = 0,
+
+  AR,
+  SMG,
+  SEMI_AUTO_PISTOL,
+  REVOLVER,
+  AUTO_SHOTGUN,
+  PUMP_SHOTGUN,
+  SNIPER,
+  FLAMETHROWER,
+  HMG,
+  EXPLOSIVE,
+  SCIENCE,
+  BLADED,
+  BLUNT,
+  BRAWLING,
+
+  GROUP_ANY
+}

@@ -1,0 +1,41 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbSkill;
+
+enum FB_SkillType:int8 {
+  INVALID = 0,
+
+  /// Combat skills
+  AUTOMATIC_WEAPONS,
+  BIG_GUNS,
+  BRAWLING,
+  MELEE_COMBAT,
+  SMALL_ARMS,
+  SNIPER_RIFLES,
+            
+  /// General skills
+  ANIMAL_WHISPERER,
+  EXPLOSIVES,
+  FIRST_AID,
+  SNEAKY_SHIT,
+  WEIRD_SCIENCE,
+
+  /// Exploration skills
+  ARMOR_MODDING,
+  LOCKPICKING,
+  NERD_STUFF,
+  MECHANICS,
+  SURVIVAL,
+  TOASTER_REPAIR,
+  WEAPON_MODDING,
+
+  /// Social skills
+  BARTER,
+  HARD_ASS,
+  KISS_ASS,
+  LEADERSHIP,
+}

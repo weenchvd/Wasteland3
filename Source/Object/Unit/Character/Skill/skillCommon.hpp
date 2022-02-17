@@ -7,6 +7,8 @@
 #ifndef SKILL_COMMON_HPP
 #define SKILL_COMMON_HPP
 
+#include"skillTypeFB_generated.h"
+
 namespace game {
 namespace object {
 
@@ -56,6 +58,10 @@ enum class Skill__Group : char {
 
     NUMBER_OF                       /// must be the last
 };
+
+///************************************************************************************************
+
+Skill__Type toSkillType(fbSkill::FB_SkillType id);
 
 } // namespace object
 } // namespace game

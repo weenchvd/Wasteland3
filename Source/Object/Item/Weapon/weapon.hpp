@@ -91,9 +91,9 @@ public:
         return base_.level_;
     }
 
-    common::Level levelSkill() const noexcept {
-        return base_.levSkill_;
-    }
+    //common::Level levelSkill() const noexcept {
+    //    return base_.levSkill_;
+    //}
 
     common::Multiplier multiplierCritDamage() const noexcept {
         return mulCritDmg_;

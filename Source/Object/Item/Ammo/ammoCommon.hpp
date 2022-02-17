@@ -7,7 +7,7 @@
 #ifndef AMMO_COMMON_HPP
 #define AMMO_COMMON_HPP
 
-#include<string>
+#include"ammoTypeFB_generated.h"
 
 namespace game {
 namespace object {
@@ -24,7 +24,7 @@ enum class Ammo__Type : char {
 
 ///************************************************************************************************
 
-Ammo__Type toAmmoType(std::string& key);
+Ammo__Type toAmmoType(fbAmmo::FB_AmmoType id);
 
 } // namespace object
 } // namespace game

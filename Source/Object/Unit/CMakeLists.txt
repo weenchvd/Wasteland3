@@ -16,9 +16,11 @@ set(LIBRARY_NAME "unit")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Character/character.cpp"
                     "Character/Attribute/attribute.cpp"
+                    "Character/Attribute/attributeCommon.cpp"
                     "Character/Attribute/attributeReference.cpp"
                     "Character/Attribute/attributeText.cpp"
                     "Character/Skill/skill.cpp"
+                    "Character/Skill/skillCommon.cpp"
                     "Character/Skill/skillReference.cpp"
                     "Character/Skill/skillText.cpp"
 )
@@ -35,8 +37,8 @@ target_include_directories(${LIBRARY_NAME}
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC common
                       PUBLIC effect
-                      PUBLIC flatbuffers
                       PUBLIC flatbuffersAux
+                      PUBLIC flatbuffersCommon
                       PUBLIC item
                       PUBLIC locator
                       PUBLIC observer

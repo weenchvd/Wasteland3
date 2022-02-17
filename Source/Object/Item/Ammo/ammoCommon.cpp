@@ -12,15 +12,15 @@ namespace object {
 
 using namespace std;
 
-Ammo__Type toAmmoType(std::string& key)
+Ammo__Type toAmmoType(fbAmmo::FB_AmmoType id)
 {
-    static unordered_map<string, Ammo__Type> map{
-        { "INVALID", Ammo__Type::INVALID },
-        { "None", Ammo__Type::NONE },
-        { "5.56", Ammo__Type::A_5_56 },
-        { "7.62", Ammo__Type::A_7_62 },
+    static unordered_map<fbAmmo::FB_AmmoType, Ammo__Type> map{
+        { fbAmmo::FB_AmmoType_INVALID, Ammo__Type::INVALID },
+        { fbAmmo::FB_AmmoType_NONE, Ammo__Type::NONE },
+        { fbAmmo::FB_AmmoType_A_5_56, Ammo__Type::A_5_56 },
+        { fbAmmo::FB_AmmoType_A_7_62, Ammo__Type::A_7_62 }
     };
-    return map.at(key);
+    return map.at(id);
 }
 
 } // namespace object

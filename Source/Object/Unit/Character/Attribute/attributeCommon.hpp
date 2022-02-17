@@ -7,6 +7,8 @@
 #ifndef ATTRIBUTE_COMMON_HPP
 #define ATTRIBUTE_COMMON_HPP
 
+#include"attributeTypeFB_generated.h"
+
 namespace game {
 namespace object {
 
@@ -23,6 +25,10 @@ enum class Attribute__Type : char {
 
     NUMBER_OF                       /// must be the last
 };
+
+///************************************************************************************************
+
+Attribute__Type toAttributeType(fbAttribute::FB_AttributeType id);
 
 } // namespace object
 } // namespace game

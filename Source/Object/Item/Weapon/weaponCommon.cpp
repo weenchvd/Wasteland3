@@ -34,38 +34,38 @@ bool isCompatible(Weapon__Type id1, Weapon__Type id2)
     }
 }
 
-Weapon__Model toWeaponModel(std::string& key)
+Weapon__Model toWeaponModel(fbWeapon::FB_WeaponModel id)
 {
-    static unordered_map<string, Weapon__Model> map{
-        { "INVALID", Weapon__Model::INVALID },
-        { "Kalash97", Weapon__Model::AR_KALASH97 },
-        { "Socom", Weapon__Model::AR_SOCOM },
-        { "Ripper", Weapon__Model::SMG_RIPPER }
+    static unordered_map<fbWeapon::FB_WeaponModel, Weapon__Model> map{
+        { fbWeapon::FB_WeaponModel_INVALID, Weapon__Model::INVALID },
+        { fbWeapon::FB_WeaponModel_AR_KALASH97, Weapon__Model::AR_KALASH97 },
+        { fbWeapon::FB_WeaponModel_AR_SOCOM, Weapon__Model::AR_SOCOM },
+        { fbWeapon::FB_WeaponModel_SMG_RIPPER, Weapon__Model::SMG_RIPPER }
     };
-    return map.at(key);
+    return map.at(id);
 }
 
-Weapon__Type toWeaponType(std::string& key)
+Weapon__Type toWeaponType(fbWeapon::FB_WeaponType id)
 {
-    static unordered_map<string, Weapon__Type> map{
-        { "INVALID", Weapon__Type::INVALID },
-        { "AR", Weapon__Type::AR },
-        { "SMG", Weapon__Type::SMG },
-        { "Pistol", Weapon__Type::SEMI_AUTO_PISTOL },
-        { "Revolver", Weapon__Type::REVOLVER },
-        { "AutoSG", Weapon__Type::AUTO_SHOTGUN },
-        { "PumpSG", Weapon__Type::PUMP_SHOTGUN },
-        { "Sniper", Weapon__Type::SNIPER },
-        { "FT", Weapon__Type::FLAMETHROWER },
-        { "HMG", Weapon__Type::HMG },
-        { "Explosive", Weapon__Type::EXPLOSIVE },
-        { "Science", Weapon__Type::SCIENCE },
-        { "Bladed", Weapon__Type::BLADED },
-        { "Blunt", Weapon__Type::BLUNT },
-        { "Brawling", Weapon__Type::BRAWLING },
-        { "G_Any", Weapon__Type::GROUP_ANY }
+    static unordered_map<fbWeapon::FB_WeaponType, Weapon__Type> map{
+        { fbWeapon::FB_WeaponType_INVALID, Weapon__Type::INVALID },
+        { fbWeapon::FB_WeaponType_AR, Weapon__Type::AR },
+        { fbWeapon::FB_WeaponType_SMG, Weapon__Type::SMG },
+        { fbWeapon::FB_WeaponType_SEMI_AUTO_PISTOL, Weapon__Type::SEMI_AUTO_PISTOL },
+        { fbWeapon::FB_WeaponType_REVOLVER, Weapon__Type::REVOLVER },
+        { fbWeapon::FB_WeaponType_AUTO_SHOTGUN, Weapon__Type::AUTO_SHOTGUN },
+        { fbWeapon::FB_WeaponType_PUMP_SHOTGUN, Weapon__Type::PUMP_SHOTGUN },
+        { fbWeapon::FB_WeaponType_SNIPER, Weapon__Type::SNIPER },
+        { fbWeapon::FB_WeaponType_FLAMETHROWER, Weapon__Type::FLAMETHROWER },
+        { fbWeapon::FB_WeaponType_HMG, Weapon__Type::HMG },
+        { fbWeapon::FB_WeaponType_EXPLOSIVE, Weapon__Type::EXPLOSIVE },
+        { fbWeapon::FB_WeaponType_SCIENCE, Weapon__Type::SCIENCE },
+        { fbWeapon::FB_WeaponType_BLADED, Weapon__Type::BLADED },
+        { fbWeapon::FB_WeaponType_BLUNT, Weapon__Type::BLUNT },
+        { fbWeapon::FB_WeaponType_BRAWLING, Weapon__Type::BRAWLING },
+        { fbWeapon::FB_WeaponType_GROUP_ANY, Weapon__Type::GROUP_ANY }
     };
-    return map.at(key);
+    return map.at(id);
 }
 
 } // namespace object

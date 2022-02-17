@@ -40,6 +40,7 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC flatbuffersCommon
                       PUBLIC locator
                       PUBLIC plainText
+                      PUBLIC unit
 )
 
 add_subdirectory("Weapon")

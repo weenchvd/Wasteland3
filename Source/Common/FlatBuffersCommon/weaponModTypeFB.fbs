@@ -1,0 +1,19 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbWeaponMod;
+
+enum FB_WeaponModType:int8 {
+  INVALID = 0,
+
+  CHOKE,
+  BARREL,
+  UNDERBARREL,
+  SCOPE,
+  MAGAZINE,
+  WEIGHT,
+  HANDLE,
+}

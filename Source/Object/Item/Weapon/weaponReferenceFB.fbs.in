@@ -4,17 +4,48 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+include "ammoTypeFB.fbs";
+include "attributeTypeFB.fbs";
+include "damageTypeFB.fbs";
 include "languageBundleFB.fbs";
+include "skillTypeFB.fbs";
+include "weaponModelFB.fbs";
+include "weaponModTypeFB.fbs";
+include "weaponTypeFB.fbs";
 
 namespace fbWeapon;
 
 file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
 file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
+struct FB_SkillRequirement {
+  type:fbSkill.FB_SkillType;
+  level:int8;
+}
+
+struct FB_AttributeRequirement {
+  type:fbAttribute.FB_AttributeType;
+  level:int8;
+}
+
+table FB_WeaponRequirements {
+  skill:[FB_SkillRequirement];
+  attr:[FB_AttributeRequirement];
+}
+
+table FB_WeaponPenalties {
+  multiplier_crit_dmg:int16;
+  chance_hit:int16;
+  chance_crit_dmg:int16;
+  strike_rate:int16;
+}
+
 table FB_WeaponReference {
-  weapon_model:string;
-  weapon_type:string;
-  weapon_mod_types:[string];
+  weapon_model:fbWeapon.FB_WeaponModel;
+  weapon_type:fbWeapon.FB_WeaponType;
+  weapon_mod_types:[fbWeaponMod.FB_WeaponModType];
+  weapon_requirements:FB_WeaponRequirements;
+  weapon_penalties:FB_WeaponPenalties;
   name:fbCommon.FB_LanguageBundle;
   descrip:fbCommon.FB_LanguageBundle;
   dmg_min:int16;
@@ -26,13 +57,12 @@ table FB_WeaponReference {
   chance_hit:int16;
   chance_crit_dmg:int16;
   weapon_level:int8;
-  level_of_skill:int8;
   armor_penetration:int8;
   ap_per_attack:int8;
   ap_per_reload:int8;
   shots_per_attack:int8;
-  ammo_type:string;
-  dmg_type:string;
+  ammo_type:fbAmmo.FB_AmmoType;
+  dmg_type:fbDamage.FB_DamageType;
 }
 
 table FB_WeaponReferenceContainer {
