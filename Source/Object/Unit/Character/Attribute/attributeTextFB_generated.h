@@ -6,13 +6,12 @@
 
 #include "flatbuffers/flatbuffers.h"
 
+#include "languageBundleFB_generated.h"
+
 namespace fbAttribute {
 
 struct FB_AttributeTextType;
 struct FB_AttributeTextTypeBuilder;
-
-struct FB_LanguageBundle;
-struct FB_LanguageBundleBuilder;
 
 struct FB_AttributeText;
 struct FB_AttributeTextBuilder;
@@ -28,43 +27,43 @@ struct FB_AttributeTextType FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table
     VT_INTELLIGENCE = 14,
     VT_CHARISMA = 16
   };
-  const flatbuffers::String *coordination() const {
-    return GetPointer<const flatbuffers::String *>(VT_COORDINATION);
+  const fbCommon::FB_LanguageBundle *coordination() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_COORDINATION);
   }
-  const flatbuffers::String *luck() const {
-    return GetPointer<const flatbuffers::String *>(VT_LUCK);
+  const fbCommon::FB_LanguageBundle *luck() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_LUCK);
   }
-  const flatbuffers::String *awareness() const {
-    return GetPointer<const flatbuffers::String *>(VT_AWARENESS);
+  const fbCommon::FB_LanguageBundle *awareness() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_AWARENESS);
   }
-  const flatbuffers::String *strength() const {
-    return GetPointer<const flatbuffers::String *>(VT_STRENGTH);
+  const fbCommon::FB_LanguageBundle *strength() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_STRENGTH);
   }
-  const flatbuffers::String *speed() const {
-    return GetPointer<const flatbuffers::String *>(VT_SPEED);
+  const fbCommon::FB_LanguageBundle *speed() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SPEED);
   }
-  const flatbuffers::String *intelligence() const {
-    return GetPointer<const flatbuffers::String *>(VT_INTELLIGENCE);
+  const fbCommon::FB_LanguageBundle *intelligence() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_INTELLIGENCE);
   }
-  const flatbuffers::String *charisma() const {
-    return GetPointer<const flatbuffers::String *>(VT_CHARISMA);
+  const fbCommon::FB_LanguageBundle *charisma() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_CHARISMA);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_COORDINATION) &&
-           verifier.VerifyString(coordination()) &&
+           verifier.VerifyTable(coordination()) &&
            VerifyOffset(verifier, VT_LUCK) &&
-           verifier.VerifyString(luck()) &&
+           verifier.VerifyTable(luck()) &&
            VerifyOffset(verifier, VT_AWARENESS) &&
-           verifier.VerifyString(awareness()) &&
+           verifier.VerifyTable(awareness()) &&
            VerifyOffset(verifier, VT_STRENGTH) &&
-           verifier.VerifyString(strength()) &&
+           verifier.VerifyTable(strength()) &&
            VerifyOffset(verifier, VT_SPEED) &&
-           verifier.VerifyString(speed()) &&
+           verifier.VerifyTable(speed()) &&
            VerifyOffset(verifier, VT_INTELLIGENCE) &&
-           verifier.VerifyString(intelligence()) &&
+           verifier.VerifyTable(intelligence()) &&
            VerifyOffset(verifier, VT_CHARISMA) &&
-           verifier.VerifyString(charisma()) &&
+           verifier.VerifyTable(charisma()) &&
            verifier.EndTable();
   }
 };
@@ -73,25 +72,25 @@ struct FB_AttributeTextTypeBuilder {
   typedef FB_AttributeTextType Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_coordination(flatbuffers::Offset<flatbuffers::String> coordination) {
+  void add_coordination(flatbuffers::Offset<fbCommon::FB_LanguageBundle> coordination) {
     fbb_.AddOffset(FB_AttributeTextType::VT_COORDINATION, coordination);
   }
-  void add_luck(flatbuffers::Offset<flatbuffers::String> luck) {
+  void add_luck(flatbuffers::Offset<fbCommon::FB_LanguageBundle> luck) {
     fbb_.AddOffset(FB_AttributeTextType::VT_LUCK, luck);
   }
-  void add_awareness(flatbuffers::Offset<flatbuffers::String> awareness) {
+  void add_awareness(flatbuffers::Offset<fbCommon::FB_LanguageBundle> awareness) {
     fbb_.AddOffset(FB_AttributeTextType::VT_AWARENESS, awareness);
   }
-  void add_strength(flatbuffers::Offset<flatbuffers::String> strength) {
+  void add_strength(flatbuffers::Offset<fbCommon::FB_LanguageBundle> strength) {
     fbb_.AddOffset(FB_AttributeTextType::VT_STRENGTH, strength);
   }
-  void add_speed(flatbuffers::Offset<flatbuffers::String> speed) {
+  void add_speed(flatbuffers::Offset<fbCommon::FB_LanguageBundle> speed) {
     fbb_.AddOffset(FB_AttributeTextType::VT_SPEED, speed);
   }
-  void add_intelligence(flatbuffers::Offset<flatbuffers::String> intelligence) {
+  void add_intelligence(flatbuffers::Offset<fbCommon::FB_LanguageBundle> intelligence) {
     fbb_.AddOffset(FB_AttributeTextType::VT_INTELLIGENCE, intelligence);
   }
-  void add_charisma(flatbuffers::Offset<flatbuffers::String> charisma) {
+  void add_charisma(flatbuffers::Offset<fbCommon::FB_LanguageBundle> charisma) {
     fbb_.AddOffset(FB_AttributeTextType::VT_CHARISMA, charisma);
   }
   explicit FB_AttributeTextTypeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -107,13 +106,13 @@ struct FB_AttributeTextTypeBuilder {
 
 inline flatbuffers::Offset<FB_AttributeTextType> CreateFB_AttributeTextType(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::String> coordination = 0,
-    flatbuffers::Offset<flatbuffers::String> luck = 0,
-    flatbuffers::Offset<flatbuffers::String> awareness = 0,
-    flatbuffers::Offset<flatbuffers::String> strength = 0,
-    flatbuffers::Offset<flatbuffers::String> speed = 0,
-    flatbuffers::Offset<flatbuffers::String> intelligence = 0,
-    flatbuffers::Offset<flatbuffers::String> charisma = 0) {
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> coordination = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> luck = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> awareness = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> strength = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> speed = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> intelligence = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> charisma = 0) {
   FB_AttributeTextTypeBuilder builder_(_fbb);
   builder_.add_charisma(charisma);
   builder_.add_intelligence(intelligence);
@@ -125,35 +124,8 @@ inline flatbuffers::Offset<FB_AttributeTextType> CreateFB_AttributeTextType(
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<FB_AttributeTextType> CreateFB_AttributeTextTypeDirect(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    const char *coordination = nullptr,
-    const char *luck = nullptr,
-    const char *awareness = nullptr,
-    const char *strength = nullptr,
-    const char *speed = nullptr,
-    const char *intelligence = nullptr,
-    const char *charisma = nullptr) {
-  auto coordination__ = coordination ? _fbb.CreateString(coordination) : 0;
-  auto luck__ = luck ? _fbb.CreateString(luck) : 0;
-  auto awareness__ = awareness ? _fbb.CreateString(awareness) : 0;
-  auto strength__ = strength ? _fbb.CreateString(strength) : 0;
-  auto speed__ = speed ? _fbb.CreateString(speed) : 0;
-  auto intelligence__ = intelligence ? _fbb.CreateString(intelligence) : 0;
-  auto charisma__ = charisma ? _fbb.CreateString(charisma) : 0;
-  return fbAttribute::CreateFB_AttributeTextType(
-      _fbb,
-      coordination__,
-      luck__,
-      awareness__,
-      strength__,
-      speed__,
-      intelligence__,
-      charisma__);
-}
-
-struct FB_LanguageBundle FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_LanguageBundleBuilder Builder;
+struct FB_AttributeText FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef FB_AttributeTextBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_NAME = 4,
     VT_DESCR = 6
@@ -174,68 +146,15 @@ struct FB_LanguageBundle FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct FB_LanguageBundleBuilder {
-  typedef FB_LanguageBundle Table;
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_name(flatbuffers::Offset<fbAttribute::FB_AttributeTextType> name) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_NAME, name);
-  }
-  void add_descr(flatbuffers::Offset<fbAttribute::FB_AttributeTextType> descr) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_DESCR, descr);
-  }
-  explicit FB_LanguageBundleBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  flatbuffers::Offset<FB_LanguageBundle> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<FB_LanguageBundle>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<FB_LanguageBundle> CreateFB_LanguageBundle(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<fbAttribute::FB_AttributeTextType> name = 0,
-    flatbuffers::Offset<fbAttribute::FB_AttributeTextType> descr = 0) {
-  FB_LanguageBundleBuilder builder_(_fbb);
-  builder_.add_descr(descr);
-  builder_.add_name(name);
-  return builder_.Finish();
-}
-
-struct FB_AttributeText FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_AttributeTextBuilder Builder;
-  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_EN = 4,
-    VT_RU = 6
-  };
-  const fbAttribute::FB_LanguageBundle *en() const {
-    return GetPointer<const fbAttribute::FB_LanguageBundle *>(VT_EN);
-  }
-  const fbAttribute::FB_LanguageBundle *ru() const {
-    return GetPointer<const fbAttribute::FB_LanguageBundle *>(VT_RU);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_EN) &&
-           verifier.VerifyTable(en()) &&
-           VerifyOffset(verifier, VT_RU) &&
-           verifier.VerifyTable(ru()) &&
-           verifier.EndTable();
-  }
-};
-
 struct FB_AttributeTextBuilder {
   typedef FB_AttributeText Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_en(flatbuffers::Offset<fbAttribute::FB_LanguageBundle> en) {
-    fbb_.AddOffset(FB_AttributeText::VT_EN, en);
+  void add_name(flatbuffers::Offset<fbAttribute::FB_AttributeTextType> name) {
+    fbb_.AddOffset(FB_AttributeText::VT_NAME, name);
   }
-  void add_ru(flatbuffers::Offset<fbAttribute::FB_LanguageBundle> ru) {
-    fbb_.AddOffset(FB_AttributeText::VT_RU, ru);
+  void add_descr(flatbuffers::Offset<fbAttribute::FB_AttributeTextType> descr) {
+    fbb_.AddOffset(FB_AttributeText::VT_DESCR, descr);
   }
   explicit FB_AttributeTextBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -250,11 +169,11 @@ struct FB_AttributeTextBuilder {
 
 inline flatbuffers::Offset<FB_AttributeText> CreateFB_AttributeText(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<fbAttribute::FB_LanguageBundle> en = 0,
-    flatbuffers::Offset<fbAttribute::FB_LanguageBundle> ru = 0) {
+    flatbuffers::Offset<fbAttribute::FB_AttributeTextType> name = 0,
+    flatbuffers::Offset<fbAttribute::FB_AttributeTextType> descr = 0) {
   FB_AttributeTextBuilder builder_(_fbb);
-  builder_.add_ru(ru);
-  builder_.add_en(en);
+  builder_.add_descr(descr);
+  builder_.add_name(name);
   return builder_.Finish();
 }
 

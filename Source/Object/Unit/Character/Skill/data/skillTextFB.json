@@ -1,114 +1,200 @@
 {
-  "en": {
-    "name": {
-      "automatic_weapons": "Automatic Weapons",
-      "big_guns": "Big Guns",
-      "brawling": "Brawling",
-      "melee_combat": "Melee Combat",
-      "small_arms": "Small Arms",
-      "sniper_rifles": "Sniper Rifles",
-      "animal_whisperer": "Animal Whisperer",
-      "explosives": "Explosives",
-      "first_aid": "First Aid",
-      "sneaky_shit": "Sneaky Shit",
-      "weird_science": "Weird Science",
-      "armor_modding": "Armor Modding",
-      "lockpicking": "Lockpicking",
-      "nerd_stuff": "Nerd Stuff",
-      "mechanics": "Mechanics",
-      "survival": "Survival",
-      "toaster_repair": "Toaster Repair",
-      "weapon_modding": "Weapon Modding",
-      "barter": "Barter",
-      "hard_ass": "Hard Ass",
-      "kiss_ass": "Kiss Ass",
-      "leadership": "Leadership"
+  "name": {
+    "automatic_weapons": {
+      "en": "Automatic Weapons",
+      "ru": "Автоматическое Оружие"
     },
-    "descr": {
-      "automatic_weapons": "Makes you more effective with submachine guns and assault rifles. Recommended Attributes: Coordination, Awareness, Speed",
-      "big_guns": "Makes you more effective with heavy machine guns, flamethrowers, and other oversized weapons. Recommended Attributes: Awareness, Coordination, Strength",
-      "brawling": "Makes you more effective with fist-based weapons. Brawlers start out weak but have great potential at high levels. Recommended Attributes: Coordination, Intelligence, Charisma",
-      "melee_combat": "Makes you more effective with bladed and blunt weapons. Recommended Attributes: Strength, Coordination, Speed",
-      "small_arms": "Makes you more effective with handguns and shotguns. Recommended Attributes: Coordination, Luck, Awareness",
-      "sniper_rifles": "Makes you more effective with sniper rifles. Recommended Attributes: Intelligence, Awareness, Luck",
-      "animal_whisperer": "Allows you to tame friendly animals to follow you, and temporarily tame hostile animals in combat (level 3 and above).",
-      "explosives": "Allows you to deal more damage with explosives, defuse bombs, and avoid losing you digits when they go off.",
-      "first_aid": "Makes you more effective when using healing items and reviving squad members.",
-      "sneaky_shit": "Makes it easier to disarm alarms, evade detection, spot hidden objects, and damage unaware enemies.",
-      "weird_science": "Increases the damage you deal with unconventional types of weapons, and serves as a requirement for exotic, high-tech equipment.",
-      "armor_modding": "Allows you to modify armor, granting it increased protection and additional benefits.",
-      "lockpicking": "Allows you to open containers, doors, and other locked objects.",
-      "nerd_stuff": "Allows you to use and hack computers, and turn hostile robots to your side.",
-      "mechanics": "You can repair vehicles, generators and other machines more effectively. You also do more damage to mechanical foes.",
-      "survival": "Improves your ability to avoid dangers on the World Map, and contend with hostile wildlife.",
-      "toaster_repair": "Allows you to repair broken toasters.",
-      "weapon_modding": "Allows you to modify your weapons, and strip them down for parts.",
-      "barter": "Allows you to buy items for less, and sell them for more.",
-      "hard_ass": "Allows you to intimidate others to do what you want and throw them off guard.",
-      "kiss_ass": "Allows you to sweet-talk information out of others and bring them to your way of thinking.",
-      "leadership": "Inspires your nearby allies, and grants you abilities to command the battlefield."
+    "big_guns": {
+      "en": "Big Guns",
+      "ru": "Тяжелое Оружие"
     },
-    "group": {
-      "combat": "Combat Skills",
-      "general": "General Skills",
-      "exploration": "Exploration Skills",
-      "social": "Social Skills"
+    "brawling": {
+      "en": "Brawling",
+      "ru": "Рукопашная"
+    },
+    "melee_combat": {
+      "en": "Melee Combat",
+      "ru": "Ближний Бой"
+    },
+    "small_arms": {
+      "en": "Small Arms",
+      "ru": "Стрелковое Оружие"
+    },
+    "sniper_rifles": {
+      "en": "Sniper Rifles",
+      "ru": "Снайперские Винтовки"
+    },
+    "animal_whisperer": {
+      "en": "Animal Whisperer",
+      "ru": "Дрессировщик"
+    },
+    "explosives": {
+      "en": "Explosives",
+      "ru": "Взрывчатка"
+    },
+    "first_aid": {
+      "en": "First Aid",
+      "ru": "Первая Помощь"
+    },
+    "sneaky_shit": {
+      "en": "Sneaky Shit",
+      "ru": "Исподтишка"
+    },
+    "weird_science": {
+      "en": "Weird Science",
+      "ru": "Чудная наука"
+    },
+    "armor_modding": {
+      "en": "Armor Modding",
+      "ru": "Модификация Брони"
+    },
+    "lockpicking": {
+      "en": "Lockpicking",
+      "ru": "Вскрывание Замков"
+    },
+    "nerd_stuff": {
+      "en": "Nerd Stuff",
+      "ru": "Всезнайка"
+    },
+    "mechanics": {
+      "en": "Mechanics",
+      "ru": "Работа с Механикой"
+    },
+    "survival": {
+      "en": "Survival",
+      "ru": "Выживание"
+    },
+    "toaster_repair": {
+      "en": "Toaster Repair",
+      "ru": "Ремонт Тостеров"
+    },
+    "weapon_modding": {
+      "en": "Weapon Modding",
+      "ru": "Модификация Оружия"
+    },
+    "barter": {
+      "en": "Barter",
+      "ru": "Бартер"
+    },
+    "hard_ass": {
+      "en": "Hard Ass",
+      "ru": "Железная Задница"
+    },
+    "kiss_ass": {
+      "en": "Kiss Ass",
+      "ru": "Жополиз"
+    },
+    "leadership": {
+      "en": "Leadership",
+      "ru": "Лидерство"
     }
   },
-  "ru": {
-    "name": {
-      "automatic_weapons": "Автоматическое Оружие",
-      "big_guns": "Тяжелое Оружие",
-      "brawling": "Рукопашная",
-      "melee_combat": "Ближний Бой",
-      "small_arms": "Стрелковое Оружие",
-      "sniper_rifles": "Снайперские Винтовки",
-      "animal_whisperer": "Дрессировщик",
-      "explosives": "Взрывчатка",
-      "first_aid": "Первая Помощь",
-      "sneaky_shit": "Исподтишка",
-      "weird_science": "Чудная наука",
-      "armor_modding": "Модификация Брони",
-      "lockpicking": "Вскрывание Замков",
-      "nerd_stuff": "Всезнайка",
-      "mechanics": "Работа с Механикой",
-      "survival": "Выживание",
-      "toaster_repair": "Ремонт Тостеров",
-      "weapon_modding": "Модификация Оружия",
-      "barter": "Бартер",
-      "hard_ass": "Железная Задница",
-      "kiss_ass": "Жополиз",
-      "leadership": "Лидерство"
+  "descr": {
+    "automatic_weapons": {
+      "en": "Makes you more effective with submachine guns and assault rifles. Recommended Attributes: Coordination, Awareness, Speed",
+      "ru": "Вы сможете эффективнее обращаться с писитолетами-пулеметами и штурмовыми винтовками. Рекомендуется: Координация, Наблюдательность, Скорость"
     },
-    "descr": {
-      "automatic_weapons": "Вы сможете эффективнее обращаться с писитолетами-пулеметами и штурмовыми винтовками. Рекомендуется: Координация, Наблюдательность, Скорость",
-      "big_guns": "Вы сможете эффективнее обращаться с тяжелыми пулеметами, огнеметами и другим громоздким оружием. Рекомендуется: Наблюдательность, Координация, Сила",
-      "brawling": "Вы сможете эффективнее обращаться с оружием для кулачного боя. Рукопашные бойцы поначалу слабы, но с повышением уровня раскрывают свой большой потенциал. Рекомендуется: Координация, Интеллект, Харизма",
-      "melee_combat": "Вы сможете эффективнее обращаться с режущим и дробящим оружием. Рекомендуется: Сила, Координация, Скорость",
-      "small_arms": "Вы сможете эффективнее обращаться с пистолетами и дробовиками. Рекомендуется: Координация, Удача, Наблюдательность",
-      "sniper_rifles": "Вы сможете эффективнее обращаться со снайперскими винтовками. Рекомендуется: Интеллект, Наблюдательность, Удача",
-      "animal_whisperer": "Позволяет приручать дружелюбных животных, делая их спутниками, и временно усмирять в бою агрессивных животных (ур. 3 и выше).",
-      "explosives": "Позволяет наносить больше урона взрывчаткой, обезвреживать бомбы и сохранять все пальцы, если бомба таки взорвется.",
-      "first_aid": "Позволяет более эффективно использовать предметы медицинского назначения, а также воскрешать соратников по отряду.",
-      "sneaky_shit": "Проще отключать сигнализацию, избегать обнаружения, замечать спрятанные объекты и скрытно наносить урон врагам.",
-      "weird_science": "Повышает урон, который вы наносите нетрадиционным оружием. Требуется для обращения с экзотическим, высокотехнологичным оружием.",
-      "armor_modding": "Позволяет вым модифицировать броню, обеспечивая ей улучшенную защиту и дополнительные преимущества.",
-      "lockpicking": "Позволяет окрывать контейнеры, двери и прочие предметы, на которых есть замки.",
-      "nerd_stuff": "Позволяет пользоваться компьютерами и взламывать их. Это также касается электронных противников.",
-      "mechanics": "Вы можете эффективно ремонтировать транспортные средства, генераторы и другую технику. А еще вы наносите больше урона по механическим противникам.",
-      "survival": "Улучшает вышу способность избегать опасностей на карте мира и справляться с дикой природой.",
-      "toaster_repair": "Позволяет чинить сломанные тостеры.",
-      "weapon_modding": "Позволяет вам модифицировать оружие и разбирать его на части.",
-      "barter": "Позволяет покупать предметы подешевле, а продавать подороже.",
-      "hard_ass": "Позволяет оказывать психологическое давление на окружающих, чтобы они поступали так, как хочется вам, и заставать их врасплох.",
-      "kiss_ass": "Позволяет использовать методочивые речи, чтобы получать у собеседников информацию и убеждать их в верности вашей точки зрения.",
-      "leadership": "Воодушевляет ближайших союзников, позволяет вам командовать на поле боя."
+    "big_guns": {
+      "en": "Makes you more effective with heavy machine guns, flamethrowers, and other oversized weapons. Recommended Attributes: Awareness, Coordination, Strength",
+      "ru": "Вы сможете эффективнее обращаться с тяжелыми пулеметами, огнеметами и другим громоздким оружием. Рекомендуется: Наблюдательность, Координация, Сила"
     },
-    "group": {
-      "combat": "Боевые Навыки",
-      "general": "Общие Навыки",
-      "exploration": "Исследовательские Навыки",
-      "social": "Социальные Навыки"
+    "brawling": {
+      "en": "Makes you more effective with fist-based weapons. Brawlers start out weak but have great potential at high levels. Recommended Attributes: Coordination, Intelligence, Charisma",
+      "ru": "Вы сможете эффективнее обращаться с оружием для кулачного боя. Рукопашные бойцы поначалу слабы, но с повышением уровня раскрывают свой большой потенциал. Рекомендуется: Координация, Интеллект, Харизма"
+    },
+    "melee_combat": {
+      "en": "Makes you more effective with bladed and blunt weapons. Recommended Attributes: Strength, Coordination, Speed",
+      "ru": "Вы сможете эффективнее обращаться с режущим и дробящим оружием. Рекомендуется: Сила, Координация, Скорость"
+    },
+    "small_arms": {
+      "en": "Makes you more effective with handguns and shotguns. Recommended Attributes: Coordination, Luck, Awareness",
+      "ru": "Вы сможете эффективнее обращаться с пистолетами и дробовиками. Рекомендуется: Координация, Удача, Наблюдательность"
+    },
+    "sniper_rifles": {
+      "en": "Makes you more effective with sniper rifles. Recommended Attributes: Intelligence, Awareness, Luck",
+      "ru": "Вы сможете эффективнее обращаться со снайперскими винтовками. Рекомендуется: Интеллект, Наблюдательность, Удача"
+    },
+    "animal_whisperer": {
+      "en": "Allows you to tame friendly animals to follow you, and temporarily tame hostile animals in combat (level 3 and above).",
+      "ru": "Позволяет приручать дружелюбных животных, делая их спутниками, и временно усмирять в бою агрессивных животных (ур. 3 и выше)."
+    },
+    "explosives": {
+      "en": "Allows you to deal more damage with explosives, defuse bombs, and avoid losing you digits when they go off.",
+      "ru": "Позволяет наносить больше урона взрывчаткой, обезвреживать бомбы и сохранять все пальцы, если бомба таки взорвется."
+    },
+    "first_aid": {
+      "en": "Makes you more effective when using healing items and reviving squad members.",
+      "ru": "Позволяет более эффективно использовать предметы медицинского назначения, а также воскрешать соратников по отряду."
+    },
+    "sneaky_shit": {
+      "en": "Makes it easier to disarm alarms, evade detection, spot hidden objects, and damage unaware enemies.",
+      "ru": "Проще отключать сигнализацию, избегать обнаружения, замечать спрятанные объекты и скрытно наносить урон врагам."
+    },
+    "weird_science": {
+      "en": "Increases the damage you deal with unconventional types of weapons, and serves as a requirement for exotic, high-tech equipment.",
+      "ru": "Повышает урон, который вы наносите нетрадиционным оружием. Требуется для обращения с экзотическим, высокотехнологичным оружием."
+    },
+    "armor_modding": {
+      "en": "Allows you to modify armor, granting it increased protection and additional benefits.",
+      "ru": "Позволяет вым модифицировать броню, обеспечивая ей улучшенную защиту и дополнительные преимущества."
+    },
+    "lockpicking": {
+      "en": "Allows you to open containers, doors, and other locked objects.",
+      "ru": "Позволяет окрывать контейнеры, двери и прочие предметы, на которых есть замки."
+    },
+    "nerd_stuff": {
+      "en": "Allows you to use and hack computers, and turn hostile robots to your side.",
+      "ru": "Позволяет пользоваться компьютерами и взламывать их. Это также касается электронных противников."
+    },
+    "mechanics": {
+      "en": "You can repair vehicles, generators and other machines more effectively. You also do more damage to mechanical foes.",
+      "ru": "Вы можете эффективно ремонтировать транспортные средства, генераторы и другую технику. А еще вы наносите больше урона по механическим противникам."
+    },
+    "survival": {
+      "en": "Improves your ability to avoid dangers on the World Map, and contend with hostile wildlife.",
+      "ru": "Улучшает вышу способность избегать опасностей на карте мира и справляться с дикой природой."
+    },
+    "toaster_repair": {
+      "en": "Allows you to repair broken toasters.",
+      "ru": "Позволяет чинить сломанные тостеры."
+    },
+    "weapon_modding": {
+      "en": "Allows you to modify your weapons, and strip them down for parts.",
+      "ru": "Позволяет вам модифицировать оружие и разбирать его на части."
+    },
+    "barter": {
+      "en": "Allows you to buy items for less, and sell them for more.",
+      "ru": "Позволяет покупать предметы подешевле, а продавать подороже."
+    },
+    "hard_ass": {
+      "en": "Allows you to intimidate others to do what you want and throw them off guard.",
+      "ru": "Позволяет оказывать психологическое давление на окружающих, чтобы они поступали так, как хочется вам, и заставать их врасплох."
+    },
+    "kiss_ass": {
+      "en": "Allows you to sweet-talk information out of others and bring them to your way of thinking.",
+      "ru": "Позволяет использовать методочивые речи, чтобы получать у собеседников информацию и убеждать их в верности вашей точки зрения."
+    },
+    "leadership": {
+      "en": "Inspires your nearby allies, and grants you abilities to command the battlefield.",
+      "ru": "Воодушевляет ближайших союзников, позволяет вам командовать на поле боя."
+    }
+  },
+  "group": {
+    "combat": {
+      "en": "Combat Skills",
+      "ru": "Боевые Навыки"
+    },
+    "general": {
+      "en": "General Skills",
+      "ru": "Общие Навыки"
+    },
+    "exploration": {
+      "en": "Exploration Skills",
+      "ru": "Исследовательские Навыки"
+    },
+    "social": {
+      "en": "Social Skills",
+      "ru": "Социальные Навыки"
     }
   }
 }

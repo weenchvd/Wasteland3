@@ -8,19 +8,31 @@
 #define SKILL_TEXT_HPP
 
 #include"common.hpp"
-#include"locator.hpp"
 #include"observerDLL.hpp"
+#include"plainText.hpp"
 #include"skillCommon.hpp"
 #include"skillTextFB_generated.h"
 #include<array>
+#include<assert.h>
+#include<type_traits>
 
 namespace game {
 namespace object {
 
 class SkillText {
 public:
-    using Text              = common::Text;
+    using text              = common::Text;
 
+private:
+    using language          = global::PlainText::Language;
+
+    static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
+    static constexpr auto sizeType_     { common::toUnderlying(Skill__Type::NUMBER_OF) };
+    static constexpr auto sizeGroup_    { common::toUnderlying(Skill__Group::NUMBER_OF) };
+
+    using language_bundle   = std::array<text, sizeLang_>;
+
+public:
     SkillText() noexcept {}
 
     SkillText(const SkillText&) = delete;
@@ -30,48 +42,62 @@ public:
 
     static bool isInitialized() { return initialized_; }
 
-    static const Text& name(Skill__Type id) noexcept;
+    static const text& name(Skill__Type id) noexcept;
 
-    static const Text& descr(Skill__Type id) noexcept;
+    static const text& descr(Skill__Type id) noexcept;
 
-    static const Text& group(Skill__Group id) noexcept;
+    static const text& group(Skill__Group id) noexcept;
 
 private:
-    static constexpr int sizeLang_      = common::toUnderlying(
-        global::PlainText::Language::NUMBER_OF);
-    static constexpr int sizeType_      = common::toUnderlying(Skill__Type::NUMBER_OF);
-    static constexpr int sizeGroup_     = common::toUnderlying(Skill__Group::NUMBER_OF);
-
-    static void setLanguage(global::PlainText::Language lang);
-
-    static void initLanguage(
-        const fbSkill::FB_LanguageBundle* table,
-        global::PlainText::Language lang
-    );
+    static void setLanguage(language lang) noexcept;
 
     static void initByType(
         const fbSkill::FB_SkillTextType* table,
-        std::array<Text, sizeType_>& ar
+        std::array<language_bundle, sizeType_>& ar
     );
 
     static void initByGroup(
         const fbSkill::FB_SkillTextGroup* table,
-        std::array<Text, sizeGroup_>& ar
+        std::array<language_bundle, sizeGroup_>& ar
     );
 
 private:
-    static common::ObserverDLL<void, global::PlainText::Language>   langObs_;
+    static common::ObserverDLL<void, language>      langObs_;
 
-    static std::array<std::array<Text, sizeType_>, sizeLang_>   name_;
-    static std::array<std::array<Text, sizeType_>, sizeLang_>   descr_;
-    static std::array<std::array<Text, sizeGroup_>, sizeLang_>  group_;
+    static std::array<language_bundle, sizeType_>   name_;
+    static std::array<language_bundle, sizeType_>   descr_;
+    static std::array<language_bundle, sizeGroup_>  group_;
 
-    static std::array<Text, sizeType_>*     ptrName_;
-    static std::array<Text, sizeType_>*     ptrDescr_;
-    static std::array<Text, sizeGroup_>*    ptrGroup_;
-
-    static bool                             initialized_;
+    static std::underlying_type_t<language>         langIndex_;
+    static bool                                     initialized_;
 };
+
+///************************************************************************************************
+
+inline const SkillText::text& SkillText::name(Skill__Type id) noexcept
+{
+    assert(common::isValidEnum(id));
+    return name_[common::toUnderlying(id)][langIndex_];
+}
+
+inline const SkillText::text& SkillText::descr(Skill__Type id) noexcept
+{
+    assert(common::isValidEnum(id));
+    return descr_[common::toUnderlying(id)][langIndex_];
+}
+
+inline const SkillText::text& SkillText::group(Skill__Group id) noexcept
+{
+    assert(common::isValidEnum(id));
+    return group_[common::toUnderlying(id)][langIndex_];
+}
+
+inline void SkillText::setLanguage(language lang) noexcept
+{
+    assert(common::isValidEnum(lang));
+    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
+    langIndex_ = common::toUnderlying(lang);
+}
 
 } // namespace object
 } // namespace game

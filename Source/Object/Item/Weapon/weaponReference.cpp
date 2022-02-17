@@ -16,16 +16,16 @@ namespace game {
 namespace object {
 
 using namespace std;
-using common::Text;
-using global::Locator;
 
 common::ObserverDLL<void, WeaponReferenceContainer::language>
-    WeaponReferenceContainer::langObs_;
+                            WeaponReferenceContainer::langObs_;
 
-std::vector<WeaponReference>    WeaponReferenceContainer::refs_;
-WeaponReference                 WeaponReferenceContainer::refMinimal_;
-unsigned char                   WeaponReferenceContainer::langIndex_    { 0 };
-bool                            WeaponReferenceContainer::initialized_  { false };
+vector<WeaponReference>     WeaponReferenceContainer::refs_;
+WeaponReference             WeaponReferenceContainer::refMinimal_;
+
+underlying_type_t<WeaponReferenceContainer::language>
+                            WeaponReferenceContainer::langIndex_    { 0 };
+bool                        WeaponReferenceContainer::initialized_  { false };
 
 ///************************************************************************************************
 
@@ -83,6 +83,8 @@ WeaponReference::WeaponReference() noexcept
 
 void WeaponReferenceContainer::initialize()
 {
+    using global::Locator;
+
     if (isInitialized()) return;
 
     unique_ptr<char[]> buffer{

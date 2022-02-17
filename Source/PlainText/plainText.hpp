@@ -32,7 +32,7 @@ public:
     using Language      = PlainText__Language;
     using General       = PlainText__General;
 
-    static constexpr unsigned char sizeLang_{ common::toUnderlying(PlainText::Language::NUMBER_OF) };
+    static constexpr auto sizeLang_{ common::toUnderlying(PlainText::Language::NUMBER_OF) };
 
 private:
     using text          = common::Text;

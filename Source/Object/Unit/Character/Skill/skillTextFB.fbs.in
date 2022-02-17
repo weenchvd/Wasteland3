@@ -4,52 +4,49 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+include "languageBundleFB.fbs";
+
 namespace fbSkill;
 
 file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
 file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
 table FB_SkillTextType {
-  automatic_weapons:string;
-  big_guns:string;
-  brawling:string;
-  melee_combat:string;
-  small_arms:string;
-  sniper_rifles:string;
-  animal_whisperer:string;
-  explosives:string;
-  first_aid:string;
-  sneaky_shit:string;
-  weird_science:string;
-  armor_modding:string;
-  lockpicking:string;
-  nerd_stuff:string;
-  mechanics:string;
-  survival:string;
-  toaster_repair:string;
-  weapon_modding:string;
-  barter:string;
-  hard_ass:string;
-  kiss_ass:string;
-  leadership:string;
+  automatic_weapons:fbCommon.FB_LanguageBundle;
+  big_guns:fbCommon.FB_LanguageBundle;
+  brawling:fbCommon.FB_LanguageBundle;
+  melee_combat:fbCommon.FB_LanguageBundle;
+  small_arms:fbCommon.FB_LanguageBundle;
+  sniper_rifles:fbCommon.FB_LanguageBundle;
+  animal_whisperer:fbCommon.FB_LanguageBundle;
+  explosives:fbCommon.FB_LanguageBundle;
+  first_aid:fbCommon.FB_LanguageBundle;
+  sneaky_shit:fbCommon.FB_LanguageBundle;
+  weird_science:fbCommon.FB_LanguageBundle;
+  armor_modding:fbCommon.FB_LanguageBundle;
+  lockpicking:fbCommon.FB_LanguageBundle;
+  nerd_stuff:fbCommon.FB_LanguageBundle;
+  mechanics:fbCommon.FB_LanguageBundle;
+  survival:fbCommon.FB_LanguageBundle;
+  toaster_repair:fbCommon.FB_LanguageBundle;
+  weapon_modding:fbCommon.FB_LanguageBundle;
+  barter:fbCommon.FB_LanguageBundle;
+  hard_ass:fbCommon.FB_LanguageBundle;
+  kiss_ass:fbCommon.FB_LanguageBundle;
+  leadership:fbCommon.FB_LanguageBundle;
 }
 
 table FB_SkillTextGroup {
-  combat:string;
-  general:string;
-  exploration:string;
-  social:string;
-}
-
-table FB_LanguageBundle {
-  name:FB_SkillTextType;
-  descr:FB_SkillTextType;
-  group:FB_SkillTextGroup;
+  combat:fbCommon.FB_LanguageBundle;
+  general:fbCommon.FB_LanguageBundle;
+  exploration:fbCommon.FB_LanguageBundle;
+  social:fbCommon.FB_LanguageBundle;
 }
 
 table FB_SkillText {
-  en:FB_LanguageBundle;
-  ru:FB_LanguageBundle;
+  name:FB_SkillTextType;
+  descr:FB_SkillTextType;
+  group:FB_SkillTextGroup;
 }
 
 root_type FB_SkillText;

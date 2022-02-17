@@ -6,6 +6,8 @@
 
 #include "flatbuffers/flatbuffers.h"
 
+#include "languageBundleFB_generated.h"
+
 namespace fbSkill {
 
 struct FB_SkillTextType;
@@ -13,9 +15,6 @@ struct FB_SkillTextTypeBuilder;
 
 struct FB_SkillTextGroup;
 struct FB_SkillTextGroupBuilder;
-
-struct FB_LanguageBundle;
-struct FB_LanguageBundleBuilder;
 
 struct FB_SkillText;
 struct FB_SkillTextBuilder;
@@ -46,118 +45,118 @@ struct FB_SkillTextType FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_KISS_ASS = 44,
     VT_LEADERSHIP = 46
   };
-  const flatbuffers::String *automatic_weapons() const {
-    return GetPointer<const flatbuffers::String *>(VT_AUTOMATIC_WEAPONS);
+  const fbCommon::FB_LanguageBundle *automatic_weapons() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_AUTOMATIC_WEAPONS);
   }
-  const flatbuffers::String *big_guns() const {
-    return GetPointer<const flatbuffers::String *>(VT_BIG_GUNS);
+  const fbCommon::FB_LanguageBundle *big_guns() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BIG_GUNS);
   }
-  const flatbuffers::String *brawling() const {
-    return GetPointer<const flatbuffers::String *>(VT_BRAWLING);
+  const fbCommon::FB_LanguageBundle *brawling() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BRAWLING);
   }
-  const flatbuffers::String *melee_combat() const {
-    return GetPointer<const flatbuffers::String *>(VT_MELEE_COMBAT);
+  const fbCommon::FB_LanguageBundle *melee_combat() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_MELEE_COMBAT);
   }
-  const flatbuffers::String *small_arms() const {
-    return GetPointer<const flatbuffers::String *>(VT_SMALL_ARMS);
+  const fbCommon::FB_LanguageBundle *small_arms() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SMALL_ARMS);
   }
-  const flatbuffers::String *sniper_rifles() const {
-    return GetPointer<const flatbuffers::String *>(VT_SNIPER_RIFLES);
+  const fbCommon::FB_LanguageBundle *sniper_rifles() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SNIPER_RIFLES);
   }
-  const flatbuffers::String *animal_whisperer() const {
-    return GetPointer<const flatbuffers::String *>(VT_ANIMAL_WHISPERER);
+  const fbCommon::FB_LanguageBundle *animal_whisperer() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_ANIMAL_WHISPERER);
   }
-  const flatbuffers::String *explosives() const {
-    return GetPointer<const flatbuffers::String *>(VT_EXPLOSIVES);
+  const fbCommon::FB_LanguageBundle *explosives() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_EXPLOSIVES);
   }
-  const flatbuffers::String *first_aid() const {
-    return GetPointer<const flatbuffers::String *>(VT_FIRST_AID);
+  const fbCommon::FB_LanguageBundle *first_aid() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_FIRST_AID);
   }
-  const flatbuffers::String *sneaky_shit() const {
-    return GetPointer<const flatbuffers::String *>(VT_SNEAKY_SHIT);
+  const fbCommon::FB_LanguageBundle *sneaky_shit() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SNEAKY_SHIT);
   }
-  const flatbuffers::String *weird_science() const {
-    return GetPointer<const flatbuffers::String *>(VT_WEIRD_SCIENCE);
+  const fbCommon::FB_LanguageBundle *weird_science() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_WEIRD_SCIENCE);
   }
-  const flatbuffers::String *armor_modding() const {
-    return GetPointer<const flatbuffers::String *>(VT_ARMOR_MODDING);
+  const fbCommon::FB_LanguageBundle *armor_modding() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_ARMOR_MODDING);
   }
-  const flatbuffers::String *lockpicking() const {
-    return GetPointer<const flatbuffers::String *>(VT_LOCKPICKING);
+  const fbCommon::FB_LanguageBundle *lockpicking() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_LOCKPICKING);
   }
-  const flatbuffers::String *nerd_stuff() const {
-    return GetPointer<const flatbuffers::String *>(VT_NERD_STUFF);
+  const fbCommon::FB_LanguageBundle *nerd_stuff() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_NERD_STUFF);
   }
-  const flatbuffers::String *mechanics() const {
-    return GetPointer<const flatbuffers::String *>(VT_MECHANICS);
+  const fbCommon::FB_LanguageBundle *mechanics() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_MECHANICS);
   }
-  const flatbuffers::String *survival() const {
-    return GetPointer<const flatbuffers::String *>(VT_SURVIVAL);
+  const fbCommon::FB_LanguageBundle *survival() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SURVIVAL);
   }
-  const flatbuffers::String *toaster_repair() const {
-    return GetPointer<const flatbuffers::String *>(VT_TOASTER_REPAIR);
+  const fbCommon::FB_LanguageBundle *toaster_repair() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_TOASTER_REPAIR);
   }
-  const flatbuffers::String *weapon_modding() const {
-    return GetPointer<const flatbuffers::String *>(VT_WEAPON_MODDING);
+  const fbCommon::FB_LanguageBundle *weapon_modding() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_WEAPON_MODDING);
   }
-  const flatbuffers::String *barter() const {
-    return GetPointer<const flatbuffers::String *>(VT_BARTER);
+  const fbCommon::FB_LanguageBundle *barter() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BARTER);
   }
-  const flatbuffers::String *hard_ass() const {
-    return GetPointer<const flatbuffers::String *>(VT_HARD_ASS);
+  const fbCommon::FB_LanguageBundle *hard_ass() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_HARD_ASS);
   }
-  const flatbuffers::String *kiss_ass() const {
-    return GetPointer<const flatbuffers::String *>(VT_KISS_ASS);
+  const fbCommon::FB_LanguageBundle *kiss_ass() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_KISS_ASS);
   }
-  const flatbuffers::String *leadership() const {
-    return GetPointer<const flatbuffers::String *>(VT_LEADERSHIP);
+  const fbCommon::FB_LanguageBundle *leadership() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_LEADERSHIP);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_AUTOMATIC_WEAPONS) &&
-           verifier.VerifyString(automatic_weapons()) &&
+           verifier.VerifyTable(automatic_weapons()) &&
            VerifyOffset(verifier, VT_BIG_GUNS) &&
-           verifier.VerifyString(big_guns()) &&
+           verifier.VerifyTable(big_guns()) &&
            VerifyOffset(verifier, VT_BRAWLING) &&
-           verifier.VerifyString(brawling()) &&
+           verifier.VerifyTable(brawling()) &&
            VerifyOffset(verifier, VT_MELEE_COMBAT) &&
-           verifier.VerifyString(melee_combat()) &&
+           verifier.VerifyTable(melee_combat()) &&
            VerifyOffset(verifier, VT_SMALL_ARMS) &&
-           verifier.VerifyString(small_arms()) &&
+           verifier.VerifyTable(small_arms()) &&
            VerifyOffset(verifier, VT_SNIPER_RIFLES) &&
-           verifier.VerifyString(sniper_rifles()) &&
+           verifier.VerifyTable(sniper_rifles()) &&
            VerifyOffset(verifier, VT_ANIMAL_WHISPERER) &&
-           verifier.VerifyString(animal_whisperer()) &&
+           verifier.VerifyTable(animal_whisperer()) &&
            VerifyOffset(verifier, VT_EXPLOSIVES) &&
-           verifier.VerifyString(explosives()) &&
+           verifier.VerifyTable(explosives()) &&
            VerifyOffset(verifier, VT_FIRST_AID) &&
-           verifier.VerifyString(first_aid()) &&
+           verifier.VerifyTable(first_aid()) &&
            VerifyOffset(verifier, VT_SNEAKY_SHIT) &&
-           verifier.VerifyString(sneaky_shit()) &&
+           verifier.VerifyTable(sneaky_shit()) &&
            VerifyOffset(verifier, VT_WEIRD_SCIENCE) &&
-           verifier.VerifyString(weird_science()) &&
+           verifier.VerifyTable(weird_science()) &&
            VerifyOffset(verifier, VT_ARMOR_MODDING) &&
-           verifier.VerifyString(armor_modding()) &&
+           verifier.VerifyTable(armor_modding()) &&
            VerifyOffset(verifier, VT_LOCKPICKING) &&
-           verifier.VerifyString(lockpicking()) &&
+           verifier.VerifyTable(lockpicking()) &&
            VerifyOffset(verifier, VT_NERD_STUFF) &&
-           verifier.VerifyString(nerd_stuff()) &&
+           verifier.VerifyTable(nerd_stuff()) &&
            VerifyOffset(verifier, VT_MECHANICS) &&
-           verifier.VerifyString(mechanics()) &&
+           verifier.VerifyTable(mechanics()) &&
            VerifyOffset(verifier, VT_SURVIVAL) &&
-           verifier.VerifyString(survival()) &&
+           verifier.VerifyTable(survival()) &&
            VerifyOffset(verifier, VT_TOASTER_REPAIR) &&
-           verifier.VerifyString(toaster_repair()) &&
+           verifier.VerifyTable(toaster_repair()) &&
            VerifyOffset(verifier, VT_WEAPON_MODDING) &&
-           verifier.VerifyString(weapon_modding()) &&
+           verifier.VerifyTable(weapon_modding()) &&
            VerifyOffset(verifier, VT_BARTER) &&
-           verifier.VerifyString(barter()) &&
+           verifier.VerifyTable(barter()) &&
            VerifyOffset(verifier, VT_HARD_ASS) &&
-           verifier.VerifyString(hard_ass()) &&
+           verifier.VerifyTable(hard_ass()) &&
            VerifyOffset(verifier, VT_KISS_ASS) &&
-           verifier.VerifyString(kiss_ass()) &&
+           verifier.VerifyTable(kiss_ass()) &&
            VerifyOffset(verifier, VT_LEADERSHIP) &&
-           verifier.VerifyString(leadership()) &&
+           verifier.VerifyTable(leadership()) &&
            verifier.EndTable();
   }
 };
@@ -166,70 +165,70 @@ struct FB_SkillTextTypeBuilder {
   typedef FB_SkillTextType Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_automatic_weapons(flatbuffers::Offset<flatbuffers::String> automatic_weapons) {
+  void add_automatic_weapons(flatbuffers::Offset<fbCommon::FB_LanguageBundle> automatic_weapons) {
     fbb_.AddOffset(FB_SkillTextType::VT_AUTOMATIC_WEAPONS, automatic_weapons);
   }
-  void add_big_guns(flatbuffers::Offset<flatbuffers::String> big_guns) {
+  void add_big_guns(flatbuffers::Offset<fbCommon::FB_LanguageBundle> big_guns) {
     fbb_.AddOffset(FB_SkillTextType::VT_BIG_GUNS, big_guns);
   }
-  void add_brawling(flatbuffers::Offset<flatbuffers::String> brawling) {
+  void add_brawling(flatbuffers::Offset<fbCommon::FB_LanguageBundle> brawling) {
     fbb_.AddOffset(FB_SkillTextType::VT_BRAWLING, brawling);
   }
-  void add_melee_combat(flatbuffers::Offset<flatbuffers::String> melee_combat) {
+  void add_melee_combat(flatbuffers::Offset<fbCommon::FB_LanguageBundle> melee_combat) {
     fbb_.AddOffset(FB_SkillTextType::VT_MELEE_COMBAT, melee_combat);
   }
-  void add_small_arms(flatbuffers::Offset<flatbuffers::String> small_arms) {
+  void add_small_arms(flatbuffers::Offset<fbCommon::FB_LanguageBundle> small_arms) {
     fbb_.AddOffset(FB_SkillTextType::VT_SMALL_ARMS, small_arms);
   }
-  void add_sniper_rifles(flatbuffers::Offset<flatbuffers::String> sniper_rifles) {
+  void add_sniper_rifles(flatbuffers::Offset<fbCommon::FB_LanguageBundle> sniper_rifles) {
     fbb_.AddOffset(FB_SkillTextType::VT_SNIPER_RIFLES, sniper_rifles);
   }
-  void add_animal_whisperer(flatbuffers::Offset<flatbuffers::String> animal_whisperer) {
+  void add_animal_whisperer(flatbuffers::Offset<fbCommon::FB_LanguageBundle> animal_whisperer) {
     fbb_.AddOffset(FB_SkillTextType::VT_ANIMAL_WHISPERER, animal_whisperer);
   }
-  void add_explosives(flatbuffers::Offset<flatbuffers::String> explosives) {
+  void add_explosives(flatbuffers::Offset<fbCommon::FB_LanguageBundle> explosives) {
     fbb_.AddOffset(FB_SkillTextType::VT_EXPLOSIVES, explosives);
   }
-  void add_first_aid(flatbuffers::Offset<flatbuffers::String> first_aid) {
+  void add_first_aid(flatbuffers::Offset<fbCommon::FB_LanguageBundle> first_aid) {
     fbb_.AddOffset(FB_SkillTextType::VT_FIRST_AID, first_aid);
   }
-  void add_sneaky_shit(flatbuffers::Offset<flatbuffers::String> sneaky_shit) {
+  void add_sneaky_shit(flatbuffers::Offset<fbCommon::FB_LanguageBundle> sneaky_shit) {
     fbb_.AddOffset(FB_SkillTextType::VT_SNEAKY_SHIT, sneaky_shit);
   }
-  void add_weird_science(flatbuffers::Offset<flatbuffers::String> weird_science) {
+  void add_weird_science(flatbuffers::Offset<fbCommon::FB_LanguageBundle> weird_science) {
     fbb_.AddOffset(FB_SkillTextType::VT_WEIRD_SCIENCE, weird_science);
   }
-  void add_armor_modding(flatbuffers::Offset<flatbuffers::String> armor_modding) {
+  void add_armor_modding(flatbuffers::Offset<fbCommon::FB_LanguageBundle> armor_modding) {
     fbb_.AddOffset(FB_SkillTextType::VT_ARMOR_MODDING, armor_modding);
   }
-  void add_lockpicking(flatbuffers::Offset<flatbuffers::String> lockpicking) {
+  void add_lockpicking(flatbuffers::Offset<fbCommon::FB_LanguageBundle> lockpicking) {
     fbb_.AddOffset(FB_SkillTextType::VT_LOCKPICKING, lockpicking);
   }
-  void add_nerd_stuff(flatbuffers::Offset<flatbuffers::String> nerd_stuff) {
+  void add_nerd_stuff(flatbuffers::Offset<fbCommon::FB_LanguageBundle> nerd_stuff) {
     fbb_.AddOffset(FB_SkillTextType::VT_NERD_STUFF, nerd_stuff);
   }
-  void add_mechanics(flatbuffers::Offset<flatbuffers::String> mechanics) {
+  void add_mechanics(flatbuffers::Offset<fbCommon::FB_LanguageBundle> mechanics) {
     fbb_.AddOffset(FB_SkillTextType::VT_MECHANICS, mechanics);
   }
-  void add_survival(flatbuffers::Offset<flatbuffers::String> survival) {
+  void add_survival(flatbuffers::Offset<fbCommon::FB_LanguageBundle> survival) {
     fbb_.AddOffset(FB_SkillTextType::VT_SURVIVAL, survival);
   }
-  void add_toaster_repair(flatbuffers::Offset<flatbuffers::String> toaster_repair) {
+  void add_toaster_repair(flatbuffers::Offset<fbCommon::FB_LanguageBundle> toaster_repair) {
     fbb_.AddOffset(FB_SkillTextType::VT_TOASTER_REPAIR, toaster_repair);
   }
-  void add_weapon_modding(flatbuffers::Offset<flatbuffers::String> weapon_modding) {
+  void add_weapon_modding(flatbuffers::Offset<fbCommon::FB_LanguageBundle> weapon_modding) {
     fbb_.AddOffset(FB_SkillTextType::VT_WEAPON_MODDING, weapon_modding);
   }
-  void add_barter(flatbuffers::Offset<flatbuffers::String> barter) {
+  void add_barter(flatbuffers::Offset<fbCommon::FB_LanguageBundle> barter) {
     fbb_.AddOffset(FB_SkillTextType::VT_BARTER, barter);
   }
-  void add_hard_ass(flatbuffers::Offset<flatbuffers::String> hard_ass) {
+  void add_hard_ass(flatbuffers::Offset<fbCommon::FB_LanguageBundle> hard_ass) {
     fbb_.AddOffset(FB_SkillTextType::VT_HARD_ASS, hard_ass);
   }
-  void add_kiss_ass(flatbuffers::Offset<flatbuffers::String> kiss_ass) {
+  void add_kiss_ass(flatbuffers::Offset<fbCommon::FB_LanguageBundle> kiss_ass) {
     fbb_.AddOffset(FB_SkillTextType::VT_KISS_ASS, kiss_ass);
   }
-  void add_leadership(flatbuffers::Offset<flatbuffers::String> leadership) {
+  void add_leadership(flatbuffers::Offset<fbCommon::FB_LanguageBundle> leadership) {
     fbb_.AddOffset(FB_SkillTextType::VT_LEADERSHIP, leadership);
   }
   explicit FB_SkillTextTypeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -245,28 +244,28 @@ struct FB_SkillTextTypeBuilder {
 
 inline flatbuffers::Offset<FB_SkillTextType> CreateFB_SkillTextType(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::String> automatic_weapons = 0,
-    flatbuffers::Offset<flatbuffers::String> big_guns = 0,
-    flatbuffers::Offset<flatbuffers::String> brawling = 0,
-    flatbuffers::Offset<flatbuffers::String> melee_combat = 0,
-    flatbuffers::Offset<flatbuffers::String> small_arms = 0,
-    flatbuffers::Offset<flatbuffers::String> sniper_rifles = 0,
-    flatbuffers::Offset<flatbuffers::String> animal_whisperer = 0,
-    flatbuffers::Offset<flatbuffers::String> explosives = 0,
-    flatbuffers::Offset<flatbuffers::String> first_aid = 0,
-    flatbuffers::Offset<flatbuffers::String> sneaky_shit = 0,
-    flatbuffers::Offset<flatbuffers::String> weird_science = 0,
-    flatbuffers::Offset<flatbuffers::String> armor_modding = 0,
-    flatbuffers::Offset<flatbuffers::String> lockpicking = 0,
-    flatbuffers::Offset<flatbuffers::String> nerd_stuff = 0,
-    flatbuffers::Offset<flatbuffers::String> mechanics = 0,
-    flatbuffers::Offset<flatbuffers::String> survival = 0,
-    flatbuffers::Offset<flatbuffers::String> toaster_repair = 0,
-    flatbuffers::Offset<flatbuffers::String> weapon_modding = 0,
-    flatbuffers::Offset<flatbuffers::String> barter = 0,
-    flatbuffers::Offset<flatbuffers::String> hard_ass = 0,
-    flatbuffers::Offset<flatbuffers::String> kiss_ass = 0,
-    flatbuffers::Offset<flatbuffers::String> leadership = 0) {
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> automatic_weapons = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> big_guns = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> brawling = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> melee_combat = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> small_arms = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> sniper_rifles = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> animal_whisperer = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> explosives = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> first_aid = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> sneaky_shit = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> weird_science = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> armor_modding = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> lockpicking = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> nerd_stuff = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> mechanics = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> survival = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> toaster_repair = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> weapon_modding = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> barter = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> hard_ass = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> kiss_ass = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> leadership = 0) {
   FB_SkillTextTypeBuilder builder_(_fbb);
   builder_.add_leadership(leadership);
   builder_.add_kiss_ass(kiss_ass);
@@ -293,78 +292,6 @@ inline flatbuffers::Offset<FB_SkillTextType> CreateFB_SkillTextType(
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<FB_SkillTextType> CreateFB_SkillTextTypeDirect(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    const char *automatic_weapons = nullptr,
-    const char *big_guns = nullptr,
-    const char *brawling = nullptr,
-    const char *melee_combat = nullptr,
-    const char *small_arms = nullptr,
-    const char *sniper_rifles = nullptr,
-    const char *animal_whisperer = nullptr,
-    const char *explosives = nullptr,
-    const char *first_aid = nullptr,
-    const char *sneaky_shit = nullptr,
-    const char *weird_science = nullptr,
-    const char *armor_modding = nullptr,
-    const char *lockpicking = nullptr,
-    const char *nerd_stuff = nullptr,
-    const char *mechanics = nullptr,
-    const char *survival = nullptr,
-    const char *toaster_repair = nullptr,
-    const char *weapon_modding = nullptr,
-    const char *barter = nullptr,
-    const char *hard_ass = nullptr,
-    const char *kiss_ass = nullptr,
-    const char *leadership = nullptr) {
-  auto automatic_weapons__ = automatic_weapons ? _fbb.CreateString(automatic_weapons) : 0;
-  auto big_guns__ = big_guns ? _fbb.CreateString(big_guns) : 0;
-  auto brawling__ = brawling ? _fbb.CreateString(brawling) : 0;
-  auto melee_combat__ = melee_combat ? _fbb.CreateString(melee_combat) : 0;
-  auto small_arms__ = small_arms ? _fbb.CreateString(small_arms) : 0;
-  auto sniper_rifles__ = sniper_rifles ? _fbb.CreateString(sniper_rifles) : 0;
-  auto animal_whisperer__ = animal_whisperer ? _fbb.CreateString(animal_whisperer) : 0;
-  auto explosives__ = explosives ? _fbb.CreateString(explosives) : 0;
-  auto first_aid__ = first_aid ? _fbb.CreateString(first_aid) : 0;
-  auto sneaky_shit__ = sneaky_shit ? _fbb.CreateString(sneaky_shit) : 0;
-  auto weird_science__ = weird_science ? _fbb.CreateString(weird_science) : 0;
-  auto armor_modding__ = armor_modding ? _fbb.CreateString(armor_modding) : 0;
-  auto lockpicking__ = lockpicking ? _fbb.CreateString(lockpicking) : 0;
-  auto nerd_stuff__ = nerd_stuff ? _fbb.CreateString(nerd_stuff) : 0;
-  auto mechanics__ = mechanics ? _fbb.CreateString(mechanics) : 0;
-  auto survival__ = survival ? _fbb.CreateString(survival) : 0;
-  auto toaster_repair__ = toaster_repair ? _fbb.CreateString(toaster_repair) : 0;
-  auto weapon_modding__ = weapon_modding ? _fbb.CreateString(weapon_modding) : 0;
-  auto barter__ = barter ? _fbb.CreateString(barter) : 0;
-  auto hard_ass__ = hard_ass ? _fbb.CreateString(hard_ass) : 0;
-  auto kiss_ass__ = kiss_ass ? _fbb.CreateString(kiss_ass) : 0;
-  auto leadership__ = leadership ? _fbb.CreateString(leadership) : 0;
-  return fbSkill::CreateFB_SkillTextType(
-      _fbb,
-      automatic_weapons__,
-      big_guns__,
-      brawling__,
-      melee_combat__,
-      small_arms__,
-      sniper_rifles__,
-      animal_whisperer__,
-      explosives__,
-      first_aid__,
-      sneaky_shit__,
-      weird_science__,
-      armor_modding__,
-      lockpicking__,
-      nerd_stuff__,
-      mechanics__,
-      survival__,
-      toaster_repair__,
-      weapon_modding__,
-      barter__,
-      hard_ass__,
-      kiss_ass__,
-      leadership__);
-}
-
 struct FB_SkillTextGroup FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef FB_SkillTextGroupBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
@@ -373,28 +300,28 @@ struct FB_SkillTextGroup FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_EXPLORATION = 8,
     VT_SOCIAL = 10
   };
-  const flatbuffers::String *combat() const {
-    return GetPointer<const flatbuffers::String *>(VT_COMBAT);
+  const fbCommon::FB_LanguageBundle *combat() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_COMBAT);
   }
-  const flatbuffers::String *general() const {
-    return GetPointer<const flatbuffers::String *>(VT_GENERAL);
+  const fbCommon::FB_LanguageBundle *general() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_GENERAL);
   }
-  const flatbuffers::String *exploration() const {
-    return GetPointer<const flatbuffers::String *>(VT_EXPLORATION);
+  const fbCommon::FB_LanguageBundle *exploration() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_EXPLORATION);
   }
-  const flatbuffers::String *social() const {
-    return GetPointer<const flatbuffers::String *>(VT_SOCIAL);
+  const fbCommon::FB_LanguageBundle *social() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_SOCIAL);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_COMBAT) &&
-           verifier.VerifyString(combat()) &&
+           verifier.VerifyTable(combat()) &&
            VerifyOffset(verifier, VT_GENERAL) &&
-           verifier.VerifyString(general()) &&
+           verifier.VerifyTable(general()) &&
            VerifyOffset(verifier, VT_EXPLORATION) &&
-           verifier.VerifyString(exploration()) &&
+           verifier.VerifyTable(exploration()) &&
            VerifyOffset(verifier, VT_SOCIAL) &&
-           verifier.VerifyString(social()) &&
+           verifier.VerifyTable(social()) &&
            verifier.EndTable();
   }
 };
@@ -403,16 +330,16 @@ struct FB_SkillTextGroupBuilder {
   typedef FB_SkillTextGroup Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_combat(flatbuffers::Offset<flatbuffers::String> combat) {
+  void add_combat(flatbuffers::Offset<fbCommon::FB_LanguageBundle> combat) {
     fbb_.AddOffset(FB_SkillTextGroup::VT_COMBAT, combat);
   }
-  void add_general(flatbuffers::Offset<flatbuffers::String> general) {
+  void add_general(flatbuffers::Offset<fbCommon::FB_LanguageBundle> general) {
     fbb_.AddOffset(FB_SkillTextGroup::VT_GENERAL, general);
   }
-  void add_exploration(flatbuffers::Offset<flatbuffers::String> exploration) {
+  void add_exploration(flatbuffers::Offset<fbCommon::FB_LanguageBundle> exploration) {
     fbb_.AddOffset(FB_SkillTextGroup::VT_EXPLORATION, exploration);
   }
-  void add_social(flatbuffers::Offset<flatbuffers::String> social) {
+  void add_social(flatbuffers::Offset<fbCommon::FB_LanguageBundle> social) {
     fbb_.AddOffset(FB_SkillTextGroup::VT_SOCIAL, social);
   }
   explicit FB_SkillTextGroupBuilder(flatbuffers::FlatBufferBuilder &_fbb)
@@ -428,10 +355,10 @@ struct FB_SkillTextGroupBuilder {
 
 inline flatbuffers::Offset<FB_SkillTextGroup> CreateFB_SkillTextGroup(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::String> combat = 0,
-    flatbuffers::Offset<flatbuffers::String> general = 0,
-    flatbuffers::Offset<flatbuffers::String> exploration = 0,
-    flatbuffers::Offset<flatbuffers::String> social = 0) {
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> combat = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> general = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> exploration = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> social = 0) {
   FB_SkillTextGroupBuilder builder_(_fbb);
   builder_.add_social(social);
   builder_.add_exploration(exploration);
@@ -440,26 +367,8 @@ inline flatbuffers::Offset<FB_SkillTextGroup> CreateFB_SkillTextGroup(
   return builder_.Finish();
 }
 
-inline flatbuffers::Offset<FB_SkillTextGroup> CreateFB_SkillTextGroupDirect(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    const char *combat = nullptr,
-    const char *general = nullptr,
-    const char *exploration = nullptr,
-    const char *social = nullptr) {
-  auto combat__ = combat ? _fbb.CreateString(combat) : 0;
-  auto general__ = general ? _fbb.CreateString(general) : 0;
-  auto exploration__ = exploration ? _fbb.CreateString(exploration) : 0;
-  auto social__ = social ? _fbb.CreateString(social) : 0;
-  return fbSkill::CreateFB_SkillTextGroup(
-      _fbb,
-      combat__,
-      general__,
-      exploration__,
-      social__);
-}
-
-struct FB_LanguageBundle FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_LanguageBundleBuilder Builder;
+struct FB_SkillText FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef FB_SkillTextBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_NAME = 4,
     VT_DESCR = 6,
@@ -486,73 +395,18 @@ struct FB_LanguageBundle FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct FB_LanguageBundleBuilder {
-  typedef FB_LanguageBundle Table;
-  flatbuffers::FlatBufferBuilder &fbb_;
-  flatbuffers::uoffset_t start_;
-  void add_name(flatbuffers::Offset<fbSkill::FB_SkillTextType> name) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_NAME, name);
-  }
-  void add_descr(flatbuffers::Offset<fbSkill::FB_SkillTextType> descr) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_DESCR, descr);
-  }
-  void add_group(flatbuffers::Offset<fbSkill::FB_SkillTextGroup> group) {
-    fbb_.AddOffset(FB_LanguageBundle::VT_GROUP, group);
-  }
-  explicit FB_LanguageBundleBuilder(flatbuffers::FlatBufferBuilder &_fbb)
-        : fbb_(_fbb) {
-    start_ = fbb_.StartTable();
-  }
-  flatbuffers::Offset<FB_LanguageBundle> Finish() {
-    const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<FB_LanguageBundle>(end);
-    return o;
-  }
-};
-
-inline flatbuffers::Offset<FB_LanguageBundle> CreateFB_LanguageBundle(
-    flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<fbSkill::FB_SkillTextType> name = 0,
-    flatbuffers::Offset<fbSkill::FB_SkillTextType> descr = 0,
-    flatbuffers::Offset<fbSkill::FB_SkillTextGroup> group = 0) {
-  FB_LanguageBundleBuilder builder_(_fbb);
-  builder_.add_group(group);
-  builder_.add_descr(descr);
-  builder_.add_name(name);
-  return builder_.Finish();
-}
-
-struct FB_SkillText FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_SkillTextBuilder Builder;
-  enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_EN = 4,
-    VT_RU = 6
-  };
-  const fbSkill::FB_LanguageBundle *en() const {
-    return GetPointer<const fbSkill::FB_LanguageBundle *>(VT_EN);
-  }
-  const fbSkill::FB_LanguageBundle *ru() const {
-    return GetPointer<const fbSkill::FB_LanguageBundle *>(VT_RU);
-  }
-  bool Verify(flatbuffers::Verifier &verifier) const {
-    return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_EN) &&
-           verifier.VerifyTable(en()) &&
-           VerifyOffset(verifier, VT_RU) &&
-           verifier.VerifyTable(ru()) &&
-           verifier.EndTable();
-  }
-};
-
 struct FB_SkillTextBuilder {
   typedef FB_SkillText Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_en(flatbuffers::Offset<fbSkill::FB_LanguageBundle> en) {
-    fbb_.AddOffset(FB_SkillText::VT_EN, en);
+  void add_name(flatbuffers::Offset<fbSkill::FB_SkillTextType> name) {
+    fbb_.AddOffset(FB_SkillText::VT_NAME, name);
   }
-  void add_ru(flatbuffers::Offset<fbSkill::FB_LanguageBundle> ru) {
-    fbb_.AddOffset(FB_SkillText::VT_RU, ru);
+  void add_descr(flatbuffers::Offset<fbSkill::FB_SkillTextType> descr) {
+    fbb_.AddOffset(FB_SkillText::VT_DESCR, descr);
+  }
+  void add_group(flatbuffers::Offset<fbSkill::FB_SkillTextGroup> group) {
+    fbb_.AddOffset(FB_SkillText::VT_GROUP, group);
   }
   explicit FB_SkillTextBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -567,11 +421,13 @@ struct FB_SkillTextBuilder {
 
 inline flatbuffers::Offset<FB_SkillText> CreateFB_SkillText(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<fbSkill::FB_LanguageBundle> en = 0,
-    flatbuffers::Offset<fbSkill::FB_LanguageBundle> ru = 0) {
+    flatbuffers::Offset<fbSkill::FB_SkillTextType> name = 0,
+    flatbuffers::Offset<fbSkill::FB_SkillTextType> descr = 0,
+    flatbuffers::Offset<fbSkill::FB_SkillTextGroup> group = 0) {
   FB_SkillTextBuilder builder_(_fbb);
-  builder_.add_ru(ru);
-  builder_.add_en(en);
+  builder_.add_group(group);
+  builder_.add_descr(descr);
+  builder_.add_name(name);
   return builder_.Finish();
 }
 

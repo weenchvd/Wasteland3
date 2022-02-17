@@ -4,29 +4,26 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+include "languageBundleFB.fbs";
+
 namespace fbAttribute;
 
 file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
 file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
 table FB_AttributeTextType {
-  coordination:string;
-  luck:string;
-  awareness:string;
-  strength:string;
-  speed:string;
-  intelligence:string;
-  charisma:string;
-}
-
-table FB_LanguageBundle {
-  name:FB_AttributeTextType;
-  descr:FB_AttributeTextType;
+  coordination:fbCommon.FB_LanguageBundle;
+  luck:fbCommon.FB_LanguageBundle;
+  awareness:fbCommon.FB_LanguageBundle;
+  strength:fbCommon.FB_LanguageBundle;
+  speed:fbCommon.FB_LanguageBundle;
+  intelligence:fbCommon.FB_LanguageBundle;
+  charisma:fbCommon.FB_LanguageBundle;
 }
 
 table FB_AttributeText {
-  en:FB_LanguageBundle;
-  ru:FB_LanguageBundle;
+  name:FB_AttributeTextType;
+  descr:FB_AttributeTextType;
 }
 
 root_type FB_AttributeText;

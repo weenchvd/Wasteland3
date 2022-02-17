@@ -19,6 +19,7 @@
 #include"weaponReferenceFB_generated.h"
 #include<array>
 #include<assert.h>
+#include<type_traits>
 #include<utility>
 #include<vector>
 
@@ -126,14 +127,14 @@ public:
 
     static bool isInitialized() noexcept { return initialized_; }
 
-    static bool languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return langIndex_; }
 
     static const WeaponReference& weaponReference(Weapon__Model id) noexcept;
 
     static const WeaponReference& weaponReferenceMinimal() noexcept;
 
 private:
-    static void setLanguage(language lang);
+    static void setLanguage(language lang) noexcept;
 
     static void initContainer(const fbWeapon::FB_WeaponReferenceContainer* container);
 
@@ -146,7 +147,8 @@ private:
 
     static std::vector<WeaponReference>             refs_;
     static WeaponReference                          refMinimal_;
-    static unsigned char                            langIndex_;
+
+    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
@@ -173,7 +175,7 @@ inline const WeaponReference& WeaponReferenceContainer::weaponReferenceMinimal()
     return refMinimal_;
 }
 
-inline void WeaponReferenceContainer::setLanguage(WeaponReferenceContainer::language lang)
+inline void WeaponReferenceContainer::setLanguage(WeaponReferenceContainer::language lang) noexcept
 {
     assert(common::isValidEnum(lang));
     assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);

@@ -7,62 +7,30 @@
 #include"attributePath.hpp"
 #include"attributeText.hpp"
 #include"flatbuffersAux.hpp"
+#include"flatbuffersLanguageBundle.hpp"
+#include"locator.hpp"
 #include<assert.h>
 #include<memory>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
 using namespace std;
-using common::Text;
-using global::PlainText;
-using global::Locator;
 
-common::ObserverDLL<void, PlainText::Language>
-    AttributeText::langObs_;
+common::ObserverDLL<void, AttributeText::language> AttributeText::langObs_;
 
-std::array<
-    std::array<Text, AttributeText::sizeType_>,
-    AttributeText::sizeLang_
->
-    AttributeText::name_;
+array<AttributeText::language_bundle, AttributeText::sizeType_> AttributeText::name_;
+array<AttributeText::language_bundle, AttributeText::sizeType_> AttributeText::descr_;
 
-std::array<
-    std::array<Text, AttributeText::sizeType_>,
-    AttributeText::sizeLang_
->
-    AttributeText::descr_;
+underlying_type_t<AttributeText::language>  AttributeText::langIndex_   { 0 };
+bool                                        AttributeText::initialized_ { false };
 
-std::array<Text, AttributeText::sizeType_>* AttributeText::ptrName_ { nullptr };
-std::array<Text, AttributeText::sizeType_>* AttributeText::ptrDescr_{ nullptr };
-
-bool AttributeText::initialized_{ false };
-
-
-void AttributeText::setLanguage(PlainText::Language lang)
-{
-    assert(common::isValidEnum(lang));
-    ptrName_    = { &name_[common::toUnderlying(lang)] };
-    ptrDescr_   = { &descr_[common::toUnderlying(lang)] };
-}
-
-const Text& AttributeText::name(Attribute__Type id) noexcept
-{
-    assert(common::isValidEnum(id));
-    assert(ptrName_ != nullptr);
-    return (*ptrName_)[common::toUnderlying(id)];
-}
-
-const Text& AttributeText::descr(Attribute__Type id) noexcept
-{
-    assert(common::isValidEnum(id));
-    assert(ptrDescr_ != nullptr);
-    return (*ptrDescr_)[common::toUnderlying(id)];
-}
+///************************************************************************************************
 
 void AttributeText::initialize()
 {
+    using global::Locator;
+
     if (isInitialized()) return;
 
     assert(sizeLang_ > 0);
@@ -76,8 +44,8 @@ void AttributeText::initialize()
     };
     assert(table != nullptr);
 
-    initLanguage(table->en(), PlainText::Language::EN);
-    initLanguage(table->ru(), PlainText::Language::RU);
+    initByType(table->name(), name_);
+    initByType(table->descr(), descr_);
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -87,34 +55,40 @@ void AttributeText::initialize()
     initialized_ = true;
 }
 
-void AttributeText::initLanguage(
-    const fbAttribute::FB_LanguageBundle* table,
-    PlainText::Language lang)
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    initByType(table->name(), name_[common::toUnderlying(lang)]);
-    initByType(table->descr(), descr_[common::toUnderlying(lang)]);
-}
-
 void AttributeText::initByType(
     const fbAttribute::FB_AttributeTextType* table,
-    std::array<Text, sizeType_>& ar)
+    array<language_bundle, sizeType_>& ar)
 {
-    ar[common::toUnderlying(Attribute__Type::COORDINATION)] =
-        move(Text{ table->coordination()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::LUCK)] =
-        move(Text{ table->luck()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::AWARENESS)] =
-        move(Text{ table->awareness()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::STRENGTH)] =
-        move(Text{ table->strength()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::SPEED)] =
-        move(Text{ table->speed()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::INTELLIGENCE)] =
-        move(Text{ table->intelligence()->c_str() });
-    ar[common::toUnderlying(Attribute__Type::CHARISMA)] =
-        move(Text{ table->charisma()->c_str() });
+    assert(table != nullptr);
+
+    common::initLanguageBundle(
+        table->coordination(),
+        ar[common::toUnderlying(Attribute__Type::COORDINATION)]
+    );
+    common::initLanguageBundle(
+        table->luck(),
+        ar[common::toUnderlying(Attribute__Type::LUCK)]
+    );
+    common::initLanguageBundle(
+        table->awareness(),
+        ar[common::toUnderlying(Attribute__Type::AWARENESS)]
+    );
+    common::initLanguageBundle(
+        table->strength(),
+        ar[common::toUnderlying(Attribute__Type::STRENGTH)]
+    );
+    common::initLanguageBundle(
+        table->speed(),
+        ar[common::toUnderlying(Attribute__Type::SPEED)]
+    );
+    common::initLanguageBundle(
+        table->intelligence(),
+        ar[common::toUnderlying(Attribute__Type::INTELLIGENCE)]
+    );
+    common::initLanguageBundle(
+        table->charisma(),
+        ar[common::toUnderlying(Attribute__Type::CHARISMA)]
+    );
 }
 
 } // namespace object
