@@ -61,7 +61,7 @@ inline global::PlainText::Language Option::getLanguage() const noexcept
 
 inline void Option::setLanguage(global::PlainText::Language lang) noexcept
 {
-    assert(common::isValidEnum(lang));
+    assert(common::isValidEnum(lang)); // TODO check if lang == lang_
     lang_ = { lang, true };
 }
 

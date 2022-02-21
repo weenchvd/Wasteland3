@@ -13,12 +13,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "item")
-set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
+set(SOURCE_CXX_LIST "item.cpp"
+                    "itemVisitorFullDescr.cpp"
                     "Ammo/ammoCommon.cpp"
                     "Damage/damageCommon.cpp"
                     "Weapon/weapon.cpp"
                     "Weapon/weaponCommon.cpp"
                     "Weapon/weaponReference.cpp"
+                    "Weapon/weaponText.cpp"
                     "WeaponMod/weaponMod.cpp"
                     "WeaponMod/weaponModCommon.cpp"
 )

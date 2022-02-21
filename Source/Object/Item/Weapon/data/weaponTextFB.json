@@ -1,0 +1,160 @@
+{
+  "type": {
+    "ar": {
+      "en": "Assault Rifle",
+      "ru": "Штурмовая винтовка"
+    },
+    "smg": {
+      "en": "Submachine gun",
+      "ru": "Пистолет-пулемет"
+    },
+    "sa_pistol": {
+      "en": "Semi Auto Pistol",
+      "ru": "Пистолет"
+    },
+    "revolver": {
+      "en": "Revolver",
+      "ru": "Револьвер"
+    },
+    "auto_shotgun": {
+      "en": "Auto Shotgun",
+      "ru": "Автоматический дробовик"
+    },
+    "pump_shotgun": {
+      "en": "Pump Shotgun",
+      "ru": "Помповое ружье"
+    },
+    "sr": {
+      "en": "Sniper Rifle",
+      "ru": "Снайперская винтовка"
+    },
+    "flamethrower": {
+      "en": "Flamethrower",
+      "ru": "Огнемет"
+    },
+    "hmg": {
+      "en": "Heavy Machine Gun",
+      "ru": "Тяжелый пулемет"
+    },
+    "rocket": {
+      "en": "Rocket",
+      "ru": "Ракета"
+    },
+    "laser": {
+      "en": "Laser Weapon",
+      "ru": "Лазерное оружие"
+    },
+    "bladed": {
+      "en": "Bladed Weapon",
+      "ru": "Режущее оружие"
+    },
+    "blunt": {
+      "en": "Blunt Weapon",
+      "ru": "Ударно-дробящее оружие"
+    },
+    "brawling": {
+      "en": "Brawling Weapon",
+      "ru": "Оружие для рукопашной"
+    }
+  },
+  "penalties": {
+    "crit_damage": {
+      "en": "Critical damage:",
+      "ru": "Крит. урон:"
+    },
+    "hit_chance": {
+      "en": "Hit chance:",
+      "ru": "Шанс попадания:"
+    },
+    "crit_chance": {
+      "en": "Critical chance:",
+      "ru": "Шанс крита:"
+    },
+    "strike_rate": {
+      "en": "Strike rate:",
+      "ru": "Скорость разгрома:"
+    }
+  },
+  "common": {
+    "damage": {
+      "en": "Damage:",
+      "ru": "Урон:"
+    },
+    "level": {
+      "en": "Lv",
+      "ru": "Ур."
+    },
+    "ap": {
+      "en": "AP:",
+      "ru": "ОД:"
+    },
+    "ap_reload": {
+      "en": "AP per reload:",
+      "ru": "ОД на перезарядку:"
+    },
+    "require": {
+      "en": "Requires",
+      "ru": "Требуется:"
+    },
+    "installed_mods": {
+      "en": "Installed mods:",
+      "ru": "Установленные модификаторы:"
+    },
+    "ammo_capacity": {
+      "en": "Ammo capacity:",
+      "ru": "Емкость магазина:"
+    },
+    "ammo_type": {
+      "en": "Ammo type:",
+      "ru": "Тип боеприпасов:"
+    },
+    "range": {
+      "en": "Range:",
+      "ru": "Дальность:"
+    },
+    "failed_req_penalty": {
+      "en": "Failed requirement penalty:",
+      "ru": "Штраф за невыполнение требования:"
+    },
+    "base_hit_chance": {
+      "en": "Base hit chance:",
+      "ru": "Базовый шанс попадания:"
+    },
+    "crit_damage": {
+      "en": "Crit damage:",
+      "ru": "Крит. урон:"
+    },
+    "crit_chance": {
+      "en": "Crit chance:",
+      "ru": "Вероятность крит. попадания:"
+    },
+    "penetration": {
+      "en": "Penetration:",
+      "ru": "Пробивание:"
+    },
+    "damage_vs_robots": {
+      "en": "Damage vs robots:",
+      "ru": "Урон (роботы):"
+    },
+    "damage_vs_synths": {
+      "en": "Damage vs synths:",
+      "ru": "Урон (синты):"
+    },
+    "damage_vs_vehicles": {
+      "en": "Damage vs vehicles:",
+      "ru": "Урон (транспорт):"
+    },
+    "damage_vs_humans": {
+      "en": "Damage vs humans:",
+      "ru": "Урон (люди):"
+    },
+    "damage_vs_animals": {
+      "en": "Damage vs animals:",
+      "ru": "Урон (животные):"
+    },
+    "damage_vs_mutants": {
+      "en": "Damage vs mutants:",
+      "ru": "Урон (мутанты):"
+    }
+  }
+}

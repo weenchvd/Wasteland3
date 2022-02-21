@@ -13,7 +13,8 @@ namespace object {
 
 using namespace std;
 
-const WeaponReferenceContainer Weapon::ref_;
+const WeaponReferenceContainer      Weapon::ref_;
+const WeaponText                    Weapon::text_;
 
 ///************************************************************************************************
 
@@ -36,6 +37,7 @@ Weapon::Weapon(Weapon::Model model) noexcept
     slotWeaponMod_  { base_.weaponModTypes_ }
 {
     assert(ref_.isInitialized());
+    assert(text_.isInitialized());
     assert(base_.isInitialized());
 }
 

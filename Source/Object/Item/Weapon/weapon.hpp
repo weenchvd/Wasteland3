@@ -15,6 +15,7 @@
 #include"weaponCommon.hpp"
 #include"weaponMod.hpp"
 #include"weaponReference.hpp"
+#include"weaponText.hpp"
 
 namespace game {
 namespace global {
@@ -59,6 +60,10 @@ private:
 
 /// weapon parameters
 public:
+    const WeaponReference& weaponReference() noexcept {
+        return base_;
+    }
+
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPON;
     }
@@ -209,6 +214,14 @@ public:
         return slotWeaponMod_;
     }
 
+    static const WeaponReference& weaponReference(Weapon::Model id) noexcept {
+        return ref_.weaponReference(id);
+    }
+
+    static const WeaponText& weaponText() noexcept {
+        return text_;
+    }
+
 private:
     const WeaponReference&      base_;          // reference, sample, template
 
@@ -229,6 +242,7 @@ private:
     common::Slot<WeaponMod, nWMSlots_>      slotWeaponMod_; // weapon mod slots
 
     static const WeaponReferenceContainer   ref_;           // references
+    static const WeaponText                 text_;
 };
 
 ///************************************************************************************************
@@ -236,11 +250,13 @@ private:
 inline void Weapon::initialize()
 {
     ref_.initialize();
+    text_.initialize();
 }
 
 inline bool Weapon::isInitialized()
 {
-    return ref_.isInitialized();
+    return ref_.isInitialized()
+        && text_.isInitialized();
 }
 
 } // namespace object

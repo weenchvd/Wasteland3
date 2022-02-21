@@ -1,0 +1,67 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbWeapon;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_WeaponTextType {
+  ar:fbCommon.FB_LanguageBundle;
+  smg:fbCommon.FB_LanguageBundle;
+  sa_pistol:fbCommon.FB_LanguageBundle;
+  revolver:fbCommon.FB_LanguageBundle;
+  auto_shotgun:fbCommon.FB_LanguageBundle;
+  pump_shotgun:fbCommon.FB_LanguageBundle;
+  sr:fbCommon.FB_LanguageBundle;
+  flamethrower:fbCommon.FB_LanguageBundle;
+  hmg:fbCommon.FB_LanguageBundle;
+  rocket:fbCommon.FB_LanguageBundle;
+  laser:fbCommon.FB_LanguageBundle;
+  bladed:fbCommon.FB_LanguageBundle;
+  blunt:fbCommon.FB_LanguageBundle;
+  brawling:fbCommon.FB_LanguageBundle;
+}
+
+table FB_WeaponTextPenalties {
+  crit_damage:fbCommon.FB_LanguageBundle;
+  hit_chance:fbCommon.FB_LanguageBundle;
+  crit_chance:fbCommon.FB_LanguageBundle;
+  strike_rate:fbCommon.FB_LanguageBundle;
+}
+
+table FB_WeaponTextCommon {
+  level:fbCommon.FB_LanguageBundle;
+  damage:fbCommon.FB_LanguageBundle;
+  ap:fbCommon.FB_LanguageBundle;
+  ap_reload:fbCommon.FB_LanguageBundle;
+  require:fbCommon.FB_LanguageBundle;
+  installed_mods:fbCommon.FB_LanguageBundle;
+  ammo_capacity:fbCommon.FB_LanguageBundle;
+  ammo_type:fbCommon.FB_LanguageBundle;
+  range:fbCommon.FB_LanguageBundle;
+  failed_req_penalty:fbCommon.FB_LanguageBundle;
+  base_hit_chance:fbCommon.FB_LanguageBundle;
+  crit_damage:fbCommon.FB_LanguageBundle;
+  crit_chance:fbCommon.FB_LanguageBundle;
+  penetration:fbCommon.FB_LanguageBundle;
+  damage_vs_robots:fbCommon.FB_LanguageBundle;
+  damage_vs_synths:fbCommon.FB_LanguageBundle;
+  damage_vs_vehicles:fbCommon.FB_LanguageBundle;
+  damage_vs_humans:fbCommon.FB_LanguageBundle;
+  damage_vs_animals:fbCommon.FB_LanguageBundle;
+  damage_vs_mutants:fbCommon.FB_LanguageBundle;
+}
+
+table FB_WeaponText {
+  type:FB_WeaponTextType;
+  penalties:FB_WeaponTextPenalties;
+  common:FB_WeaponTextCommon;
+}
+
+root_type FB_WeaponText;

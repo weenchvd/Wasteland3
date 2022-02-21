@@ -47,6 +47,99 @@ using LevelStat             = char;         // statistic level
 
 using Money                 = long long int;
 
+///************************************************************************************************
+
+constexpr inline double getTime(Time time)
+{
+    return static_cast<double>(time) / 1000;
+}
+
+constexpr inline double getMult(Multiplier mult)
+{
+    return static_cast<double>(mult) / 100;
+}
+
+constexpr inline double getChance(Chance chance)
+{
+    return static_cast<double>(chance) / 10;
+}
+
+constexpr inline double getBonus(Bonus bonus)
+{
+    return static_cast<double>(bonus) / 10;
+}
+
+constexpr inline double getEvasion(Evasion evasion)
+{
+    return static_cast<double>(evasion) / 10;
+}
+
+constexpr inline double getResist(Resistance res)
+{
+    return static_cast<double>(res) / 10;
+}
+
+constexpr inline double getInit(Initiative init)
+{
+    return static_cast<double>(init) / 10;
+}
+
+constexpr inline double getStrike(Strike strike)
+{
+    return static_cast<double>(strike) / 10;
+}
+
+constexpr inline int getLv(Level value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getArmor(Armor value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getAP(ActionPoint value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getMoves(NumberMoves value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getShots(NumberShots value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getPercep(Perception value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getRad(Radiation value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getLvSkill(LevelSkill value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getPAttr(PointAttribute value)
+{
+    return static_cast<int>(value);
+}
+
+constexpr inline int getLvStat(LevelStat value)
+{
+    return static_cast<int>(value);
+}
+
+///************************************************************************************************
 
 template <class Enum>
 constexpr auto toUnderlying(Enum e) noexcept

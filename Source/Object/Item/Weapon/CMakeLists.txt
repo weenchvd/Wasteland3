@@ -46,6 +46,41 @@ cmake_language(CALL distribute_file
 
 
 #**********************************************************************
+# create Flatbuffers files for WeaponText
+set(WEAPON_TEXT_FB_FILE_STEM "weaponTextFB")
+set(WEAPON_TEXT_FB_BIN_FILE_IDENTIFIER "WPNT")
+set(WEAPON_TEXT_FB_BIN_FILE_EXTENSION "${FB_BIN_FILE_EXTENSION}")
+set(WEAPON_TEXT_FB_BIN_FILE_NAME "${WEAPON_TEXT_FB_FILE_STEM}.${WEAPON_TEXT_FB_BIN_FILE_EXTENSION}")
+file(REAL_PATH "${FB_DATA_DIR_NAME}/${WEAPON_TEXT_FB_BIN_FILE_NAME}" WEAPON_TEXT_FB_BIN_FILE)
+file(RELATIVE_PATH WEAPON_TEXT_FB_BIN_FILE__REL_PATH_FROM_CSD
+                   "${CMAKE_SOURCE_DIR}"
+                   "${WEAPON_TEXT_FB_BIN_FILE}"
+)
+cmake_path(HASH WEAPON_TEXT_FB_BIN_FILE__REL_PATH_FROM_CSD
+                WEAPON_TEXT_FB_BIN_FILE__REL_PATH_FROM_CSD__HASH
+)
+string(CONCAT WEAPON_TEXT_FB_BIN_FILE_NAME__OUT
+  "${WEAPON_TEXT_FB_FILE_STEM}_${WEAPON_TEXT_FB_BIN_FILE__REL_PATH_FROM_CSD__HASH}."
+  "${WEAPON_TEXT_FB_BIN_FILE_EXTENSION}"
+)
+file(TO_NATIVE_PATH
+  "${ASSETS__DIR__REL_PATH_FROM_W3EXEC}/${WEAPON_TEXT_FB_BIN_FILE_NAME__OUT}"
+  WEAPON_TEXT_FB_BIN_FILE__NATIVE_REL_PATH
+)
+
+cmake_language(CALL create_flatbuffers_data_files
+  "${WEAPON_TEXT_FB_BIN_FILE_IDENTIFIER}"
+  "${WEAPON_TEXT_FB_BIN_FILE_EXTENSION}"
+  "${WEAPON_TEXT_FB_FILE_STEM}"
+)
+cmake_language(CALL distribute_file
+  "${WEAPON_TEXT_FB_BIN_FILE}"
+  "${ASSETS__DIR__REL_PATH_FROM_W3EXEC}"
+  "${WEAPON_TEXT_FB_BIN_FILE_NAME__OUT}"
+)
+
+
+#**********************************************************************
 # create header file with paths
 set(WEAPON_PATH_FILE_NAME "weaponPath.hpp")
 cmake_language(CALL create_file "${WEAPON_PATH_FILE_NAME}.in")

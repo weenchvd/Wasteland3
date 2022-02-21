@@ -8,6 +8,6 @@
 #define WEAPON_PATH_HPP
 
 #define WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\weaponReferenceFB_7dacd2526b2a1029.bundle)"
-/* #undef WEAPON_TEXT_FB_BIN_FILE__NATIVE_REL_PATH */
+#define WEAPON_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\weaponTextFB_79316b8e56cc405f.bundle)"
 
 #endif // !WEAPON_PATH_HPP
