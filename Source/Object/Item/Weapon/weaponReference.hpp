@@ -56,11 +56,13 @@ public:
 
 struct WeaponReference {
 public:
+    using text                  = common::Text;
+
     static constexpr unsigned char nWMSlots_{ 4 }; // number of weapon mod slots
 
-private:
-    using text                  = common::Text;
     using weapon_mod_types      = std::array<WeaponMod::Type, nWMSlots_>;
+
+private:
     using language_bundle       = std::array<text, global::PlainText::sizeLang_>;
 
     friend class WeaponReferenceContainer;

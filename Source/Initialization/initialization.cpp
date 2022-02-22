@@ -22,7 +22,7 @@ void initializeGame()
 
     object::Character::initialize();
     object::Weapon::initialize();
-    object::WeaponMod::initializeReference();
+    object::WeaponMod::initialize();
 }
 
 } // namespace global

@@ -9,6 +9,9 @@
 
 #include"common.hpp"
 #include"itemVisitor.hpp"
+#include"weaponCommon.hpp"
+#include"weaponModCommon.hpp"
+#include<vector>
 
 namespace game {
 namespace object {
@@ -46,6 +49,39 @@ private:
 private:
     text text_;          // full description
 };
+
+///************************************************************************************************
+
+class WeaponList {
+public:
+    using list                  = std::vector<Weapon__Type>;
+
+private:
+    static constexpr auto sizeWeaponType_   { common::toUnderlying(Weapon__Type::NUMBER_OF) };
+    static constexpr auto sizeWeaponModType_{ common::toUnderlying(WeaponMod__Type::NUMBER_OF) };
+
+public:
+    WeaponList() noexcept {}
+
+    static void initialize() noexcept;
+
+    static bool isInitialized() { return initialized_; }
+
+    static const list& getList(WeaponMod__Type id) noexcept;
+
+private:
+    static std::vector<list>        list_;
+    static bool                     initialized_;
+};
+
+///************************************************************************************************
+
+inline const WeaponList::list& WeaponList::getList(WeaponMod__Type id) noexcept
+{
+    assert(common::isValidEnum(id));
+    initialize();
+    return list_[common::toUnderlying(id)];
+}
 
 } // namespace object
 } // namespace game

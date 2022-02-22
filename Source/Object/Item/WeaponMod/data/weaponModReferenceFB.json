@@ -1,0 +1,131 @@
+{
+  "refs": [
+    {
+      "weapon_mod_model": "BARREL_SHORTENED",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "SHORTENED BARREL",
+        "ru": "~~ Название ~~"
+      },
+      "descrip": {
+        "en": "This short barrel reduces Chance to Hit but increases bullet velocity dramatically. Best for skilled marksmen.",
+        "ru": "~~ Описание ~~"
+      },
+      "dmg_min": 20,
+      "dmg_max": 20,
+      "price": 600,
+      "range_attack": 0,
+      "capacity_ammo": 0,
+      "multiplier_crit_dmg": 0,
+      "chance_hit": -100,
+      "chance_crit_dmg": 0,
+      "armor_penetration": 0,
+      "ap_per_attack": 0,
+      "ap_per_reload": 0,
+      "shots_per_attack": 0,
+      "ammo_type": "INVALID",
+      "dmg_type": "INVALID"
+    },
+    {
+      "weapon_mod_model": "BARREL_LIGHTWEIGHT",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "LIGHTWEIGHT BARREL",
+        "ru": "~~ Название ~~"
+      },
+      "descrip": {
+        "en": "Lighter materials in this barrel significantly reduce weight at the cost of firepower.",
+        "ru": "~~ Описание ~~"
+      },
+      "dmg_min": -12,
+      "dmg_max": -12,
+      "price": 600,
+      "chance_hit": 120,
+      "armor_penetration": 1
+    },
+    {
+      "weapon_mod_model": "MAG_QUICKFIRE",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 10
+          }
+        ]
+      },
+      "name": {
+        "en": "QUICKFIRE MAG",
+        "ru": "~~ Название ~~"
+      },
+      "descrip": {
+        "en": "This magazine has a built-in mechanism to slam bullets directry into the chamber.",
+        "ru": "~~ Описание ~~"
+      },
+      "price": 450,
+      "ap_per_attack": -1
+    },
+    {
+      "weapon_mod_model": "MAG_ADVANCED_MATERIALS",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "ADVANCED MATERIALS MAG",
+        "ru": "~~ Название ~~"
+      },
+      "descrip": {
+        "en": "A smaller, lightweight magazine can make reloads faster when it counts.",
+        "ru": "~~ Описание ~~"
+      },
+      "price": 350,
+      "capacity_ammo": -1,
+      "ap_per_reload": -1
+    },
+    {
+      "weapon_mod_model": "MAG_OVERSIZED",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 7
+          }
+        ]
+      },
+      "name": {
+        "en": "OVERSIZED MAG",
+        "ru": "~~ Название ~~"
+      },
+      "descrip": {
+        "en": "~~ Description ~~",
+        "ru": "~~ Описание ~~"
+      },
+      "price": 275,
+      "capacity_ammo": 8,
+      "ap_per_reload": 1
+    }
+  ]
+}

@@ -161,7 +161,7 @@ public:
 
     static const WeaponTextPenalties& penalties() noexcept { return penalties_; }
 
-    static const WeaponTextCommon common() noexcept { return common_; }
+    static const WeaponTextCommon& common() noexcept { return common_; }
 
 private:
     static void setLanguage(language lang) noexcept;

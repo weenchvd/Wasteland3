@@ -140,14 +140,9 @@
     }
   ],
   "ref_minimal": {
-    "weapon_model": "INVALID",
-    "weapon_type": "INVALID",
-    "weapon_mod_types": [
-      "INVALID",
-      "INVALID",
-      "INVALID",
-      "INVALID"
-    ],
+    "weapon_model": "AR_SOCOM",
+    "weapon_type": "AR",
+    "weapon_mod_types": [],
     "weapon_requirements": {},
     "weapon_penalties": {},
     "name": {
@@ -171,7 +166,7 @@
     "ap_per_attack": 1,
     "ap_per_reload": 1,
     "shots_per_attack": 1,
-    "ammo_type": "INVALID",
-    "dmg_type": "INVALID"
+    "ammo_type": "NONE",
+    "dmg_type": "NORMAL"
   }
 }

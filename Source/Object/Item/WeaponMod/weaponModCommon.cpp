@@ -18,18 +18,18 @@ WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id)
         { fbWeaponMod::FB_WeaponModModel_INVALID, WeaponMod__Model::INVALID },
         { fbWeaponMod::FB_WeaponModModel_BARREL_SHORTENED, WeaponMod__Model::BARREL_SHORTENED },
         { fbWeaponMod::FB_WeaponModModel_BARREL_LIGHTWEIGHT, WeaponMod__Model::BARREL_LIGHTWEIGHT },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
-        { fbWeaponMod::FB_WeaponModModel_BARREL_ALLOY, WeaponMod__Model::BARREL_ALLOY },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
+        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_ALLOY, WeaponMod__Model::BARREL_ALLOY },
         { fbWeaponMod::FB_WeaponModModel_MAG_QUICKFIRE, WeaponMod__Model::MAG_QUICKFIRE },
         { fbWeaponMod::FB_WeaponModModel_MAG_ADVANCED_MATERIALS, WeaponMod__Model::MAG_ADVANCED_MATERIALS },
         { fbWeaponMod::FB_WeaponModModel_MAG_OVERSIZED, WeaponMod__Model::MAG_OVERSIZED },
-        { fbWeaponMod::FB_WeaponModModel_MAG_MAX_CAPACITY, WeaponMod__Model::MAG_MAX_CAPACITY },
-        { fbWeaponMod::FB_WeaponModModel_MAG_EXTENDED, WeaponMod__Model::MAG_EXTENDED },
-        { fbWeaponMod::FB_WeaponModModel_MAG_LONG, WeaponMod__Model::MAG_LONG }
+        ///{ fbWeaponMod::FB_WeaponModModel_MAG_MAX_CAPACITY, WeaponMod__Model::MAG_MAX_CAPACITY },
+        ///{ fbWeaponMod::FB_WeaponModModel_MAG_EXTENDED, WeaponMod__Model::MAG_EXTENDED },
+        ///{ fbWeaponMod::FB_WeaponModModel_MAG_LONG, WeaponMod__Model::MAG_LONG }
     };
     return map.at(id);
 }

@@ -23,6 +23,8 @@ set(SOURCE_CXX_LIST "item.cpp"
                     "Weapon/weaponText.cpp"
                     "WeaponMod/weaponMod.cpp"
                     "WeaponMod/weaponModCommon.cpp"
+                    "WeaponMod/weaponModReference.cpp"
+                    "WeaponMod/weaponModText.cpp"
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
@@ -46,3 +48,4 @@ target_link_libraries(${LIBRARY_NAME}
 )
 
 add_subdirectory("Weapon")
+add_subdirectory("WeaponMod")

@@ -1,0 +1,118 @@
+{
+  "type": {
+    "choke": {
+      "en": "Choke",
+      "ru": "Чок"
+    },
+    "barrel": {
+      "en": "Barrel",
+      "ru": "Ствол"
+    },
+    "underbarrel": {
+      "en": "Underbarrel",
+      "ru": "Подствольный"
+    },
+    "scope": {
+      "en": "Scope",
+      "ru": "Прицел"
+    },
+    "magazine": {
+      "en": "Magazine",
+      "ru": "Магазин"
+    },
+    "weight": {
+      "en": "Weight",
+      "ru": "Груз"
+    },
+    "handle": {
+      "en": "Handle",
+      "ru": "Рукоятка"
+    }
+  },
+  "common": {
+    "item_type": {
+      "en": "Weapon Mod",
+      "ru": "Модификатор оружия"
+    },
+    "min_damage": {
+      "en": "Min damage:",
+      "ru": "Мин. урон:"
+    },
+    "max_damage": {
+      "en": "Max damage:",
+      "ru": "Макс. урон:"
+    },
+    "shots": {
+      "en": "Shots per attack:",
+      "ru": "Выстрелов за атаку:"
+    },
+    "damage_type": {
+      "en": "Damage Type:",
+      "ru": "Тип урона:"
+    },
+    "ap": {
+      "en": "AP:",
+      "ru": "ОД:"
+    },
+    "ap_reload": {
+      "en": "AP per reload:",
+      "ru": "ОД на перезарядку:"
+    },
+    "require": {
+      "en": "Requires",
+      "ru": "Требуется:"
+    },
+    "ammo_capacity": {
+      "en": "Ammo capacity:",
+      "ru": "Емкость магазина:"
+    },
+    "ammo_type": {
+      "en": "Ammo type:",
+      "ru": "Тип боеприпасов:"
+    },
+    "range": {
+      "en": "Range:",
+      "ru": "Дальность:"
+    },
+    "base_hit_chance": {
+      "en": "Base hit chance:",
+      "ru": "Базовый шанс попадания:"
+    },
+    "crit_damage": {
+      "en": "Crit damage:",
+      "ru": "Крит. урон:"
+    },
+    "crit_chance": {
+      "en": "Crit chance:",
+      "ru": "Вероятность крит. попадания:"
+    },
+    "penetration": {
+      "en": "Penetration:",
+      "ru": "Пробивание:"
+    },
+    "damage_vs_robots": {
+      "en": "Damage vs robots:",
+      "ru": "Урон (роботы):"
+    },
+    "damage_vs_synths": {
+      "en": "Damage vs synths:",
+      "ru": "Урон (синты):"
+    },
+    "damage_vs_vehicles": {
+      "en": "Damage vs vehicles:",
+      "ru": "Урон (транспорт):"
+    },
+    "damage_vs_humans": {
+      "en": "Damage vs humans:",
+      "ru": "Урон (люди):"
+    },
+    "damage_vs_animals": {
+      "en": "Damage vs animals:",
+      "ru": "Урон (животные):"
+    },
+    "damage_vs_mutants": {
+      "en": "Damage vs mutants:",
+      "ru": "Урон (мутанты):"
+    }
+  }
+}

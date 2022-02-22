@@ -7,8 +7,8 @@
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
 #include"locator.hpp"
-#include"weaponPath.hpp"
-#include"weaponReference.hpp"
+#include"weaponModPath.hpp"
+#include"weaponModReference.hpp"
 #include<memory>
 #include<type_traits>
 
@@ -17,19 +17,18 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, WeaponReferenceContainer::language>
-                            WeaponReferenceContainer::langObs_;
+common::ObserverDLL<void, WeaponModReferenceContainer::language>
+                            WeaponModReferenceContainer::langObs_;
 
-vector<WeaponReference>     WeaponReferenceContainer::refs_;
-WeaponReference             WeaponReferenceContainer::refMinimal_;
+vector<WeaponModReference>  WeaponModReferenceContainer::refs_;
 
-underlying_type_t<WeaponReferenceContainer::language>
-                            WeaponReferenceContainer::langIndex_    { 0 };
-bool                        WeaponReferenceContainer::initialized_  { false };
+underlying_type_t<WeaponModReferenceContainer::language>
+                            WeaponModReferenceContainer::langIndex_     { 0 };
+bool                        WeaponModReferenceContainer::initialized_   { false };
 
 ///************************************************************************************************
 
-WeaponRequirements::WeaponRequirements() noexcept
+WeaponModRequirements::WeaponModRequirements() noexcept
     :
     skillReq_       { skill_requirement{ Skill::Type::INVALID, 0 },
                       skill_requirement{ Skill::Type::INVALID, 0 }, },
@@ -39,26 +38,11 @@ WeaponRequirements::WeaponRequirements() noexcept
 
 ///************************************************************************************************
 
-WeaponPenalties::WeaponPenalties() noexcept
+WeaponModReference::WeaponModReference() noexcept
     :
-    mulCritDmg_     { 0 },
-    chaHit_         { 0 },
-    chaCritDmg_     { 0 },
-    strike_         { 0 }
-{}
-
-///************************************************************************************************
-
-WeaponReference::WeaponReference() noexcept
-    :
-    model_          { Weapon__Model::INVALID },
-    type_           { Weapon__Type::INVALID },
-    weaponModTypes_ { WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID },
+    model_          { WeaponMod__Model::INVALID },
+    type_           { WeaponMod__Type::INVALID },
     requirements_   {},
-    penalties_      {},
     name_           {},
     descrip_        {},
     dmgMin_         { 0 },
@@ -69,7 +53,6 @@ WeaponReference::WeaponReference() noexcept
     mulCritDmg_     { 0 },
     chaHit_         { 0 },
     chaCritDmg_     { 0 },
-    level_          { 0 },
     armorPen_       { 0 },
     apAttack_       { 0 },
     apReload_       { 0 },
@@ -81,71 +64,56 @@ WeaponReference::WeaponReference() noexcept
 
 ///************************************************************************************************
 
-void WeaponReferenceContainer::initialize()
+void WeaponModReferenceContainer::initialize()
 {
     using global::Locator;
 
     if (isInitialized()) return;
 
     unique_ptr<char[]> buffer{
-        common::getFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH)
+        common::getFlatBuffer(WEAPON_MOD_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbWeapon::FB_WeaponReferenceContainer* container{
-        fbWeapon::GetFB_WeaponReferenceContainer(buffer.get())
+    const fbWeaponMod::FB_WeaponModReferenceContainer* container{
+        fbWeaponMod::GetFB_WeaponModReferenceContainer(buffer.get())
     };
 
     initContainer(container);
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
-    langObs_.getDelegate().bind<&WeaponReferenceContainer::setLanguage>();
+    langObs_.getDelegate().bind<&WeaponModReferenceContainer::setLanguage>();
     Locator::getOption().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }
 
-void WeaponReferenceContainer::initContainer(
-    const fbWeapon::FB_WeaponReferenceContainer* container)
+void WeaponModReferenceContainer::initContainer(
+    const fbWeaponMod::FB_WeaponModReferenceContainer* container)
 {
     assert(container != nullptr);
-    assert(common::toUnderlying(Weapon__Model::NUMBER_OF) >= 0);
-    refs_.resize(common::toUnderlying(Weapon__Model::NUMBER_OF));
+    assert(common::toUnderlying(WeaponMod__Model::NUMBER_OF) >= 0);
+    refs_.resize(common::toUnderlying(WeaponMod__Model::NUMBER_OF));
     auto v{ container->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
-        WeaponReference ref{ initWeaponReference(v->Get(i)) };
+        WeaponModReference ref{ initWeaponModReference(v->Get(i)) };
         auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
-    refMinimal_ = initWeaponReference(container->ref_minimal());
-    refMinimal_.model_      = { Weapon__Model::INVALID };
-    refMinimal_.type_       = { Weapon__Type::INVALID };
-    refMinimal_.tyAmmo_     = { Ammo::Type::INVALID };
-    refMinimal_.tyDmg_      = { Damage::Type::INVALID };
 }
 
-WeaponReference WeaponReferenceContainer::initWeaponReference(
-    const fbWeapon::FB_WeaponReference* reference)
+WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
+    const fbWeaponMod::FB_WeaponModReference* reference)
 {
     assert(reference != nullptr);
-    WeaponReference ref;
+    WeaponModReference ref;
 
-    ref.model_  = toWeaponModel(reference->weapon_model());
+    ref.model_  = toWeaponModModel(reference->weapon_mod_model());
     assert(common::isValidEnum(ref.model_));
-    ref.type_   = toWeaponType(reference->weapon_type());
+    ref.type_   = toWeaponModType(reference->weapon_mod_type());
     assert(common::isValidEnum(ref.type_));
 
-    auto modTypes{ reference->weapon_mod_types() };
-    assert(modTypes != nullptr);
-    assert(modTypes->size() <= ref.weaponModTypes_.size());
-    for (size_t i = 0; i < modTypes->size(); ++i) {
-        ref.weaponModTypes_[i] = toWeaponModType(
-            static_cast<fbWeaponMod::FB_WeaponModType>(modTypes->Get(i))
-        );
-        assert(common::isValidEnum(ref.weaponModTypes_[i]));
-    }
-
-    auto requirements{ reference->weapon_requirements() };
+    auto requirements{ reference->weapon_mod_requirements() };
     assert(requirements != nullptr);
     if (requirements->skill() != nullptr) {
         auto ptr{ requirements->skill() };
@@ -166,13 +134,6 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
         }
     }
 
-    auto penalties{ reference->weapon_penalties() };
-    assert(penalties != nullptr);
-    ref.penalties_.mulCritDmg_  = { penalties->multiplier_crit_dmg() };
-    ref.penalties_.chaHit_      = { penalties->chance_hit() };
-    ref.penalties_.chaCritDmg_  = { penalties->chance_crit_dmg() };
-    ref.penalties_.strike_      = { penalties->strike_rate() };
-
     common::initLanguageBundle(reference->name(), ref.name_);
     common::initLanguageBundle(reference->descrip(), ref.descrip_);
 
@@ -184,15 +145,12 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.mulCritDmg_     = { reference->multiplier_crit_dmg() };
     ref.chaHit_         = { reference->chance_hit() };
     ref.chaCritDmg_     = { reference->chance_crit_dmg() };
-    ref.level_          = { reference->weapon_level() };
     ref.armorPen_       = { reference->armor_penetration() };
     ref.apAttack_       = { reference->ap_per_attack() };
     ref.apReload_       = { reference->ap_per_reload() };
     ref.shoPerAttack_   = { reference->shots_per_attack() };
     ref.tyAmmo_         = toAmmoType(reference->ammo_type());
-    assert(common::isValidEnum(ref.tyAmmo_));
     ref.tyDmg_          = toDamageType(reference->dmg_type());
-    assert(common::isValidEnum(ref.tyDmg_));
 
     ref.initialized_    = true;
 

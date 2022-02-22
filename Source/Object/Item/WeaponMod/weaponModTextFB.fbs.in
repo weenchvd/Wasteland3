@@ -1,0 +1,53 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbWeaponMod;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_WeaponModTextType {
+  choke:fbCommon.FB_LanguageBundle;
+  barrel:fbCommon.FB_LanguageBundle;
+  underbarrel:fbCommon.FB_LanguageBundle;
+  scope:fbCommon.FB_LanguageBundle;
+  magazine:fbCommon.FB_LanguageBundle;
+  weight:fbCommon.FB_LanguageBundle;
+  handle:fbCommon.FB_LanguageBundle;
+}
+
+table FB_WeaponModTextCommon {
+  item_type:fbCommon.FB_LanguageBundle;
+  min_damage:fbCommon.FB_LanguageBundle;
+  max_damage:fbCommon.FB_LanguageBundle;
+  shots:fbCommon.FB_LanguageBundle;
+  damage_type:fbCommon.FB_LanguageBundle;
+  ap:fbCommon.FB_LanguageBundle;
+  ap_reload:fbCommon.FB_LanguageBundle;
+  require:fbCommon.FB_LanguageBundle;
+  ammo_capacity:fbCommon.FB_LanguageBundle;
+  ammo_type:fbCommon.FB_LanguageBundle;
+  range:fbCommon.FB_LanguageBundle;
+  base_hit_chance:fbCommon.FB_LanguageBundle;
+  crit_damage:fbCommon.FB_LanguageBundle;
+  crit_chance:fbCommon.FB_LanguageBundle;
+  penetration:fbCommon.FB_LanguageBundle;
+  damage_vs_robots:fbCommon.FB_LanguageBundle;
+  damage_vs_synths:fbCommon.FB_LanguageBundle;
+  damage_vs_vehicles:fbCommon.FB_LanguageBundle;
+  damage_vs_humans:fbCommon.FB_LanguageBundle;
+  damage_vs_animals:fbCommon.FB_LanguageBundle;
+  damage_vs_mutants:fbCommon.FB_LanguageBundle;
+}
+
+table FB_WeaponModText {
+  type:FB_WeaponModTextType;
+  common:FB_WeaponModTextCommon;
+}
+
+root_type FB_WeaponModText;

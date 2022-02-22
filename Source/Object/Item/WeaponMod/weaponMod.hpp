@@ -11,13 +11,14 @@
 #include"item.hpp"
 #include"weaponModCommon.hpp"
 #include"weaponModReference.hpp"
+#include"weaponModText.hpp"
 #include<type_traits>
 #include<vector>
 
 namespace game {
 namespace global {
 
-class Factory; // TODO delete?
+class Factory;
 
 } // namespace global
 
@@ -29,7 +30,9 @@ class WeaponMod : public Item {
 public:
     using Model         = WeaponMod__Model;
     using Type          = WeaponMod__Type;
+    using text          = common::Text;
 
+private:
     friend global::Factory;
 
 protected:
@@ -41,18 +44,22 @@ public:
 
     virtual ~WeaponMod() noexcept {}
 
-    static void initializeReference() {
-        if (ref_.size() == 0) initRef();
-    }
+    static void initialize();
+
+    static bool isInitialized();
 
     virtual void accept(ItemVisitor& visitor) noexcept override {
         visitor.visitWeaponMod(*this);
     }
 
-    void apply(Weapon& weapon);
+    void apply(Weapon& weapon) noexcept;
 
 /// weapon mod parameters
 public:
+    const WeaponModReference& weaponModReference() noexcept {
+        return base_;
+    }
+
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPONMOD;
     }
@@ -69,22 +76,47 @@ public:
         return base_.type_;
     }
 
-    common::Text name() const noexcept {
-        return base_.name_;
+    const WeaponModRequirements& requirements() const noexcept {
+        return base_.requirements_;
     }
 
-private:
-    static void initRef();
+    const text& name() const noexcept {
+        return base_.name();
+    }
 
-    static void add(WeaponModReference ref) {
-        ref_[static_cast<std::underlying_type_t<WeaponMod::Model>>(ref.model_)] = std::move(ref);
+    const text& description() const noexcept {
+        return base_.descr();
+    }
+
+public:
+    static const WeaponModReference& weaponModReference(WeaponMod::Model id) noexcept {
+        return ref_.weaponModReference(id);
+    }
+
+    static const WeaponModText& weaponModText() noexcept {
+        return text_;
     }
 
 private:
     const WeaponModReference&  base_;           // reference, sample, template
 
-    static std::vector<WeaponModReference>  ref_;           // references
+    static const WeaponModReferenceContainer    ref_;
+    static const WeaponModText                  text_;
 };
+
+///************************************************************************************************
+
+inline void WeaponMod::initialize()
+{
+    ref_.initialize();
+    text_.initialize();
+}
+
+inline bool WeaponMod::isInitialized()
+{
+    return ref_.isInitialized()
+        && text_.isInitialized();
+}
 
 } // namespace object
 } // namespace game

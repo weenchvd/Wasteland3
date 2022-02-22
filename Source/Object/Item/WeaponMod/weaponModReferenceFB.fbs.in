@@ -1,0 +1,61 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "ammoTypeFB.fbs";
+include "attributeTypeFB.fbs";
+include "damageTypeFB.fbs";
+include "languageBundleFB.fbs";
+include "skillTypeFB.fbs";
+include "weaponModModelFB.fbs";
+include "weaponModTypeFB.fbs";
+
+namespace fbWeaponMod;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+struct FB_SkillRequirement {
+  type:fbSkill.FB_SkillType;
+  level:int8;
+}
+
+struct FB_AttributeRequirement {
+  type:fbAttribute.FB_AttributeType;
+  level:int8;
+}
+
+table FB_WeaponModRequirements {
+  skill:[FB_SkillRequirement];
+  attr:[FB_AttributeRequirement];
+}
+
+table FB_WeaponModReference {
+  weapon_mod_model:fbWeaponMod.FB_WeaponModModel = INVALID;
+  weapon_mod_type:fbWeaponMod.FB_WeaponModType = INVALID;
+  weapon_mod_requirements:FB_WeaponModRequirements;
+  name:fbCommon.FB_LanguageBundle;
+  descrip:fbCommon.FB_LanguageBundle;
+  dmg_min:int16 = 0;
+  dmg_max:int16 = 0;
+  price:int16 = 0;
+  range_attack:int16 = 0;
+  capacity_ammo:int16 = 0;
+  multiplier_crit_dmg:int16 = 0;
+  chance_hit:int16 = 0;
+  chance_crit_dmg:int16 = 0;
+  armor_penetration:int8 = 0;
+  ap_per_attack:int8 = 0;
+  ap_per_reload:int8 = 0;
+  shots_per_attack:int8 = 0;
+  ammo_type:fbAmmo.FB_AmmoType = INVALID;
+  dmg_type:fbDamage.FB_DamageType = INVALID;
+}
+
+table FB_WeaponModReferenceContainer {
+  refs:[FB_WeaponModReference];
+}
+
+root_type FB_WeaponModReferenceContainer;
