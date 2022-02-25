@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+///#include"ammo.hpp"
 #include"initializationAux.hpp"
 #include"locator.hpp"
 #include"character.hpp"
@@ -40,6 +41,7 @@ void initializeInventory(game::object::Inventory& inventory)
 
 void initializeShop(game::object::Inventory& inventory)
 {
+    using game::object::Ammo;
     using game::object::Weapon;
     using game::object::WeaponMod;
 
@@ -59,6 +61,14 @@ void initializeShop(game::object::Inventory& inventory)
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_OVERSIZED));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
+
+    /// ammo
+    inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 1500));
+    inventory.insert(f.createAmmo(Ammo::Type::A_7_62, 2000));
+    inventory.insert(f.createAmmo(Ammo::Type::A_D45, 1500));
+    inventory.insert(f.createAmmo(Ammo::Type::A_D38, 1000));
+    inventory.insert(f.createAmmo(Ammo::Type::ENERGY_CELLS, 1000));
+    inventory.insert(f.createAmmo(Ammo::Type::ROCKET, 50));
 
 }
 

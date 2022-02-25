@@ -1,0 +1,12 @@
+{
+  "common": {
+    "item_type": {
+      "en": "Ammunition",
+      "ru": "Боеприпасы"
+    },
+    "quantity": {
+      "en": "Amount owned:",
+      "ru": "Число в наличии:"
+    }
+  }
+}

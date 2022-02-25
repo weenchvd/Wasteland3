@@ -1,0 +1,26 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "ammoTypeFB.fbs";
+include "languageBundleFB.fbs";
+
+namespace fbAmmo;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_AmmoReference {
+  ammo_type:fbAmmo.FB_AmmoType = INVALID;
+  name:fbCommon.FB_LanguageBundle;
+  descrip:fbCommon.FB_LanguageBundle;
+  price:int16 = 0;
+}
+
+table FB_AmmoReferenceContainer {
+  refs:[FB_AmmoReference];
+}
+
+root_type FB_AmmoReferenceContainer;

@@ -13,33 +13,72 @@ enum FB_AmmoType : int8_t {
   FB_AmmoType_NONE = 1,
   FB_AmmoType_A_5_56 = 2,
   FB_AmmoType_A_7_62 = 3,
+  FB_AmmoType_SPIKES = 4,
+  FB_AmmoType_BOLTS = 5,
+  FB_AmmoType_A_9_MM = 6,
+  FB_AmmoType_A_D45 = 7,
+  FB_AmmoType_A_D38 = 8,
+  FB_AmmoType_A_D30_06 = 9,
+  FB_AmmoType_A_D50 = 10,
+  FB_AmmoType_SHOTGUN_SHELLS = 11,
+  FB_AmmoType_FLAMETHROWER_FUEL = 12,
+  FB_AmmoType_ENERGY_CELLS = 13,
+  FB_AmmoType_FROZEN_FERRET = 14,
+  FB_AmmoType_ROCKET = 15,
+  FB_AmmoType_TACTICAL_NUKE = 16,
   FB_AmmoType_MIN = FB_AmmoType_INVALID,
-  FB_AmmoType_MAX = FB_AmmoType_A_7_62
+  FB_AmmoType_MAX = FB_AmmoType_TACTICAL_NUKE
 };
 
-inline const FB_AmmoType (&EnumValuesFB_AmmoType())[4] {
+inline const FB_AmmoType (&EnumValuesFB_AmmoType())[17] {
   static const FB_AmmoType values[] = {
     FB_AmmoType_INVALID,
     FB_AmmoType_NONE,
     FB_AmmoType_A_5_56,
-    FB_AmmoType_A_7_62
+    FB_AmmoType_A_7_62,
+    FB_AmmoType_SPIKES,
+    FB_AmmoType_BOLTS,
+    FB_AmmoType_A_9_MM,
+    FB_AmmoType_A_D45,
+    FB_AmmoType_A_D38,
+    FB_AmmoType_A_D30_06,
+    FB_AmmoType_A_D50,
+    FB_AmmoType_SHOTGUN_SHELLS,
+    FB_AmmoType_FLAMETHROWER_FUEL,
+    FB_AmmoType_ENERGY_CELLS,
+    FB_AmmoType_FROZEN_FERRET,
+    FB_AmmoType_ROCKET,
+    FB_AmmoType_TACTICAL_NUKE
   };
   return values;
 }
 
 inline const char * const *EnumNamesFB_AmmoType() {
-  static const char * const names[5] = {
+  static const char * const names[18] = {
     "INVALID",
     "NONE",
     "A_5_56",
     "A_7_62",
+    "SPIKES",
+    "BOLTS",
+    "A_9_MM",
+    "A_D45",
+    "A_D38",
+    "A_D30_06",
+    "A_D50",
+    "SHOTGUN_SHELLS",
+    "FLAMETHROWER_FUEL",
+    "ENERGY_CELLS",
+    "FROZEN_FERRET",
+    "ROCKET",
+    "TACTICAL_NUKE",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameFB_AmmoType(FB_AmmoType e) {
-  if (flatbuffers::IsOutRange(e, FB_AmmoType_INVALID, FB_AmmoType_A_7_62)) return "";
+  if (flatbuffers::IsOutRange(e, FB_AmmoType_INVALID, FB_AmmoType_TACTICAL_NUKE)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesFB_AmmoType()[index];
 }

@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"ammo.hpp"
 #include"attribute.hpp"
 #include"itemVisitorFullDescr.hpp"
 #include"skill.hpp"
@@ -83,8 +84,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
 
     oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
     oss << text.common().ammoType() << sp
-        /// TODO << AmmoText::type(weapon.ammoType())
-        << endl;
+        << Ammo::ammoReference(weapon.ammoType()).name() << endl;
     oss << text.common().range() << sp << weapon.rangeAttack() << endl;
     oss << text.common().hitChance() << sp
         << common::getChance(weapon.chanceHit()) << p << endl;
@@ -167,8 +167,8 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
         oss << text.common().ammoCapacity() << sp << ref.capAmmo_ << endl;
     }
     if (ref.tyAmmo_ != def.tyAmmo_) {
-        oss << text.common().ammoType() << sp << endl;
-    /// TODO       << << endl;
+        oss << text.common().ammoType() << sp
+            << Ammo::ammoReference(weaponMod.weaponModReference().tyAmmo_).name() << endl;
     }
     if (ref.rangeAttack_ != def.rangeAttack_) {
         oss << text.common().range() << sp << ref.rangeAttack_ << endl;
@@ -209,6 +209,18 @@ void ItemVisitorFullDescription::visitArmorMod(ArmorMod& armorMod) noexcept
 void ItemVisitorFullDescription::visitAmmo(Ammo& ammo) noexcept
 {
     reset();
+    constexpr auto sp{ ' ' };
+    const auto sep{ "----------" };
+    const auto& text{ ammo.ammoText() };
+    ostringstream oss;
+    oss << ammo.name() << " (" << ammo.quantity() << ')' << endl;
+    oss << text.common().itemType() << endl;
+    oss << sep << endl;
+    oss << ammo.description() << endl;
+
+    /// TODO oss << price << endl;
+
+    text_ = oss.str();
 }
 
 void ItemVisitorFullDescription::visitJunk(Junk& junk) noexcept

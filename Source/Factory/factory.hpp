@@ -7,9 +7,10 @@
 #ifndef FACTORY_HPP
 #define FACTORY_HPP
 
-#include"plainText.hpp"
+#include"ammo.hpp"
 #include"item.hpp"
 #include"option.hpp"
+#include"plainText.hpp"
 #include"unit.hpp"
 #include<memory>
 
@@ -22,6 +23,15 @@ public:
     std::unique_ptr<object::Item> createItem(typename T::Model model) const {
         //T::initialize();
         return std::unique_ptr<object::Item>(new T(std::move(model)));
+    }
+
+    std::unique_ptr<object::Item> createAmmo(
+        object::Ammo::Type type,
+        object::Ammo::ammo_quantity qty
+    ) const {
+        return std::unique_ptr<object::Item>(
+            new object::Ammo(std::move(type), std::move(qty))
+            );
     }
 
     template<class T>

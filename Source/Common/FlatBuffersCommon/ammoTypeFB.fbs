@@ -12,4 +12,17 @@ enum FB_AmmoType:int8 {
   NONE,
   A_5_56,
   A_7_62,
+  SPIKES,
+  BOLTS,
+  A_9_MM,
+  A_D45,
+  A_D38,
+  A_D30_06,
+  A_D50,
+  SHOTGUN_SHELLS,
+  FLAMETHROWER_FUEL,
+  ENERGY_CELLS,
+  FROZEN_FERRET,
+  ROCKET,
+  TACTICAL_NUKE
 }

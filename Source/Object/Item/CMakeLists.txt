@@ -15,7 +15,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(LIBRARY_NAME "item")
 set(SOURCE_CXX_LIST "item.cpp"
                     "itemVisitorFullDescr.cpp"
+                    "Ammo/ammo.cpp"
                     "Ammo/ammoCommon.cpp"
+                    "Ammo/ammoReference.cpp"
+                    "Ammo/ammoText.cpp"
                     "Damage/damageCommon.cpp"
                     "Weapon/weapon.cpp"
                     "Weapon/weaponCommon.cpp"
@@ -47,5 +50,6 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC unit
 )
 
+add_subdirectory("Ammo")
 add_subdirectory("Weapon")
 add_subdirectory("WeaponMod")

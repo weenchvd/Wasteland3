@@ -16,8 +16,21 @@ enum class Ammo__Type : char {
     INVALID = -1,                   /// invalid, must be the first
     // vvv TYPES vvv
     NONE,                           // without ammo
-    A_5_56,                         // 5.56
-    A_7_62,                         // 7.62
+    A_5_56,                         // 5.56mm ammo
+    A_7_62,                         // 7.62mm ammo
+    SPIKES,
+    BOLTS,
+    A_9_MM,                         // 9mm ammo
+    A_D45,                          // .45 ammo
+    A_D38,                          // .38 ammo
+    A_D30_06,                       // .30-06 ammo
+    A_D50,                          // .50 ammo
+    SHOTGUN_SHELLS,
+    FLAMETHROWER_FUEL,
+    ENERGY_CELLS,
+    FROZEN_FERRET,
+    ROCKET,
+    TACTICAL_NUKE,
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };

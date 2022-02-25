@@ -1,0 +1,23 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbAmmo;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_AmmoTextCommon {
+  item_type:fbCommon.FB_LanguageBundle;
+  quantity:fbCommon.FB_LanguageBundle;
+}
+
+table FB_AmmoText {
+  common:FB_AmmoTextCommon;
+}
+
+root_type FB_AmmoText;

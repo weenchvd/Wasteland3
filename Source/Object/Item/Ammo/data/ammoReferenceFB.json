@@ -1,0 +1,196 @@
+{
+  "refs": [
+    {
+      "ammo_type": "NONE",
+      "name": {
+        "en": "NO_DATA",
+        "ru": "НЕТ_ДАННЫХ"
+      },
+      "descrip": {
+        "en": "NO_DATA",
+        "ru": "НЕТ_ДАННЫХ"
+      },
+      "price": 0
+    },
+    {
+      "ammo_type": "A_5_56",
+      "name": {
+        "en": "5.56MM AMMO",
+        "ru": "ПАТРОНЫ 5,56 ММ"
+      },
+      "descrip": {
+        "en": "This high velocity rimless cartridge is used in high-end assault rifles.",
+        "ru": "Эти скоростные бесфланцевые патроны используются в штурмовых винтовках высшего сорта."
+      },
+      "price": 3
+    },
+    {
+      "ammo_type": "A_7_62",
+      "name": {
+        "en": "7.62MM AMMO",
+        "ru": "ПАТРОНЫ 7,62 ММ"
+      },
+      "descrip": {
+        "en": "A rifle-grade rounds with stopping power to please. This ammo is used for assault rifles and fast-firing heavy machine guns.",
+        "ru": "Ружейный патрон с очень приятным останавливающим действием. Используется в штурмовых винтовках и скорострельных тяжелых пулеметах."
+      },
+      "price": 2
+    },
+    {
+      "ammo_type": "SPIKES",
+      "name": {
+        "en": "SPIKES",
+        "ru": "КОЛЬЯ"
+      },
+      "descrip": {
+        "en": "Made from rusty nails and powder cartridges - it's like 1776 all over again. This ammo is used only in the jankiest of home-made weapons.",
+        "ru": "Сделаны из ржавых гвоздей и пороховых гильз - мы словно вернулись в 1776-й. Этот тип боеприпасов подходит для самого дрянного самодельного оружия."
+      },
+      "price": 3
+    },
+    {
+      "ammo_type": "BOLTS",
+      "name": {
+        "en": "BOLTS",
+        "ru": "БОЛТЫ"
+      },
+      "descrip": {
+        "en": "How else are you gonna stab something from far away?",
+        "ru": "А как еще пырнуть кого-то острым наконечником с большого расстояния?"
+      },
+      "price": 6
+    },
+    {
+      "ammo_type": "A_9_MM",
+      "name": {
+        "en": "9MM AMMO",
+        "ru": "ПАТРОНЫ 9 ММ"
+      },
+      "descrip": {
+        "en": "The gunslinger's choice. This ammo is commonly used in semi-automatic pistols and lightweight SMGs.",
+        "ru": "Выбор скорострела. Это частый тип боеприпасов для самозарядных пистолетов и пистолетов-пулеметов."
+      },
+      "price": 2
+    },
+    {
+      "ammo_type": "A_D45",
+      "name": {
+        "en": ".45 AMMO",
+        "ru": "ПАТРОНЫ .45"
+      },
+      "descrip": {
+        "en": "This large round offers a real kick in the teeth - both for you and your target. This ammo is used most commonly in high-end SMGs.",
+        "ru": "Эти крупные патроны больно бьют не только по цели, но и по вам отдачей. Чаще всего используются в пистолетах-пулеметах высшего сорта."
+      },
+      "price": 3
+    },
+    {
+      "ammo_type": "A_D38",
+      "name": {
+        "en": ".38 AMMO",
+        "ru": "ПАТРОНЫ .38"
+      },
+      "descrip": {
+        "en": "This classic revolver round has your back.",
+        "ru": "Классический револьверный патрон, на который всегда можно положиться."
+      },
+      "price": 6
+    },
+    {
+      "ammo_type": "A_D30_06",
+      "name": {
+        "en": ".30-06 AMMO",
+        "ru": "ПАТРОНЫ .30-06"
+      },
+      "descrip": {
+        "en": "The gold standard for long-distance elimination. This ammo is used exclusively in sniper rifles.",
+        "ru": "Золотой стандарт для ликвидирования с дальних расстояний. Эти патроны - прерогатива снайперских винтовок."
+      },
+      "price": 6
+    },
+    {
+      "ammo_type": "A_D50",
+      "name": {
+        "en": ".50 AMMO",
+        "ru": "ПАТРОНЫ .50"
+      },
+      "descrip": {
+        "en": "Whether you nedd to take out a person or their vehicle, this massive round has you covered. This ammo is used for high-powered sniper rifles and heavy machine guns.",
+        "ru": "Отлично подходят для стрельбы и по живой цели, и по транспортному средству. Эти патроны используются в мощных снайперских винтовках и тяжелых пулеметах."
+      },
+      "price": 10
+    },
+    {
+      "ammo_type": "SHOTGUN_SHELLS",
+      "name": {
+        "en": "SHOTGUN SHELLS",
+        "ru": "РУЖЕЙНЫЕ ПАТРОНЫ"
+      },
+      "descrip": {
+        "en": "Whether hunting game or man, it's no surprise shotguns survived the apocalypse.",
+        "ru": "Неудивительно, что ружья пережили апокалипсис. Они годятся для охоты и на животных, и на людей."
+      },
+      "price": 6
+    },
+    {
+      "ammo_type": "FLAMETHROWER_FUEL",
+      "name": {
+        "en": "FLAMETHROWER FUEL",
+        "ru": "ТОПЛИВО ДЛЯ ОГНЕМЕТА"
+      },
+      "descrip": {
+        "en": "Put this valuable resource to the best possible use: setting things on fire.",
+        "ru": "Используйте этот ценный ресурс с наибольшей пользой: жгите."
+      },
+      "price": 9
+    },
+    {
+      "ammo_type": "ENERGY_CELLS",
+      "name": {
+        "en": "ENERGY CELLS",
+        "ru": "АККУМУЛЯТОРЫ"
+      },
+      "descrip": {
+        "en": "These portable batteries are used to power electronic devices, such as laser blasters and death rays.",
+        "ru": "Портативные аккумуляторы для питания электронных устройств, в том числе мощных лазеров и лучей смерти."
+      },
+      "price": 10
+    },
+    {
+      "ammo_type": "FROZEN_FERRET",
+      "name": {
+        "en": "FROZEN FERRET",
+        "ru": "ЗАМЕРЗШИЙ ХОРЕК"
+      },
+      "descrip": {
+        "en": "Is it animal cruelty if they're already dead?",
+        "ru": "Он ведь уже мертв, так что это не назовешь жестоким обращением с животными?"
+      },
+      "price": 20
+    },
+    {
+      "ammo_type": "ROCKET",
+      "name": {
+        "en": "ROCKET",
+        "ru": "РАКЕТА"
+      },
+      "descrip": {
+        "en": "Rockets pack a powerful blast. Just be sure you have something that can propel it far enough away from you.",
+        "ru": "Ракеты дают довольно мощный взрыв. Нужно только орудие, чтобы выстрелить куда-нибудь подальше от себя."
+      },
+      "price": 120
+    },
+    {
+      "ammo_type": "TACTICAL_NUKE",
+      "name": {
+        "en": "TACTICAL NUKE",
+        "ru": "АТОМНАЯ БОМБА"
+      },
+      "descrip": {
+        "en": "I am become death, the destroyer of worlds.",
+        "ru": "Я - смерть, разрушитель миров."
+      },
+      "price": 1000
+    }
+  ]
+}
