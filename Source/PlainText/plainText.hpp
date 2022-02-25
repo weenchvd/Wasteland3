@@ -32,14 +32,14 @@ public:
     using Language      = PlainText__Language;
     using General       = PlainText__General;
 
-    static constexpr auto sizeLang_{ common::toUnderlying(PlainText::Language::NUMBER_OF) };
+    static constexpr auto sizeLang_{ common::numberOf<PlainText::Language>() };
 
 private:
     using text          = common::Text;
 
     friend class Factory;
 
-    static constexpr unsigned int sizeCommon_{ common::toUnderlying(PlainText::General::NUMBER_OF) };
+    static constexpr auto sizeCommon_{ common::numberOf<PlainText::General>() };
 
 protected:
     PlainText(PlainText::Language lang);

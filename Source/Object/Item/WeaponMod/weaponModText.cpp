@@ -38,10 +38,10 @@ void WeaponModText::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_MOD_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-
     const fbWeaponMod::FB_WeaponModText* table{
         fbWeaponMod::GetFB_WeaponModText(buffer.get())
     };
+    assert(table != nullptr);
 
     initByType(table->type(), type_);
     initCommon(table->common());

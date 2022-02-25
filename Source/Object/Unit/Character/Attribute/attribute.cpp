@@ -164,7 +164,7 @@ bool Attribute::isInitialized()
 
 vector<common::SpecStorage<common::LevelStat>> Attribute::initLevels()
 {
-    constexpr auto nAttributes = common::toUnderlying(Attribute::Type::NUMBER_OF);
+    constexpr auto nAttributes = common::numberOf<Attribute::Type>();
     const common::SpecStorage<common::LevelStat> tempLevel{
         ref_.minAttrLevel_,
         ref_.maxAttrLevel_

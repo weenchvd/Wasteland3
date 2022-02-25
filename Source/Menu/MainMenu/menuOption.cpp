@@ -114,9 +114,8 @@ global::PlainText::Language pickLanguage(const Indent indent)
     Indent ind2 = ind1 + Indent{};
     Indent ind3 = ind2 + Indent{};
 
-    for (int i = static_cast<int>(PlainText::Language::INVALID) + 1;
-        i < static_cast<int>(PlainText::Language::NUMBER_OF);
-        ++i)
+    for (int i = { common::toUnderlying(common::firstEnum<PlainText::Language>()) };
+        i <= common::toUnderlying(common::lastEnum<PlainText::Language>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
             << Locator::getPlainText().language(static_cast<PlainText::Language>(i)) << endl;
@@ -125,8 +124,9 @@ global::PlainText::Language pickLanguage(const Indent indent)
     cout << ind1 << "Select a Language:" << endl;
     PlainText::Language t{ PlainText::Language::INVALID };
     int n = getPosNumber();
-    if (n > static_cast<int>(PlainText::Language::INVALID) &&
-        n < static_cast<int>(PlainText::Language::NUMBER_OF)) {
+    if (n >= common::toUnderlying(common::firstEnum<PlainText::Language>()) &&
+        n <= common::toUnderlying(common::lastEnum<PlainText::Language>()))
+    {
         t = static_cast<PlainText::Language>(n);
     }
     return t;

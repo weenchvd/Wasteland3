@@ -221,7 +221,7 @@ bool Skill::isInitialized()
 
 vector<common::SpecStorage<common::LevelStat>> Skill::initLevels()
 {
-    constexpr auto nSkills = common::toUnderlying(Skill::Type::NUMBER_OF);
+    constexpr auto nSkills = common::numberOf<Skill::Type>();
     const common::SpecStorage<common::LevelStat> tempLevel{
         ref_.minSkillLevel_,
         ref_.maxSkillLevel_

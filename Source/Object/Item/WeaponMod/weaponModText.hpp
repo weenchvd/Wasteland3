@@ -111,7 +111,7 @@ private:
     using language          = global::PlainText::Language;
 
     static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
-    static constexpr auto sizeType_     { common::toUnderlying(WeaponMod__Type::NUMBER_OF) };
+    static constexpr auto sizeType_     { common::numberOf<WeaponMod__Type>() };
 
     using language_bundle   = std::array<text, sizeLang_>;
 

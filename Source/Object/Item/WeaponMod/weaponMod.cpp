@@ -20,7 +20,10 @@ const WeaponModText                     WeaponMod::text_;
 WeaponMod::WeaponMod(WeaponMod::Model model) noexcept
     :
     base_{ ref_.weaponModReference(model) }
-{}
+{
+    assert(isInitialized());
+    assert(base_.isInitialized());
+}
 
 void WeaponMod::apply(Weapon& weapon) noexcept
 {

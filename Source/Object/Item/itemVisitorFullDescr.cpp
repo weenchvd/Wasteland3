@@ -238,13 +238,13 @@ void WeaponList::initialize() noexcept
     Weapon__Type last{ Weapon__Type::INVALID };
     list_.resize(sizeWeaponModType_);
 
-    for (size_t k = common::toUnderlying(WeaponMod__Type::INVALID) + 1;
+    for (size_t k = { common::toUnderlying(common::firstEnum<WeaponMod__Type>()) };
         k < list_.size(); ++k)
     {
         array<bool, sizeWeaponType_> a;
         a.fill(false);
-        for (size_t i = common::toUnderlying(Weapon__Model::INVALID) + 1;
-            i < common::toUnderlying(Weapon__Model::NUMBER_OF); ++i)
+        for (size_t i = { common::toUnderlying(common::firstEnum<Weapon__Model>()) };
+            i <= common::toUnderlying(common::lastEnum<Weapon__Model>()); ++i)
         {
             const auto& ref{
                 WeaponReferenceContainer::weaponReference(static_cast<Weapon__Model>(i))

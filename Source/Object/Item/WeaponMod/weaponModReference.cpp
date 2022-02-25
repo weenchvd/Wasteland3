@@ -91,8 +91,7 @@ void WeaponModReferenceContainer::initContainer(
     const fbWeaponMod::FB_WeaponModReferenceContainer* container)
 {
     assert(container != nullptr);
-    assert(common::toUnderlying(WeaponMod__Model::NUMBER_OF) >= 0);
-    refs_.resize(common::toUnderlying(WeaponMod__Model::NUMBER_OF));
+    refs_.resize(common::numberOf<WeaponMod__Model>());
     auto v{ container->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {

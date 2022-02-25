@@ -134,7 +134,7 @@ bool Character::isInitialized()
 
 void Character::initRef()
 {
-    ref_.resize(static_cast<underlying_type_t<Character::Model>>(Character::Model::NUMBER_OF));
+    ref_.resize(common::numberOf<Character::Model>());
 
     ///// TEMPLATE
     //{

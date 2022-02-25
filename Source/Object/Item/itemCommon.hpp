@@ -15,14 +15,14 @@ using Item__Model                   = ItemBaseType;
 
 enum class Item__Type : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
-
+    // vvv TYPES vvv
     WEAPON,
     WEAPONMOD,
     ARMOR,
     ARMORMOD,
     AMMO,
     JUNK,
-
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
 

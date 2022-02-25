@@ -199,8 +199,8 @@ object::Attribute::Type pickAttribute(
     cout << ind1 << "Attributes:" << endl;
     Indent ind2 = ind1 + Indent{};
 
-    for (int i = static_cast<int>(object::Attribute::Type::INVALID) + 1;
-        i < static_cast<int>(object::Attribute::Type::NUMBER_OF); ++i)
+    for (int i = { common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
+        i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
             << character.attribute().attributeText().name(
@@ -209,8 +209,9 @@ object::Attribute::Type pickAttribute(
     cout << ind1 << "Select an attribute:" << endl;
     object::Attribute::Type t{ object::Attribute::Type::INVALID };
     int n = getPosNumber();
-    if (n > static_cast<int>(object::Attribute::Type::INVALID) &&
-        n < static_cast<int>(object::Attribute::Type::NUMBER_OF)) {
+    if (n >= common::toUnderlying(common::firstEnum<object::Attribute::Type>()) &&
+        n <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()))
+    {
         t = static_cast<object::Attribute::Type>(n);
     }
     return t;

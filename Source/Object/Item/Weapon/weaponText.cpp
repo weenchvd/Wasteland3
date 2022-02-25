@@ -39,7 +39,6 @@ void WeaponText::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-
     const fbWeapon::FB_WeaponText* table{
         fbWeapon::GetFB_WeaponText(buffer.get())
     };

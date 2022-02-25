@@ -27,8 +27,8 @@ private:
     using language          = global::PlainText::Language;
 
     static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
-    static constexpr auto sizeType_     { common::toUnderlying(Skill__Type::NUMBER_OF) };
-    static constexpr auto sizeGroup_    { common::toUnderlying(Skill__Group::NUMBER_OF) };
+    static constexpr auto sizeType_     { common::numberOf<Skill__Type>() };
+    static constexpr auto sizeGroup_    { common::numberOf<Skill__Group>() };
 
     using language_bundle   = std::array<text, sizeLang_>;
 

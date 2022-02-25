@@ -238,8 +238,8 @@ object::Skill::Type pickSkill(
     cout << ind1 << "Skills:" << endl;
     Indent ind2 = ind1 + Indent{};
 
-    for (int i = static_cast<int>(object::Skill::Type::INVALID) + 1;
-        i < static_cast<int>(object::Skill::Type::NUMBER_OF); ++i)
+    for (int i = { common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
+        i <= common::toUnderlying(common::lastEnum<object::Skill::Type>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
             << character.skill().skillText().name(
@@ -249,8 +249,9 @@ object::Skill::Type pickSkill(
     cout << ind1 << "Select a skill:" << endl;
     object::Skill::Type t{ object::Skill::Type::INVALID };
     int n = getPosNumber();
-    if (n > static_cast<int>(object::Skill::Type::INVALID) &&
-        n < static_cast<int>(object::Skill::Type::NUMBER_OF)) {
+    if (n >= common::toUnderlying(common::firstEnum<object::Skill::Type>()) &&
+        n <= common::toUnderlying(common::lastEnum<object::Skill::Type>()))
+    {
         t = static_cast<object::Skill::Type>(n);
     }
     return t;

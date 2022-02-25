@@ -66,8 +66,7 @@ void AmmoReferenceContainer::initContainer(
     const fbAmmo::FB_AmmoReferenceContainer* container)
 {
     assert(container != nullptr);
-    assert(common::toUnderlying(Ammo__Type::NUMBER_OF) >= 0);
-    refs_.resize(common::toUnderlying(Ammo__Type::NUMBER_OF));
+    refs_.resize(common::numberOf<Ammo__Type>());
     auto v{ container->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {

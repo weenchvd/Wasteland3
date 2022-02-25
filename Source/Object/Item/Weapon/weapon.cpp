@@ -36,8 +36,7 @@ Weapon::Weapon(Weapon::Model model) noexcept
     tyDmg_          { base_.tyDmg_ },
     slotWeaponMod_  { base_.weaponModTypes_ }
 {
-    assert(ref_.isInitialized());
-    assert(text_.isInitialized());
+    assert(isInitialized());
     assert(base_.isInitialized());
 }
 

@@ -57,8 +57,8 @@ public:
     using list                  = std::vector<Weapon__Type>;
 
 private:
-    static constexpr auto sizeWeaponType_   { common::toUnderlying(Weapon__Type::NUMBER_OF) };
-    static constexpr auto sizeWeaponModType_{ common::toUnderlying(WeaponMod__Type::NUMBER_OF) };
+    static constexpr auto sizeWeaponType_   { common::numberOf<Weapon__Type>() };
+    static constexpr auto sizeWeaponModType_{ common::numberOf<WeaponMod__Type>() };
 
 public:
     WeaponList() noexcept {}

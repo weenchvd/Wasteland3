@@ -7,6 +7,7 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#include<assert.h>
 #include<string>
 #include<type_traits>
 
@@ -150,7 +151,32 @@ constexpr auto toUnderlying(Enum e) noexcept
 template <class Enum>
 constexpr bool isValidEnum(Enum e) noexcept
 {
+    assert(toUnderlying(Enum::INVALID) == -1);
     return (e > Enum::INVALID && e < Enum::NUMBER_OF);
+}
+
+template <class Enum>
+constexpr auto numberOf() noexcept
+{
+    assert(toUnderlying(Enum::INVALID) == -1);
+    assert(Enum::INVALID < Enum::NUMBER_OF);
+    return toUnderlying(Enum::NUMBER_OF);
+}
+
+template <class Enum>
+constexpr auto firstEnum() noexcept
+{
+    auto e{ static_cast<Enum>(toUnderlying(Enum::INVALID) + 1) };
+    assert(isValidEnum(e));
+    return e;
+}
+
+template <class Enum>
+constexpr auto lastEnum() noexcept
+{
+    auto e{ static_cast<Enum>(toUnderlying(Enum::NUMBER_OF) - 1) };
+    assert(isValidEnum(e));
+    return e;
 }
 
 } // namespace common
