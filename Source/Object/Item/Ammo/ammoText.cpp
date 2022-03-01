@@ -36,12 +36,12 @@ void AmmoText::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbAmmo::FB_AmmoText* table{
+    const fbAmmo::FB_AmmoText* fb{
         fbAmmo::GetFB_AmmoText(buffer.get())
     };
-    assert(table != nullptr);
+    assert(fb != nullptr);
 
-    initCommon(table->common());
+    initCommon(fb->common());
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -51,12 +51,12 @@ void AmmoText::initialize()
     initialized_ = true;
 }
 
-void AmmoText::initCommon(const fbAmmo::FB_AmmoTextCommon* table)
+void AmmoText::initCommon(const fbAmmo::FB_AmmoTextCommon* fb)
 {
-    assert(table != nullptr);
+    assert(fb != nullptr);
 
-    common::initLanguageBundle(table->item_type(), common_.itemType_);
-    common::initLanguageBundle(table->quantity(), common_.qty_);
+    common::initLanguageBundle(fb->item_type(), common_.itemType_);
+    common::initLanguageBundle(fb->quantity(), common_.qty_);
 }
 
 } // namespace object

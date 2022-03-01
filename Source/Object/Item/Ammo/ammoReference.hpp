@@ -79,10 +79,10 @@ public:
 private:
     static void setLanguage(language lang) noexcept;
 
-    static void initContainer(const fbAmmo::FB_AmmoReferenceContainer* container);
+    static void initContainer(const fbAmmo::FB_AmmoReferenceContainer* fb);
 
     static AmmoReference initAmmoReference(
-        const fbAmmo::FB_AmmoReference* reference
+        const fbAmmo::FB_AmmoReference* fb
     );
 
 private:

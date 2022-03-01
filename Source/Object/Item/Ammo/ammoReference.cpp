@@ -48,11 +48,11 @@ void AmmoReferenceContainer::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbAmmo::FB_AmmoReferenceContainer* container{
+    const fbAmmo::FB_AmmoReferenceContainer* fb{
         fbAmmo::GetFB_AmmoReferenceContainer(buffer.get())
     };
 
-    initContainer(container);
+    initContainer(fb);
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -63,11 +63,11 @@ void AmmoReferenceContainer::initialize()
 }
 
 void AmmoReferenceContainer::initContainer(
-    const fbAmmo::FB_AmmoReferenceContainer* container)
+    const fbAmmo::FB_AmmoReferenceContainer* fb)
 {
-    assert(container != nullptr);
+    assert(fb != nullptr);
     refs_.resize(common::numberOf<Ammo__Type>());
-    auto v{ container->refs() };
+    auto v{ fb->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         AmmoReference ref{ initAmmoReference(v->Get(i)) };
@@ -77,18 +77,18 @@ void AmmoReferenceContainer::initContainer(
 }
 
 AmmoReference AmmoReferenceContainer::initAmmoReference(
-    const fbAmmo::FB_AmmoReference* reference)
+    const fbAmmo::FB_AmmoReference* fb)
 {
-    assert(reference != nullptr);
+    assert(fb != nullptr);
     AmmoReference ref;
 
-    ref.type_ = toAmmoType(reference->ammo_type());
+    ref.type_ = toAmmoType(fb->ammo_type());
     assert(common::isValidEnum(ref.type_));
 
-    common::initLanguageBundle(reference->name(), ref.name_);
-    common::initLanguageBundle(reference->descrip(), ref.descrip_);
+    common::initLanguageBundle(fb->name(), ref.name_);
+    common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.price_          = { reference->price() };
+    ref.price_          = { fb->price() };
 
     ref.initialized_    = true;
 

@@ -31,7 +31,7 @@ public:
 private:
     friend global::Factory;
 
-protected:
+private:
     explicit Ammo(Ammo::Type type, ammo_quantity qty) noexcept;
 
 public:
@@ -82,8 +82,8 @@ public:
     }
 
 public:
-    static const AmmoReference& ammoReference(Ammo::Type id) noexcept {
-        return ref_.ammoReference(id);
+    static const AmmoReferenceContainer& ammoReferenceContainer() noexcept {
+        return ref_;
     }
 
     static const AmmoText& ammoText() noexcept {

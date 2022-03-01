@@ -74,7 +74,7 @@ public:
 private:
     static void setLanguage(language lang) noexcept;
 
-    static void initCommon(const fbAmmo::FB_AmmoTextCommon* table);
+    static void initCommon(const fbAmmo::FB_AmmoTextCommon* fb);
 
 private:
     static common::ObserverDLL<void, language>      langObs_;

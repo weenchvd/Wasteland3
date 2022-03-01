@@ -85,7 +85,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
 
     oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
     oss << text.common().ammoType() << sp
-        << Ammo::ammoReference(weapon.ammoType()).name() << endl;
+        << Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name() << endl;
     oss << text.common().range() << sp << weapon.rangeAttack() << endl;
     oss << text.common().hitChance() << sp
         << common::getChance(weapon.chanceHit()) << p << endl;
@@ -176,7 +176,7 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
     }
     if (weaponMod.ammoType() != def.ammoType()) {
         oss << text.common().ammoType() << sp
-            << Ammo::ammoReference(weaponMod.ammoType()).name() << endl;
+            << Ammo::ammoReferenceContainer().ammoReference(weaponMod.ammoType()).name() << endl;
     }
     if (weaponMod.rangeAttack() != def.rangeAttack()) {
         oss << text.common().range() << sp << weaponMod.rangeAttack() << endl;

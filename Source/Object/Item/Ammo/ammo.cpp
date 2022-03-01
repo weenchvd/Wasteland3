@@ -24,6 +24,7 @@ Ammo::Ammo(Ammo::Type type, Ammo::ammo_quantity qty) noexcept
 {
     assert(isInitialized());
     assert(base_.isInitialized());
+    assert(qty_ > 0);
 }
 
 } // namespace object
