@@ -21,6 +21,8 @@ common::ObserverDLL<void, WeaponModReferenceContainer::language>
                             WeaponModReferenceContainer::langObs_;
 
 vector<WeaponModReference>  WeaponModReferenceContainer::refs_;
+WeaponModReference          WeaponModReferenceContainer::refDefault_;
+
 
 underlying_type_t<WeaponModReferenceContainer::language>
                             WeaponModReferenceContainer::langIndex_     { 0 };
@@ -30,11 +32,12 @@ bool                        WeaponModReferenceContainer::initialized_   { false 
 
 WeaponModRequirements::WeaponModRequirements() noexcept
     :
-    skillReq_       { skill_requirement{ Skill::Type::INVALID, 0 },
-                      skill_requirement{ Skill::Type::INVALID, 0 }, },
-    attrReq_        { attribute_requirement{ Attribute::Type::INVALID, 0 },
-                      attribute_requirement{ Attribute::Type::INVALID, 0 } }
-{}
+    skillReq_       {},
+    attrReq_        {}
+{
+    skillReq_.fill(skill_requirement{ Skill::Type::INVALID, 0 });
+    attrReq_.fill(attribute_requirement{ Attribute::Type::INVALID, 0 });
+}
 
 ///************************************************************************************************
 
@@ -73,11 +76,11 @@ void WeaponModReferenceContainer::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_MOD_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbWeaponMod::FB_WeaponModReferenceContainer* container{
+    const fbWeaponMod::FB_WeaponModReferenceContainer* fb{
         fbWeaponMod::GetFB_WeaponModReferenceContainer(buffer.get())
     };
 
-    initContainer(container);
+    initContainer(fb);
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -88,72 +91,84 @@ void WeaponModReferenceContainer::initialize()
 }
 
 void WeaponModReferenceContainer::initContainer(
-    const fbWeaponMod::FB_WeaponModReferenceContainer* container)
+    const fbWeaponMod::FB_WeaponModReferenceContainer* fb)
 {
-    assert(container != nullptr);
+    assert(fb != nullptr);
     refs_.resize(common::numberOf<WeaponMod__Model>());
-    auto v{ container->refs() };
+    auto v{ fb->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         WeaponModReference ref{ initWeaponModReference(v->Get(i)) };
         auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
+    refDefault_ = initWeaponModReference(fb->ref_default(), false);
 }
 
 WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
-    const fbWeaponMod::FB_WeaponModReference* reference)
+    const fbWeaponMod::FB_WeaponModReference* fb, const bool assert)
 {
-    assert(reference != nullptr);
+    assert(fb != nullptr);
     WeaponModReference ref;
 
-    ref.model_  = toWeaponModModel(reference->weapon_mod_model());
-    assert(common::isValidEnum(ref.model_));
-    ref.type_   = toWeaponModType(reference->weapon_mod_type());
-    assert(common::isValidEnum(ref.type_));
+    ref.model_  = toWeaponModModel(fb->weapon_mod_model());
+    ref.type_   = toWeaponModType(fb->weapon_mod_type());
 
-    auto requirements{ reference->weapon_mod_requirements() };
-    assert(requirements != nullptr);
-    if (requirements->skill() != nullptr) {
-        auto ptr{ requirements->skill() };
-        assert(ptr->size() <= ref.requirements_.skillReq_.size());
-        for (size_t i = 0; i < ptr->size(); ++i) {
-            ref.requirements_.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
-            assert(common::isValidEnum(ref.requirements_.skillReq_[i].first));
-            ref.requirements_.skillReq_[i].second = { ptr->Get(i)->level() };
-        }
-    }
-    if (requirements->attr() != nullptr) {
-        auto ptr{ requirements->attr() };
-        assert(ptr->size() <= ref.requirements_.attrReq_.size());
-        for (size_t i = 0; i < ptr->size(); ++i) {
-            ref.requirements_.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
-            assert(common::isValidEnum(ref.requirements_.attrReq_[i].first));
-            ref.requirements_.attrReq_[i].second = { ptr->Get(i)->level() };
-        }
-    }
+    initWeaponModRequirements(fb->weapon_mod_requirements(), ref.requirements_);
 
-    common::initLanguageBundle(reference->name(), ref.name_);
-    common::initLanguageBundle(reference->descrip(), ref.descrip_);
+    common::initLanguageBundle(fb->name(), ref.name_);
+    common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.dmgMin_         = { reference->dmg_min() };
-    ref.dmgMax_         = { reference->dmg_max() };
-    ref.price_          = { reference->price() };
-    ref.rangeAttack_    = { reference->range_attack() };
-    ref.capAmmo_        = { reference->capacity_ammo() };
-    ref.mulCritDmg_     = { reference->multiplier_crit_dmg() };
-    ref.chaHit_         = { reference->chance_hit() };
-    ref.chaCritDmg_     = { reference->chance_crit_dmg() };
-    ref.armorPen_       = { reference->armor_penetration() };
-    ref.apAttack_       = { reference->ap_per_attack() };
-    ref.apReload_       = { reference->ap_per_reload() };
-    ref.shoPerAttack_   = { reference->shots_per_attack() };
-    ref.tyAmmo_         = toAmmoType(reference->ammo_type());
-    ref.tyDmg_          = toDamageType(reference->dmg_type());
+    ref.dmgMin_         = { fb->dmg_min() };
+    ref.dmgMax_         = { fb->dmg_max() };
+    ref.price_          = { fb->price() };
+    ref.rangeAttack_    = { fb->range_attack() };
+    ref.capAmmo_        = { fb->capacity_ammo() };
+    ref.mulCritDmg_     = { fb->multiplier_crit_dmg() };
+    ref.chaHit_         = { fb->chance_hit() };
+    ref.chaCritDmg_     = { fb->chance_crit_dmg() };
+    ref.armorPen_       = { fb->armor_penetration() };
+    ref.apAttack_       = { fb->ap_per_attack() };
+    ref.apReload_       = { fb->ap_per_reload() };
+    ref.shoPerAttack_   = { fb->shots_per_attack() };
+    ref.tyAmmo_         = toAmmoType(fb->ammo_type());
+    ref.tyDmg_          = toDamageType(fb->dmg_type());
 
     ref.initialized_    = true;
 
+#ifndef NDEBUG
+    if (assert == true) {
+        assert(common::isValidEnum(ref.model_));
+        assert(common::isValidEnum(ref.type_));
+    }
+#endif
+
     return ref;
+}
+
+void WeaponModReferenceContainer::initWeaponModRequirements(
+    const fbWeaponMod::FB_WeaponModRequirements* fb,
+    WeaponModRequirements& requirements)
+{
+    assert(fb != nullptr);
+    if (fb->skill() != nullptr) {
+        auto ptr{ fb->skill() };
+        assert(ptr->size() <= requirements.skillReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            requirements.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
+            assert(common::isValidEnum(requirements.skillReq_[i].first));
+            requirements.skillReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
+    if (fb->attr() != nullptr) {
+        auto ptr{ fb->attr() };
+        assert(ptr->size() <= requirements.attrReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            requirements.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
+            assert(common::isValidEnum(requirements.attrReq_[i].first));
+            requirements.attrReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
 }
 
 } // namespace object

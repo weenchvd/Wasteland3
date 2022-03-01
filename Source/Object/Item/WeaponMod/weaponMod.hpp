@@ -35,8 +35,10 @@ public:
 private:
     friend global::Factory;
 
-protected:
+private:
     explicit WeaponMod(WeaponMod::Model model) noexcept;
+
+    explicit WeaponMod(const WeaponModReference& ref) noexcept;
 
 public:
     WeaponMod(const WeaponMod&) = delete;
@@ -56,10 +58,6 @@ public:
 
 /// weapon mod parameters
 public:
-    const WeaponModReference& weaponModReference() noexcept {
-        return base_;
-    }
-
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPONMOD;
     }
@@ -88,9 +86,67 @@ public:
         return base_.descr();
     }
 
+    common::Damage damageMinimum() const noexcept {
+        return base_.dmgMin_;
+    }
+
+    common::Damage damageMaximum() const noexcept {
+        return base_.dmgMax_;
+    }
+
+    common::Price price() const noexcept {
+        return base_.price_;
+    }
+
+    common::Range rangeAttack() const noexcept {
+        return base_.rangeAttack_;
+    }
+
+    common::Capacity capacityAmmo() const noexcept {
+        return base_.capAmmo_;
+    }
+
+    common::Multiplier multiplierCritDamage() const noexcept {
+        return base_.mulCritDmg_;
+    }
+
+    common::Chance chanceHit() const noexcept {
+        return base_.chaHit_;
+    }
+
+    common::Chance chanceCritDamage() const noexcept {
+        return base_.chaCritDmg_;
+    }
+
+    common::Armor armorPenetration() const noexcept {
+        return base_.armorPen_;
+    }
+
+    common::ActionPoint actionPointPerAttack() const noexcept {
+        return base_.apAttack_;
+    }
+
+    common::ActionPoint actionPointPerReload() const noexcept {
+        return base_.apReload_;
+    }
+
+    common::NumberShots shotsPerAttack() const noexcept {
+        return base_.shoPerAttack_;
+    }
+
+    Ammo::Type ammoType() const noexcept {
+        return base_.tyAmmo_;
+    }
+
+    Damage::Type damageType() const noexcept {
+        return base_.tyDmg_;
+    }
+
 public:
-    static const WeaponModReference& weaponModReference(WeaponMod::Model id) noexcept {
-        return ref_.weaponModReference(id);
+    static const WeaponMod& weaponModDefault() noexcept;
+
+    static const WeaponModReferenceContainer& weaponModReferenceContainer() noexcept {
+        return ref_;
     }
 
     static const WeaponModText& weaponModText() noexcept {

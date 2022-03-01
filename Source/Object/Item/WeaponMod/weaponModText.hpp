@@ -135,11 +135,11 @@ private:
     static void setLanguage(language lang) noexcept;
 
     static void initByType(
-        const fbWeaponMod::FB_WeaponModTextType* table,
+        const fbWeaponMod::FB_WeaponModTextType* fb,
         std::array<language_bundle, sizeType_>& ar
     );
 
-    static void initCommon(const fbWeaponMod::FB_WeaponModTextCommon* table);
+    static void initCommon(const fbWeaponMod::FB_WeaponModTextCommon* fb);
 
 private:
     static common::ObserverDLL<void, language>      langObs_;

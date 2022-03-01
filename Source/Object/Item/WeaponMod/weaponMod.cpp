@@ -25,6 +25,14 @@ WeaponMod::WeaponMod(WeaponMod::Model model) noexcept
     assert(base_.isInitialized());
 }
 
+WeaponMod::WeaponMod(const WeaponModReference& ref) noexcept
+    :
+    base_{ ref }
+{
+    assert(isInitialized());
+    assert(base_.isInitialized());
+}
+
 void WeaponMod::apply(Weapon& weapon) noexcept
 {
     weapon.damageMinimumAdd(base_.dmgMin_);
@@ -40,6 +48,12 @@ void WeaponMod::apply(Weapon& weapon) noexcept
     weapon.shotsPerAttackAdd(base_.shoPerAttack_);
     if (common::isValidEnum(base_.tyAmmo_)) weapon.ammoType(base_.tyAmmo_);
     if (common::isValidEnum(base_.tyDmg_)) weapon.damageType(base_.tyDmg_);
+}
+
+const WeaponMod& WeaponMod::weaponModDefault() noexcept
+{
+    static const WeaponMod def{ ref_.weaponModReferenceDefault() };
+    return def;
 }
 
 } // namespace object

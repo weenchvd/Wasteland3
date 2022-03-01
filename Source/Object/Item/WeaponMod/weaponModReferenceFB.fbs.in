@@ -18,13 +18,13 @@ file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
 file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
 
 struct FB_SkillRequirement {
-  type:fbSkill.FB_SkillType;
-  level:int8;
+  type:fbSkill.FB_SkillType = INVALID;
+  level:int8 = 0;
 }
 
 struct FB_AttributeRequirement {
-  type:fbAttribute.FB_AttributeType;
-  level:int8;
+  type:fbAttribute.FB_AttributeType = INVALID;
+  level:int8 = 0;
 }
 
 table FB_WeaponModRequirements {
@@ -56,6 +56,7 @@ table FB_WeaponModReference {
 
 table FB_WeaponModReferenceContainer {
   refs:[FB_WeaponModReference];
+  ref_default:FB_WeaponModReference;
 }
 
 root_type FB_WeaponModReferenceContainer;

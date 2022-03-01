@@ -127,5 +127,16 @@
       "capacity_ammo": 8,
       "ap_per_reload": 1
     }
-  ]
+  ],
+  "ref_default": {
+    "weapon_mod_requirements": {},
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    }
+  }
 }

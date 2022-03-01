@@ -38,13 +38,13 @@ void WeaponModText::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_MOD_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbWeaponMod::FB_WeaponModText* table{
+    const fbWeaponMod::FB_WeaponModText* fb{
         fbWeaponMod::GetFB_WeaponModText(buffer.get())
     };
-    assert(table != nullptr);
+    assert(fb != nullptr);
 
-    initByType(table->type(), type_);
-    initCommon(table->common());
+    initByType(fb->type(), type_);
+    initCommon(fb->common());
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -55,66 +55,66 @@ void WeaponModText::initialize()
 }
 
 void WeaponModText::initByType(
-    const fbWeaponMod::FB_WeaponModTextType* table,
+    const fbWeaponMod::FB_WeaponModTextType* fb,
     array<language_bundle, sizeType_>& ar)
 {
-    assert(table != nullptr);
+    assert(fb != nullptr);
 
     common::initLanguageBundle(
-        table->choke(),
+        fb->choke(),
         ar[common::toUnderlying(WeaponMod__Type::CHOKE)]
     );
     common::initLanguageBundle(
-        table->barrel(),
+        fb->barrel(),
         ar[common::toUnderlying(WeaponMod__Type::BARREL)]
     );
     common::initLanguageBundle(
-        table->underbarrel(),
+        fb->underbarrel(),
         ar[common::toUnderlying(WeaponMod__Type::UNDERBARREL)]
     );
     common::initLanguageBundle(
-        table->scope(),
+        fb->scope(),
         ar[common::toUnderlying(WeaponMod__Type::SCOPE)]
     );
     common::initLanguageBundle(
-        table->magazine(),
+        fb->magazine(),
         ar[common::toUnderlying(WeaponMod__Type::MAGAZINE)]
     );
     common::initLanguageBundle(
-        table->weight(),
+        fb->weight(),
         ar[common::toUnderlying(WeaponMod__Type::WEIGHT)]
     );
     common::initLanguageBundle(
-        table->handle(),
+        fb->handle(),
         ar[common::toUnderlying(WeaponMod__Type::HANDLE)]
     );
 }
 
-void WeaponModText::initCommon(const fbWeaponMod::FB_WeaponModTextCommon* table)
+void WeaponModText::initCommon(const fbWeaponMod::FB_WeaponModTextCommon* fb)
 {
-    assert(table != nullptr);
+    assert(fb != nullptr);
 
-    common::initLanguageBundle(table->item_type(), common_.itemType_);
-    common::initLanguageBundle(table->min_damage(), common_.minDamage_);
-    common::initLanguageBundle(table->max_damage(), common_.maxDamage_);
-    common::initLanguageBundle(table->shots(), common_.shoPerAttack_);
-    common::initLanguageBundle(table->damage_type(), common_.tyDmg_);
-    common::initLanguageBundle(table->ap(), common_.ap_);
-    common::initLanguageBundle(table->ap_reload(), common_.apReload_);
-    common::initLanguageBundle(table->require(), common_.require_);
-    common::initLanguageBundle(table->ammo_capacity(), common_.ammoCap_);
-    common::initLanguageBundle(table->ammo_type(), common_.ammoType_);
-    common::initLanguageBundle(table->range(), common_.range_);
-    common::initLanguageBundle(table->base_hit_chance(), common_.hitChance_);
-    common::initLanguageBundle(table->crit_damage(), common_.critDamage_);
-    common::initLanguageBundle(table->crit_chance(), common_.critChance_);
-    common::initLanguageBundle(table->penetration(), common_.penet_);
-    common::initLanguageBundle(table->damage_vs_robots(), common_.dmgRobots_);
-    common::initLanguageBundle(table->damage_vs_synths(), common_.dmgSynths_);
-    common::initLanguageBundle(table->damage_vs_vehicles(), common_.dmgVehicles_);
-    common::initLanguageBundle(table->damage_vs_humans(), common_.dmgHumans_);
-    common::initLanguageBundle(table->damage_vs_animals(), common_.dmgAnimals_);
-    common::initLanguageBundle(table->damage_vs_mutants(), common_.dmgMutants_);
+    common::initLanguageBundle(fb->item_type(), common_.itemType_);
+    common::initLanguageBundle(fb->min_damage(), common_.minDamage_);
+    common::initLanguageBundle(fb->max_damage(), common_.maxDamage_);
+    common::initLanguageBundle(fb->shots(), common_.shoPerAttack_);
+    common::initLanguageBundle(fb->damage_type(), common_.tyDmg_);
+    common::initLanguageBundle(fb->ap(), common_.ap_);
+    common::initLanguageBundle(fb->ap_reload(), common_.apReload_);
+    common::initLanguageBundle(fb->require(), common_.require_);
+    common::initLanguageBundle(fb->ammo_capacity(), common_.ammoCap_);
+    common::initLanguageBundle(fb->ammo_type(), common_.ammoType_);
+    common::initLanguageBundle(fb->range(), common_.range_);
+    common::initLanguageBundle(fb->base_hit_chance(), common_.hitChance_);
+    common::initLanguageBundle(fb->crit_damage(), common_.critDamage_);
+    common::initLanguageBundle(fb->crit_chance(), common_.critChance_);
+    common::initLanguageBundle(fb->penetration(), common_.penet_);
+    common::initLanguageBundle(fb->damage_vs_robots(), common_.dmgRobots_);
+    common::initLanguageBundle(fb->damage_vs_synths(), common_.dmgSynths_);
+    common::initLanguageBundle(fb->damage_vs_vehicles(), common_.dmgVehicles_);
+    common::initLanguageBundle(fb->damage_vs_humans(), common_.dmgHumans_);
+    common::initLanguageBundle(fb->damage_vs_animals(), common_.dmgAnimals_);
+    common::initLanguageBundle(fb->damage_vs_mutants(), common_.dmgMutants_);
 }
 
 } // namespace object

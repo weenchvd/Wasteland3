@@ -30,12 +30,26 @@ public:
     using skill_requirement         = std::pair<Skill::Type, common::LevelSkill>;
     using attribute_requirement     = std::pair<Attribute::Type, common::LevelStat>;
 
+    static constexpr auto nSkill_   { 2 };
+    static constexpr auto nAttr_    { 2 };
+
+    friend class WeaponModReferenceContainer;
+
 public:
     WeaponModRequirements() noexcept;
 
 public:
-    std::array<skill_requirement, 2>        skillReq_;
-    std::array<attribute_requirement, 2>    attrReq_;
+    const std::array<skill_requirement, nSkill_>& skillRequirements() const noexcept {
+        return skillReq_;
+    }
+
+    const std::array<attribute_requirement, nAttr_>& attributeRequirements() const noexcept {
+        return attrReq_;
+    }
+
+private:
+    std::array<skill_requirement, nSkill_>      skillReq_;
+    std::array<attribute_requirement, nAttr_>   attrReq_;
 };
 
 ///************************************************************************************************
@@ -112,19 +126,28 @@ public:
 
     static const WeaponModReference& weaponModReference(WeaponMod__Model id) noexcept;
 
+    static const WeaponModReference& weaponModReferenceDefault() noexcept { return refDefault_; }
+
 private:
     static void setLanguage(language lang) noexcept;
 
-    static void initContainer(const fbWeaponMod::FB_WeaponModReferenceContainer* container);
+    static void initContainer(const fbWeaponMod::FB_WeaponModReferenceContainer* fb);
 
     static WeaponModReference initWeaponModReference(
-        const fbWeaponMod::FB_WeaponModReference* reference
+        const fbWeaponMod::FB_WeaponModReference* fb,
+        const bool assert = true
+    );
+
+    static void initWeaponModRequirements(
+        const fbWeaponMod::FB_WeaponModRequirements* fb,
+        WeaponModRequirements& requirements
     );
 
 private:
     static common::ObserverDLL<void, language>      langObs_;
 
     static std::vector<WeaponModReference>          refs_;
+    static WeaponModReference                       refDefault_;
 
     static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;

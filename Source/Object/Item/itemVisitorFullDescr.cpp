@@ -27,6 +27,7 @@ bool                                WeaponList::initialized_{ false };
 void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
 {
     reset();
+
     constexpr auto sp{ ' ' };
     constexpr auto x{ 'X' };
     constexpr auto p{ '%' };
@@ -102,11 +103,11 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
 void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
 {
     reset();
+
     constexpr auto sp{ ' ' };
     constexpr auto x{ 'X' };
     constexpr auto p{ '%' };
     const auto sep{ "----------" };
-    const auto& ref{ weaponMod.weaponModReference() };
     const auto& text{ weaponMod.weaponModText() };
     ostringstream oss;
     oss << weaponMod.name() << endl;
@@ -114,20 +115,27 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
     oss << sep << endl;
 
     oss << weaponMod.description() << endl;
-    for (int i = 0; i < ref.requirements_.skillReq_.size(); ++i) {
-        if (ref.requirements_.skillReq_[i].first != Skill::Type::INVALID) {
+
+    WeaponModRequirements wmReqDef;
+    const auto skillReqDefaultType{ wmReqDef.skillRequirements()[0].first };
+    const auto& skillReq{ weaponMod.requirements().skillRequirements() };
+    for (int i = 0; i < skillReq.size(); ++i) {
+        if (skillReq[i].first != skillReqDefaultType) {
             oss << text.common().require() << sp
-                << common::getLvSkill(ref.requirements_.skillReq_[i].second) << sp
-                << SkillText::name(ref.requirements_.skillReq_[i].first) << endl;
+                << common::getLvSkill(skillReq[i].second) << sp
+                << SkillText::name(skillReq[i].first) << endl;
         }
     }
-    for (int i = 0; i < ref.requirements_.attrReq_.size(); ++i) {
-        if (ref.requirements_.attrReq_[i].first != Attribute::Type::INVALID) {
+    const auto attrReqDefaultType{ wmReqDef.attributeRequirements()[0].first };
+    const auto& attrReq{ weaponMod.requirements().attributeRequirements() };
+    for (int i = 0; i < attrReq.size(); ++i) {
+        if (attrReq[i].first != attrReqDefaultType) {
             oss << text.common().require() << sp
-                << common::getLvStat(ref.requirements_.attrReq_[i].second) << sp
-                << AttributeText::name(ref.requirements_.attrReq_[i].first) << endl;
+                << common::getLvStat(attrReq[i].second) << sp
+                << AttributeText::name(attrReq[i].first) << endl;
         }
     }
+
     oss << text.common().require() << sp;
     const auto& list{ WeaponList::getList(weaponMod.type()) };
     for (int i = 0; i < list.size(); ++i) {
@@ -140,54 +148,54 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
     oss << sep << endl;
 
     oss << std::showpos;
-    WeaponModReference def;
-    if (ref.dmgMin_ != def.dmgMin_) {
-        oss << text.common().minDamage() << sp << ref.dmgMin_ << endl;
+    const WeaponMod& def{ WeaponMod::weaponModDefault() };
+    if (weaponMod.damageMinimum() != def.damageMinimum()) {
+        oss << text.common().minDamage() << sp << weaponMod.damageMinimum() << endl;
     }
-    if (ref.dmgMax_ != def.dmgMax_) {
-        oss << text.common().maxDamage() << sp << ref.dmgMax_ << endl;
+    if (weaponMod.damageMaximum() != def.damageMaximum()) {
+        oss << text.common().maxDamage() << sp << weaponMod.damageMaximum() << endl;
     }
-    if (ref.shoPerAttack_ != def.shoPerAttack_) {
+    if (weaponMod.shotsPerAttack() != def.shotsPerAttack()) {
         oss << text.common().shots() << sp
-            << common::getShots(ref.shoPerAttack_) << p << endl;
+            << common::getShots(weaponMod.shotsPerAttack()) << p << endl;
     }
-    if (ref.tyDmg_ != def.tyDmg_) {
+    if (weaponMod.damageType() != def.damageType()) {
         oss << text.common().damageType() << sp << endl;
-    /// TODO        << << endl;
+        /// TODO        << << endl;
     }
-    if (ref.apAttack_ != def.apAttack_) {
+    if (weaponMod.actionPointPerAttack() != def.actionPointPerAttack()) {
         oss << text.common().ap() << sp
-            << common::getAP(ref.apAttack_) << endl;
+            << common::getAP(weaponMod.actionPointPerAttack()) << endl;
     }
-    if (ref.apReload_ != def.apReload_) {
+    if (weaponMod.actionPointPerReload() != def.actionPointPerReload()) {
         oss << text.common().apReload() << sp
-            << common::getAP(ref.apReload_) << endl;
+            << common::getAP(weaponMod.actionPointPerReload()) << endl;
     }
-    if (ref.capAmmo_ != def.capAmmo_) {
-        oss << text.common().ammoCapacity() << sp << ref.capAmmo_ << endl;
+    if (weaponMod.capacityAmmo() != def.capacityAmmo()) {
+        oss << text.common().ammoCapacity() << sp << weaponMod.capacityAmmo() << endl;
     }
-    if (ref.tyAmmo_ != def.tyAmmo_) {
+    if (weaponMod.ammoType() != def.ammoType()) {
         oss << text.common().ammoType() << sp
-            << Ammo::ammoReference(weaponMod.weaponModReference().tyAmmo_).name() << endl;
+            << Ammo::ammoReference(weaponMod.ammoType()).name() << endl;
     }
-    if (ref.rangeAttack_ != def.rangeAttack_) {
-        oss << text.common().range() << sp << ref.rangeAttack_ << endl;
+    if (weaponMod.rangeAttack() != def.rangeAttack()) {
+        oss << text.common().range() << sp << weaponMod.rangeAttack() << endl;
     }
-    if (ref.chaHit_ != def.chaHit_) {
+    if (weaponMod.chanceHit() != def.chanceHit()) {
         oss << text.common().hitChance() << sp
-            << common::getChance(ref.chaHit_) << p << endl;
+            << common::getChance(weaponMod.chanceHit()) << p << endl;
     }
-    if (ref.mulCritDmg_ != def.mulCritDmg_) {
+    if (weaponMod.multiplierCritDamage() != def.multiplierCritDamage()) {
         oss << text.common().critDamage() << sp << x
-            << common::getMult(ref.mulCritDmg_) << endl;
+            << common::getMult(weaponMod.multiplierCritDamage()) << endl;
     }
-    if (ref.chaCritDmg_ != def.chaCritDmg_) {
+    if (weaponMod.chanceCritDamage() != def.chanceCritDamage()) {
         oss << text.common().critChance() << sp
-            << common::getChance(ref.chaCritDmg_) << p << endl;
+            << common::getChance(weaponMod.chanceCritDamage()) << p << endl;
     }
-    if (ref.armorPen_ != def.armorPen_) {
+    if (weaponMod.armorPenetration() != def.armorPenetration()) {
         oss << text.common().penetration() << sp
-            << common::getArmor(ref.armorPen_) << endl;
+            << common::getArmor(weaponMod.armorPenetration()) << endl;
     }
     oss << std::noshowpos;
 
@@ -209,6 +217,7 @@ void ItemVisitorFullDescription::visitArmorMod(ArmorMod& armorMod) noexcept
 void ItemVisitorFullDescription::visitAmmo(Ammo& ammo) noexcept
 {
     reset();
+
     constexpr auto sp{ ' ' };
     const auto sep{ "----------" };
     const auto& text{ ammo.ammoText() };
@@ -250,10 +259,10 @@ void WeaponList::initialize() noexcept
                 WeaponReferenceContainer::weaponReference(static_cast<Weapon__Model>(i))
             };
             if (last == ref.type_) continue;
+            last = ref.type_;
             for (size_t j = 0; j < ref.weaponModTypes_.size(); ++j) {
                 if (ref.weaponModTypes_[j] == static_cast<WeaponMod__Type>(k)) {
                     a[common::toUnderlying(ref.type_)] = true;
-                    last = ref.type_;
                     break;
                 }
             }

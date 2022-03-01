@@ -6,13 +6,13 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "ammoTypeFB_generated.h"
 #include "attributeTypeFB_generated.h"
 #include "damageTypeFB_generated.h"
 #include "weaponModTypeFB_generated.h"
 #include "weaponModModelFB_generated.h"
 #include "skillTypeFB_generated.h"
 #include "languageBundleFB_generated.h"
+#include "ammoTypeFB_generated.h"
 
 namespace fbWeaponMod {
 
@@ -367,16 +367,22 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
 struct FB_WeaponModReferenceContainer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef FB_WeaponModReferenceContainerBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_REFS = 4
+    VT_REFS = 4,
+    VT_REF_DEFAULT = 6
   };
   const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *refs() const {
     return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *>(VT_REFS);
+  }
+  const fbWeaponMod::FB_WeaponModReference *ref_default() const {
+    return GetPointer<const fbWeaponMod::FB_WeaponModReference *>(VT_REF_DEFAULT);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_REFS) &&
            verifier.VerifyVector(refs()) &&
            verifier.VerifyVectorOfTables(refs()) &&
+           VerifyOffset(verifier, VT_REF_DEFAULT) &&
+           verifier.VerifyTable(ref_default()) &&
            verifier.EndTable();
   }
 };
@@ -387,6 +393,9 @@ struct FB_WeaponModReferenceContainerBuilder {
   flatbuffers::uoffset_t start_;
   void add_refs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> refs) {
     fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REFS, refs);
+  }
+  void add_ref_default(flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default) {
+    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REF_DEFAULT, ref_default);
   }
   explicit FB_WeaponModReferenceContainerBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -401,19 +410,23 @@ struct FB_WeaponModReferenceContainerBuilder {
 
 inline flatbuffers::Offset<FB_WeaponModReferenceContainer> CreateFB_WeaponModReferenceContainer(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> refs = 0) {
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> refs = 0,
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default = 0) {
   FB_WeaponModReferenceContainerBuilder builder_(_fbb);
+  builder_.add_ref_default(ref_default);
   builder_.add_refs(refs);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<FB_WeaponModReferenceContainer> CreateFB_WeaponModReferenceContainerDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *refs = nullptr) {
+    const std::vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *refs = nullptr,
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default = 0) {
   auto refs__ = refs ? _fbb.CreateVector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>(*refs) : 0;
   return fbWeaponMod::CreateFB_WeaponModReferenceContainer(
       _fbb,
-      refs__);
+      refs__,
+      ref_default);
 }
 
 inline const fbWeaponMod::FB_WeaponModReferenceContainer *GetFB_WeaponModReferenceContainer(const void *buf) {
