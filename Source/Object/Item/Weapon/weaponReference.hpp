@@ -31,12 +31,26 @@ public:
     using skill_requirement         = std::pair<Skill::Type, common::LevelSkill>;
     using attribute_requirement     = std::pair<Attribute::Type, common::LevelStat>;
 
+    static constexpr auto nSkill_   { 2 };
+    static constexpr auto nAttr_    { 2 };
+
+    friend class WeaponReferenceContainer;
+
 public:
     WeaponRequirements() noexcept;
 
 public:
-    std::array<skill_requirement, 2>        skillReq_;
-    std::array<attribute_requirement, 2>    attrReq_;
+    const std::array<skill_requirement, nSkill_>& skillRequirements() const noexcept {
+        return skillReq_;
+    }
+
+    const std::array<attribute_requirement, nAttr_>& attributeRequirements() const noexcept {
+        return attrReq_;
+    }
+
+private:
+    std::array<skill_requirement, nSkill_>      skillReq_;
+    std::array<attribute_requirement, nAttr_>   attrReq_;
 };
 
 ///************************************************************************************************
@@ -44,6 +58,8 @@ public:
 struct WeaponPenalties {
 public:
     WeaponPenalties() noexcept;
+
+    bool isPresented() const noexcept;
 
 public:
     common::Multiplier      mulCritDmg_;    // critical damage multiplier
@@ -133,15 +149,23 @@ public:
 
     static const WeaponReference& weaponReference(Weapon__Model id) noexcept;
 
-    static const WeaponReference& weaponReferenceMinimal() noexcept;
+    static const WeaponReference& weaponReferenceMinimal() noexcept { return refMinimal_; }
+
+    static const WeaponReference& weaponReferenceDefault() noexcept { return refDefault_; }
 
 private:
     static void setLanguage(language lang) noexcept;
 
-    static void initContainer(const fbWeapon::FB_WeaponReferenceContainer* container);
+    static void initContainer(const fbWeapon::FB_WeaponReferenceContainer* fb);
 
     static WeaponReference initWeaponReference(
-        const fbWeapon::FB_WeaponReference* reference
+        const fbWeapon::FB_WeaponReference* fb,
+        const bool assert = true
+    );
+
+    static void initWeaponRequirements(
+        const fbWeapon::FB_WeaponRequirements* fb,
+        WeaponRequirements& requirements
     );
 
 private:
@@ -149,6 +173,7 @@ private:
 
     static std::vector<WeaponReference>             refs_;
     static WeaponReference                          refMinimal_;
+    static WeaponReference                          refDefault_;
 
     static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
@@ -171,10 +196,6 @@ inline const WeaponReference::text& WeaponReference::descr() const noexcept
 inline const WeaponReference& WeaponReferenceContainer::weaponReference(Weapon__Model id) noexcept {
     assert(common::isValidEnum(id));
     return refs_[common::toUnderlying(id)];
-}
-
-inline const WeaponReference& WeaponReferenceContainer::weaponReferenceMinimal() noexcept {
-    return refMinimal_;
 }
 
 inline void WeaponReferenceContainer::setLanguage(WeaponReferenceContainer::language lang) noexcept

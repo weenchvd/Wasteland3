@@ -22,6 +22,7 @@ common::ObserverDLL<void, WeaponReferenceContainer::language>
 
 vector<WeaponReference>     WeaponReferenceContainer::refs_;
 WeaponReference             WeaponReferenceContainer::refMinimal_;
+WeaponReference             WeaponReferenceContainer::refDefault_;
 
 underlying_type_t<WeaponReferenceContainer::language>
                             WeaponReferenceContainer::langIndex_    { 0 };
@@ -31,11 +32,12 @@ bool                        WeaponReferenceContainer::initialized_  { false };
 
 WeaponRequirements::WeaponRequirements() noexcept
     :
-    skillReq_       { skill_requirement{ Skill::Type::INVALID, 0 },
-                      skill_requirement{ Skill::Type::INVALID, 0 }, },
-    attrReq_        { attribute_requirement{ Attribute::Type::INVALID, 0 },
-                      attribute_requirement{ Attribute::Type::INVALID, 0 } }
-{}
+    skillReq_       {},
+    attrReq_        {}
+{
+    skillReq_.fill(skill_requirement{ Skill::Type::INVALID, 0 });
+    attrReq_.fill(attribute_requirement{ Attribute::Type::INVALID, 0 });
+}
 
 ///************************************************************************************************
 
@@ -47,16 +49,24 @@ WeaponPenalties::WeaponPenalties() noexcept
     strike_         { 0 }
 {}
 
+bool WeaponPenalties::isPresented() const noexcept
+{
+    assert(WeaponReferenceContainer::weaponReferenceDefault().isInitialized());
+    const WeaponPenalties& def{ WeaponReferenceContainer::weaponReferenceDefault().penalties_ };
+    if (mulCritDmg_ != def.mulCritDmg_) return true;
+    if (chaHit_     != def.chaHit_)     return true;
+    if (chaCritDmg_ != def.chaCritDmg_) return true;
+    if (strike_     != def.strike_)     return true;
+    return false;
+}
+
 ///************************************************************************************************
 
 WeaponReference::WeaponReference() noexcept
     :
     model_          { Weapon__Model::INVALID },
     type_           { Weapon__Type::INVALID },
-    weaponModTypes_ { WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID,
-                      WeaponMod::Type::INVALID },
+    weaponModTypes_ {},
     requirements_   {},
     penalties_      {},
     name_           {},
@@ -77,7 +87,9 @@ WeaponReference::WeaponReference() noexcept
     tyAmmo_         { Ammo::Type::INVALID },
     tyDmg_          { Damage::Type::INVALID },
     initialized_    { false }
-{}
+{
+    weaponModTypes_.fill(WeaponMod::Type::INVALID);
+}
 
 ///************************************************************************************************
 
@@ -90,11 +102,11 @@ void WeaponReferenceContainer::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-    const fbWeapon::FB_WeaponReferenceContainer* container{
+    const fbWeapon::FB_WeaponReferenceContainer* fb{
         fbWeapon::GetFB_WeaponReferenceContainer(buffer.get())
     };
 
-    initContainer(container);
+    initContainer(fb);
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -105,36 +117,31 @@ void WeaponReferenceContainer::initialize()
 }
 
 void WeaponReferenceContainer::initContainer(
-    const fbWeapon::FB_WeaponReferenceContainer* container)
+    const fbWeapon::FB_WeaponReferenceContainer* fb)
 {
-    assert(container != nullptr);
+    assert(fb != nullptr);
     refs_.resize(common::numberOf<Weapon__Model>());
-    auto v{ container->refs() };
+    const auto* v{ fb->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         WeaponReference ref{ initWeaponReference(v->Get(i)) };
-        auto pos{ common::toUnderlying(ref.model_) };
+        const auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
-    refMinimal_ = initWeaponReference(container->ref_minimal());
-    refMinimal_.model_      = { Weapon__Model::INVALID };
-    refMinimal_.type_       = { Weapon__Type::INVALID };
-    refMinimal_.tyAmmo_     = { Ammo::Type::INVALID };
-    refMinimal_.tyDmg_      = { Damage::Type::INVALID };
+    refMinimal_ = initWeaponReference(fb->ref_minimal(), false);
+    refDefault_ = initWeaponReference(fb->ref_default(), false);
 }
 
 WeaponReference WeaponReferenceContainer::initWeaponReference(
-    const fbWeapon::FB_WeaponReference* reference)
+    const fbWeapon::FB_WeaponReference* fb, const bool assert)
 {
-    assert(reference != nullptr);
+    assert(fb != nullptr);
     WeaponReference ref;
 
-    ref.model_  = toWeaponModel(reference->weapon_model());
-    assert(common::isValidEnum(ref.model_));
-    ref.type_   = toWeaponType(reference->weapon_type());
-    assert(common::isValidEnum(ref.type_));
+    ref.model_  = toWeaponModel(fb->weapon_model());
+    ref.type_   = toWeaponType(fb->weapon_type());
 
-    auto modTypes{ reference->weapon_mod_types() };
+    const auto* modTypes{ fb->weapon_mod_types() };
     assert(modTypes != nullptr);
     assert(modTypes->size() <= ref.weaponModTypes_.size());
     for (size_t i = 0; i < modTypes->size(); ++i) {
@@ -144,58 +151,71 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
         assert(common::isValidEnum(ref.weaponModTypes_[i]));
     }
 
-    auto requirements{ reference->weapon_requirements() };
-    assert(requirements != nullptr);
-    if (requirements->skill() != nullptr) {
-        auto ptr{ requirements->skill() };
-        assert(ptr->size() <= ref.requirements_.skillReq_.size());
-        for (size_t i = 0; i < ptr->size(); ++i) {
-            ref.requirements_.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
-            assert(common::isValidEnum(ref.requirements_.skillReq_[i].first));
-            ref.requirements_.skillReq_[i].second = { ptr->Get(i)->level() };
-        }
-    }
-    if (requirements->attr() != nullptr) {
-        auto ptr{ requirements->attr() };
-        assert(ptr->size() <= ref.requirements_.attrReq_.size());
-        for (size_t i = 0; i < ptr->size(); ++i) {
-            ref.requirements_.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
-            assert(common::isValidEnum(ref.requirements_.attrReq_[i].first));
-            ref.requirements_.attrReq_[i].second = { ptr->Get(i)->level() };
-        }
-    }
+    initWeaponRequirements(fb->weapon_requirements(), ref.requirements_);
 
-    auto penalties{ reference->weapon_penalties() };
+    const auto* penalties{ fb->weapon_penalties() };
     assert(penalties != nullptr);
     ref.penalties_.mulCritDmg_  = { penalties->multiplier_crit_dmg() };
     ref.penalties_.chaHit_      = { penalties->chance_hit() };
     ref.penalties_.chaCritDmg_  = { penalties->chance_crit_dmg() };
     ref.penalties_.strike_      = { penalties->strike_rate() };
 
-    common::initLanguageBundle(reference->name(), ref.name_);
-    common::initLanguageBundle(reference->descrip(), ref.descrip_);
+    common::initLanguageBundle(fb->name(), ref.name_);
+    common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.dmgMin_         = { reference->dmg_min() };
-    ref.dmgMax_         = { reference->dmg_max() };
-    ref.price_          = { reference->price() };
-    ref.rangeAttack_    = { reference->range_attack() };
-    ref.capAmmo_        = { reference->capacity_ammo() };
-    ref.mulCritDmg_     = { reference->multiplier_crit_dmg() };
-    ref.chaHit_         = { reference->chance_hit() };
-    ref.chaCritDmg_     = { reference->chance_crit_dmg() };
-    ref.level_          = { reference->weapon_level() };
-    ref.armorPen_       = { reference->armor_penetration() };
-    ref.apAttack_       = { reference->ap_per_attack() };
-    ref.apReload_       = { reference->ap_per_reload() };
-    ref.shoPerAttack_   = { reference->shots_per_attack() };
-    ref.tyAmmo_         = toAmmoType(reference->ammo_type());
-    assert(common::isValidEnum(ref.tyAmmo_));
-    ref.tyDmg_          = toDamageType(reference->dmg_type());
-    assert(common::isValidEnum(ref.tyDmg_));
+    ref.dmgMin_         = { fb->dmg_min() };
+    ref.dmgMax_         = { fb->dmg_max() };
+    ref.price_          = { fb->price() };
+    ref.rangeAttack_    = { fb->range_attack() };
+    ref.capAmmo_        = { fb->capacity_ammo() };
+    ref.mulCritDmg_     = { fb->multiplier_crit_dmg() };
+    ref.chaHit_         = { fb->chance_hit() };
+    ref.chaCritDmg_     = { fb->chance_crit_dmg() };
+    ref.level_          = { fb->weapon_level() };
+    ref.armorPen_       = { fb->armor_penetration() };
+    ref.apAttack_       = { fb->ap_per_attack() };
+    ref.apReload_       = { fb->ap_per_reload() };
+    ref.shoPerAttack_   = { fb->shots_per_attack() };
+    ref.tyAmmo_         = toAmmoType(fb->ammo_type());
+    ref.tyDmg_          = toDamageType(fb->dmg_type());
 
     ref.initialized_    = true;
 
+#ifndef NDEBUG
+    if (assert == true) {
+        assert(common::isValidEnum(ref.model_));
+        assert(common::isValidEnum(ref.type_));
+        assert(common::isValidEnum(ref.tyAmmo_));
+        assert(common::isValidEnum(ref.tyDmg_));
+    }
+#endif
+
     return ref;
+}
+
+void WeaponReferenceContainer::initWeaponRequirements(
+    const fbWeapon::FB_WeaponRequirements* fb,
+    WeaponRequirements& requirements)
+{
+    assert(fb != nullptr);
+    if (fb->skill() != nullptr) {
+        const auto* ptr{ fb->skill() };
+        assert(ptr->size() <= requirements.skillReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            requirements.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
+            assert(common::isValidEnum(requirements.skillReq_[i].first));
+            requirements.skillReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
+    if (fb->attr() != nullptr) {
+        const auto* ptr{ fb->attr() };
+        assert(ptr->size() <= requirements.attrReq_.size());
+        for (size_t i = 0; i < ptr->size(); ++i) {
+            requirements.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
+            assert(common::isValidEnum(requirements.attrReq_[i].first));
+            requirements.attrReq_[i].second = { ptr->Get(i)->level() };
+        }
+    }
 }
 
 } // namespace object

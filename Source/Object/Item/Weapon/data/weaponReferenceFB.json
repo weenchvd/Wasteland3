@@ -15,9 +15,11 @@
             "type": "AUTOMATIC_WEAPONS",
             "level": 6
           }
-        ]
+        ],
+        "attr": []
       },
       "weapon_penalties": {
+        "multiplier_crit_dmg": 0,
         "chance_hit": -100,
         "chance_crit_dmg": -1000,
         "strike_rate": -1000
@@ -83,7 +85,6 @@
       "capacity_ammo": 30,
       "multiplier_crit_dmg": 150,
       "chance_hit": 750,
-      "chance_crit_dmg": 0,
       "weapon_level": 21,
       "armor_penetration": 22,
       "ap_per_attack": 4,
@@ -129,7 +130,6 @@
       "capacity_ammo": 2,
       "multiplier_crit_dmg": 150,
       "chance_hit": 750,
-      "chance_crit_dmg": 0,
       "weapon_level": 21,
       "armor_penetration": 2,
       "ap_per_attack": 4,
@@ -140,8 +140,8 @@
     }
   ],
   "ref_minimal": {
-    "weapon_model": "AR_SOCOM",
-    "weapon_type": "AR",
+    "weapon_model": "INVALID",
+    "weapon_type": "INVALID",
     "weapon_mod_types": [],
     "weapon_requirements": {},
     "weapon_penalties": {},
@@ -166,7 +166,20 @@
     "ap_per_attack": 1,
     "ap_per_reload": 1,
     "shots_per_attack": 1,
-    "ammo_type": "NONE",
-    "dmg_type": "NORMAL"
+    "ammo_type": "INVALID",
+    "dmg_type": "INVALID"
+  },
+  "ref_default": {
+    "weapon_mod_types": [],
+    "weapon_requirements": {},
+    "weapon_penalties": {},
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    }
   }
 }

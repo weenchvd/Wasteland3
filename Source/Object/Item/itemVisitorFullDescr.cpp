@@ -32,7 +32,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
     constexpr auto x{ 'X' };
     constexpr auto p{ '%' };
     const auto sep{ "----------" };
-    const auto& ref{ weapon.weaponReference() };
+    const Weapon& def{ Weapon::weaponDefault() };
     const auto& text{ weapon.weaponText() };
     ostringstream oss;
     oss << weapon.name() << endl;
@@ -49,44 +49,59 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
     oss << sep << endl;
 
     oss << weapon.description() << endl;
-    for (int i = 0; i < ref.requirements_.skillReq_.size(); ++i) {
-        if (ref.requirements_.skillReq_[i].first != Skill::Type::INVALID) {
+
+    WeaponRequirements wReqDef;
+    const auto skillReqDefaultType{ wReqDef.skillRequirements()[0].first };
+    const auto& skillReq{ weapon.requirements().skillRequirements() };
+    for (int i = 0; i < skillReq.size(); ++i) {
+        if (skillReq[i].first != skillReqDefaultType) {
             oss << text.common().require() << sp
-                << common::getLvSkill(ref.requirements_.skillReq_[i].second) << sp
-                << SkillText::name(ref.requirements_.skillReq_[i].first) << endl;
+                << common::getLvSkill(skillReq[i].second) << sp
+                << SkillText::name(skillReq[i].first) << endl;
         }
     }
-    for (int i = 0; i < ref.requirements_.attrReq_.size(); ++i) {
-        if (ref.requirements_.attrReq_[i].first != Attribute::Type::INVALID) {
+    const auto attrReqDefaultType{ wReqDef.attributeRequirements()[0].first };
+    const auto& attrReq{ weapon.requirements().attributeRequirements() };
+    for (int i = 0; i < attrReq.size(); ++i) {
+        if (attrReq[i].first != attrReqDefaultType) {
             oss << text.common().require() << sp
-                << common::getLvStat(ref.requirements_.attrReq_[i].second) << sp
-                << AttributeText::name(ref.requirements_.attrReq_[i].first) << endl;
+                << common::getLvStat(attrReq[i].second) << sp
+                << AttributeText::name(attrReq[i].first) << endl;
         }
     }
-    oss << text.common().penalty() << endl;
-    WeaponPenalties pen;
-    if (ref.penalties_.mulCritDmg_ != pen.mulCritDmg_) {
-        oss << text.penalties().critDamage() << sp
-            << common::getMult(ref.penalties_.mulCritDmg_) << p << endl;
-    }
-    if (ref.penalties_.chaHit_ != pen.chaHit_) {
-        oss << text.penalties().hitChance() << sp
-            << common::getChance(ref.penalties_.chaHit_) << p << endl;
-    }
-    if (ref.penalties_.chaCritDmg_ != pen.chaCritDmg_) {
-        oss << text.penalties().critChance() << sp
-            << common::getChance(ref.penalties_.chaCritDmg_) << p << endl;
-    }
-    if (ref.penalties_.strike_ != pen.strike_) {
-        oss << text.penalties().strikeRate() << sp
-            << common::getStrike(ref.penalties_.strike_) << p << endl;
+
+    if (weapon.penalties().isPresented()) {
+        oss << text.common().penalty() << endl;
+        const WeaponPenalties& pen{ def.penalties() };
+        if (weapon.penalties().mulCritDmg_ != pen.mulCritDmg_) {
+            oss << text.penalties().critDamage() << sp
+                << common::getMult(weapon.penalties().mulCritDmg_) << p << endl;
+        }
+        if (weapon.penalties().chaHit_ != pen.chaHit_) {
+            oss << text.penalties().hitChance() << sp
+                << common::getChance(weapon.penalties().chaHit_) << p << endl;
+        }
+        if (weapon.penalties().chaCritDmg_ != pen.chaCritDmg_) {
+            oss << text.penalties().critChance() << sp
+                << common::getChance(weapon.penalties().chaCritDmg_) << p << endl;
+        }
+        if (weapon.penalties().strike_ != pen.strike_) {
+            oss << text.penalties().strikeRate() << sp
+                << common::getStrike(weapon.penalties().strike_) << p << endl;
+        }
     }
     oss << sep << endl;
 
-    oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
-    oss << text.common().ammoType() << sp
-        << Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name() << endl;
-    oss << text.common().range() << sp << weapon.rangeAttack() << endl;
+    if (weapon.capacityAmmo() != def.capacityAmmo()) {
+        oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
+    }
+    if (weapon.ammoType() != def.ammoType()) {
+        oss << text.common().ammoType() << sp
+            << Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name() << endl;
+    }
+    if (weapon.rangeAttack() != def.rangeAttack()) {
+        oss << text.common().range() << sp << weapon.rangeAttack() << endl;
+    }
     oss << text.common().hitChance() << sp
         << common::getChance(weapon.chanceHit()) << p << endl;
     oss << text.common().critDamage() << sp << x

@@ -36,8 +36,10 @@ private:
 
     static constexpr auto nWMSlots_{ WeaponReference::nWMSlots_ };
 
-protected:
+private:
     explicit Weapon(Weapon::Model model) noexcept;
+
+    explicit Weapon(const WeaponReference& ref) noexcept;
 
 public:
     Weapon(const Weapon&) = delete;
@@ -60,10 +62,6 @@ private:
 
 /// weapon parameters
 public:
-    const WeaponReference& weaponReference() noexcept {
-        return base_;
-    }
-
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPON;
     }
@@ -78,6 +76,14 @@ public:
 
     Weapon::Type type() const noexcept {
         return base_.type_;
+    }
+
+    const WeaponRequirements& requirements() const noexcept {
+        return base_.requirements_;
+    }
+
+    const WeaponPenalties& penalties() const noexcept {
+        return base_.penalties_;
     }
 
     const common::Text& name() const noexcept {
@@ -96,14 +102,9 @@ public:
         return base_.level_;
     }
 
-    //common::Level levelSkill() const noexcept {
-    //    return base_.levSkill_;
-    //}
-
     common::Multiplier multiplierCritDamage() const noexcept {
         return mulCritDmg_;
     }
-
     void multiplierCritDamageAdd(common::Multiplier shift) noexcept {
         mulCritDmg_ += shift;
     }
@@ -111,7 +112,6 @@ public:
     common::Damage damageMinimum() const noexcept {
         return dmgMin_;
     }
-
     void damageMinimumAdd(common::Damage shift) noexcept {
         dmgMin_ += shift;
     }
@@ -119,7 +119,6 @@ public:
     common::Damage damageMaximum() const noexcept {
         return dmgMax_;
     }
-
     void damageMaximumAdd(common::Damage shift) noexcept {
         dmgMax_ += shift;
     }
@@ -127,7 +126,6 @@ public:
     common::Chance chanceHit() const noexcept {
         return chaHit_;
     }
-
     void chanceHitAdd(common::Chance shift) noexcept {
         chaHit_ += shift;
     }
@@ -135,7 +133,6 @@ public:
     common::Chance chanceCritDamage() const noexcept {
         return chaCritDmg_;
     }
-
     void chanceCritDamageAdd(common::Chance shift) noexcept {
         chaCritDmg_ += shift;
     }
@@ -143,7 +140,6 @@ public:
     common::Armor armorPenetration() const noexcept {
         return armorPen_;
     }
-
     void armorPenetrationAdd(common::Armor shift) noexcept {
         armorPen_ += shift;
     }
@@ -151,7 +147,6 @@ public:
     common::Range rangeAttack() const noexcept {
         return rangeAttack_;
     }
-
     void rangeAttackAdd(common::Range shift) noexcept {
         rangeAttack_ += shift;
     }
@@ -159,7 +154,6 @@ public:
     common::NumberShots shotsPerAttack() const noexcept {
         return shoPerAttack_;
     }
-
     void shotsPerAttackAdd(common::NumberShots shift) noexcept {
         shoPerAttack_ += shift;
     }
@@ -167,7 +161,6 @@ public:
     common::ActionPoint actionPointPerAttack() const noexcept {
         return apAttack_;
     }
-
     void actionPointPerAttackAdd(common::ActionPoint shift) noexcept {
         apAttack_ += shift;
     }
@@ -175,7 +168,6 @@ public:
     common::ActionPoint actionPointPerReload() const noexcept {
         return apReload_;
     }
-
     void actionPointPerReloadAdd(common::ActionPoint shift) noexcept {
         apReload_ += shift;
     }
@@ -183,7 +175,6 @@ public:
     common::Capacity capacityAmmo() const noexcept {
         return capAmmo_;
     }
-
     void capacityAmmoAdd(common::Capacity shift) noexcept {
         capAmmo_ += shift;
     }
@@ -191,7 +182,6 @@ public:
     Ammo::Type ammoType() const noexcept {
         return tyAmmo_;
     }
-
     void ammoType(Ammo::Type type) noexcept {
         tyAmmo_ = type;
     }
@@ -199,7 +189,6 @@ public:
     Damage::Type damageType() const noexcept {
         return tyDmg_;
     }
-
     void damageType(Damage::Type type) noexcept {
         tyDmg_ = type;
     }
@@ -214,8 +203,10 @@ public:
         return slotWeaponMod_;
     }
 
-    static const WeaponReference& weaponReference(Weapon::Model id) noexcept {
-        return ref_.weaponReference(id);
+    static const Weapon& weaponDefault() noexcept;
+
+    static const WeaponReferenceContainer& weaponReferenceContainer() noexcept {
+        return ref_;
     }
 
     static const WeaponText& weaponText() noexcept {

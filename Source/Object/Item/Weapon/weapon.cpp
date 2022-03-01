@@ -40,6 +40,28 @@ Weapon::Weapon(Weapon::Model model) noexcept
     assert(base_.isInitialized());
 }
 
+Weapon::Weapon(const WeaponReference& ref) noexcept
+    :
+    base_           { ref },
+    dmgMin_         { base_.dmgMin_ },
+    dmgMax_         { base_.dmgMax_ },
+    rangeAttack_    { base_.rangeAttack_ },
+    capAmmo_        { base_.capAmmo_ },
+    mulCritDmg_     { base_.mulCritDmg_ },
+    chaHit_         { base_.chaHit_ },
+    chaCritDmg_     { base_.chaCritDmg_ },
+    armorPen_       { base_.armorPen_ },
+    apAttack_       { base_.apAttack_ },
+    apReload_       { base_.apReload_ },
+    shoPerAttack_   { base_.shoPerAttack_ },
+    tyAmmo_         { base_.tyAmmo_ },
+    tyDmg_          { base_.tyDmg_ },
+    slotWeaponMod_  { base_.weaponModTypes_ }
+{
+    assert(isInitialized());
+    assert(base_.isInitialized());
+}
+
 void Weapon::apply() noexcept
 {
     dmgMin_         = base_.dmgMin_;
@@ -77,6 +99,12 @@ void Weapon::check() noexcept
     if (apAttack_       < refMin.apAttack_)         apAttack_       = refMin.apAttack_;
     if (apReload_       < refMin.apReload_)         apReload_       = refMin.apReload_;
     if (shoPerAttack_   < refMin.shoPerAttack_)     shoPerAttack_   = refMin.shoPerAttack_;
+}
+
+const Weapon& Weapon::weaponDefault() noexcept
+{
+    static const Weapon def{ ref_.weaponReferenceDefault() };
+    return def;
 }
 
 } // namespace object
