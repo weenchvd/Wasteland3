@@ -35,19 +35,19 @@ WeaponMod::WeaponMod(const WeaponModReference& ref) noexcept
 
 void WeaponMod::apply(Weapon& weapon) noexcept
 {
-    weapon.damageMinimumAdd(base_.dmgMin_);
-    weapon.damageMaximumAdd(base_.dmgMax_);
-    weapon.rangeAttackAdd(base_.rangeAttack_);
-    weapon.capacityAmmoAdd(base_.capAmmo_);
-    weapon.multiplierCritDamageAdd(base_.mulCritDmg_);
-    weapon.chanceHitAdd(base_.chaHit_);
-    weapon.chanceCritDamageAdd(base_.chaCritDmg_);
-    weapon.armorPenetrationAdd(base_.armorPen_);
-    weapon.actionPointPerAttackAdd(base_.apAttack_);
-    weapon.actionPointPerReloadAdd(base_.apReload_);
-    weapon.shotsPerAttackAdd(base_.shoPerAttack_);
-    if (common::isValidEnum(base_.tyAmmo_)) weapon.ammoType(base_.tyAmmo_);
-    if (common::isValidEnum(base_.tyDmg_)) weapon.damageType(base_.tyDmg_);
+    weapon.damageMinimumAdd(damageMinimum());
+    weapon.damageMaximumAdd(damageMaximum());
+    weapon.rangeAttackAdd(rangeAttack());
+    weapon.capacityAmmoAdd(capacityAmmo());
+    weapon.multiplierCritDamageAdd(multiplierCritDamage());
+    weapon.chanceHitAdd(chanceHit());
+    weapon.chanceCritDamageAdd(chanceCritDamage());
+    weapon.armorPenetrationAdd(armorPenetration());
+    weapon.actionPointPerAttackAdd(actionPointPerAttack());
+    weapon.actionPointPerReloadAdd(actionPointPerReload());
+    weapon.shotsPerAttackAdd(shotsPerAttack());
+    if (common::isValidEnum(damageType())) weapon.damageType(damageType());
+    if (common::isValidEnum(ammoType())) weapon.ammoType(ammoType());
 }
 
 const WeaponMod& WeaponMod::weaponModDefault() noexcept

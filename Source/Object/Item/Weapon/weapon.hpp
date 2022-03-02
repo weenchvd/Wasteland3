@@ -35,6 +35,7 @@ private:
     friend global::Factory;
 
     static constexpr auto nWMSlots_{ WeaponReference::nWMSlots_ };
+    static constexpr auto initAmmo_{ 0 };
 
 private:
     explicit Weapon(Weapon::Model model) noexcept;
@@ -179,12 +180,13 @@ public:
         capAmmo_ += shift;
     }
 
+    void reloadAmmo(Ammo& ammo) noexcept;
+    void unloadAmmo(Ammo& ammo) noexcept;
+
     Ammo::Type ammoType() const noexcept {
         return tyAmmo_;
     }
-    void ammoType(Ammo::Type type) noexcept {
-        tyAmmo_ = type;
-    }
+    void ammoType(Ammo::Type type) noexcept;
 
     Damage::Type damageType() const noexcept {
         return tyDmg_;
@@ -193,12 +195,10 @@ public:
         tyDmg_ = type;
     }
 
-/// slots
 public:
     const common::Slot<WeaponMod, nWMSlots_>& slotMod() const noexcept {
         return slotWeaponMod_;
     }
-
     common::Slot<WeaponMod, nWMSlots_>& slotMod() noexcept {
         return slotWeaponMod_;
     }
@@ -220,6 +220,7 @@ private:
     common::Damage              dmgMax_;        // max damage per hit
     common::Range               rangeAttack_;   // attack range
     common::Capacity            capAmmo_;       // ammo capacity
+    common::Capacity            loadedAmmo_;    // loaded ammo
     common::Multiplier          mulCritDmg_;    // crit damage multiplier
     common::Chance              chaHit_;        // base hit chance
     common::Chance              chaCritDmg_;    // base critical damage chance

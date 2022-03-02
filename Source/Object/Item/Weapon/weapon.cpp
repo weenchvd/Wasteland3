@@ -7,6 +7,7 @@
 #include"weapon.hpp"
 #include<assert.h>
 #include<string>
+#include<type_traits>
 
 namespace game {
 namespace object {
@@ -25,6 +26,7 @@ Weapon::Weapon(Weapon::Model model) noexcept
     dmgMax_         { base_.dmgMax_ },
     rangeAttack_    { base_.rangeAttack_ },
     capAmmo_        { base_.capAmmo_ },
+    loadedAmmo_     { initAmmo_ },
     mulCritDmg_     { base_.mulCritDmg_ },
     chaHit_         { base_.chaHit_ },
     chaCritDmg_     { base_.chaCritDmg_ },
@@ -47,6 +49,7 @@ Weapon::Weapon(const WeaponReference& ref) noexcept
     dmgMax_         { base_.dmgMax_ },
     rangeAttack_    { base_.rangeAttack_ },
     capAmmo_        { base_.capAmmo_ },
+    loadedAmmo_     { initAmmo_ },
     mulCritDmg_     { base_.mulCritDmg_ },
     chaHit_         { base_.chaHit_ },
     chaCritDmg_     { base_.chaCritDmg_ },
@@ -99,6 +102,35 @@ void Weapon::check() noexcept
     if (apAttack_       < refMin.apAttack_)         apAttack_       = refMin.apAttack_;
     if (apReload_       < refMin.apReload_)         apReload_       = refMin.apReload_;
     if (shoPerAttack_   < refMin.shoPerAttack_)     shoPerAttack_   = refMin.shoPerAttack_;
+}
+
+void Weapon::reloadAmmo(Ammo& ammo) noexcept
+{
+    assert(ammo.type() == ammoType());
+    if (ammo.type() != ammoType()) return;
+    common::Capacity qty{ capacityAmmo() - loadedAmmo_ };
+    if (ammo.quantity() < qty) {
+        qty = ammo.quantity();
+    }
+    ammo.quantityAdd(-qty);
+    loadedAmmo_ = qty;
+    assert(loadedAmmo_ >= 0);
+}
+
+void Weapon::unloadAmmo(Ammo& ammo) noexcept
+{
+    assert(ammo.type() == ammoType());
+    if (ammo.type() != ammoType()) return;
+    ammo.quantityAdd(loadedAmmo_);
+    loadedAmmo_ = 0;
+}
+
+void Weapon::ammoType(Ammo::Type type) noexcept
+{
+    assert(loadedAmmo_ == 0);
+    if (loadedAmmo_ > 0) return;
+    tyAmmo_ = type;
+    assert(common::isValidEnum(tyAmmo_));
 }
 
 const Weapon& Weapon::weaponDefault() noexcept

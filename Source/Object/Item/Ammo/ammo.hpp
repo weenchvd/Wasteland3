@@ -12,6 +12,7 @@
 #include"ammoText.hpp"
 #include"common.hpp"
 #include"item.hpp"
+#include<assert.h>
 
 namespace game {
 namespace global {
@@ -79,6 +80,7 @@ public:
 
     void quantityAdd(ammo_quantity shift) noexcept {
         qty_ += shift;
+        assert(qty_ >= 0);
     }
 
 public:
