@@ -95,11 +95,11 @@ void WeaponModReferenceContainer::initContainer(
 {
     assert(fb != nullptr);
     refs_.resize(common::numberOf<WeaponMod__Model>());
-    auto v{ fb->refs() };
+    const auto* v{ fb->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         WeaponModReference ref{ initWeaponModReference(v->Get(i)) };
-        auto pos{ common::toUnderlying(ref.model_) };
+        const auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
     refDefault_ = initWeaponModReference(fb->ref_default(), false);
@@ -152,7 +152,7 @@ void WeaponModReferenceContainer::initWeaponModRequirements(
 {
     assert(fb != nullptr);
     if (fb->skill() != nullptr) {
-        auto ptr{ fb->skill() };
+        const auto* ptr{ fb->skill() };
         assert(ptr->size() <= requirements.skillReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
             requirements.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
@@ -161,7 +161,7 @@ void WeaponModReferenceContainer::initWeaponModRequirements(
         }
     }
     if (fb->attr() != nullptr) {
-        auto ptr{ fb->attr() };
+        const auto* ptr{ fb->attr() };
         assert(ptr->size() <= requirements.attrReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
             requirements.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());

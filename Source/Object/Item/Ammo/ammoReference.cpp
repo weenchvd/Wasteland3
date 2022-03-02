@@ -67,11 +67,11 @@ void AmmoReferenceContainer::initContainer(
 {
     assert(fb != nullptr);
     refs_.resize(common::numberOf<Ammo__Type>());
-    auto v{ fb->refs() };
+    const auto* v{ fb->refs() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         AmmoReference ref{ initAmmoReference(v->Get(i)) };
-        auto pos{ common::toUnderlying(ref.type_) };
+        const auto pos{ common::toUnderlying(ref.type_) };
         refs_[pos] = move(ref);
     }
 }
