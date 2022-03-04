@@ -36,6 +36,7 @@ table FB_WeaponTextPenalties {
 }
 
 table FB_WeaponTextCommon {
+  item_type:fbCommon.FB_LanguageBundle;
   level:fbCommon.FB_LanguageBundle;
   damage:fbCommon.FB_LanguageBundle;
   ap:fbCommon.FB_LanguageBundle;

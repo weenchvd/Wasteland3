@@ -36,7 +36,7 @@ void menuOption(const Indent indent)
         case actionCommon::EXIT:
             if (global::Locator::getOption().isModified()) {
                 cout << ind1 << "Options have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo()) {
+                switch (getYesNo(ind1)) {
                 case YesNo::YES:
                     global::Locator::getOption().accept();
                     return;
@@ -76,6 +76,7 @@ void menuLanguage(const Indent indent)
         cout << ind1 << "Language menu" << endl;
         cout << ind1 << "Current language: "
             << Locator::getPlainText().language(Locator::getOption().getLanguage()) << endl;
+        cout << ind1 << "Actions:" << endl;
         cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
         cout << ind2 << '\'' << actionLanguage::CHANGE_LANGUAGE << "\' Change language" << endl;
 

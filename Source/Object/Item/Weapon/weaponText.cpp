@@ -134,8 +134,9 @@ void WeaponText::initCommon(const fbWeapon::FB_WeaponTextCommon* fb)
 {
     assert(fb != nullptr);
 
-    common::initLanguageBundle(fb->damage(), common_.damage_);
+    common::initLanguageBundle(fb->item_type(), common_.itemType_);
     common::initLanguageBundle(fb->level(), common_.level_);
+    common::initLanguageBundle(fb->damage(), common_.damage_);
     common::initLanguageBundle(fb->ap(), common_.ap_);
     common::initLanguageBundle(fb->ap_reload(), common_.apReload_);
     common::initLanguageBundle(fb->require(), common_.require_);

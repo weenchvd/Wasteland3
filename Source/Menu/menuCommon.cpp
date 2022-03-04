@@ -5,7 +5,11 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"menuCommon.hpp"
+#include"menuCommonText.hpp"
+#include<assert.h>
+#include<iostream>
 #include<string>
+#include<type_traits>
 
 namespace game {
 namespace menu {
@@ -26,7 +30,7 @@ ostream& operator<<(ostream& os, const Indent& indent) {
 
 int getAction()
 {
-    cout << "> Enter an action: ";
+    cout << MenuCommonText::common().enterAction() << MenuCommonText::common().promptSymbol();
     string input;
     getline(cin, input);
     try {
@@ -39,7 +43,7 @@ int getAction()
 
 int getPosNumber()
 {
-    cout << "> Enter a number: ";
+    cout << MenuCommonText::common().enterNumber() << MenuCommonText::common().promptSymbol();
     string input;
     getline(cin, input);
     int n;
@@ -55,19 +59,24 @@ int getPosNumber()
     return n;
 }
 
-YesNo getYesNo()
+YesNo getYesNo(const Indent indent)
 {
-    cout << "> 'Y' Yes | 'N' No: ";
+    Indent ind1 = indent + Indent{};
+    const auto& text{ MenuCommonText::common() };
+    cout << indent << text.actions() << endl;
+    cout << ind1 << "'1' " << text.yes() << endl;
+    cout << ind1 << "'0' " << text.no() << endl;
+    cout << text.enterAction() << text.promptSymbol();
     string input;
     getline(cin, input);
-    if (input.size() != sizeof('Y')) {
+    if (input.size() != sizeof('1')) {
         return YesNo::INVALID;
     }
     char ch = toupper(input[0]);
-    if (ch == 'Y') {
+    if (ch == '1') {
         return YesNo::YES;
     }
-    else if (ch == 'N') {
+    else if (ch == '0') {
         return YesNo::NO;
     }
     else {
@@ -123,6 +132,21 @@ common::Text fillWithPlaseholders(
     }
     return t;
 }
+
+///************************************************************************************************
+
+void initLanguageBundleMenu(
+    LanguageBundle& bundle,
+    std::array<common::Text, global::PlainText::sizeLang_>& target)
+{
+    using lang = global::PlainText::Language;
+    using text = common::Text;
+    assert(bundle.size() == target.size());
+
+    target[common::toUnderlying(lang::EN)] = move(bundle.en());
+    target[common::toUnderlying(lang::RU)] = move(bundle.ru());
+}
+
 
 } // namespace menu
 } // namespace game

@@ -125,7 +125,7 @@ int main()
     auto all = inv.roster();
     auto all2 = inv.roster();
     auto weapons = inv.roster(ItemType::WEAPON);
-    auto weaponMods = inv.roster(ItemType::WEAPONMOD);
+    auto weaponMods = inv.roster(ItemType::WEAPON_MOD);
     auto armors = inv.roster(ItemType::ARMOR);
 
     unique_ptr<Unit> unit1 = Character::create(Character::Model::RANGER_COMMON);
@@ -133,8 +133,8 @@ int main()
     unique_ptr<Character> char1{ static_cast<Character*>(unit1.release()) };
     static_cast<Weapon*>(weapon.get())->slotMod().set(0, inv.extract(weaponMods.oldItems.beg));
     char1->slotWeapon().set(0, weapon);
-    char1->slotWeapon().get(0)->slotMod().set(0, inv.extract(inv.roster(ItemType::WEAPONMOD).oldItems.beg));
-    char1->slotWeapon().get(0)->slotMod().set(3, inv.extract(----inv.roster(ItemType::WEAPONMOD).oldItems.end));
+    char1->slotWeapon().get(0)->slotMod().set(0, inv.extract(inv.roster(ItemType::WEAPON_MOD).oldItems.beg));
+    char1->slotWeapon().get(0)->slotMod().set(3, inv.extract(----inv.roster(ItemType::WEAPON_MOD).oldItems.end));
 
     const WeaponMod::Type ty1 = char1->slotWeapon().get(0)->slotMod().get(0)->type();
     const auto size1 = char1->slotWeapon().get(0)->slotMod().size();

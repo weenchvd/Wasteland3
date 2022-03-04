@@ -285,27 +285,31 @@ inline flatbuffers::Offset<FB_WeaponTextPenalties> CreateFB_WeaponTextPenalties(
 struct FB_WeaponTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef FB_WeaponTextCommonBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_LEVEL = 4,
-    VT_DAMAGE = 6,
-    VT_AP = 8,
-    VT_AP_RELOAD = 10,
-    VT_REQUIRE = 12,
-    VT_INSTALLED_MODS = 14,
-    VT_AMMO_CAPACITY = 16,
-    VT_AMMO_TYPE = 18,
-    VT_RANGE = 20,
-    VT_FAILED_REQ_PENALTY = 22,
-    VT_BASE_HIT_CHANCE = 24,
-    VT_CRIT_DAMAGE = 26,
-    VT_CRIT_CHANCE = 28,
-    VT_PENETRATION = 30,
-    VT_DAMAGE_VS_ROBOTS = 32,
-    VT_DAMAGE_VS_SYNTHS = 34,
-    VT_DAMAGE_VS_VEHICLES = 36,
-    VT_DAMAGE_VS_HUMANS = 38,
-    VT_DAMAGE_VS_ANIMALS = 40,
-    VT_DAMAGE_VS_MUTANTS = 42
+    VT_ITEM_TYPE = 4,
+    VT_LEVEL = 6,
+    VT_DAMAGE = 8,
+    VT_AP = 10,
+    VT_AP_RELOAD = 12,
+    VT_REQUIRE = 14,
+    VT_INSTALLED_MODS = 16,
+    VT_AMMO_CAPACITY = 18,
+    VT_AMMO_TYPE = 20,
+    VT_RANGE = 22,
+    VT_FAILED_REQ_PENALTY = 24,
+    VT_BASE_HIT_CHANCE = 26,
+    VT_CRIT_DAMAGE = 28,
+    VT_CRIT_CHANCE = 30,
+    VT_PENETRATION = 32,
+    VT_DAMAGE_VS_ROBOTS = 34,
+    VT_DAMAGE_VS_SYNTHS = 36,
+    VT_DAMAGE_VS_VEHICLES = 38,
+    VT_DAMAGE_VS_HUMANS = 40,
+    VT_DAMAGE_VS_ANIMALS = 42,
+    VT_DAMAGE_VS_MUTANTS = 44
   };
+  const fbCommon::FB_LanguageBundle *item_type() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_ITEM_TYPE);
+  }
   const fbCommon::FB_LanguageBundle *level() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_LEVEL);
   }
@@ -368,6 +372,8 @@ struct FB_WeaponTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table 
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyOffset(verifier, VT_ITEM_TYPE) &&
+           verifier.VerifyTable(item_type()) &&
            VerifyOffset(verifier, VT_LEVEL) &&
            verifier.VerifyTable(level()) &&
            VerifyOffset(verifier, VT_DAMAGE) &&
@@ -416,6 +422,9 @@ struct FB_WeaponTextCommonBuilder {
   typedef FB_WeaponTextCommon Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_item_type(flatbuffers::Offset<fbCommon::FB_LanguageBundle> item_type) {
+    fbb_.AddOffset(FB_WeaponTextCommon::VT_ITEM_TYPE, item_type);
+  }
   void add_level(flatbuffers::Offset<fbCommon::FB_LanguageBundle> level) {
     fbb_.AddOffset(FB_WeaponTextCommon::VT_LEVEL, level);
   }
@@ -489,6 +498,7 @@ struct FB_WeaponTextCommonBuilder {
 
 inline flatbuffers::Offset<FB_WeaponTextCommon> CreateFB_WeaponTextCommon(
     flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> item_type = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> level = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> ap = 0,
@@ -530,6 +540,7 @@ inline flatbuffers::Offset<FB_WeaponTextCommon> CreateFB_WeaponTextCommon(
   builder_.add_ap(ap);
   builder_.add_damage(damage);
   builder_.add_level(level);
+  builder_.add_item_type(item_type);
   return builder_.Finish();
 }
 

@@ -4,8 +4,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"itemVisitorFullDescr.hpp"
 #include"menuAttribute.hpp"
+#include"menuCommonText.hpp"
+#include"menuInventory.hpp"
+#include"menuInventoryText.hpp"
 #include"menuMain.hpp"
+#include"menuMainText.hpp"
 #include"menuOption.hpp"
 #include"menuSkill.hpp"
 #include<limits>
@@ -17,23 +22,35 @@ namespace menu {
 
 using namespace std;
 
+void initializeMenu()
+{
+    MenuCommonText::initialize();
+    MenuMainText::initialize();
+    MenuInventoryText::initialize();
+}
+
+///************************************************************************************************
 
 void menuMain(object::Squad& squad, object::Inventory& shop)
 {
+    initializeMenu();
+
     Indent ind1 = Indent{};
     Indent ind2 = ind1 + Indent{};
+    const auto& cText{ MenuCommonText::common() };
+    const auto& mText{ MenuMainText::common() };
 
     while (true)
     {
         cout << endl << endl;
-        cout << ind1 << "Main menu" << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionMain::MENU_OPTION << "\' Enter the option menu" << endl;
-        cout << ind2 << '\'' << actionMain::MENU_SQUAD << "\' Enter the squad menu" << endl;
-        cout << ind2 << '\'' << actionMain::MENU_INVENTORY << "\' Enter the inventory menu" << endl;
-        cout << ind2 << '\'' << actionMain::MENU_SHOP << "\' Enter the shop menu" << endl;
-        cout << ind2 << '\'' << actionMain::MENU_TRADE << "\' Enter the trade menu" << endl;
+        cout << ind1 << mText.menuName() << endl;
+        cout << ind1 << cText.actions() << endl;
+        cout << ind2 << '\'' << actionCommon::EXIT << "\' " << mText.exit() << endl;
+        cout << ind2 << '\'' << actionMain::MENU_OPTION << "\' " << mText.enterOptions() << endl;
+        cout << ind2 << '\'' << actionMain::MENU_SQUAD << "\' " << mText.enterSquad() << endl;
+        cout << ind2 << '\'' << actionMain::MENU_INVENTORY << "\' " << mText.enterInventory() << endl;
+        cout << ind2 << '\'' << actionMain::MENU_SHOP << "\' " << mText.enterShop() << endl;
+        cout << ind2 << '\'' << actionMain::MENU_TRADE << "\' " << mText.enterTrade() << endl;
 
         switch (getAction()) {
         case actionMain::MENU_OPTION:
@@ -54,10 +71,10 @@ void menuMain(object::Squad& squad, object::Inventory& shop)
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
+            cout << cText.errorSymbol() << cText.invalidInput() << endl;
             break;
         default:
-            cout << "!Unknown action" << endl;
+            cout << cText.errorSymbol() << cText.unknownAction() << endl;
             break;
         }
     }
@@ -79,11 +96,11 @@ void menuTrade(object::Squad& squad, object::Inventory& shop, const Indent inden
 
         switch (getAction()) {
         case actionTrade::BUY_ITEM:
-            showAll(shop, ind1, false);
+            showAllItems(shop, ind1, false);
 
             break;
         case actionTrade::SELL_ITEM:
-            showAll(squad.inventory(), ind1);
+            showAllItems(squad.inventory(), ind1);
 
             break;
         case actionCommon::EXIT:
@@ -113,40 +130,7 @@ void menuShop(object::Inventory& shop, const Indent indent)
 
         switch (getAction()) {
         case actionShop::ALL_ITEMS:
-            showAll(shop, ind1, false);
-            break;
-        case actionCommon::EXIT:
-            return;
-        case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
-            break;
-        default:
-            cout << "!Unknown action" << endl;
-            break;
-        }
-    }
-}
-
-void menuInventory(object::Squad& squad, const Indent indent)
-{
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
-
-    while (true)
-    {
-        cout << endl << endl;
-        cout << ind1 << "Inventory menu" << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionInventory::MONEY << "\' Show money" << endl;
-        cout << ind2 << '\'' << actionInventory::ALL_ITEMS << "\' Show all items" << endl;
-
-        switch (getAction()) {
-        case actionInventory::MONEY:
-            cout << ind2 << "Money: $" << squad.money() << endl;
-            break;
-        case actionInventory::ALL_ITEMS:
-            showAll(squad.inventory(), ind1);
+            showAllItems(shop, ind1, false);
             break;
         case actionCommon::EXIT:
             return;
@@ -249,42 +233,7 @@ void menuCharacter(object::Character& character, const Indent indent)
     }
 }
 
-///------------------------------------------------------------------------------------------------
-
-common::Text itemName(const std::unique_ptr<object::Item>& item)
-{
-    object::TypeItemVisitor vis;
-    item->accept(vis);
-    if (vis.isWeapon()) {
-        auto& r = *static_cast<object::Weapon*>(item.get());
-        return r.name();
-    }
-    else if (vis.isWeaponMod()) {
-        auto& r = *static_cast<object::WeaponMod*>(item.get());
-        return r.name();
-    }
-    return common::Text{};
-}
-
-void showAll(object::Inventory& inventory, const Indent indent, bool squad)
-{
-    Indent ind1 = indent + Indent{};
-    if (squad) {
-        cout << ind1 << "Inventory (* - new items):" << endl;
-    }
-    else {
-        cout << ind1 << "Shop:" << endl;
-    }
-    Indent ind2 = ind1 + Indent{};
-    object::Inventory::Roster r = inventory.roster();
-    int i = 0;
-    for (auto iter = r.newItems.beg; iter != r.newItems.end; ++iter) {
-        cout << ind2 << "Item " << ++i << ": " << '*' << itemName(*iter) << endl;
-    }
-    for (auto iter = r.oldItems.beg; iter != r.oldItems.end; ++iter) {
-        cout << ind2 << "Item " << ++i << ": " << itemName(*iter) << endl;
-    }
-}
+///************************************************************************************************
 
 object::Character* pickCharacter(object::Squad& squad, const Indent indent)
 {

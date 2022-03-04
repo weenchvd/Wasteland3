@@ -17,6 +17,10 @@
 namespace game {
 namespace menu {
 
+void initializeMenu();
+
+///************************************************************************************************
+
 namespace actionMain {
 
 enum ActionMain {
@@ -52,17 +56,6 @@ enum ActionShop {
 
 void menuShop(object::Inventory& shop, const Indent indent);
 
-namespace actionInventory {
-
-enum ActionInventory {
-    MONEY = actionCommon::NEXT,
-    ALL_ITEMS
-};
-
-} // namespace actionInventory
-
-void menuInventory(object::Squad& squad, const Indent indent);
-
 namespace actionSquad {
 
 enum ActionSquad {
@@ -89,11 +82,7 @@ enum ActionCharacter {
 
 void menuCharacter(object::Character& character, const Indent indent);
 
-///------------------------------------------------------------------------------------------------
-
-common::Text itemName(const std::unique_ptr<object::Item>& item);
-
-void showAll(object::Inventory& inventory, const Indent indent, bool squad = true);
+///************************************************************************************************
 
 object::Character* pickCharacter(object::Squad& squad, const Indent indent);
 

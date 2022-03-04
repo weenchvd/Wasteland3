@@ -87,7 +87,7 @@ public:
         return base_.penalties_;
     }
 
-    const common::Text& name() const noexcept {
+    virtual const common::Text& name() const noexcept override {
         return base_.name();
     }
 

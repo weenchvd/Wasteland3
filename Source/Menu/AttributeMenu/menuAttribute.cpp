@@ -50,7 +50,7 @@ void menuAttribute(object::Character& character, const Indent indent)
         case actionCommon::EXIT:
             if (character.attribute().isModified()) {
                 cout << ind1 << "Attributes have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo()) {
+                switch (getYesNo(ind1)) {
                 case YesNo::YES:
                     character.attribute().accept();
                     return;

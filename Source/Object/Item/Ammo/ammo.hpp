@@ -62,7 +62,7 @@ public:
         return base_.type_;
     }
 
-    const text& name() const noexcept {
+    virtual const text& name() const noexcept override {
         return base_.name();
     }
 

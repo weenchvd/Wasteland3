@@ -59,7 +59,7 @@ public:
 /// weapon mod parameters
 public:
     virtual Item::Type itemType() const noexcept override {
-        return Item::Type::WEAPONMOD;
+        return Item::Type::WEAPON_MOD;
     }
 
     virtual Item::Model itemModel() const noexcept override {
@@ -78,7 +78,7 @@ public:
         return base_.requirements_;
     }
 
-    const text& name() const noexcept {
+    virtual const text& name() const noexcept override {
         return base_.name();
     }
 

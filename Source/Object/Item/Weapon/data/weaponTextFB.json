@@ -76,13 +76,17 @@
     }
   },
   "common": {
-    "damage": {
-      "en": "Damage:",
-      "ru": "Урон:"
+    "item_type": {
+      "en": "Weapon",
+      "ru": "Оружие"
     },
     "level": {
       "en": "Lv",
       "ru": "Ур."
+    },
+    "damage": {
+      "en": "Damage:",
+      "ru": "Урон:"
     },
     "ap": {
       "en": "AP:",

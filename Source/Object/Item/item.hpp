@@ -7,6 +7,7 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
+#include"common.hpp"
 #include"itemCommon.hpp"
 #include"itemVisitor.hpp"
 #include<memory>
@@ -30,6 +31,8 @@ public:
     virtual Item::Type itemType() const noexcept = 0;
 
     virtual Item::Model itemModel() const noexcept = 0;
+
+    virtual const common::Text& name() const noexcept = 0;
 
     virtual void accept(ItemVisitor& visitor) noexcept {};
 };

@@ -8,7 +8,9 @@
 #define MENU_COMMON_HPP
 
 #include"common.hpp"
+#include"plainText.hpp"
 #include"specStorage.hpp"
+#include<array>
 #include<iostream>
 
 namespace game {
@@ -35,6 +37,8 @@ private:
 Indent operator+(const Indent& left, const Indent& right);
 
 std::ostream& operator<<(std::ostream& os, const Indent& indent);
+
+///************************************************************************************************
 
 inline double secondTime(common::Time time) {
     return static_cast<double>(time) / 1000;
@@ -73,6 +77,8 @@ inline int integer(char ch)
     return static_cast<int>(ch);
 }
 
+///************************************************************************************************
+
 int getAction();
 
 int getPosNumber();
@@ -83,7 +89,7 @@ enum class YesNo {
     YES
 };
 
-YesNo getYesNo();
+YesNo getYesNo(const Indent indent);
 
 namespace actionCommon {
 
@@ -105,6 +111,50 @@ common::Text fillWithPlaseholders(
     const common::Text& source,
     unsigned char width,
     char placeholder);
+
+///************************************************************************************************
+
+class LanguageBundle {
+public:
+    using text              = common::Text;
+    
+private:
+    using language          = global::PlainText::Language;
+
+    static constexpr auto sizeLang_{ 2 };
+
+    using language_bundle   = std::array<text, sizeLang_>;
+
+public:
+    LanguageBundle() noexcept {}
+
+    LanguageBundle(const LanguageBundle&) = delete;
+    LanguageBundle& operator=(const LanguageBundle&) = delete;
+
+    size_t size() const noexcept { return bundle_.size(); }
+
+    void en(text t) {
+        bundle_[common::toUnderlying(language::EN)] = std::move(t);
+    }
+    text& en() {
+        return bundle_[common::toUnderlying(language::EN)];
+    }
+
+    void ru(text t) {
+        bundle_[common::toUnderlying(language::RU)] = std::move(t);
+    }
+    text& ru() {
+        return bundle_[common::toUnderlying(language::RU)];
+    }
+
+private:
+    language_bundle bundle_;
+};
+
+void initLanguageBundleMenu(
+    LanguageBundle& bundle,
+    std::array<common::Text, global::PlainText::sizeLang_>& target
+);
 
 } // namespace menu
 } // namespace game

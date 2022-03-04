@@ -17,11 +17,11 @@ enum class Item__Type : ItemBaseType {
     INVALID = -1,                   /// invalid, must be the first
     // vvv TYPES vvv
     WEAPON,
-    WEAPONMOD,
-    ARMOR,
-    ARMORMOD,
+    ///ARMOR,
+    WEAPON_MOD,
+    ///ARMOR_MOD,
     AMMO,
-    JUNK,
+    ///JUNK,
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };

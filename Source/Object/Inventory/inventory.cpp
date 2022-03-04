@@ -73,21 +73,15 @@ Inventory::Roster Inventory::roster()
 
 Inventory::Roster Inventory::roster(Item::Type type)
 {
-    struct ItemType_Equal {
-        bool operator()(const unique_ptr<Item>& item, Item::Type type) {
-            if (item->itemType() == type) {
-                return true;
-            }
-            return false;
+    struct ItemType_Less_LowerBounds {
+        bool operator()(const unique_ptr<Item>& item, const Item::Type type) {
+            return item->itemType() < type ? true : false;
         }
     };
-            
-    struct ItemType_Less {
-        bool operator()(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) {
-            if (item1->itemType() < item2->itemType()) {
-                return true;
-            }
-            return false;
+
+    struct ItemType_Less_UpperBounds {
+        bool operator()(const Item::Type type, const unique_ptr<Item>& item) {
+            return type < item->itemType() ? true : false;
         }
     };
 
@@ -95,19 +89,12 @@ Inventory::Roster Inventory::roster(Item::Type type)
     mergeLists();
     viewed_ = true;
 
-    auto instance = lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Equal{});
-
     Inventory::Roster roster;
     roster.newItems = { newItems_.cbegin(), newItems_.cend() };
-    if (instance == oldItems_.cend()) {
-        roster.oldItems = { oldItems_.cend(), oldItems_.cend() };
-    }
-    else {
-        roster.oldItems = {
-            lower_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{}),
-            upper_bound(oldItems_.cbegin(), oldItems_.cend(), *instance, ItemType_Less{})
-        };
-    }
+    roster.oldItems = {
+        lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_LowerBounds{}),
+        upper_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_UpperBounds{})
+    };
     return roster;
 }
 

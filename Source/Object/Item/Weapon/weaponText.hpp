@@ -68,9 +68,11 @@ private:
 public:
     WeaponTextCommon() noexcept {}
 
-    const text& damage() const noexcept;
+    const text& itemType() const noexcept;
 
     const text& level() const noexcept;
+
+    const text& damage() const noexcept;
 
     const text& ap() const noexcept;
 
@@ -109,8 +111,9 @@ public:
     const text& damageVsMutants() const noexcept;
 
 private:
-    language_bundle damage_;
+    language_bundle itemType_;
     language_bundle level_;
+    language_bundle damage_;
     language_bundle ap_;
     language_bundle apReload_;
     language_bundle require_;
@@ -188,14 +191,19 @@ private:
 
 ///************************************************************************************************
 
-inline const WeaponTextCommon::text& WeaponTextCommon::damage() const noexcept
+inline const WeaponTextCommon::text& WeaponTextCommon::itemType() const noexcept
 {
-    return damage_[WeaponText::languageIndex()];
+    return itemType_[WeaponText::languageIndex()];
 }
 
 inline const WeaponTextCommon::text& WeaponTextCommon::level() const noexcept
 {
     return level_[WeaponText::languageIndex()];
+}
+
+inline const WeaponTextCommon::text& WeaponTextCommon::damage() const noexcept
+{
+    return damage_[WeaponText::languageIndex()];
 }
 
 inline const WeaponTextCommon::text& WeaponTextCommon::ap() const noexcept

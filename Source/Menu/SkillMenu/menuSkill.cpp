@@ -51,7 +51,7 @@ void menuSkill(object::Character& character, const Indent indent)
         case actionCommon::EXIT:
             if (character.skill().isModified()) {
                 cout << ind1 << "Skills have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo()) {
+                switch (getYesNo(ind1)) {
                 case YesNo::YES:
                     character.skill().accept();
                     return;
