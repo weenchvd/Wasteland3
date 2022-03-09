@@ -8,6 +8,7 @@
 #include"menuCommonText.hpp"
 #include<assert.h>
 #include<iostream>
+#include<limits>
 #include<string>
 #include<type_traits>
 
@@ -15,7 +16,6 @@ namespace game {
 namespace menu {
 
 using namespace std;
-
 
 Indent operator+(const Indent& left, const Indent& right) {
     return Indent{ left.get() + right.get() };
@@ -28,67 +28,76 @@ ostream& operator<<(ostream& os, const Indent& indent) {
     return os;
 }
 
+///************************************************************************************************
+
+void printMenuBar(const Indent indent, int number, const common::Text& text)
+{
+    cout << indent << '\'' << number << "\' " << text << endl;
+}
+
 int getAction()
 {
-    cout << MenuCommonText::common().enterAction() << MenuCommonText::common().promptSymbol();
+    const auto& text{ MenuCommonText::common() };
+    cout << text.enterAction() << text.promptSymbol();
     string input;
     getline(cin, input);
     try {
         return stoi(input);
     }
     catch (...) {
+        cout << text.errorSymbol() << text.invalidInput() << endl;
         return actionCommon::INVALID;
     }
 }
 
-int getPosNumber()
+pair<int, bool> getNumber()
 {
-    cout << MenuCommonText::common().enterNumber() << MenuCommonText::common().promptSymbol();
+    const auto& text{ MenuCommonText::common() };
+    cout << text.enterNumber() << text.promptSymbol();
     string input;
     getline(cin, input);
-    int n;
     try {
-        n = stoi(input);
+        return { stoi(input), true };
     }
     catch (...) {
-        return -1;
+        cout << text.errorSymbol() << text.invalidInput() << endl;
+        return { numeric_limits<int>::min(), false };
     }
-    if (n < 0) {
-        return -1;
-    }
-    return n;
 }
 
 YesNo getYesNo(const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
+    Indent ind1{ indent + Indent{} };
     const auto& text{ MenuCommonText::common() };
     cout << indent << text.actions() << endl;
-    cout << ind1 << "'1' " << text.yes() << endl;
-    cout << ind1 << "'0' " << text.no() << endl;
-    cout << text.enterAction() << text.promptSymbol();
+    printMenuBar(ind1, common::toUnderlying(YesNo::CANCEL), text.cancel());
+    printMenuBar(ind1, common::toUnderlying(YesNo::YES), text.yes());
+    printMenuBar(ind1, common::toUnderlying(YesNo::NO), text.no());
+    cout << text.enterNumber() << text.promptSymbol();
     string input;
     getline(cin, input);
-    if (input.size() != sizeof('1')) {
-        return YesNo::INVALID;
+    auto pair{ getNumber() };
+    if (pair.second == true) {
+        switch (pair.first) {
+        case common::toUnderlying(YesNo::CANCEL):
+            return YesNo::CANCEL;
+        case common::toUnderlying(YesNo::YES):
+            return YesNo::YES;
+        case common::toUnderlying(YesNo::NO):
+            return YesNo::NO;
+        default:
+            cout << text.errorSymbol() << text.invalidNumber() << endl;
+            break;
+        }
     }
-    char ch = toupper(input[0]);
-    if (ch == '1') {
-        return YesNo::YES;
-    }
-    else if (ch == '0') {
-        return YesNo::NO;
-    }
-    else {
-        return YesNo::INVALID;
-    }
+    return YesNo::INVALID;
 }
 
 common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool accepted)
 {
     common::Text s;
     if (accepted) {
-        for (common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i{ level.getMinPossible() + 1 }; i <= level.getMaxPossible(); ++i) {
             if (i <= level.getAccepted()) {
                 s += '+';
             }
@@ -98,7 +107,7 @@ common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool
         }
     }
     else {
-        for (common::LevelStat i = level.getMinPossible() + 1; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i{ level.getMinPossible() + 1 }; i <= level.getMaxPossible(); ++i) {
             if (i <= level.get()) {
                 s += '+';
             }
@@ -127,7 +136,7 @@ common::Text fillWithPlaseholders(
     char placeholder)
 {
     common::Text t{ source };
-    for (int i = utf8Size(source); i < width; ++i) {
+    for (unsigned int i{ utf8Size(source) }; i < width; ++i) {
         t += placeholder;
     }
     return t;

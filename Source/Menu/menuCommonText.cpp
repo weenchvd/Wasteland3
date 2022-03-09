@@ -62,6 +62,10 @@ void MenuCommonText::initCommon()
     temp.ru("Недействительный тип");
     initLanguageBundleMenu(temp, common_.invalidType_);
 
+    temp.en("Invalid number");
+    temp.ru("Недействительный номер");
+    initLanguageBundleMenu(temp, common_.invalidNumber_);
+
     temp.en("Unknown action");
     temp.ru("Неизвестное действие");
     initLanguageBundleMenu(temp, common_.unknownAct_);
@@ -71,8 +75,12 @@ void MenuCommonText::initCommon()
     initLanguageBundleMenu(temp, common_.enterAct_);
 
     temp.en("Enter a number");
-    temp.ru("Введите число");
+    temp.ru("Введите номер");
     initLanguageBundleMenu(temp, common_.enterNum_);
+
+    temp.en("Select a type:");
+    temp.ru("Выберите тип:");
+    initLanguageBundleMenu(temp, common_.selectType_);
 
     temp.en("Yes");
     temp.ru("Да");
@@ -81,6 +89,10 @@ void MenuCommonText::initCommon()
     temp.en("No");
     temp.ru("Нет");
     initLanguageBundleMenu(temp, common_.no_);
+
+    temp.en("Cancel");
+    temp.ru("Отмена");
+    initLanguageBundleMenu(temp, common_.cancel_);
 
     temp.en("> ");
     temp.ru("> ");

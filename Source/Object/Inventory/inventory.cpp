@@ -4,16 +4,44 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"common.hpp"
 #include"error.hpp"
 #include"inventory.hpp"
 #include"weapon.hpp"
 #include<algorithm>
+#include<assert.h>
 #include<type_traits>
 
 namespace game {
 namespace object {
 
 using namespace std;
+
+Roster::Roster(Inventory& inventory) noexcept
+    :
+    pInv_           { &inventory },
+    newItems_       {},
+    oldItems_       {},
+    type_           { Item::Type::INVALID }
+{}
+
+void Roster::itemType(Item::Type type) noexcept
+{
+    type_ = type;
+    assert(common::isValidEnum(type_));
+}
+
+void Roster::refresh()
+{
+    if (common::isValidEnum(type_)) {
+        *this = pInv_->roster(type_);
+    }
+    else {
+        *this = pInv_->roster();
+    }
+}
+
+///************************************************************************************************
 
 void Inventory::insert(unique_ptr<Item>& item, bool isNew)
 {
@@ -22,7 +50,6 @@ void Inventory::insert(unique_ptr<Item>& item, bool isNew)
             // inserts the item first in the inventory
             auto iter = newItems_.emplace(newItems_.cbegin(), unique_ptr<Item>{});
             *iter = move(item);
-            viewed_ = false;
         }
         else {
             // inserts the item into the inventory last among the same ones
@@ -57,21 +84,17 @@ void Inventory::erase(list<unique_ptr<Item>>::const_iterator iterator)
     }
 }
 
-Inventory::Roster Inventory::roster()
+Roster Inventory::roster()
 {
     clean();
-    if (viewed_) {
-        mergeLists();
-    }
-    viewed_ = true;
 
-    Inventory::Roster roster;
-    roster.newItems = { newItems_.cbegin(), newItems_.cend() };
-    roster.oldItems = { oldItems_.cbegin(), oldItems_.cend() };
+    Roster roster{ *this };
+    roster.newItems_ = { newItems_.cbegin(), newItems_.cend() };
+    roster.oldItems_ = { oldItems_.cbegin(), oldItems_.cend() };
     return roster;
 }
 
-Inventory::Roster Inventory::roster(Item::Type type)
+Roster Inventory::roster(Item::Type type)
 {
     struct ItemType_Less_LowerBounds {
         bool operator()(const unique_ptr<Item>& item, const Item::Type type) {
@@ -87,11 +110,11 @@ Inventory::Roster Inventory::roster(Item::Type type)
 
     clean();
     mergeLists();
-    viewed_ = true;
 
-    Inventory::Roster roster;
-    roster.newItems = { newItems_.cbegin(), newItems_.cend() };
-    roster.oldItems = {
+    Roster roster{ *this };
+    roster.itemType(type);
+    roster.newItems_ = { newItems_.cbegin(), newItems_.cend() };
+    roster.oldItems_ = {
         lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_LowerBounds{}),
         upper_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_UpperBounds{})
     };

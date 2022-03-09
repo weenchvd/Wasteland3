@@ -36,9 +36,13 @@ public:
 
     const text& showMoney() const noexcept;
 
+    const text& showItems() const noexcept;
+
     const text& showAllItems() const noexcept;
 
     const text& showItemsOfType() const noexcept;
+
+    const text& enterItemMenu() const noexcept;
 
     const text& money() const noexcept;
 
@@ -50,19 +54,21 @@ public:
 
     const text& typesOfItems() const noexcept;
 
-    const text& selectType() const noexcept;
+    const text& enterItemNumber() const noexcept;
 
 private:
     language_bundle menuName_;
     language_bundle showMoney_;
+    language_bundle showItems_;
     language_bundle showAllItems_;
     language_bundle showItemsOfType_;
+    language_bundle enterItem_;
     language_bundle money_;
     language_bundle inventory_;
     language_bundle shop_;
     language_bundle item_;
     language_bundle typesOfItems_;
-    language_bundle selectType_;
+    language_bundle enterItemNumber_;
 };
 
 ///************************************************************************************************
@@ -118,6 +124,11 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showMoney()
     return showMoney_[MenuInventoryText::languageIndex()];
 }
 
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showItems() const noexcept
+{
+    return showItems_[MenuInventoryText::languageIndex()];
+}
+
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showAllItems() const noexcept
 {
     return showAllItems_[MenuInventoryText::languageIndex()];
@@ -126,6 +137,11 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showAllItem
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showItemsOfType() const noexcept
 {
     return showItemsOfType_[MenuInventoryText::languageIndex()];
+}
+
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemMenu() const noexcept
+{
+    return enterItem_[MenuInventoryText::languageIndex()];
 }
 
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::money() const noexcept
@@ -153,9 +169,9 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::typesOfItem
     return typesOfItems_[MenuInventoryText::languageIndex()];
 }
 
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::selectType() const noexcept
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemNumber() const noexcept
 {
-    return selectType_[MenuInventoryText::languageIndex()];
+    return enterItemNumber_[MenuInventoryText::languageIndex()];
 }
 
 ///************************************************************************************************

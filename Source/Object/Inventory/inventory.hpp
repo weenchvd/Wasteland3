@@ -14,22 +14,43 @@
 namespace game {
 namespace object {
 
-class Inventory {
+class Roster {
+public:
+    friend class Inventory;
+
 public:
     struct ItemRange {
-        std::list<std::unique_ptr<Item>>::const_iterator beg;   // beginning
-        std::list<std::unique_ptr<Item>>::const_iterator end;   // end
+        std::list<std::unique_ptr<Item>>::const_iterator beg_;   // beginning
+        std::list<std::unique_ptr<Item>>::const_iterator end_;   // end
     };
 
-    struct Roster {
-        ItemRange newItems;
-        ItemRange oldItems;
-    };
+private:
+    Roster(Inventory& inventory) noexcept;
 
 public:
-    Inventory()
-        : viewed_{ true } {}
-            
+    void itemType(Item::Type type) noexcept;
+
+    void refresh();
+
+    void clear() { *this = Roster{ *pInv_ }; }
+
+    ItemRange newItems() noexcept { return newItems_; }
+
+    ItemRange oldItems() noexcept { return oldItems_; }
+
+private:
+    Inventory*          pInv_;
+    ItemRange           newItems_;
+    ItemRange           oldItems_;
+    Item::Type          type_;
+};
+
+///************************************************************************************************
+
+class Inventory {
+public:
+    Inventory() {}
+
     Inventory(const Inventory&) = delete;
     Inventory& operator=(const Inventory&) = delete;
 
@@ -38,12 +59,14 @@ public:
 
     std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
-    Inventory::Roster roster();
+    Roster roster();
 
-    Inventory::Roster roster(Item::Type type);
+    Roster roster(Item::Type type);
 
     size_t size();
-            
+
+    void viewed() noexcept { mergeLists(); }
+
 private:
     void clean();
 
@@ -57,7 +80,6 @@ private:
 private:
     std::list<std::unique_ptr<Item>>    newItems_;
     std::list<std::unique_ptr<Item>>    oldItems_;
-    bool                                viewed_;
 };
 
 } // namespace object

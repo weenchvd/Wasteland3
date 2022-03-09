@@ -12,6 +12,7 @@
 #include"specStorage.hpp"
 #include<array>
 #include<iostream>
+#include<utility>
 
 namespace game {
 namespace menu {
@@ -72,21 +73,23 @@ inline double percentStrike(common::Strike strike) {
     return static_cast<double>(strike) / 10;
 }
 
-inline int integer(char ch)
-{
+inline int integer(char ch) {
     return static_cast<int>(ch);
 }
 
 ///************************************************************************************************
 
+void printMenuBar(const Indent indent, int number, const common::Text& text);
+
 int getAction();
 
-int getPosNumber();
+std::pair<int, bool> getNumber();
 
 enum class YesNo {
     INVALID = -1,
-    NO,
-    YES
+    CANCEL,
+    YES,
+    NO
 };
 
 YesNo getYesNo(const Indent indent);
@@ -103,14 +106,16 @@ enum ActionCommon {
 
 common::Text statLevel(
     const common::SpecStorage<common::LevelStat>& level,
-    bool accepted = false);
+    bool accepted = false
+);
 
 unsigned int utf8Size(const std::string& s);
 
 common::Text fillWithPlaseholders(
     const common::Text& source,
     unsigned char width,
-    char placeholder);
+    char placeholder
+);
 
 ///************************************************************************************************
 

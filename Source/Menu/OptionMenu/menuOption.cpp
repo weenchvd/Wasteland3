@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"menuCommonText.hpp"
 #include"menuOption.hpp"
 #include"locator.hpp"
 #include<limits>
@@ -18,8 +19,8 @@ using namespace std;
 
 void menuOption(const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
 
     while (true)
     {
@@ -43,8 +44,8 @@ void menuOption(const Indent indent)
                 case YesNo::NO:
                     global::Locator::getOption().reject();
                     return;
+                case YesNo::CANCEL:
                 default:
-                    cout << "!Invalid input" << endl;
                     break;
                 }
             }
@@ -53,7 +54,6 @@ void menuOption(const Indent indent)
             }
             break;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -67,8 +67,8 @@ void menuLanguage(const Indent indent)
     using global::PlainText;
     using global::Locator;
 
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
 
     while (true)
     {
@@ -86,15 +86,11 @@ void menuLanguage(const Indent indent)
             if (lang != PlainText::Language::INVALID) {
                 global::Locator::getOption().setLanguage(lang);
             }
-            else {
-                cout << "!Invalid type" << endl;
-            }
             break;
         }
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -110,12 +106,13 @@ global::PlainText::Language pickLanguage(const Indent indent)
     using global::PlainText;
     using global::Locator;
 
-    Indent ind1 = indent + Indent{};
-    cout << ind1 << "Languages:" << endl;
-    Indent ind2 = ind1 + Indent{};
-    Indent ind3 = ind2 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
+    Indent ind3{ ind2 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
-    for (int i = { common::toUnderlying(common::firstEnum<PlainText::Language>()) };
+    cout << ind1 << "Languages:" << endl;
+    for (int i{ common::toUnderlying(common::firstEnum<PlainText::Language>()) };
         i <= common::toUnderlying(common::lastEnum<PlainText::Language>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
@@ -124,11 +121,16 @@ global::PlainText::Language pickLanguage(const Indent indent)
 
     cout << ind1 << "Select a Language:" << endl;
     PlainText::Language t{ PlainText::Language::INVALID };
-    int n = getPosNumber();
-    if (n >= common::toUnderlying(common::firstEnum<PlainText::Language>()) &&
-        n <= common::toUnderlying(common::lastEnum<PlainText::Language>()))
-    {
-        t = static_cast<PlainText::Language>(n);
+    auto pair{ getNumber() };
+    if (pair.second == true) {
+        if (pair.first >= common::toUnderlying(common::firstEnum<PlainText::Language>()) &&
+            pair.first <= common::toUnderlying(common::lastEnum<PlainText::Language>()))
+        {
+            t = static_cast<PlainText::Language>(pair.first);
+        }
+        else {
+            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+        }
     }
     return t;
 }

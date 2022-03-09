@@ -53,6 +53,10 @@ void MenuInventoryText::initCommon()
     temp.ru("Показать деньги");
     initLanguageBundleMenu(temp, common_.showMoney_);
 
+    temp.en("Show items");
+    temp.ru("Показать предметы");
+    initLanguageBundleMenu(temp, common_.showItems_);
+
     temp.en("Show all items");
     temp.ru("Показать все предметы");
     initLanguageBundleMenu(temp, common_.showAllItems_);
@@ -60,6 +64,10 @@ void MenuInventoryText::initCommon()
     temp.en("Show items of a certain type");
     temp.ru("Показать предметы определенного типа");
     initLanguageBundleMenu(temp, common_.showItemsOfType_);
+
+    temp.en("Enter the item menu");
+    temp.ru("Войти в меню предмета");
+    initLanguageBundleMenu(temp, common_.enterItem_);
 
     temp.en("Money: $");
     temp.ru("Деньги: $");
@@ -81,9 +89,9 @@ void MenuInventoryText::initCommon()
     temp.ru("Типы предметов:");
     initLanguageBundleMenu(temp, common_.typesOfItems_);
 
-    temp.en("Select a type:");
-    temp.ru("Выберите тип:");
-    initLanguageBundleMenu(temp, common_.selectType_);
+    temp.en("Enter the item number:");
+    temp.ru("Введите номер предмета:");
+    initLanguageBundleMenu(temp, common_.enterItemNumber_);
 }
 
 } // namespace menu

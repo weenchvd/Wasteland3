@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"menuCommonText.hpp"
 #include"menuSkill.hpp"
 #include"locator.hpp"
 #include<limits>
@@ -18,8 +19,8 @@ using namespace std;
 
 void menuSkill(object::Character& character, const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
 
     while (true)
     {
@@ -43,9 +44,6 @@ void menuSkill(object::Character& character, const Indent indent)
             if (type != object::Skill::Type::INVALID) {
                 menuModifySkill(character, type, ind1);
             }
-            else {
-                cout << "!Invalid type" << endl;
-            }
             break;
         }
         case actionCommon::EXIT:
@@ -58,8 +56,8 @@ void menuSkill(object::Character& character, const Indent indent)
                 case YesNo::NO:
                     character.skill().reject();
                     return;
+                case YesNo::CANCEL:
                 default:
-                    cout << "!Invalid input" << endl;
                     break;
                 }
             }
@@ -68,7 +66,6 @@ void menuSkill(object::Character& character, const Indent indent)
             }
             break;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -82,8 +79,8 @@ void menuModifySkill(
     object::Skill::Type type,
     const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
     auto width{ utf8Size(character.skill().skillText().name(type)) + 2 };
 
     while (true)
@@ -104,23 +101,34 @@ void menuModifySkill(
                 << stringSkill(character, type, width, space, true) << endl;
             break;
         case actionModifySkill::INCREASE_LEVEL: {
-            int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
-                character.skill().addLevel(type, n);
+            auto pair{ getNumber() };
+            if (pair.second == true) {
+                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                    // TODO ^^^ check or set range
+                    character.skill().addLevel(type, pair.first);
+                }
+                else {
+                    // TODO cout << message
+                }
             }
             break;
         }
         case actionModifySkill::DECREASE_LEVEL: {
-            int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
-                character.skill().addLevel(type, -n);
+            auto pair{ getNumber() };
+            if (pair.second == true) {
+                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                    // TODO ^^^ check or set range
+                    character.skill().addLevel(type, -pair.first);
+                }
+                else {
+                    // TODO cout << message
+                }
             }
             break;
         }
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -136,15 +144,16 @@ void showAllSkills(
     const Indent indent,
     bool accepted)
 {
-    Indent ind1 = indent + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
+    Indent ind3{ ind2 + Indent{} };
+
     showSkillPoints(character, ind1, accepted);
     cout << ind1 << "Skills";
     if (accepted) {
         cout << " (accepted)";
     }
     cout << ":" << endl;
-    Indent ind2 = ind1 + Indent{};
-    Indent ind3 = ind2 + Indent{};
 
     cout << ind2 << character.skill().skillText().group(object::Skill::Group::COMBAT) << endl;
     cout << ind3 << stringSkill(character, object::Skill::Type::AUTOMATIC_WEAPONS,
@@ -234,11 +243,12 @@ object::Skill::Type pickSkill(
     const object::Character& character,
     const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    cout << ind1 << "Skills:" << endl;
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
-    for (int i = { common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
+    cout << ind1 << "Skills:" << endl;
+    for (int i{ common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Skill::Type>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
@@ -248,11 +258,16 @@ object::Skill::Type pickSkill(
 
     cout << ind1 << "Select a skill:" << endl;
     object::Skill::Type t{ object::Skill::Type::INVALID };
-    int n = getPosNumber();
-    if (n >= common::toUnderlying(common::firstEnum<object::Skill::Type>()) &&
-        n <= common::toUnderlying(common::lastEnum<object::Skill::Type>()))
-    {
-        t = static_cast<object::Skill::Type>(n);
+    auto pair{ getNumber() };
+    if (pair.second == true) {
+        if (pair.first >= common::toUnderlying(common::firstEnum<object::Skill::Type>()) &&
+            pair.first <= common::toUnderlying(common::lastEnum<object::Skill::Type>()))
+        {
+            t = static_cast<object::Skill::Type>(pair.first);
+        }
+        else {
+            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+        }
     }
     return t;
 }

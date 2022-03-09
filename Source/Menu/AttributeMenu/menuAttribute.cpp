@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"menuAttribute.hpp"
+#include"menuCommonText.hpp"
 #include<limits>
 #include<sstream>
 #include<string>
@@ -17,8 +18,8 @@ using namespace std;
 
 void menuAttribute(object::Character& character, const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
 
     while (true)
     {
@@ -42,9 +43,6 @@ void menuAttribute(object::Character& character, const Indent indent)
             if (type != object::Attribute::Type::INVALID) {
                 menuModifyAttribute(character, type, ind1);
             }
-            else {
-                cout << "!Invalid type" << endl;
-            }
             break;
         }
         case actionCommon::EXIT:
@@ -57,8 +55,8 @@ void menuAttribute(object::Character& character, const Indent indent)
                 case YesNo::NO:
                     character.attribute().reject();
                     return;
+                case YesNo::CANCEL:
                 default:
-                    cout << "!Invalid input" << endl;
                     break;
                 }
             }
@@ -67,7 +65,6 @@ void menuAttribute(object::Character& character, const Indent indent)
             }
             break;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -81,8 +78,8 @@ void menuModifyAttribute(
     object::Attribute::Type type,
     const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
     auto width{ utf8Size(character.attribute().attributeText().name(type)) + 2 };
 
     while (true)
@@ -103,23 +100,34 @@ void menuModifyAttribute(
                 << stringAttribute(character, type, width, space, true) << endl;
             break;
         case actionModifyAttribute::INCREASE_LEVEL: {
-            int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
-                character.attribute().addLevel(type, n);
+            auto pair{ getNumber() };
+            if (pair.second == true) {
+                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                    // TODO ^^^ check or set range
+                    character.attribute().addLevel(type, pair.first);
+                }
+                else {
+                    // TODO cout << message
+                }
             }
             break;
         }
         case actionModifyAttribute::DECREASE_LEVEL: {
-            int n = getPosNumber();
-            if (n >= 0 && n <= numeric_limits<common::LevelStat>::max()) {
-                character.attribute().addLevel(type, -n);
+            auto pair{ getNumber() };
+            if (pair.second == true) {
+                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                    // TODO ^^^ check or set range
+                    character.attribute().addLevel(type, -pair.first);
+                }
+                else {
+                    // TODO cout << message
+                }
             }
             break;
         }
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
-            cout << "!Invalid action" << endl;
             break;
         default:
             cout << "!Unknown action" << endl;
@@ -135,14 +143,15 @@ void showAllAttributes(
     const Indent indent,
     bool accepted)
 {
-    Indent ind1 = indent + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
+
     showAttPoints(character, ind1, accepted);
     cout << ind1 << "Attributes";
     if (accepted) {
         cout << " (accepted)";
     }
     cout << ":" << endl;
-    Indent ind2 = ind1 + Indent{};
 
     cout << ind2 << stringAttribute(character, object::Attribute::Type::COORDINATION,
         attrWidth, space, accepted) << endl;
@@ -195,11 +204,12 @@ object::Attribute::Type pickAttribute(
     const object::Character& character,
     const Indent indent)
 {
-    Indent ind1 = indent + Indent{};
-    cout << ind1 << "Attributes:" << endl;
-    Indent ind2 = ind1 + Indent{};
+    Indent ind1{ indent + Indent{} };
+    Indent ind2{ ind1 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
-    for (int i = { common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
+    cout << ind1 << "Attributes:" << endl;
+    for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {
         cout << ind2 << '\'' << i << "\' "
@@ -208,11 +218,16 @@ object::Attribute::Type pickAttribute(
     }
     cout << ind1 << "Select an attribute:" << endl;
     object::Attribute::Type t{ object::Attribute::Type::INVALID };
-    int n = getPosNumber();
-    if (n >= common::toUnderlying(common::firstEnum<object::Attribute::Type>()) &&
-        n <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()))
-    {
-        t = static_cast<object::Attribute::Type>(n);
+    auto pair{ getNumber() };
+    if (pair.second == true) {
+        if (pair.first >= common::toUnderlying(common::firstEnum<object::Attribute::Type>()) &&
+            pair.first <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()))
+        {
+            t = static_cast<object::Attribute::Type>(pair.first);
+        }
+        else {
+            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+        }
     }
     return t;
 }

@@ -40,15 +40,21 @@ public:
 
     const text& invalidType() const noexcept;
 
+    const text& invalidNumber() const noexcept;
+
     const text& unknownAction() const noexcept;
 
     const text& enterAction() const noexcept;
 
     const text& enterNumber() const noexcept;
 
+    const text& selectType() const noexcept;
+
     const text& yes() const noexcept;
 
     const text& no() const noexcept;
+
+    const text& cancel() const noexcept;
 
     const text& promptSymbol() const noexcept;
 
@@ -59,11 +65,14 @@ private:
     language_bundle exitMenu_;
     language_bundle invalidInput_;
     language_bundle invalidType_;
+    language_bundle invalidNumber_;
     language_bundle unknownAct_;
     language_bundle enterAct_;
     language_bundle enterNum_;
+    language_bundle selectType_;
     language_bundle yes_;
     language_bundle no_;
+    language_bundle cancel_;
     language_bundle promptSymbol_;
     language_bundle errorSymbol_;
 };
@@ -131,6 +140,11 @@ inline const MenuCommonTextCommon::text& MenuCommonTextCommon::invalidType() con
     return invalidType_[MenuCommonText::languageIndex()];
 }
 
+inline const MenuCommonTextCommon::text& MenuCommonTextCommon::invalidNumber() const noexcept
+{
+    return invalidNumber_[MenuCommonText::languageIndex()];
+}
+
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::unknownAction() const noexcept
 {
     return unknownAct_[MenuCommonText::languageIndex()];
@@ -146,6 +160,11 @@ inline const MenuCommonTextCommon::text& MenuCommonTextCommon::enterNumber() con
     return enterNum_[MenuCommonText::languageIndex()];
 }
 
+inline const MenuCommonTextCommon::text& MenuCommonTextCommon::selectType() const noexcept
+{
+    return selectType_[MenuCommonText::languageIndex()];
+}
+
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::yes() const noexcept
 {
     return yes_[MenuCommonText::languageIndex()];
@@ -154,6 +173,11 @@ inline const MenuCommonTextCommon::text& MenuCommonTextCommon::yes() const noexc
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::no() const noexcept
 {
     return no_[MenuCommonText::languageIndex()];
+}
+
+inline const MenuCommonTextCommon::text& MenuCommonTextCommon::cancel() const noexcept
+{
+    return cancel_[MenuCommonText::languageIndex()];
 }
 
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::promptSymbol() const noexcept
