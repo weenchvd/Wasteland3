@@ -14,7 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 set(LIBRARY_NAME "item")
 set(SOURCE_CXX_LIST "item.cpp"
-                    "itemVisitorFullDescr.cpp"
                     "Ammo/ammo.cpp"
                     "Ammo/ammoCommon.cpp"
                     "Ammo/ammoReference.cpp"

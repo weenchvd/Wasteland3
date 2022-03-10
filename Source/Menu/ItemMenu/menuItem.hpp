@@ -19,13 +19,29 @@ namespace actionItem {
 
 enum ActionItem {
     SHOW_FULL_DESCR = actionCommon::NEXT,
+    REMOVE,
 
     __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionItem
 
-void menuItem(
+void menuItem_Inventory(
+    object::Squad& squad,
+    std::list<std::unique_ptr<object::Item>>::const_iterator item,
+    const Indent indent
+);
+
+namespace actionItemWeapon {
+
+enum ActionItemWeapon {
+    EQUIP = actionItem::__NEXT_ACTION_NUMBER,
+    MODIFY
+};
+
+} // namespace actionItemWeapon
+
+int contextSensitiveMenuItem_Inventory(
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::const_iterator item,
     const Indent indent
@@ -34,6 +50,12 @@ void menuItem(
 ///************************************************************************************************
 
 void printFullDescription(const std::unique_ptr<object::Item>& item, const Indent indent);
+
+bool removeItem(
+    object::Inventory& inventory,
+    std::list<std::unique_ptr<object::Item>>::const_iterator item,
+    const Indent indent
+);
 
 } // namespace menu
 } // namespace game

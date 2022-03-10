@@ -52,6 +52,18 @@ void MenuItemText::initCommon()
     temp.en("Show full description");
     temp.ru("Показать полное описание");
     initLanguageBundleMenu(temp, common_.showFullDescr_);
+
+    temp.en("Are you sure you want to remove this item?");
+    temp.ru("Вы уверены, что хотите удалить этот предмет?");
+    initLanguageBundleMenu(temp, common_.questionDelete_);
+
+    temp.en("Equip");
+    temp.ru("Экипировать");
+    initLanguageBundleMenu(temp, common_.equip_);
+
+    temp.en("Modify");
+    temp.ru("Модифицировать");
+    initLanguageBundleMenu(temp, common_.modify_);
 }
 
 } // namespace menu

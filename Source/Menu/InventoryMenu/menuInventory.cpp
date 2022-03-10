@@ -46,7 +46,7 @@ void menuInventory(object::Squad& squad, const Indent indent)
             if (roster.second == true) {
                 auto iter{ pickItem(roster.first, ind1) };
                 if (iter.second == true) {
-                    menuItem(squad, iter.first, ind1);
+                    menuItem_Inventory(squad, iter.first, ind1);
                 }
             }
             break;
@@ -184,9 +184,7 @@ pair<list<unique_ptr<object::Item>>::const_iterator, bool> pickItem(
                 return { iter, true };
             }
         }
-        else {
-            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
-        }
+        cout << comT.errorSymbol() << comT.invalidNumber() << endl;
     }
     return { list<unique_ptr<object::Item>>::const_iterator{}, false };
 }

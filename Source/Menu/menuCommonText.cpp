@@ -82,6 +82,10 @@ void MenuCommonText::initCommon()
     temp.ru("Выберите тип:");
     initLanguageBundleMenu(temp, common_.selectType_);
 
+    temp.en("Remove");
+    temp.ru("Удалить");
+    initLanguageBundleMenu(temp, common_.remove_);
+
     temp.en("Yes");
     temp.ru("Да");
     initLanguageBundleMenu(temp, common_.yes_);
@@ -101,6 +105,10 @@ void MenuCommonText::initCommon()
     temp.en("!");
     temp.ru("!");
     initLanguageBundleMenu(temp, common_.errorSymbol_);
+
+    temp.en("Feature not implemented yet");
+    temp.ru("Функция еще не реализована");
+    initLanguageBundleMenu(temp, common_.notImplemented_);
 }
 
 } // namespace menu

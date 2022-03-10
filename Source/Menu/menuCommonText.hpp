@@ -50,6 +50,8 @@ public:
 
     const text& selectType() const noexcept;
 
+    const text& remove() const noexcept;
+
     const text& yes() const noexcept;
 
     const text& no() const noexcept;
@@ -59,6 +61,8 @@ public:
     const text& promptSymbol() const noexcept;
 
     const text& errorSymbol() const noexcept;
+
+    const text& notImplemented() const noexcept;
 
 private:
     language_bundle actions_;
@@ -70,11 +74,13 @@ private:
     language_bundle enterAct_;
     language_bundle enterNum_;
     language_bundle selectType_;
+    language_bundle remove_;
     language_bundle yes_;
     language_bundle no_;
     language_bundle cancel_;
     language_bundle promptSymbol_;
     language_bundle errorSymbol_;
+    language_bundle notImplemented_;
 };
 
 ///************************************************************************************************
@@ -165,6 +171,11 @@ inline const MenuCommonTextCommon::text& MenuCommonTextCommon::selectType() cons
     return selectType_[MenuCommonText::languageIndex()];
 }
 
+inline const MenuCommonTextCommon::text& MenuCommonTextCommon::remove() const noexcept
+{
+    return remove_[MenuCommonText::languageIndex()];
+}
+
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::yes() const noexcept
 {
     return yes_[MenuCommonText::languageIndex()];
@@ -188,6 +199,11 @@ inline const MenuCommonTextCommon::text& MenuCommonTextCommon::promptSymbol() co
 inline const MenuCommonTextCommon::text& MenuCommonTextCommon::errorSymbol() const noexcept
 {
     return errorSymbol_[MenuCommonText::languageIndex()];
+}
+
+inline const MenuCommonTextCommon::text& MenuCommonTextCommon::notImplemented() const noexcept
+{
+    return notImplemented_[MenuCommonText::languageIndex()];
 }
 
 ///************************************************************************************************

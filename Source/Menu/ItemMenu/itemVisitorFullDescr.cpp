@@ -15,7 +15,7 @@
 #include<sstream>
 
 namespace game {
-namespace object {
+namespace menu {
 
 using namespace std;
 
@@ -24,7 +24,7 @@ bool                                WeaponList::initialized_{ false };
 
 ///************************************************************************************************
 
-void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
+void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
 {
     reset();
 
@@ -32,7 +32,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
     constexpr auto x{ 'X' };
     constexpr auto p{ '%' };
     const auto sep{ "----------" };
-    const Weapon& def{ Weapon::weaponDefault() };
+    const object::Weapon& def{ object::Weapon::weaponDefault() };
     const auto& text{ weapon.weaponText() };
     ostringstream oss;
     oss << weapon.name() << endl;
@@ -50,14 +50,14 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
 
     oss << weapon.description() << endl;
 
-    WeaponRequirements wReqDef;
+    object::WeaponRequirements wReqDef;
     const auto skillReqDefaultType{ wReqDef.skillRequirements()[0].first };
     const auto& skillReq{ weapon.requirements().skillRequirements() };
     for (int i = 0; i < skillReq.size(); ++i) {
         if (skillReq[i].first != skillReqDefaultType) {
             oss << text.common().require() << sp
                 << common::getLvSkill(skillReq[i].second) << sp
-                << SkillText::name(skillReq[i].first) << endl;
+                << object::SkillText::name(skillReq[i].first) << endl;
         }
     }
     const auto attrReqDefaultType{ wReqDef.attributeRequirements()[0].first };
@@ -66,13 +66,13 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
         if (attrReq[i].first != attrReqDefaultType) {
             oss << text.common().require() << sp
                 << common::getLvStat(attrReq[i].second) << sp
-                << AttributeText::name(attrReq[i].first) << endl;
+                << object::AttributeText::name(attrReq[i].first) << endl;
         }
     }
 
     if (weapon.penalties().isPresented()) {
         oss << text.common().penalty() << endl;
-        const WeaponPenalties& pen{ def.penalties() };
+        const object::WeaponPenalties& pen{ def.penalties() };
         if (weapon.penalties().mulCritDmg_ != pen.mulCritDmg_) {
             oss << text.penalties().critDamage() << sp
                 << common::getMult(weapon.penalties().mulCritDmg_) << p << endl;
@@ -97,7 +97,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
     }
     if (weapon.ammoType() != def.ammoType()) {
         oss << text.common().ammoType() << sp
-            << Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name() << endl;
+            << object::Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name() << endl;
     }
     if (weapon.rangeAttack() != def.rangeAttack()) {
         oss << text.common().range() << sp << weapon.rangeAttack() << endl;
@@ -115,7 +115,7 @@ void ItemVisitorFullDescription::visitWeapon(Weapon& weapon) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
+void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) noexcept
 {
     reset();
 
@@ -131,14 +131,14 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
 
     oss << weaponMod.description() << endl;
 
-    WeaponModRequirements wmReqDef;
+    object::WeaponModRequirements wmReqDef;
     const auto skillReqDefaultType{ wmReqDef.skillRequirements()[0].first };
     const auto& skillReq{ weaponMod.requirements().skillRequirements() };
     for (int i = 0; i < skillReq.size(); ++i) {
         if (skillReq[i].first != skillReqDefaultType) {
             oss << text.common().require() << sp
                 << common::getLvSkill(skillReq[i].second) << sp
-                << SkillText::name(skillReq[i].first) << endl;
+                << object::SkillText::name(skillReq[i].first) << endl;
         }
     }
     const auto attrReqDefaultType{ wmReqDef.attributeRequirements()[0].first };
@@ -147,7 +147,7 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
         if (attrReq[i].first != attrReqDefaultType) {
             oss << text.common().require() << sp
                 << common::getLvStat(attrReq[i].second) << sp
-                << AttributeText::name(attrReq[i].first) << endl;
+                << object::AttributeText::name(attrReq[i].first) << endl;
         }
     }
 
@@ -157,13 +157,13 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
         if (i > 0) {
             oss << ", ";
         }
-        oss << WeaponText::type(list[i]);
+        oss << object::WeaponText::type(list[i]);
     }
     oss << endl;
     oss << sep << endl;
 
     oss << std::showpos;
-    const WeaponMod& def{ WeaponMod::weaponModDefault() };
+    const object::WeaponMod& def{ object::WeaponMod::weaponModDefault() };
     if (weaponMod.damageMinimum() != def.damageMinimum()) {
         oss << text.common().minDamage() << sp << weaponMod.damageMinimum() << endl;
     }
@@ -191,7 +191,7 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
     }
     if (weaponMod.ammoType() != def.ammoType()) {
         oss << text.common().ammoType() << sp
-            << Ammo::ammoReferenceContainer().ammoReference(weaponMod.ammoType()).name() << endl;
+            << object::Ammo::ammoReferenceContainer().ammoReference(weaponMod.ammoType()).name() << endl;
     }
     if (weaponMod.rangeAttack() != def.rangeAttack()) {
         oss << text.common().range() << sp << weaponMod.rangeAttack() << endl;
@@ -219,17 +219,17 @@ void ItemVisitorFullDescription::visitWeaponMod(WeaponMod& weaponMod) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitArmor(Armor& armor) noexcept
+void ItemVisitorFullDescription::visitArmor(object::Armor& armor) noexcept
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitArmorMod(ArmorMod& armorMod) noexcept
+void ItemVisitorFullDescription::visitArmorMod(object::ArmorMod& armorMod) noexcept
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitAmmo(Ammo& ammo) noexcept
+void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo) noexcept
 {
     reset();
 
@@ -247,7 +247,7 @@ void ItemVisitorFullDescription::visitAmmo(Ammo& ammo) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitJunk(Junk& junk) noexcept
+void ItemVisitorFullDescription::visitJunk(object::Junk& junk) noexcept
 {
     reset();
 }
@@ -258,25 +258,25 @@ void WeaponList::initialize() noexcept
 {
     if (isInitialized()) return;
 
-    assert(WeaponReferenceContainer::isInitialized());
-    Weapon__Type last{ Weapon__Type::INVALID };
+    assert(object::WeaponReferenceContainer::isInitialized());
+    object::Weapon__Type last{ object::Weapon__Type::INVALID };
     list_.resize(sizeWeaponModType_);
 
-    for (size_t k = { common::toUnderlying(common::firstEnum<WeaponMod__Type>()) };
+    for (size_t k = { common::toUnderlying(common::firstEnum<object::WeaponMod__Type>()) };
         k < list_.size(); ++k)
     {
         array<bool, sizeWeaponType_> a;
         a.fill(false);
-        for (size_t i = { common::toUnderlying(common::firstEnum<Weapon__Model>()) };
-            i <= common::toUnderlying(common::lastEnum<Weapon__Model>()); ++i)
+        for (size_t i = { common::toUnderlying(common::firstEnum<object::Weapon__Model>()) };
+            i <= common::toUnderlying(common::lastEnum<object::Weapon__Model>()); ++i)
         {
             const auto& ref{
-                WeaponReferenceContainer::weaponReference(static_cast<Weapon__Model>(i))
+                object::WeaponReferenceContainer::weaponReference(static_cast<object::Weapon__Model>(i))
             };
             if (last == ref.type_) continue;
             last = ref.type_;
             for (size_t j = 0; j < ref.weaponModTypes_.size(); ++j) {
-                if (ref.weaponModTypes_[j] == static_cast<WeaponMod__Type>(k)) {
+                if (ref.weaponModTypes_[j] == static_cast<object::WeaponMod__Type>(k)) {
                     a[common::toUnderlying(ref.type_)] = true;
                     break;
                 }
@@ -284,7 +284,7 @@ void WeaponList::initialize() noexcept
         }
         for (size_t i = 0; i < a.size(); ++i) {
             if (a[i] == true) {
-                list_[k].emplace_back(static_cast<Weapon__Type>(i));
+                list_[k].emplace_back(static_cast<object::Weapon__Type>(i));
             }
         }
     }
@@ -292,5 +292,5 @@ void WeaponList::initialize() noexcept
     initialized_ = true;
 }
 
-} // namespace object
+} // namespace menu
 } // namespace game

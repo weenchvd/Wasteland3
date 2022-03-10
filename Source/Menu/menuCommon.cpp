@@ -73,9 +73,6 @@ YesNo getYesNo(const Indent indent)
     printMenuBar(ind1, common::toUnderlying(YesNo::CANCEL), text.cancel());
     printMenuBar(ind1, common::toUnderlying(YesNo::YES), text.yes());
     printMenuBar(ind1, common::toUnderlying(YesNo::NO), text.no());
-    cout << text.enterNumber() << text.promptSymbol();
-    string input;
-    getline(cin, input);
     auto pair{ getNumber() };
     if (pair.second == true) {
         switch (pair.first) {

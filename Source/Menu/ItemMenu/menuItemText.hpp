@@ -36,9 +36,18 @@ public:
 
     const text& showFullDescription() const noexcept;
 
+    const text& questionDeleteItem() const noexcept;
+
+    const text& equip() const noexcept;
+
+    const text& modify() const noexcept;
+
 private:
     language_bundle menuName_;
     language_bundle showFullDescr_;
+    language_bundle questionDelete_;
+    language_bundle equip_;
+    language_bundle modify_;
 };
 
 ///************************************************************************************************
@@ -92,6 +101,21 @@ inline const MenuItemTextCommon::text& MenuItemTextCommon::menuName() const noex
 inline const MenuItemTextCommon::text& MenuItemTextCommon::showFullDescription() const noexcept
 {
     return showFullDescr_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextCommon::text& MenuItemTextCommon::questionDeleteItem() const noexcept
+{
+    return questionDelete_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextCommon::text& MenuItemTextCommon::equip() const noexcept
+{
+    return equip_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextCommon::text& MenuItemTextCommon::modify() const noexcept
+{
+    return modify_[MenuItemText::languageIndex()];
 }
 
 ///************************************************************************************************

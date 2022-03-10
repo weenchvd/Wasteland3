@@ -77,7 +77,7 @@ int main()
     sizeof(Weapon);
 
     unique_ptr<Item> socom1 = Weapon::create(WeaponModel::AR_SOCOM);
-    TypeItemVisitor typeIV1;
+    ItemVisitorType typeIV1;
     socom1->accept(typeIV1);
     cout << "socom1->accept(typeIV1)" << endl;
     cout << "  isWeapon:    " << boolalpha << typeIV1.isWeapon() << endl;
