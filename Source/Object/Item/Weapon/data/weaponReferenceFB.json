@@ -29,8 +29,8 @@
         "ru": "КАЛАШ 97"
       },
       "descrip": {
-        "en": "~~ Description ~~",
-        "ru": "~~ Описание ~~"
+        "en": "The grandchild of the venerable Kalash 47.",
+        "ru": "Внук многоуважаемого Калаша 47."
       },
       "dmg_min": 26,
       "dmg_max": 32,
@@ -120,18 +120,18 @@
         "ru": "ПОТРОШИТЕЛЬ"
       },
       "descrip": {
-        "en": "~~ Description ~~",
-        "ru": "~~ Описание ~~"
+        "en": "The rate-of-fire for this experimental machine pistol is so high that the vibrations can numb your hand in seconds.",
+        "ru": "Скорострельность этого экспериментального пистолета-пулемета столь высока, что от отдачи руки немеют за считанные секунды."
       },
-      "dmg_min": 2,
-      "dmg_max": 2,
-      "price": 10,
-      "range_attack": 2,
-      "capacity_ammo": 2,
-      "multiplier_crit_dmg": 150,
+      "dmg_min": 27,
+      "dmg_max": 37,
+      "price": 1630,
+      "range_attack": 12,
+      "capacity_ammo": 30,
+      "multiplier_crit_dmg": 160,
       "chance_hit": 750,
       "weapon_level": 21,
-      "armor_penetration": 2,
+      "armor_penetration": 14,
       "ap_per_attack": 4,
       "ap_per_reload": 2,
       "shots_per_attack": 10,

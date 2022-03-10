@@ -13,11 +13,11 @@
       },
       "name": {
         "en": "SHORTENED BARREL",
-        "ru": "~~ Название ~~"
+        "ru": "УКОРОЧЕННЫЙ СТВОЛ"
       },
       "descrip": {
         "en": "This short barrel reduces Chance to Hit but increases bullet velocity dramatically. Best for skilled marksmen.",
-        "ru": "~~ Описание ~~"
+        "ru": "Более короткий ствол снижает меткость боя, но сильно увеличивает начальную скорость пули. Рекомендуется для опытных стрелков."
       },
       "dmg_min": 20,
       "dmg_max": 20,
@@ -47,17 +47,40 @@
       },
       "name": {
         "en": "LIGHTWEIGHT BARREL",
-        "ru": "~~ Название ~~"
+        "ru": "ОБЛЕГЧЕННЫЙ СТВОЛ"
       },
       "descrip": {
         "en": "Lighter materials in this barrel significantly reduce weight at the cost of firepower.",
-        "ru": "~~ Описание ~~"
+        "ru": "Использование более легких материалов позволяет значительно снизить вес оружия за счет меньшей огневой мощи."
       },
       "dmg_min": -12,
       "dmg_max": -12,
       "price": 600,
       "chance_hit": 120,
       "armor_penetration": 1
+    },
+    {
+      "weapon_mod_model": "BARREL_TITANIUM_COBALT",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 6
+          }
+        ]
+      },
+      "name": {
+        "en": "TITANIUM-COBALT BARREL",
+        "ru": "СТВОЛ ИЗ ТИТАНА И КОБАЛЬТА"
+      },
+      "descrip": {
+        "en": "Difficult to machine, but twice as strong as steel at the same weight.",
+        "ru": "С трудом поддается обработке, но в два раза прочнее стали при равном весе."
+      },
+      "dmg_min": 8,
+      "dmg_max": 8,
+      "price": 175
     },
     {
       "weapon_mod_model": "MAG_QUICKFIRE",
@@ -72,11 +95,11 @@
       },
       "name": {
         "en": "QUICKFIRE MAG",
-        "ru": "~~ Название ~~"
+        "ru": "МАГАЗИН ДЛЯ БЫСТРОЙ СТРЕЛЬБЫ"
       },
       "descrip": {
         "en": "This magazine has a built-in mechanism to slam bullets directry into the chamber.",
-        "ru": "~~ Описание ~~"
+        "ru": "У этого магазина есть встроенный механизм, сразу подающий патроны в патронник."
       },
       "price": 450,
       "ap_per_attack": -1
@@ -94,11 +117,11 @@
       },
       "name": {
         "en": "ADVANCED MATERIALS MAG",
-        "ru": "~~ Название ~~"
+        "ru": "МАГАЗИН ИЗ УЛУЧШЕННЫХ МАТЕРИАЛОВ"
       },
       "descrip": {
         "en": "A smaller, lightweight magazine can make reloads faster when it counts.",
-        "ru": "~~ Описание ~~"
+        "ru": "Небольшой и легкий магазин ускоряет заряжание, когда каждая секунда на счету."
       },
       "price": 350,
       "capacity_ammo": -1,
@@ -117,11 +140,11 @@
       },
       "name": {
         "en": "OVERSIZED MAG",
-        "ru": "~~ Название ~~"
+        "ru": "ЧРЕЗМЕРНО БОЛЬШОЙ МАГАЗИН"
       },
       "descrip": {
-        "en": "~~ Description ~~",
-        "ru": "~~ Описание ~~"
+        "en": "This huge magazine stores a ton of ammo, but is akward to reload.",
+        "ru": "Этот огромный магазин вмещает уйму патронов, но его неудобно заряжать."
       },
       "price": 275,
       "capacity_ammo": 8,

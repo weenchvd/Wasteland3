@@ -24,6 +24,7 @@ void initializeSquad(game::object::Squad& squad)
 
 void initializeInventory(game::object::Inventory& inventory)
 {
+    using game::object::Ammo;
     using game::object::Weapon;
     using game::object::WeaponMod;
         
@@ -32,11 +33,21 @@ void initializeInventory(game::object::Inventory& inventory)
     /// weapons
     inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_SOCOM));
     inventory.insert(f.createItem<Weapon>(Weapon::Model::AR_KALASH97));
+    inventory.insert(f.createItem<Weapon>(Weapon::Model::SMG_RIPPER));
+    inventory.insert(f.createItem<Weapon>(Weapon::Model::SMG_RIPPER));
 
     /// weapon mods
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_SHORTENED));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_LIGHTWEIGHT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_OVERSIZED));
 
+    /// ammo
+    inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 90));
+    inventory.insert(f.createAmmo(Ammo::Type::ENERGY_CELLS, 55));
+    inventory.insert(f.createAmmo(Ammo::Type::ROCKET, 4));
 }
 
 void initializeShop(game::object::Inventory& inventory)
@@ -57,6 +68,9 @@ void initializeShop(game::object::Inventory& inventory)
     /// weapon mods
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_LIGHTWEIGHT));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_SHORTENED));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_OVERSIZED));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));

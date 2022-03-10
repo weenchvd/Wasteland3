@@ -19,7 +19,7 @@ WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id)
         { fbWeaponMod::FB_WeaponModModel_BARREL_SHORTENED, WeaponMod__Model::BARREL_SHORTENED },
         { fbWeaponMod::FB_WeaponModModel_BARREL_LIGHTWEIGHT, WeaponMod__Model::BARREL_LIGHTWEIGHT },
         ///{ fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
         ///{ fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
         ///{ fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
         ///{ fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
