@@ -48,6 +48,12 @@ private:
 ///************************************************************************************************
 
 class Inventory {
+private:
+    struct IteratorBundle {
+        std::list<std::unique_ptr<Item>>::iterator  iter_;
+        std::list<std::unique_ptr<Item>>*           list_;
+    };
+
 public:
     Inventory() {}
 
@@ -68,14 +74,25 @@ public:
     void viewed() noexcept { mergeLists(); }
 
 private:
+    void insert(
+        std::list<std::unique_ptr<Item>>& receiver,
+        std::unique_ptr<Item>& item,
+        bool insertFirst = false
+    );
+
+    std::unique_ptr<Item> extract(IteratorBundle iteratorBundle);
+
     void clean();
 
     void mergeLists();
 
-    void erase(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+    void erase(IteratorBundle iteratorBundle);
 
-    std::list<std::unique_ptr<Item>>::iterator
-        find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+    bool isAggregable(std::unique_ptr<Item>& item) const noexcept;
+
+    void aggregate(std::unique_ptr<Item>& receiver, std::unique_ptr<Item>& source);
+
+    IteratorBundle find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
 private:
     std::list<std::unique_ptr<Item>>    newItems_;

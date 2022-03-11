@@ -8,7 +8,9 @@
 #define SLOT_HPP
 
 #include<array>
+#include<assert.h>
 #include<memory>
+#include<type_traits>
 
 namespace game {
 namespace common {
@@ -69,18 +71,25 @@ public:
     }
 
     template<class Base>
-    bool set(unsigned int slotNumber, std::unique_ptr<Base>& source) noexcept
+    bool set(
+        unsigned int slotNumber,
+        std::unique_ptr<Base>& source,
+        bool (*typeChecker)(Type, Type)
+    ) noexcept
     {
+        assert(typeChecker != nullptr);
+        assert((std::is_base_of_v<Base, T> == true));
         if (source == nullptr ||
             slotNumber >= elem_.size() ||
             type_[slotNumber] == Type::INVALID ||
-            elem_[slotNumber] != nullptr)
+            elem_[slotNumber] != nullptr ||
+            std::is_base_of_v<Base, T> == false)
         {
             return false;
         }
         T* derived = static_cast<T*>(source.get());
-        if (type_[slotNumber] == Type::ANY ||
-            type_[slotNumber] == derived->type())
+        if (typeChecker != nullptr &&
+            typeChecker(type_[slotNumber], derived->type()) == true)
         {
             elem_[slotNumber].reset(static_cast<T*>(source.release()));
             return true;

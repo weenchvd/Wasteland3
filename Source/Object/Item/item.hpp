@@ -39,6 +39,8 @@ public:
 
 ///------------------------------------------------------------------------------------------------
 
+bool operator==(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
+
 bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
 
 } // namespace object

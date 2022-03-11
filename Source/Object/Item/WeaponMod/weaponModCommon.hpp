@@ -52,6 +52,11 @@ enum class WeaponMod__Type : char {
 
 ///************************************************************************************************
 
+// @brief Check if the types are compatible.
+// @param "id1" - must be a type;
+// @param "id2" - must be a type;
+bool isCompatible(WeaponMod__Type id1, WeaponMod__Type id2);
+
 WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id);
 
 WeaponMod__Type toWeaponModType(fbWeaponMod::FB_WeaponModType id);

@@ -73,9 +73,13 @@ void MenuInventoryText::initCommon()
     temp.ru("Деньги: $");
     initLanguageBundleMenu(temp, common_.money_);
 
-    temp.en("Inventory (* - new items):");
-    temp.ru("Инвентарь (* - новые предметы):");
+    temp.en("Inventory");
+    temp.ru("Инвентарь");
     initLanguageBundleMenu(temp, common_.inventory_);
+
+    temp.en("* - new items");
+    temp.ru("* - новые предметы");
+    initLanguageBundleMenu(temp, common_.starNewItems_);
 
     temp.en("Shop:");
     temp.ru("Магазин:");

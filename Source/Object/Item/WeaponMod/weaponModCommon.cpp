@@ -12,6 +12,12 @@ namespace object {
 
 using namespace std;
 
+bool isCompatible(WeaponMod__Type id1, WeaponMod__Type id2)
+{
+    if (id1 == id2) return true;
+    return false;
+}
+
 WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id)
 {
     static unordered_map<fbWeaponMod::FB_WeaponModModel, WeaponMod__Model> map{

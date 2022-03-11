@@ -38,17 +38,25 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
     oss << weapon.name() << endl;
     oss << text.common().level() << sp << common::getLv(weapon.level()) << sp
         << text.type(weapon.type()) << endl;
-    oss << text.common().damage() << sp << weapon.damageMinimum() << '-'
-        << weapon.damageMaximum() << sp << x
-        << common::getShots(weapon.shotsPerAttack()) << endl;
-    /// TODO oss << damageType << endl;
-    oss << text.common().ap() << sp
-        << common::getAP(weapon.actionPointPerAttack()) << endl;
-    oss << text.common().apReload() << sp
-        << common::getAP(weapon.actionPointPerReload()) << endl;
+    oss << weapon.description() << endl;
     oss << sep << endl;
 
-    oss << weapon.description() << endl;
+    bool modsInstalled{ false };
+    for (int i = 0; modsInstalled == false && i < weapon.slotMod().size(); ++i) {
+        if (weapon.slotMod()[i] != nullptr) {
+            modsInstalled = true;
+        }
+    }
+    if (modsInstalled == true) {
+        oss << text.common().installedMods() << endl;
+        for (int i = 0; i < weapon.slotMod().size(); ++i) {
+            const auto& weaponMod{ weapon.slotMod()[i] };
+            if (weaponMod != nullptr) {
+                oss << weaponMod->name() << endl;
+            }
+        }
+        oss << sep << endl;
+    }
 
     object::WeaponRequirements wReqDef;
     const auto skillReqDefaultType{ wReqDef.skillRequirements()[0].first };
@@ -92,6 +100,14 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
     }
     oss << sep << endl;
 
+    oss << text.common().damage() << sp << weapon.damageMinimum() << '-'
+        << weapon.damageMaximum() << sp << x
+        << common::getShots(weapon.shotsPerAttack()) << endl;
+    /// TODO oss << damageType << endl;
+    oss << text.common().ap() << sp
+        << common::getAP(weapon.actionPointPerAttack()) << endl;
+    oss << text.common().apReload() << sp
+        << common::getAP(weapon.actionPointPerReload()) << endl;
     if (weapon.capacityAmmo() != def.capacityAmmo()) {
         oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
     }

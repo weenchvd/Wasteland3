@@ -48,6 +48,8 @@ public:
 
     const text& inventory() const noexcept;
 
+    const text& starNewItems() const noexcept;
+
     const text& shop() const noexcept;
 
     const text& item() const noexcept;
@@ -65,6 +67,7 @@ private:
     language_bundle enterItem_;
     language_bundle money_;
     language_bundle inventory_;
+    language_bundle starNewItems_;
     language_bundle shop_;
     language_bundle item_;
     language_bundle typesOfItems_;
@@ -152,6 +155,11 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::money() con
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::inventory() const noexcept
 {
     return inventory_[MenuInventoryText::languageIndex()];
+}
+
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::starNewItems() const noexcept
+{
+    return starNewItems_[MenuInventoryText::languageIndex()];
 }
 
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::shop() const noexcept

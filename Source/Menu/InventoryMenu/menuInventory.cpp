@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"ammo.hpp"
+#include"itemVisitorExtendedName.hpp"
 #include"menuCommonText.hpp"
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
@@ -75,17 +76,20 @@ pair<object::Roster, bool> subMenuShowItems(object::Inventory& inventory, const 
     printMenuBar(ind2, actionShowItems::SHOW_ITEMS_OF_TYPE, text.showItemsOfType());
 
     switch (getAction()) {
-    case actionShowItems::SHOW_ALL_ITEMS:
+    case actionShowItems::SHOW_ALL_ITEMS: {
         ret.first = inventory.roster();
         ret.second = true;
-        showItems(ret.first, text.inventory(), ind1);
+        auto title{ text.inventory() + " (" + text.starNewItems() + "):" };
+        showItems(ret.first, title, ind1);
         break;
+    }
     case actionShowItems::SHOW_ITEMS_OF_TYPE: {
         object::Item::Type type{ pickItemType(ind1) };
         if (type != object::Item::Type::INVALID) {
             ret.first = inventory.roster(type);
             ret.second = true;
-            showItems(ret.first, text.inventory(), ind1);
+            auto title{ text.inventory() + " (" + getItemTypeName(type) + "):" };
+            showItems(ret.first, title, ind1);
         }
         break;
     }
@@ -112,12 +116,15 @@ void showRoster(object::Roster& roster, const Indent indent)
     Indent ind1{ indent + Indent{} };
     const auto& text{ MenuInventoryText::common() };
 
+    ItemVisitorExtendedName vis;
     int i{ itemNumber::countFrom };
     for (auto iter{ roster.newItems().beg_ }; iter != roster.newItems().end_; ++iter) {
-        cout << ind1 << text.item() << i++ << ": " << '*' << (*iter)->name() << endl;
+        (*iter)->accept(vis);
+        cout << ind1 << text.item() << i++ << ": " << '*' << vis.getExtendedName() << endl;
     }
     for (auto iter{ roster.oldItems().beg_ }; iter != roster.oldItems().end_; ++iter) {
-        cout << ind1 << text.item() << i++ << ": " << (*iter)->name() << endl;
+        (*iter)->accept(vis);
+        cout << ind1 << text.item() << i++ << ": " << vis.getExtendedName() << endl;
     }
 }
 

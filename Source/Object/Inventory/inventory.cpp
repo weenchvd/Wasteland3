@@ -45,43 +45,84 @@ void Roster::refresh()
 
 void Inventory::insert(unique_ptr<Item>& item, bool isNew)
 {
-    if (item) {
-        if (isNew) {
-            // inserts the item first in the inventory
-            auto iter = newItems_.emplace(newItems_.cbegin(), unique_ptr<Item>{});
+    if (isNew == true) {
+        insert(newItems_, item, true);
+    }
+    else {
+        insert(oldItems_, item);
+    }
+}
+
+void Inventory::insert(list<unique_ptr<Item>>& receiver, unique_ptr<Item>& item, bool insertFirst)
+{
+    if (item != nullptr) {
+        auto pos{ lower_bound(receiver.begin(), receiver.end(), item) };
+        if (insertFirst == true) {
+            // inserts the item first in the receiver
+            auto iter{ receiver.emplace(receiver.begin(), unique_ptr<Item>{}) };
             *iter = move(item);
+            if (isAggregable(*iter) == true && pos != receiver.cend() && *pos == *iter) {
+                aggregate(*iter, *pos);
+                erase(IteratorBundle{ pos, &receiver });
+            }
         }
         else {
-            // inserts the item into the inventory last among the same ones
-            auto pos = upper_bound(oldItems_.cbegin(), oldItems_.cend(), item);
-            auto iter = oldItems_.emplace(pos, unique_ptr<Item>{});
-            *iter = move(item);
+            // inserts the item into the receiver first among the same ones
+            if (isAggregable(item) == true && pos != receiver.cend() && *pos == item) {
+                aggregate(*pos, item);
+            }
+            else {
+                auto iter{ receiver.emplace(pos, unique_ptr<Item>{}) };
+                *iter = move(item);
+            }
         }
     }
 }
 
 unique_ptr<Item> Inventory::extract(list<unique_ptr<Item>>::const_iterator iterator)
 {
-    list<unique_ptr<Item>>::iterator iter;
-    try {
-        iter = find(iterator);
+    return extract(find(iterator));
+}
+
+unique_ptr<Item> Inventory::extract(IteratorBundle iteratorBundle)
+{
+    unique_ptr<Item> item{};
+    if (iteratorBundle.list_ != nullptr) {
+        item = move(*iteratorBundle.iter_);
+        erase(iteratorBundle);
     }
-    catch (const error::OutOfRangeError& e) {
-        return unique_ptr<Item>{};
-    }
-    unique_ptr<Item> item = move(*iter);
-    erase(iter);
     return item;
 }
 
-void Inventory::erase(list<unique_ptr<Item>>::const_iterator iterator)
+void Inventory::erase(IteratorBundle iteratorBundle)
 {
-    if (lower_bound(newItems_.cbegin(), newItems_.cend(), *iterator) != newItems_.cend()) {
-        newItems_.erase(iterator);
+    assert(iteratorBundle.list_ != nullptr);
+    iteratorBundle.list_->erase(iteratorBundle.iter_);
+}
+
+bool Inventory::isAggregable(std::unique_ptr<Item>& item) const noexcept
+{
+    switch (item->itemType()) {
+    case Item::Type::AMMO:
+        return true;
+    default:
+        return false;
     }
-    else {
-        oldItems_.erase(iterator);
+}
+
+void Inventory::aggregate(unique_ptr<Item>& receiver, unique_ptr<Item>& source)
+{
+    assert(receiver == source);
+    switch (receiver->itemType()) {
+    case Item::Type::AMMO:
+        static_cast<Ammo*>(receiver.get())->quantityAdd(
+            static_cast<Ammo*>(source.get())->quantity()
+        );
+        break;
+    default:
+        break;
     }
+    source.reset();
 }
 
 Roster Inventory::roster()
@@ -129,18 +170,19 @@ size_t Inventory::size()
 
 inline void Inventory::mergeLists()
 {
-    newItems_.sort();
-    oldItems_.merge(newItems_);
+    clean();
+    for (auto iter{ newItems_.begin() }; iter != newItems_.end(); ++iter) {
+        insert(oldItems_, *iter);
+        assert(*iter == nullptr);
+    }
+    newItems_.clear();
 }
 
 void Inventory::clean()
 {
     struct UniquePtr_Null {
         bool operator()(const unique_ptr<Item>& item) {
-            if (item == nullptr) {
-                return true;
-            }
-            return false;
+            return item == nullptr ? true : false;
         }
     };
 
@@ -148,20 +190,20 @@ void Inventory::clean()
     oldItems_.remove_if(UniquePtr_Null{});
 }
 
-list<unique_ptr<Item>>::iterator Inventory::find(list<unique_ptr<Item>>::const_iterator iterator)
+Inventory::IteratorBundle Inventory::find(list<unique_ptr<Item>>::const_iterator iterator)
 {
     clean();
     for (auto iter = newItems_.begin(); iter != newItems_.end(); ++iter) {
         if (iterator == iter) {
-            return iter;
+            return { iter, &newItems_ };
         }
     }
     for (auto iter = oldItems_.begin(); iter != oldItems_.end(); ++iter) {
         if (iterator == iter) {
-            return iter;
+            return { iter, &oldItems_ };
         }
     }
-    throw error::OutOfRangeError{"Inventory::find()"};
+    return { list<unique_ptr<Item>>::iterator{}, nullptr };
 }
 
 } // namespace object
