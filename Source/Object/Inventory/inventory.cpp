@@ -43,40 +43,56 @@ void Roster::refresh()
 
 ///************************************************************************************************
 
-void Inventory::insert(unique_ptr<Item>& item, bool isNew)
+list<unique_ptr<Item>>::const_iterator Inventory::insert(unique_ptr<Item>& item, bool isNew)
 {
-    if (isNew == true) {
-        insert(newItems_, item, true);
-    }
-    else {
-        insert(oldItems_, item);
-    }
+    return (isNew == true) ? insert(newItems_, item) : insert(oldItems_, item);
 }
 
-void Inventory::insert(list<unique_ptr<Item>>& receiver, unique_ptr<Item>& item, bool insertFirst)
+list<unique_ptr<Item>>::const_iterator Inventory::insert(
+    list<unique_ptr<Item>>& receiver,
+    unique_ptr<Item>& item)
 {
+    struct ItemLessByModel {
+        bool operator()(const unique_ptr<Item>& lhs, const unique_ptr<Item>& rhs) {
+            return isLessByModel(*lhs, *rhs);
+        }
+    };
+
+    list<unique_ptr<Item>>::const_iterator ret{};
     if (item != nullptr) {
-        auto pos{ lower_bound(receiver.begin(), receiver.end(), item) };
-        if (insertFirst == true) {
+        auto pos{ lower_bound(receiver.begin(), receiver.end(), item, ItemLessByModel{}) };
+        if (&receiver == &newItems_) {
             // inserts the item first in the receiver
             auto iter{ receiver.emplace(receiver.begin(), unique_ptr<Item>{}) };
             *iter = move(item);
-            if (isAggregable(*iter) == true && pos != receiver.cend() && *pos == *iter) {
+            ret = iter;
+            if (isAggregable(*iter) == true &&
+                pos != receiver.cend() &&
+                object::isSameModel(**pos, **iter) == true)
+            {
                 aggregate(*iter, *pos);
-                erase(IteratorBundle{ pos, &receiver });
+                receiver.erase(pos);
             }
         }
         else {
             // inserts the item into the receiver first among the same ones
-            if (isAggregable(item) == true && pos != receiver.cend() && *pos == item) {
+            if (isAggregable(item) == true &&
+                pos != receiver.cend() &&
+                object::isSameModel(**pos, *item) == true)
+            {
                 aggregate(*pos, item);
+                ret = pos;
             }
             else {
                 auto iter{ receiver.emplace(pos, unique_ptr<Item>{}) };
                 *iter = move(item);
+                ret = iter;
             }
         }
     }
+    assert(item == nullptr);
+    assert(check(receiver) == true);
+    return ret;
 }
 
 unique_ptr<Item> Inventory::extract(list<unique_ptr<Item>>::const_iterator iterator)
@@ -89,15 +105,18 @@ unique_ptr<Item> Inventory::extract(IteratorBundle iteratorBundle)
     unique_ptr<Item> item{};
     if (iteratorBundle.list_ != nullptr) {
         item = move(*iteratorBundle.iter_);
-        erase(iteratorBundle);
+        assert(*iteratorBundle.iter_ == nullptr);
+        iteratorBundle.list_->erase(iteratorBundle.iter_);
+        assert(check(*iteratorBundle.list_) == true);
     }
     return item;
 }
 
-void Inventory::erase(IteratorBundle iteratorBundle)
+pair<list<unique_ptr<Item>>::iterator, bool> Inventory::getIterator(
+    list<unique_ptr<Item>>::const_iterator iterator)
 {
-    assert(iteratorBundle.list_ != nullptr);
-    iteratorBundle.list_->erase(iteratorBundle.iter_);
+    IteratorBundle bundle{ find(iterator) };
+    return { bundle.iter_, bundle.list_ != nullptr ? true : false };
 }
 
 bool Inventory::isAggregable(std::unique_ptr<Item>& item) const noexcept
@@ -112,7 +131,7 @@ bool Inventory::isAggregable(std::unique_ptr<Item>& item) const noexcept
 
 void Inventory::aggregate(unique_ptr<Item>& receiver, unique_ptr<Item>& source)
 {
-    assert(receiver == source);
+    assert(object::isSameModel(*receiver, *source) == true);
     switch (receiver->itemType()) {
     case Item::Type::AMMO:
         static_cast<Ammo*>(receiver.get())->quantityAdd(
@@ -127,7 +146,7 @@ void Inventory::aggregate(unique_ptr<Item>& receiver, unique_ptr<Item>& source)
 
 Roster Inventory::roster()
 {
-    clean();
+    assert(checkAll() == true);
 
     Roster roster{ *this };
     roster.newItems_ = { newItems_.cbegin(), newItems_.cend() };
@@ -149,8 +168,8 @@ Roster Inventory::roster(Item::Type type)
         }
     };
 
-    clean();
     mergeLists();
+    assert(checkAll() == true);
 
     Roster roster{ *this };
     roster.itemType(type);
@@ -164,46 +183,79 @@ Roster Inventory::roster(Item::Type type)
 
 size_t Inventory::size()
 {
-    clean();
+    assert(checkAll() == true);
     return newItems_.size() + oldItems_.size();
+}
+
+list<unique_ptr<Item>>::const_iterator Inventory::viewed(
+    list<unique_ptr<Item>>::const_iterator iterator) noexcept
+{
+    for (auto iter = newItems_.begin(); iter != newItems_.end(); ++iter) {
+        if (*iterator == *iter) {
+            auto ret{ insert(oldItems_, *iter) };
+            extract(IteratorBundle{ iter, &newItems_ });
+            assert(checkAll() == true);
+            return ret;
+        }
+    }
+    return iterator;
 }
 
 inline void Inventory::mergeLists()
 {
-    clean();
+    assert(checkAll() == true);
     for (auto iter{ newItems_.begin() }; iter != newItems_.end(); ++iter) {
         insert(oldItems_, *iter);
-        assert(*iter == nullptr);
     }
     newItems_.clear();
-}
-
-void Inventory::clean()
-{
-    struct UniquePtr_Null {
-        bool operator()(const unique_ptr<Item>& item) {
-            return item == nullptr ? true : false;
-        }
-    };
-
-    newItems_.remove_if(UniquePtr_Null{});
-    oldItems_.remove_if(UniquePtr_Null{});
+    assert(check(newItems_) == true);
 }
 
 Inventory::IteratorBundle Inventory::find(list<unique_ptr<Item>>::const_iterator iterator)
 {
-    clean();
+    assert(checkAll() == true);
     for (auto iter = newItems_.begin(); iter != newItems_.end(); ++iter) {
-        if (iterator == iter) {
+        if (*iterator == *iter) {
             return { iter, &newItems_ };
         }
     }
     for (auto iter = oldItems_.begin(); iter != oldItems_.end(); ++iter) {
-        if (iterator == iter) {
+        if (*iterator == *iter) {
             return { iter, &oldItems_ };
         }
     }
     return { list<unique_ptr<Item>>::iterator{}, nullptr };
+}
+
+bool Inventory::check(const list<unique_ptr<Item>>& source) const
+{
+    if (&source == &newItems_) {
+        for (auto iter{ source.cbegin() }; iter != source.cend(); ++iter) {
+            if (*iter == nullptr) return false;
+        }
+    }
+    else if (&source == &oldItems_) {
+        for (auto iter{ source.cbegin() }; iter != source.cend(); ++iter) {
+            if (*iter == nullptr) return false;
+            auto iterNext{ iter };
+            ++iterNext;
+            if (iterNext != source.cend() &&
+                *iterNext != nullptr &&
+                isGreaterByModel(**iter, **iterNext) == true)
+            {
+                return false;
+            }
+        }
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
+bool Inventory::checkAll() const
+{
+    return check(newItems_) && check(oldItems_);
 }
 
 } // namespace object

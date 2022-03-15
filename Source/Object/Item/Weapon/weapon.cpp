@@ -133,6 +133,28 @@ void Weapon::ammoType(Ammo::Type type) noexcept
     assert(common::isValidEnum(tyAmmo_));
 }
 
+bool Weapon::setMod(
+    unsigned int slotNumber,
+    unique_ptr<Item>& source,
+    bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)
+) noexcept
+{
+    if (slotWeaponMod_.set(slotNumber, source, typeChecker) == true) {
+        this->apply();
+        return true;
+    }
+    return false;
+}
+
+bool Weapon::unsetMod(unsigned int slotNumber, unique_ptr<Item>& receiver) noexcept
+{
+    if (slotWeaponMod_.unset(slotNumber, receiver) == true) {
+        this->apply();
+        return true;
+    }
+    return false;
+}
+
 const Weapon& Weapon::weaponDefault() noexcept
 {
     static const Weapon def{ ref_.weaponReferenceDefault() };

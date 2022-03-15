@@ -52,6 +52,48 @@ private:
 
 ///************************************************************************************************
 
+struct MenuItemTextModify {
+public:
+    using text              = common::Text;
+
+private:
+    using language          = global::PlainText::Language;
+
+    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
+
+    using language_bundle   = std::array<text, sizeLang_>;
+
+    friend class MenuItemText;
+
+public:
+    MenuItemTextModify() noexcept {}
+
+    const text& menuName() const noexcept;
+
+    const text& item() const noexcept;
+
+    const text& mods() const noexcept;
+
+    const text& installMod() const noexcept;
+
+    const text& removeMod() const noexcept;
+
+    const text& enterSlotNumber() const noexcept;
+
+    const text& unsuitableMod() const noexcept;
+
+private:
+    language_bundle menuName_;
+    language_bundle item_;
+    language_bundle mods_;
+    language_bundle installMod_;
+    language_bundle removeMod_;
+    language_bundle enterSlotNumber_;
+    language_bundle unsuitableMod_;
+};
+
+///************************************************************************************************
+
 class MenuItemText {
 public:
     using text              = common::Text;
@@ -77,15 +119,20 @@ public:
 
     static const MenuItemTextCommon& common() noexcept { return common_; }
 
+    static const MenuItemTextModify& modify() noexcept { return modify_; }
+
 private:
     static void setLanguage(language lang) noexcept;
 
     static void initCommon();
 
+    static void initModify();
+
 private:
     static common::ObserverDLL<void, language>      langObs_;
 
     static MenuItemTextCommon                       common_;
+    static MenuItemTextModify                       modify_;
 
     static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
@@ -116,6 +163,43 @@ inline const MenuItemTextCommon::text& MenuItemTextCommon::equip() const noexcep
 inline const MenuItemTextCommon::text& MenuItemTextCommon::modify() const noexcept
 {
     return modify_[MenuItemText::languageIndex()];
+}
+
+///************************************************************************************************
+
+inline const MenuItemTextModify::text& MenuItemTextModify::menuName() const noexcept
+{
+    return menuName_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::item() const noexcept
+{
+    return item_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::mods() const noexcept
+{
+    return mods_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::installMod() const noexcept
+{
+    return installMod_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::removeMod() const noexcept
+{
+    return removeMod_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::enterSlotNumber() const noexcept
+{
+    return enterSlotNumber_[MenuItemText::languageIndex()];
+}
+
+inline const MenuItemTextModify::text& MenuItemTextModify::unsuitableMod() const noexcept
+{
+    return unsuitableMod_[MenuItemText::languageIndex()];
 }
 
 ///************************************************************************************************

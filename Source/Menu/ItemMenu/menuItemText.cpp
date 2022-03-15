@@ -17,6 +17,7 @@ using namespace std;
 common::ObserverDLL<void, MenuItemText::language> MenuItemText::langObs_;
 
 MenuItemTextCommon MenuItemText::common_;
+MenuItemTextModify MenuItemText::modify_;
 
 underlying_type_t<MenuItemText::language>   MenuItemText::langIndex_    { 0 };
 bool                                        MenuItemText::initialized_  { false };
@@ -32,6 +33,7 @@ void MenuItemText::initialize()
     assert(sizeLang_ > 0);
 
     initCommon();
+    initModify();
 
     assert(Locator::isInitialized());
     setLanguage(Locator::getOption().getLanguage());
@@ -64,6 +66,39 @@ void MenuItemText::initCommon()
     temp.en("Modify");
     temp.ru("Модифицировать");
     initLanguageBundleMenu(temp, common_.modify_);
+}
+
+void MenuItemText::initModify()
+{
+    LanguageBundle temp;
+
+    temp.en("Item modification  menu");
+    temp.ru("Меню модификации предмета");
+    initLanguageBundleMenu(temp, modify_.menuName_);
+
+    temp.en("Item: ");
+    temp.ru("Предмет: ");
+    initLanguageBundleMenu(temp, modify_.item_);
+
+    temp.en("Modifications: ");
+    temp.ru("Модификации: ");
+    initLanguageBundleMenu(temp, modify_.mods_);
+
+    temp.en("Install modification");
+    temp.ru("Установить модификацию");
+    initLanguageBundleMenu(temp, modify_.installMod_);
+
+    temp.en("Remove modification");
+    temp.ru("Удалить модификацию");
+    initLanguageBundleMenu(temp, modify_.removeMod_);
+
+    temp.en("Enter slot number");
+    temp.ru("Введите номер слота");
+    initLanguageBundleMenu(temp, modify_.enterSlotNumber_);
+
+    temp.en("Unsuitable modification");
+    temp.ru("Неподходящая модификация");
+    initLanguageBundleMenu(temp, modify_.unsuitableMod_);
 }
 
 } // namespace menu

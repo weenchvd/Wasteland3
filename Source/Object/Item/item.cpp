@@ -11,20 +11,50 @@ namespace object {
 
 using namespace std;
 
-bool operator==(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
+//bool operator==(const Item& lhs, const Item& rhs) noexcept
+//{
+//    if (lhs.itemType() == rhs.itemType() && lhs.itemModel() == rhs.itemModel()) {
+//        return true;
+//    }
+//    return false;
+//}
+
+//bool operator<(const unique_ptr<Item>& lhs, const unique_ptr<Item>& rhs) noexcept
+//{
+//    if (lhs->itemType() < rhs->itemType()) {
+//        return true;
+//    }
+//    if (lhs->itemType() == rhs->itemType() && lhs->itemModel() < rhs->itemModel()) {
+//        return true;
+//    }
+//    return false;
+//}
+
+bool isSameModel(const Item& lhs, const Item& rhs) noexcept
 {
-    if (item1->itemType() == item2->itemType() && item1->itemModel() == item2->itemModel()) {
+    if (lhs.itemType() == rhs.itemType() && lhs.itemModel() == rhs.itemModel()) {
         return true;
     }
     return false;
 }
 
-bool operator<(const unique_ptr<Item>& item1, const unique_ptr<Item>& item2) noexcept
+bool isLessByModel(const Item& lhs, const Item& rhs) noexcept
 {
-    if (item1->itemType() < item2->itemType()) {
+    if (lhs.itemType() < rhs.itemType()) {
         return true;
     }
-    if (item1->itemType() == item2->itemType() && item1->itemModel() < item2->itemModel()) {
+    if (lhs.itemType() == rhs.itemType() && lhs.itemModel() < rhs.itemModel()) {
+        return true;
+    }
+    return false;
+}
+
+bool isGreaterByModel(const Item& lhs, const Item& rhs) noexcept
+{
+    if (lhs.itemType() > rhs.itemType()) {
+        return true;
+    }
+    if (lhs.itemType() == rhs.itemType() && lhs.itemModel() > rhs.itemModel()) {
         return true;
     }
     return false;

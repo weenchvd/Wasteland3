@@ -27,7 +27,7 @@ public:
         : type_{ list } {}
 
     unsigned int size() const noexcept {
-        unsigned int size = 0;
+        unsigned int size{ 0 };
         for (int i = 0; i < type_.size(); ++i) {
             if (type_[i] != Type::INVALID) {
                 ++size;
@@ -87,7 +87,7 @@ public:
         {
             return false;
         }
-        T* derived = static_cast<T*>(source.get());
+        T* derived{ static_cast<T*>(source.get()) };
         if (typeChecker != nullptr &&
             typeChecker(type_[slotNumber], derived->type()) == true)
         {
@@ -100,9 +100,11 @@ public:
     template<class Base>
     bool unset(unsigned int slotNumber, std::unique_ptr<Base>& receiver) noexcept
     {
+        assert((std::is_base_of_v<Base, T> == true));
         if (receiver != nullptr ||
             slotNumber >= elem_.size() ||
-            elem_[slotNumber] == nullptr)
+            elem_[slotNumber] == nullptr ||
+            std::is_base_of_v<Base, T> == false)
         {
             return false;
         }

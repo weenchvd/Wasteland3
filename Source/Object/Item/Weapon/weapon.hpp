@@ -199,9 +199,14 @@ public:
     const common::Slot<WeaponMod, nWMSlots_>& slotMod() const noexcept {
         return slotWeaponMod_;
     }
-    common::Slot<WeaponMod, nWMSlots_>& slotMod() noexcept {
-        return slotWeaponMod_;
-    }
+
+    bool setMod(
+        unsigned int slotNumber,
+        std::unique_ptr<Item>& source,
+        bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)
+    ) noexcept;
+
+    bool unsetMod(unsigned int slotNumber, std::unique_ptr<Item>& receiver) noexcept;
 
     static const Weapon& weaponDefault() noexcept;
 

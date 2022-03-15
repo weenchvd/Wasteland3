@@ -39,9 +39,15 @@ public:
 
 ///------------------------------------------------------------------------------------------------
 
-bool operator==(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
+//bool operator==(const Item& lhs, const Item& rhs) noexcept;
 
-bool operator<(const std::unique_ptr<Item>& item1, const std::unique_ptr<Item>& item2) noexcept;
+//bool operator<(const std::unique_ptr<Item>& lhs, const std::unique_ptr<Item>& rhs) noexcept;
+
+bool isSameModel(const Item& lhs, const Item& rhs) noexcept;
+
+bool isLessByModel(const Item& lhs, const Item& rhs) noexcept;
+
+bool isGreaterByModel(const Item& lhs, const Item& rhs) noexcept;
 
 } // namespace object
 } // namespace game

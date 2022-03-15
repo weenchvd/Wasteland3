@@ -8,6 +8,7 @@
 #include"itemVisitorFullDescr.hpp"
 #include"menuCommonText.hpp"
 #include"menuItem.hpp"
+#include"menuItemModify.hpp"
 #include"menuItemText.hpp"
 
 namespace game {
@@ -24,6 +25,8 @@ void menuItem_Inventory(
     Indent ind2{ ind1 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::common() };
+
+    item = squad.inventory().viewed(item);
 
     while (true)
     {
@@ -76,10 +79,13 @@ int contextSensitiveMenuItem_Inventory(
             cout << ind1 << comT.notImplemented() << endl;
             // TODO
             break;
-        case actionItemWeapon::MODIFY:
-            cout << ind1 << comT.notImplemented() << endl;
-            // TODO
+        case actionItemWeapon::MODIFY: {
+            auto pair{ squad.inventory().getIterator(item) };
+            if (pair.second == true) {
+                menuItemModify(squad, pair.first, ind1);
+            }
             break;
+        }
         default:
             return action;
         }

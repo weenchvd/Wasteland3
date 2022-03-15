@@ -129,13 +129,13 @@
       "range_attack": 12,
       "capacity_ammo": 30,
       "multiplier_crit_dmg": 160,
-      "chance_hit": 750,
+      "chance_hit": 650,
       "weapon_level": 21,
       "armor_penetration": 14,
       "ap_per_attack": 4,
       "ap_per_reload": 2,
       "shots_per_attack": 10,
-      "ammo_type": "A_5_56",
+      "ammo_type": "A_D45",
       "dmg_type": "NORMAL"
     }
   ],

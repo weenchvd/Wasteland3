@@ -16,12 +16,6 @@
 namespace game {
 namespace menu {
 
-namespace itemNumber {
-
-constexpr auto countFrom{ 1 };
-
-} // namespace itemNumber
-
 namespace actionInventory {
 
 enum ActionInventory {
@@ -46,6 +40,12 @@ enum ActionShowItems {
 std::pair<object::Roster, bool> subMenuShowItems(object::Inventory& inventory, const Indent indent);
 
 ///************************************************************************************************
+
+namespace itemNumber {
+
+constexpr auto countFrom{ 1 };
+
+} // namespace itemNumber
 
 void showItems(object::Roster& roster, const common::Text& title, const Indent indent);
 

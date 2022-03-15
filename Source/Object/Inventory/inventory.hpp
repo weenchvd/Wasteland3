@@ -61,9 +61,16 @@ public:
     Inventory& operator=(const Inventory&) = delete;
 
     // insert (put) an item into inventory 
-    void insert(std::unique_ptr<Item>& item, bool isNew = false);
+    std::list<std::unique_ptr<Item>>::const_iterator insert(
+        std::unique_ptr<Item>& item,
+        bool isNew = false
+    );
 
     std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+
+    std::pair<std::list<std::unique_ptr<Item>>::iterator, bool> getIterator(
+        std::list<std::unique_ptr<Item>>::const_iterator iterator
+    );
 
     Roster roster();
 
@@ -71,28 +78,31 @@ public:
 
     size_t size();
 
-    void viewed() noexcept { mergeLists(); }
+    std::list<std::unique_ptr<Item>>::const_iterator viewed(
+        std::list<std::unique_ptr<Item>>::const_iterator iterator
+    ) noexcept;
+
+    void viewedAll() noexcept { mergeLists(); }
 
 private:
-    void insert(
+    std::list<std::unique_ptr<Item>>::const_iterator insert(
         std::list<std::unique_ptr<Item>>& receiver,
-        std::unique_ptr<Item>& item,
-        bool insertFirst = false
+        std::unique_ptr<Item>& item
     );
 
     std::unique_ptr<Item> extract(IteratorBundle iteratorBundle);
 
-    void clean();
-
     void mergeLists();
-
-    void erase(IteratorBundle iteratorBundle);
 
     bool isAggregable(std::unique_ptr<Item>& item) const noexcept;
 
     void aggregate(std::unique_ptr<Item>& receiver, std::unique_ptr<Item>& source);
 
     IteratorBundle find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
+
+    bool check(const std::list<std::unique_ptr<Item>>& source) const;
+
+    bool checkAll() const;
 
 private:
     std::list<std::unique_ptr<Item>>    newItems_;

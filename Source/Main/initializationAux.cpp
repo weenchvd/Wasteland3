@@ -35,8 +35,8 @@ void initializeInventory(game::object::Inventory& inventory)
     auto weapon{ f.createItem<Weapon>(Weapon::Model::AR_SOCOM) };
     auto modBarrel{ f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT) };
     auto modMag{ f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE) };
-    static_cast<Weapon*>(weapon.get())->slotMod().set(0, modBarrel, game::object::isCompatible);
-    static_cast<Weapon*>(weapon.get())->slotMod().set(3, modMag, game::object::isCompatible);
+    static_cast<Weapon*>(weapon.get())->setMod(0, modBarrel, game::object::isCompatible);
+    static_cast<Weapon*>(weapon.get())->setMod(3, modMag, game::object::isCompatible);
     inventory.insert(weapon, true);
 
     /// weapons
@@ -56,6 +56,7 @@ void initializeInventory(game::object::Inventory& inventory)
     /// ammo
     inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 15), true);
     inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 90));
+    inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 10));
     inventory.insert(f.createAmmo(Ammo::Type::FROZEN_FERRET, 6), true);
     inventory.insert(f.createAmmo(Ammo::Type::ENERGY_CELLS, 55));
     inventory.insert(f.createAmmo(Ammo::Type::ROCKET, 4));
