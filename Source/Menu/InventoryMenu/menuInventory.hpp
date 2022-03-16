@@ -19,25 +19,30 @@ namespace menu {
 namespace actionInventory {
 
 enum ActionInventory {
-    MONEY = actionCommon::NEXT,
+    MONEY = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ITEMS,
     MENU_ITEM
 };
 
 } // namespace actionInventory
 
-void menuInventory(object::Squad& squad, const Indent indent);
+void menuInventory(std::istream& is, std::ostream& os, object::Squad& squad, const Indent indent);
 
 namespace actionShowItems {
 
 enum ActionShowItems {
-    SHOW_ALL_ITEMS = actionCommon::NEXT,
+    SHOW_ALL_ITEMS = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ITEMS_OF_TYPE,
 };
 
 } // namespace actionShowItems
 
-std::pair<object::Roster, bool> subMenuShowItems(object::Inventory& inventory, const Indent indent);
+std::pair<object::Roster, bool> subMenuShowItems(
+    std::istream& is,
+    std::ostream& os,
+    object::Inventory& inventory,
+    const Indent indent
+);
 
 ///************************************************************************************************
 
@@ -47,13 +52,21 @@ constexpr auto countFrom{ 1 };
 
 } // namespace itemNumber
 
-void showItems(object::Roster& roster, const common::Text& title, const Indent indent);
+void showItems(
+    std::istream& is,
+    std::ostream& os,
+    object::Roster& roster,
+    const common::Text& title,
+    const Indent indent
+);
 
-void showRoster(object::Roster& roster, const Indent indent);
+void showRoster(std::istream& is, std::ostream& os, object::Roster& roster, const Indent indent);
 
-object::Item::Type pickItemType(const Indent indent);
+object::Item::Type pickItemType(std::istream& is, std::ostream& os, const Indent indent);
 
 std::pair<std::list<std::unique_ptr<object::Item>>::const_iterator, bool> pickItem(
+    std::istream& is,
+    std::ostream& os,
     object::Roster& roster,
     const Indent indent
 );

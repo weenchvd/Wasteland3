@@ -93,8 +93,8 @@ void MenuInventoryText::initCommon()
     temp.ru("Типы предметов:");
     initLanguageBundleMenu(temp, common_.typesOfItems_);
 
-    temp.en("Enter the item number:");
-    temp.ru("Введите номер предмета:");
+    temp.en("Enter the item number");
+    temp.ru("Введите номер предмета");
     initLanguageBundleMenu(temp, common_.enterItemNumber_);
 }
 

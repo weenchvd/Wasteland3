@@ -19,26 +19,26 @@ constexpr int optionWidth{ 30 };
 namespace actionOption {
 
 enum ActionOption {
-    LANGUAGE = actionCommon::NEXT
+    LANGUAGE = actionCommon::__NEXT_ACTION_NUMBER
 };
 
 } // namespace actionOption
 
-void menuOption(const Indent indent);
+void menuOption(std::istream& is, std::ostream& os, const Indent indent);
 
 namespace actionLanguage {
 
 enum ActionLanguage {
-    CHANGE_LANGUAGE = actionCommon::NEXT
+    CHANGE_LANGUAGE = actionCommon::__NEXT_ACTION_NUMBER
 };
 
 } // namespace actionLanguage
 
-void menuLanguage(const Indent indent);
+void menuLanguage(std::istream& is, std::ostream& os, const Indent indent);
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
-global::PlainText::Language pickLanguage(const Indent indent);
+global::PlainText::Language pickLanguage(std::istream& is, std::ostream& os, const Indent indent);
 
 } // namespace menu
 } // namespace game

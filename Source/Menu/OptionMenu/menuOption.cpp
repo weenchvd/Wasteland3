@@ -17,27 +17,29 @@ namespace menu {
 using namespace std;
 
 
-void menuOption(const Indent indent)
+void menuOption(istream& is, ostream& os, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << "Option menu" << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionOption::LANGUAGE << "\' Enter the language menu" << endl;
+        verticalIndent(os);
+        os << ind0 << "Option menu" << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionOption::LANGUAGE, "Enter the language menu") << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionOption::LANGUAGE:
-            menuLanguage(ind1);
+            menuLanguage(is, os, ind1);
             break;
         case actionCommon::EXIT:
             if (global::Locator::getOption().isModified()) {
-                cout << ind1 << "Options have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo(ind1)) {
+                os << ind0 << "Options have been changed. Do you want to save the changes?" << endl;
+                switch (getYesNo(is, os, ind1)) {
                 case YesNo::YES:
                     global::Locator::getOption().accept();
                     return;
@@ -56,33 +58,35 @@ void menuOption(const Indent indent)
         case actionCommon::INVALID:
             break;
         default:
-            cout << "!Unknown action" << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
-void menuLanguage(const Indent indent)
+void menuLanguage(istream& is, ostream& os, const Indent indent)
 {
     using global::PlainText;
     using global::Locator;
 
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << "Language menu" << endl;
-        cout << ind1 << "Current language: "
+        verticalIndent(os);
+        os << ind0 << "Language menu" << endl;
+        os << ind0 << "Current language: "
             << Locator::getPlainText().language(Locator::getOption().getLanguage()) << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionLanguage::CHANGE_LANGUAGE << "\' Change language" << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionLanguage::CHANGE_LANGUAGE, "Change language") << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionLanguage::CHANGE_LANGUAGE: {
-            PlainText::Language lang{ pickLanguage(ind1) };
+            PlainText::Language lang{ pickLanguage(is, os, ind1) };
             if (lang != PlainText::Language::INVALID) {
                 global::Locator::getOption().setLanguage(lang);
             }
@@ -93,35 +97,34 @@ void menuLanguage(const Indent indent)
         case actionCommon::INVALID:
             break;
         default:
-            cout << "!Unknown action" << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
-global::PlainText::Language pickLanguage(const Indent indent)
+global::PlainText::Language pickLanguage(istream& is, ostream& os, const Indent indent)
 {
     using global::PlainText;
     using global::Locator;
 
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
-    Indent ind3{ ind2 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
 
-    cout << ind1 << "Languages:" << endl;
+    os << ind0 << "Languages:" << endl;
     for (int i{ common::toUnderlying(common::firstEnum<PlainText::Language>()) };
         i <= common::toUnderlying(common::lastEnum<PlainText::Language>()); ++i)
     {
-        cout << ind2 << '\'' << i << "\' "
+        os << ind1 << '\'' << i << "\' "
             << Locator::getPlainText().language(static_cast<PlainText::Language>(i)) << endl;
     }
 
-    cout << ind1 << "Select a Language:" << endl;
+    os << ind0 << "Select a Language:" << endl;
     PlainText::Language t{ PlainText::Language::INVALID };
-    auto pair{ getNumber() };
+    auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<PlainText::Language>()) &&
             pair.first <= common::toUnderlying(common::lastEnum<PlainText::Language>()))
@@ -129,7 +132,7 @@ global::PlainText::Language pickLanguage(const Indent indent)
             t = static_cast<PlainText::Language>(pair.first);
         }
         else {
-            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+            os << comT.errorSymbol() << comT.invalidNumber() << endl;
         }
     }
     return t;

@@ -20,37 +20,40 @@ namespace menu {
 using namespace std;
 
 void menuItemModify(
+    istream& is,
+    ostream& os,
     object::Squad& squad,
     list<unique_ptr<object::Item>>::iterator iterator,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& tCom{ MenuItemText::common() };
     const auto& text{ MenuItemText::modify() };
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << text.menuName() << endl;
-        cout << ind1 << text.item() << (*iterator)->name() << endl;
-        showMods(iterator, indent);
-        cout << ind1 << comT.actions() << endl;
-        printMenuBar(ind2, actionCommon::EXIT, comT.exitMenu());
-        printMenuBar(ind2, actionItemModify::SHOW_FULL_DESCR, tCom.showFullDescription());
-        printMenuBar(ind2, actionItemModify::INSTALL_MOD, text.installMod());
-        printMenuBar(ind2, actionItemModify::REMOVE_MOD, text.removeMod());
+        verticalIndent(os);
+        os << ind0 << text.menuName() << endl;
+        os << ind0 << text.item() << (*iterator)->name() << endl;
+        showMods(is, os, iterator, indent);
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionItemModify::SHOW_FULL_DESCR, tCom.showFullDescription()) << endl;
+        printNumBar(os, ind1, actionItemModify::INSTALL_MOD, text.installMod()) << endl;
+        printNumBar(os, ind1, actionItemModify::REMOVE_MOD, text.removeMod()) << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionItemModify::SHOW_FULL_DESCR:
-            printFullDescription(*iterator, ind1);
+            printFullDescription(is, os, *iterator, ind1);
             break;
         case actionItemModify::INSTALL_MOD:
-            contextSensitiveMenuItemModify_Install(squad, iterator, ind1);
+            contextSensitiveMenuItemModify_Install(is, os, squad, iterator, ind1);
             break;
         case actionItemModify::REMOVE_MOD:
-            cout << ind1 << comT.notImplemented() << endl;
+            os << ind0 << comT.notImplemented() << endl;
             // TODO
             break;
         case actionCommon::EXIT:
@@ -58,20 +61,21 @@ void menuItemModify(
         case actionCommon::INVALID:
             break;
         default:
-            cout << comT.errorSymbol() << comT.unknownAction() << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
 void contextSensitiveMenuItemModify_Install(
+    istream& is,
+    ostream& os,
     object::Squad& squad,
     list<unique_ptr<object::Item>>::iterator iterator,
     const Indent indent
 )
 {
-    Indent ind1{ indent + Indent{} };
-    //Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::modify() };
     const auto& invTCom{ MenuInventoryText::common() };
@@ -80,13 +84,13 @@ void contextSensitiveMenuItemModify_Install(
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        auto pairSlotNumber{ pickSlotNumber(squad, iterator, ind1) };
+        auto pairSlotNumber{ pickSlotNumber(is, os, squad, iterator, ind0) };
         if (pairSlotNumber.second == false) break;
         object::Item::Type type{ object::Item::Type::WEAPON_MOD };
         auto roster{ squad.inventory().roster(type) };
         auto title{ invTCom.inventory() + " (" + getItemTypeName(type) + "):" };
-        showItems(roster, title, ind1);
-        auto pairIter{ pickItem(roster, ind1) };
+        showItems(is, os, roster, title, ind0);
+        auto pairIter{ pickItem(is, os, roster, ind0) };
         if (pairIter.second == false) break;
         auto* weapon{ static_cast<object::Weapon*>(iterator->get()) };
         const auto* weaponMod{ static_cast<object::WeaponMod*>(pairIter.first->get()) };
@@ -100,7 +104,7 @@ void contextSensitiveMenuItemModify_Install(
             }
         }
         else {
-            cout << comT.errorSymbol() << text.unsuitableMod() << endl;
+            os << comT.errorSymbol() << text.unsuitableMod() << endl;
         }
         break;
     }
@@ -114,15 +118,17 @@ void contextSensitiveMenuItemModify_Install(
 ///************************************************************************************************
 
 void showMods(
+    istream& is,
+    ostream& os,
     list<unique_ptr<object::Item>>::const_iterator iterator,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::modify() };
 
-    cout << ind1 << text.mods() << endl;
+    os << ind0 << text.mods() << endl;
 
     int i{ itemModNumber::countFrom };
     object::ItemVisitorType vis;
@@ -133,11 +139,14 @@ void showMods(
         const auto* weapon{ static_cast<object::Weapon*>(iterator->get()) };
         for (int j = 0; j < weapon->slotMod().sizeRaw(); ++j) {
             if (weapon->slotMod().type(j) != object::WeaponMod::Type::INVALID) {
-                auto t{ object::WeaponMod::weaponModText().type(weapon->slotMod().type(j)) + ": "};
+                printNumBar(os, ind1, i++,
+                    object::WeaponMod::weaponModText().type(weapon->slotMod().type(j))
+                );
+                os << ": ";
                 if (weapon->slotMod()[j] != nullptr) {
-                    t += weapon->slotMod()[j]->name();
+                    os << weapon->slotMod()[j]->name();
                 }
-                printMenuBar(ind2, i++, t);
+                os << endl;
             }
         }
         break;
@@ -147,20 +156,19 @@ void showMods(
     default:
         break;
     }
-    cout << ind1 << comT.enterAction() << endl;
 }
 
 pair<int, bool> pickSlotNumber(
+    istream& is,
+    ostream& os,
     object::Squad& squad,
     list<unique_ptr<object::Item>>::iterator iterator,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::modify() };
 
-    cout << ind1 << text.enterSlotNumber() << endl;
+    os << indent << text.enterSlotNumber() << endl;
 
     int i{ itemModNumber::countFrom };
     object::ItemVisitorType vis;
@@ -169,7 +177,7 @@ pair<int, bool> pickSlotNumber(
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
         const auto* weapon{ static_cast<object::Weapon*>(iterator->get()) };
-        auto pair{ getNumber() };
+        auto pair{ getNumber(is, os) };
         if (pair.second == true) {
             for (int j = 0; j < weapon->slotMod().sizeRaw(); ++j) {
                 if (weapon->slotMod().type(j) != object::WeaponMod::Type::INVALID) {
@@ -179,7 +187,7 @@ pair<int, bool> pickSlotNumber(
                     ++i;
                 }
             }
-            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+            os << comT.errorSymbol() << comT.invalidNumber() << endl;
         }
         break;
     }

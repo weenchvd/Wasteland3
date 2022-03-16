@@ -18,7 +18,7 @@ namespace menu {
 namespace actionItemModify {
 
 enum ActionItemModify {
-    SHOW_FULL_DESCR = actionCommon::NEXT,
+    SHOW_FULL_DESCR = actionCommon::__NEXT_ACTION_NUMBER,
     INSTALL_MOD,
     REMOVE_MOD,
 
@@ -28,6 +28,8 @@ enum ActionItemModify {
 } // namespace actionItemModify
 
 void menuItemModify(
+    std::istream& is,
+    std::ostream& os,
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::iterator iterator,
     const Indent indent
@@ -43,6 +45,8 @@ void menuItemModify(
 //} // namespace actionItemWeapon
 
 void contextSensitiveMenuItemModify_Install(
+    std::istream& is,
+    std::ostream& os,
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::iterator iterator,
     const Indent indent
@@ -57,11 +61,15 @@ constexpr auto countFrom{ 1 };
 } // namespace itemModNumber
 
 void showMods(
+    std::istream& is,
+    std::ostream& os,
     std::list<std::unique_ptr<object::Item>>::const_iterator iterator,
     const Indent indent
 );
 
 std::pair<int, bool> pickSlotNumber(
+    std::istream& is,
+    std::ostream& os,
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::iterator iterator,
     const Indent indent

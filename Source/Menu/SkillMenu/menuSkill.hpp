@@ -19,19 +19,19 @@ constexpr int skillWidth{ 30 };
 namespace actionSkill {
 
 enum ActionSkill {
-    SHOW_ALL = actionCommon::NEXT,
+    SHOW_ALL = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ALL_ACCEPTED,
     MODIFY
 };
 
 } // namespace actionSkill
 
-void menuSkill(object::Character& character, const Indent indent);
+void menuSkill(std::istream& is, std::ostream& os, object::Character& character, const Indent indent);
 
 namespace actionModifySkill {
 
 enum ActionModifySkill {
-    SHOW_ACCEPTED = actionCommon::NEXT,
+    SHOW_ACCEPTED = actionCommon::__NEXT_ACTION_NUMBER,
     INCREASE_LEVEL,
     DECREASE_LEVEL
 };
@@ -39,32 +39,45 @@ enum ActionModifySkill {
 } // namespace actionModifySkill
 
 void menuModifySkill(
+    std::istream& is,
+    std::ostream& os,
     object::Character& character,
     object::Skill::Type type,
-    const Indent indent);
+    const Indent indent
+);
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 void showAllSkills(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
     const Indent indent,
-    bool accepted = false);
+    bool accepted = false
+);
 
 common::Text stringSkill(
     const object::Character& character,
     object::Skill::Type type,
     unsigned char width,
     char placeholder,
-    bool accepted = false);
+    bool accepted = false
+);
 
 void showSkillPoints(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
     const Indent indent,
-    bool accepted = false);
+    bool accepted = false
+);
 
 object::Skill::Type pickSkill(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
-    const Indent indent);
+    const Indent indent
+);
 
 } // namespace menu
 } // namespace game

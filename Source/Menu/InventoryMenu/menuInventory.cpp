@@ -18,36 +18,37 @@ namespace menu {
 
 using namespace std;
 
-void menuInventory(object::Squad& squad, const Indent indent)
+void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuInventoryText::common() };
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << text.menuName() << endl;
-        cout << ind1 << comT.actions() << endl;
-        printMenuBar(ind2, actionCommon::EXIT, comT.exitMenu());
-        printMenuBar(ind2, actionInventory::MONEY, text.showMoney());
-        printMenuBar(ind2, actionInventory::SHOW_ITEMS, text.showItems());
-        printMenuBar(ind2, actionInventory::MENU_ITEM, text.enterItemMenu());
+        verticalIndent(os);
+        os << ind0 << text.menuName() << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionInventory::MONEY, text.showMoney()) << endl;
+        printNumBar(os, ind1, actionInventory::SHOW_ITEMS, text.showItems()) << endl;
+        printNumBar(os, ind1, actionInventory::MENU_ITEM, text.enterItemMenu()) << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionInventory::MONEY:
-            cout << ind2 << text.money() << squad.money() << endl;
+            os << ind1 << text.money() << squad.money() << endl;
             break;
         case actionInventory::SHOW_ITEMS:
-            subMenuShowItems(squad.inventory(), ind1);
+            subMenuShowItems(is, os, squad.inventory(), ind1);
             break;
         case actionInventory::MENU_ITEM: {
-            auto roster{ subMenuShowItems(squad.inventory(), ind1) };
+            auto roster{ subMenuShowItems(is, os, squad.inventory(), ind1) };
             if (roster.second == true) {
-                auto iter{ pickItem(roster.first, ind1) };
+                auto iter{ pickItem(is, os, roster.first, ind0) };
                 if (iter.second == true) {
-                    menuItem_Inventory(squad, iter.first, ind1);
+                    menuItem_Inventory(is, os, squad, iter.first, ind1);
                 }
             }
             break;
@@ -57,46 +58,51 @@ void menuInventory(object::Squad& squad, const Indent indent)
         case actionCommon::INVALID:
             break;
         default:
-            cout << comT.errorSymbol() << comT.unknownAction() << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
-pair<object::Roster, bool> subMenuShowItems(object::Inventory& inventory, const Indent indent)
+pair<object::Roster, bool> subMenuShowItems(
+    istream& is,
+    ostream& os,
+    object::Inventory& inventory,
+    const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuInventoryText::common() };
     pair<object::Roster, bool> ret{ object::Roster{ inventory.roster() }, false };
 
-    cout << ind1 << comT.actions() << endl;
-    printMenuBar(ind2, actionShowItems::SHOW_ALL_ITEMS, text.showAllItems());
-    printMenuBar(ind2, actionShowItems::SHOW_ITEMS_OF_TYPE, text.showItemsOfType());
+    os << ind0 << comT.actions() << endl;
+    printNumBar(os, ind1, actionShowItems::SHOW_ALL_ITEMS, text.showAllItems()) << endl;
+    printNumBar(os, ind1, actionShowItems::SHOW_ITEMS_OF_TYPE, text.showItemsOfType()) << endl;
+    os << ind0 << comT.enterAction() << endl;
 
-    switch (getAction()) {
+    switch (getAction(is, os)) {
     case actionShowItems::SHOW_ALL_ITEMS: {
         ret.first = inventory.roster();
         ret.second = true;
         auto title{ text.inventory() + " (" + text.starNewItems() + "):" };
-        showItems(ret.first, title, ind1);
+        showItems(is, os, ret.first, title, ind0);
         break;
     }
     case actionShowItems::SHOW_ITEMS_OF_TYPE: {
-        object::Item::Type type{ pickItemType(ind1) };
+        object::Item::Type type{ pickItemType(is, os, ind0) };
         if (type != object::Item::Type::INVALID) {
             ret.first = inventory.roster(type);
             ret.second = true;
             auto title{ text.inventory() + " (" + getItemTypeName(type) + "):" };
-            showItems(ret.first, title, ind1);
+            showItems(is, os, ret.first, title, ind0);
         }
         break;
     }
     case actionCommon::INVALID:
         break;
     default:
-        cout << comT.errorSymbol() << comT.unknownAction() << endl;
+        os << comT.errorSymbol() << comT.unknownAction() << endl;
         break;
     }
     return ret;
@@ -104,48 +110,51 @@ pair<object::Roster, bool> subMenuShowItems(object::Inventory& inventory, const 
 
 ///************************************************************************************************
 
-void showItems(object::Roster& roster, const common::Text& title, const Indent indent)
+void showItems(
+    istream& is,
+    ostream& os,
+    object::Roster& roster,
+    const common::Text& title,
+    const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    cout << ind1 << title << endl;
-    showRoster(roster, ind1);
+    os << indent << title << endl;
+    showRoster(is, os, roster, indent + Indent{});
 }
 
-void showRoster(object::Roster& roster, const Indent indent)
+void showRoster(istream& is, ostream& os, object::Roster& roster, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
+    Indent ind0{ indent };
     const auto& text{ MenuInventoryText::common() };
 
     ItemVisitorExtendedName vis;
     int i{ itemNumber::countFrom };
     for (auto iter{ roster.newItems().beg_ }; iter != roster.newItems().end_; ++iter) {
         (*iter)->accept(vis);
-        cout << ind1 << text.item() << i++ << ": " << '*' << vis.getExtendedName() << endl;
+        printNumBar(os, ind0, i++, '*' + vis.getExtendedName()) << endl;
     }
     for (auto iter{ roster.oldItems().beg_ }; iter != roster.oldItems().end_; ++iter) {
         (*iter)->accept(vis);
-        cout << ind1 << text.item() << i++ << ": " << vis.getExtendedName() << endl;
+        printNumBar(os, ind0, i++, vis.getExtendedName()) << endl;
     }
 }
 
-object::Item::Type pickItemType(const Indent indent)
+object::Item::Type pickItemType(istream& is, ostream& os, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuInventoryText::common() };
 
-    cout << ind1 << text.typesOfItems() << endl;
+    os << ind0 << text.typesOfItems() << endl;
 
     for (int i{ common::toUnderlying(common::firstEnum<object::Item::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Item::Type>()); ++i)
     {
-        cout << ind2 << '\'' << i << "\' "
-            << getItemTypeName(static_cast<object::Item::Type>(i)) << endl;
+        printNumBar(os, ind1, i, getItemTypeName(static_cast<object::Item::Type>(i))) << endl;
     }
-    cout << ind1 << comT.selectType() << endl;
+    os << ind0 << comT.selectType() << endl;
     object::Item::Type t{ object::Item::Type::INVALID };
-    auto pair{ getNumber() };
+    auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<object::Item::Type>()) &&
             pair.first <= common::toUnderlying(common::lastEnum<object::Item::Type>()))
@@ -153,23 +162,25 @@ object::Item::Type pickItemType(const Indent indent)
             t = static_cast<object::Item::Type>(pair.first);
         }
         else {
-            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+            os << comT.errorSymbol() << comT.invalidNumber() << endl;
         }
     }
     return t;
 }
 
 pair<list<unique_ptr<object::Item>>::const_iterator, bool> pickItem(
+    istream& is,
+    ostream& os,
     object::Roster& roster,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
+    Indent ind0{ indent };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuInventoryText::common() };
 
-    cout << ind1 << text.enterItemNumber() << endl;
+    os << ind0 << text.enterItemNumber() << endl;
 
-    auto pair{ getNumber() };
+    auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= itemNumber::countFrom) {
             int i{ itemNumber::countFrom };
@@ -191,7 +202,7 @@ pair<list<unique_ptr<object::Item>>::const_iterator, bool> pickItem(
                 return { iter, true };
             }
         }
-        cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+        os << comT.errorSymbol() << comT.invalidNumber() << endl;
     }
     return { list<unique_ptr<object::Item>>::const_iterator{}, false };
 }

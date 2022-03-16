@@ -12,6 +12,7 @@
 #include"specStorage.hpp"
 #include<array>
 #include<iostream>
+#include<limits>
 #include<utility>
 
 namespace game {
@@ -79,11 +80,13 @@ inline int integer(char ch) {
 
 ///************************************************************************************************
 
-void printMenuBar(const Indent indent, int number, const common::Text& text);
+std::ostream& printNumBar(std::ostream& os, const Indent indent, int number, const common::Text& text);
 
-int getAction();
+std::ostream& verticalIndent(std::ostream& os);
 
-std::pair<int, bool> getNumber();
+int getAction(std::istream& is, std::ostream& os);
+
+std::pair<int, bool> getNumber(std::istream& is, std::ostream& os);
 
 enum class YesNo {
     INVALID = -1,
@@ -92,14 +95,14 @@ enum class YesNo {
     NO
 };
 
-YesNo getYesNo(const Indent indent);
+YesNo getYesNo(std::istream& is, std::ostream& os, const Indent indent);
 
 namespace actionCommon {
 
 enum ActionCommon {
-    INVALID = -1,
-    EXIT,
-    NEXT
+    INVALID = std::numeric_limits<int>::min(),
+    EXIT = 0,
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionCommon

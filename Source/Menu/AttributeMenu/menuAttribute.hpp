@@ -19,19 +19,24 @@ constexpr int attrWidth{ 20 };
 namespace actionAttribute {
 
 enum ActionAttribute {
-    SHOW_ALL = actionCommon::NEXT,
+    SHOW_ALL = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ALL_ACCEPTED,
     MODIFY
 };
 
 } // namespace actionAttribute
 
-void menuAttribute(object::Character& character, const Indent indent);
+void menuAttribute(
+    std::istream& is,
+    std::ostream& os,
+    object::Character& character,
+    const Indent indent
+);
 
 namespace actionModifyAttribute {
 
 enum ActionModifyAttribute {
-    SHOW_ACCEPTED = actionCommon::NEXT,
+    SHOW_ACCEPTED = actionCommon::__NEXT_ACTION_NUMBER,
     INCREASE_LEVEL,
     DECREASE_LEVEL
 };
@@ -39,32 +44,45 @@ enum ActionModifyAttribute {
 } // namespace actionModifyAttribute
 
 void menuModifyAttribute(
+    std::istream& is,
+    std::ostream& os,
     object::Character& character,
     object::Attribute::Type type,
-    const Indent indent);
+    const Indent indent
+);
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 void showAllAttributes(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
     const Indent indent,
-    bool accepted = false);
+    bool accepted = false
+);
 
 common::Text stringAttribute(
     const object::Character& character,
     object::Attribute::Type type,
     unsigned char width,
     char placeholder,
-    bool accepted = false);
+    bool accepted = false
+);
 
 void showAttPoints(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
     const Indent indent,
-    bool accepted = false);
+    bool accepted = false
+);
 
 object::Attribute::Type pickAttribute(
+    std::istream& is,
+    std::ostream& os,
     const object::Character& character,
-    const Indent indent);
+    const Indent indent
+);
 
 } // namespace menu
 } // namespace game

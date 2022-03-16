@@ -18,7 +18,7 @@ namespace menu {
 namespace actionItem {
 
 enum ActionItem {
-    SHOW_FULL_DESCR = actionCommon::NEXT,
+    SHOW_FULL_DESCR = actionCommon::__NEXT_ACTION_NUMBER,
     REMOVE,
 
     __NEXT_ACTION_NUMBER
@@ -27,6 +27,8 @@ enum ActionItem {
 } // namespace actionItem
 
 void menuItem_Inventory(
+    std::istream& is,
+    std::ostream& os,
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::const_iterator item,
     const Indent indent
@@ -42,6 +44,8 @@ enum ActionItemWeapon {
 } // namespace actionItemWeapon
 
 int contextSensitiveMenuItem_Inventory(
+    std::istream& is,
+    std::ostream& os,
     object::Squad& squad,
     std::list<std::unique_ptr<object::Item>>::const_iterator item,
     const Indent indent
@@ -49,9 +53,16 @@ int contextSensitiveMenuItem_Inventory(
 
 ///************************************************************************************************
 
-void printFullDescription(const std::unique_ptr<object::Item>& item, const Indent indent);
+void printFullDescription(
+    std::istream& is,
+    std::ostream& os,
+    const std::unique_ptr<object::Item>& item,
+    const Indent indent
+);
 
 bool removeItem(
+    std::istream& is,
+    std::ostream& os,
     object::Inventory& inventory,
     std::list<std::unique_ptr<object::Item>>::const_iterator item,
     const Indent indent

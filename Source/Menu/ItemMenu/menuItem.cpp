@@ -17,12 +17,14 @@ namespace menu {
 using namespace std;
 
 void menuItem_Inventory(
+    istream& is,
+    ostream& os,
     object::Squad& squad,
     list<unique_ptr<object::Item>>::const_iterator item,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::common() };
 
@@ -30,39 +32,41 @@ void menuItem_Inventory(
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << text.menuName() << endl;
-        cout << ind1 << comT.actions() << endl;
-        printMenuBar(ind2, actionCommon::EXIT, comT.exitMenu());
-        printMenuBar(ind2, actionItem::SHOW_FULL_DESCR, text.showFullDescription());
-        printMenuBar(ind2, actionItem::REMOVE, comT.remove());
+        verticalIndent(os);
+        os << ind0 << text.menuName() << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionItem::SHOW_FULL_DESCR, text.showFullDescription()) << endl;
+        printNumBar(os, ind1, actionItem::REMOVE, comT.remove()) << endl;
 
-        switch (contextSensitiveMenuItem_Inventory(squad, item, indent)) {
+        switch (contextSensitiveMenuItem_Inventory(is, os, squad, item, indent)) {
         case actionItem::SHOW_FULL_DESCR:
-            printFullDescription(*item, ind1);
+            printFullDescription(is, os, *item, ind1);
             break;
         case actionItem::REMOVE:
-            if (removeItem(squad.inventory(), item, ind1)) return;
+            if (removeItem(is, os, squad.inventory(), item, ind1)) return;
             break;
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
             break;
         default:
-            cout << comT.errorSymbol() << comT.unknownAction() << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
 int contextSensitiveMenuItem_Inventory(
+    istream& is,
+    ostream& os,
     object::Squad& squad,
     list<unique_ptr<object::Item>>::const_iterator item,
     const Indent indent
 )
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::common() };
     object::ItemVisitorType vis;
@@ -70,19 +74,20 @@ int contextSensitiveMenuItem_Inventory(
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        printMenuBar(ind2, actionItemWeapon::EQUIP, text.equip());
-        printMenuBar(ind2, actionItemWeapon::MODIFY, text.modify());
+        printNumBar(os, ind1, actionItemWeapon::EQUIP, text.equip()) << endl;
+        printNumBar(os, ind1, actionItemWeapon::MODIFY, text.modify()) << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        auto action{ getAction() };
+        auto action{ getAction(is, os) };
         switch (action) {
         case actionItemWeapon::EQUIP:
-            cout << ind1 << comT.notImplemented() << endl;
+            os << ind0 << comT.notImplemented() << endl;
             // TODO
             break;
         case actionItemWeapon::MODIFY: {
             auto pair{ squad.inventory().getIterator(item) };
             if (pair.second == true) {
-                menuItemModify(squad, pair.first, ind1);
+                menuItemModify(is, os, squad, pair.first, ind1);
             }
             break;
         }
@@ -94,39 +99,45 @@ int contextSensitiveMenuItem_Inventory(
     case object::Item::Type::WEAPON_MOD:
     case object::Item::Type::AMMO:
     default:
-        return getAction();
+        os << ind0 << comT.enterAction() << endl;
+        return getAction(is, os);
     }
     return actionCommon::INVALID;
 }
 
 ///************************************************************************************************
 
-void printFullDescription(const unique_ptr<object::Item>& item, const Indent indent)
+void printFullDescription(
+    istream& is,
+    ostream& os,
+    const unique_ptr<object::Item>& item,
+    const Indent indent)
 {
-    Indent ind{ indent + Indent{} + Indent{} };
     ItemVisitorFullDescription vis;
     item->accept(vis);
     auto text{ vis.getFullDescription() };
     for (int i = 0; i < text.size(); ++i) {
-        cout << ind;
+        os << indent;
         while (i < text.size() && text[i] != '\n') {
-            cout << text[i++];
+            os << text[i++];
         }
-        cout << endl;
+        os << endl;
     }
     if (text.size() > 0) {
-        cout << endl;
+        os << endl;
     }
 }
 
 bool removeItem(
+    istream& is,
+    ostream& os,
     object::Inventory& inventory,
     list<unique_ptr<object::Item>>::const_iterator item,
     const Indent indent)
 {
     const auto& text{ MenuItemText::common() };
-    cout << indent << text.questionDeleteItem() << endl;
-    switch (getYesNo(indent)) {
+    os << indent << text.questionDeleteItem() << endl;
+    switch (getYesNo(is, os, indent)) {
     case YesNo::YES:
         inventory.extract(item);
         return true;

@@ -24,7 +24,7 @@ void initializeMenu();
 namespace actionMain {
 
 enum ActionMain {
-    MENU_OPTION = actionCommon::NEXT,
+    MENU_OPTION = actionCommon::__NEXT_ACTION_NUMBER,
     MENU_SQUAD,
     MENU_INVENTORY,
     MENU_SHOP,
@@ -33,44 +33,50 @@ enum ActionMain {
 
 } // namespace actionMain
 
-void menuMain(object::Squad& squad, object::Inventory& shop);
+void menuMain(std::istream& is, std::ostream& os, object::Squad& squad, object::Inventory& shop);
 
 namespace actionTrade {
 
 enum ActionTrade {
-    BUY_ITEM = actionCommon::NEXT,
+    BUY_ITEM = actionCommon::__NEXT_ACTION_NUMBER,
     SELL_ITEM
 };
 
 } // namespace actionTrade
 
-void menuTrade(object::Squad& squad, object::Inventory& shop, const Indent indent);
+void menuTrade(
+    std::istream& is,
+    std::ostream& os,
+    object::Squad& squad,
+    object::Inventory& shop,
+    const Indent indent
+);
 
 namespace actionShop {
 
 enum ActionShop {
-    ALL_ITEMS = actionCommon::NEXT
+    ALL_ITEMS = actionCommon::__NEXT_ACTION_NUMBER
 };
 
 } // namespace actionShop
 
-void menuShop(object::Inventory& shop, const Indent indent);
+void menuShop(std::istream& is, std::ostream& os, object::Inventory& shop, const Indent indent);
 
 namespace actionSquad {
 
 enum ActionSquad {
-    SHOW_SQUAD = actionCommon::NEXT,
+    SHOW_SQUAD = actionCommon::__NEXT_ACTION_NUMBER,
     MENU_CHARACTER
 };
 
 } // namespace actionSquad
 
-void menuSquad(object::Squad& squad, const Indent indent);
+void menuSquad(std::istream& is, std::ostream& os, object::Squad& squad, const Indent indent);
 
 namespace actionCharacter {
 
 enum ActionCharacter {
-    SHOW_STATS = actionCommon::NEXT,
+    SHOW_STATS = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_GEAR,
     SHOW_ATTRIBUTES,
     MENU_ATTRIBUTE,
@@ -80,17 +86,42 @@ enum ActionCharacter {
 
 } // namespace actionCharacter
 
-void menuCharacter(object::Character& character, const Indent indent);
+void menuCharacter(
+    std::istream& is,
+    std::ostream& os,
+    object::Character& character,
+    const Indent indent
+);
 
 ///************************************************************************************************
 
-object::Character* pickCharacter(object::Squad& squad, const Indent indent);
+object::Character* pickCharacter(
+    std::istream& is,
+    std::ostream& os,
+    object::Squad& squad,
+    const Indent indent
+);
 
-void showSquad(const object::Squad& squad, const Indent indent);
+void showSquad(
+    std::istream& is,
+    std::ostream& os,
+    const object::Squad& squad,
+    const Indent indent
+);
 
-void showStats(const object::Character& character, const Indent indent);
+void showStats(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent
+);
 
-void showGear(const object::Character& character, const Indent indent);
+void showGear(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent
+);
 
 } // namespace menu
 } // namespace game

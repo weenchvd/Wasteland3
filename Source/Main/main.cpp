@@ -54,7 +54,7 @@ int main()
     game::object::Inventory shop;
     init::initializeShop(shop);
 
-    game::menu::menuMain(squad, shop);
+    game::menu::menuMain(cin, cout, squad, shop);
 
     //sizeof(game::object::Character);
     //sizeof(game::common::Text);

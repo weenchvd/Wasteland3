@@ -16,39 +16,41 @@ namespace menu {
 using namespace std;
 
 
-void menuAttribute(object::Character& character, const Indent indent)
+void menuAttribute(istream& is, ostream& os, object::Character& character, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
 
     while (true)
     {
-        cout << endl << endl;
-        cout << ind1 << "Attribute menu (" << character.name() << ")" << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionAttribute::SHOW_ALL << "\' Show attributes" << endl;
-        cout << ind2 << '\'' << actionAttribute::SHOW_ALL_ACCEPTED << "\' Show attributes (accepted)" << endl;
-        cout << ind2 << '\'' << actionAttribute::MODIFY << "\' Modify attribute" << endl;
+        verticalIndent(os);
+        os << ind0 << "Attribute menu (" << character.name() << ")" << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionAttribute::SHOW_ALL, "Show attributes") << endl;
+        printNumBar(os, ind1, actionAttribute::SHOW_ALL_ACCEPTED, "Show attributes (accepted)") << endl;
+        printNumBar(os, ind1, actionAttribute::MODIFY, "Modify attribute") << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionAttribute::SHOW_ALL:
-            showAllAttributes(character, ind1);
+            showAllAttributes(is, os, character, ind1);
             break;
         case actionAttribute::SHOW_ALL_ACCEPTED:
-            showAllAttributes(character, ind1, true);
+            showAllAttributes(is, os, character, ind1, true);
             break;
         case actionAttribute::MODIFY: {
-            object::Attribute::Type type{ pickAttribute(character, ind1) };
+            object::Attribute::Type type{ pickAttribute(is, os, character, ind1) };
             if (type != object::Attribute::Type::INVALID) {
-                menuModifyAttribute(character, type, ind1);
+                menuModifyAttribute(is, os, character, type, ind1);
             }
             break;
         }
         case actionCommon::EXIT:
             if (character.attribute().isModified()) {
-                cout << ind1 << "Attributes have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo(ind1)) {
+                os << ind0 << "Attributes have been changed. Do you want to save the changes?" << endl;
+                switch (getYesNo(is, os, ind0)) {
                 case YesNo::YES:
                     character.attribute().accept();
                     return;
@@ -67,60 +69,64 @@ void menuAttribute(object::Character& character, const Indent indent)
         case actionCommon::INVALID:
             break;
         default:
-            cout << "!Unknown action" << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
 void menuModifyAttribute(
+    istream& is,
+    ostream& os,
     object::Character& character,
     object::Attribute::Type type,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
     auto width{ utf8Size(character.attribute().attributeText().name(type)) + 2 };
 
     while (true)
     {
-        cout << endl << endl;
-        showAttPoints(character, ind1);
-        cout << ind1 << "Attribute: " << stringAttribute(character, type, width, space) << endl;
-        cout << ind2 << character.attribute().attributeText().descr(type) << endl;
-        cout << ind1 << "Actions:" << endl;
-        cout << ind2 << '\'' << actionCommon::EXIT << "\' Exit the menu" << endl;
-        cout << ind2 << '\'' << actionModifyAttribute::SHOW_ACCEPTED << "\' Show the accepted level" << endl;
-        cout << ind2 << '\'' << actionModifyAttribute::INCREASE_LEVEL << "\' Increase level" << endl;
-        cout << ind2 << '\'' << actionModifyAttribute::DECREASE_LEVEL << "\' Decrease level" << endl;
+        verticalIndent(os);
+        showAttPoints(is, os, character, ind0);
+        os << ind0 << "Attribute: " << stringAttribute(character, type, width, space) << endl;
+        os << ind1 << character.attribute().attributeText().descr(type) << endl;
+        os << ind0 << comT.actions() << endl;
+        printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
+        printNumBar(os, ind1, actionModifyAttribute::SHOW_ACCEPTED, "Show the accepted level") << endl;
+        printNumBar(os, ind1, actionModifyAttribute::INCREASE_LEVEL, "Increase level") << endl;
+        printNumBar(os, ind1, actionModifyAttribute::DECREASE_LEVEL, "Decrease level") << endl;
+        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction()) {
+        switch (getAction(is, os)) {
         case actionModifyAttribute::SHOW_ACCEPTED:
-            cout << ind2 << "Attribute (accepted): "
+            os << ind1 << "Attribute (accepted): "
                 << stringAttribute(character, type, width, space, true) << endl;
             break;
         case actionModifyAttribute::INCREASE_LEVEL: {
-            auto pair{ getNumber() };
+            auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
                     // TODO ^^^ check or set range
                     character.attribute().addLevel(type, pair.first);
                 }
                 else {
-                    // TODO cout << message
+                    // TODO os << message
                 }
             }
             break;
         }
         case actionModifyAttribute::DECREASE_LEVEL: {
-            auto pair{ getNumber() };
+            auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
                     // TODO ^^^ check or set range
                     character.attribute().addLevel(type, -pair.first);
                 }
                 else {
-                    // TODO cout << message
+                    // TODO os << message
                 }
             }
             break;
@@ -130,42 +136,44 @@ void menuModifyAttribute(
         case actionCommon::INVALID:
             break;
         default:
-            cout << "!Unknown action" << endl;
+            os << comT.errorSymbol() << comT.unknownAction() << endl;
             break;
         }
     }
 }
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 void showAllAttributes(
+    istream& is,
+    ostream& os,
     const object::Character& character,
     const Indent indent,
     bool accepted)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
 
-    showAttPoints(character, ind1, accepted);
-    cout << ind1 << "Attributes";
+    showAttPoints(is, os, character, ind0, accepted);
+    os << ind0 << "Attributes";
     if (accepted) {
-        cout << " (accepted)";
+        os << " (accepted)";
     }
-    cout << ":" << endl;
+    os << ":" << endl;
 
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::COORDINATION,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::COORDINATION,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::LUCK,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::LUCK,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::AWARENESS,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::AWARENESS,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::STRENGTH,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::STRENGTH,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::SPEED,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::SPEED,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::INTELLIGENCE,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::INTELLIGENCE,
         attrWidth, space, accepted) << endl;
-    cout << ind2 << stringAttribute(character, object::Attribute::Type::CHARISMA,
+    os << ind1 << stringAttribute(character, object::Attribute::Type::CHARISMA,
         attrWidth, space, accepted) << endl;
 }
 
@@ -185,40 +193,44 @@ common::Text stringAttribute(
 }
 
 void showAttPoints(
+    istream& is,
+    ostream& os,
     const object::Character& character,
     const Indent indent,
     bool accepted)
 {
-    cout << indent << "Attribute points";
+    os << indent << "Attribute points";
     if (accepted) {
-        cout << " (accepted): " << static_cast<int>(
+        os << " (accepted): " << static_cast<int>(
             character.attribute().storage().getAccepted()) << endl;
     }
     else {
-        cout << ": " << static_cast<int>(
+        os << ": " << static_cast<int>(
             character.attribute().storage().get()) << endl;
     }
 }
 
 object::Attribute::Type pickAttribute(
+    istream& is,
+    ostream& os,
     const object::Character& character,
     const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
-    Indent ind2{ ind1 + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
 
-    cout << ind1 << "Attributes:" << endl;
+    os << ind0 << "Attributes:" << endl;
     for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {
-        cout << ind2 << '\'' << i << "\' "
+        os << ind1 << '\'' << i << "\' "
             << character.attribute().attributeText().name(
                 static_cast<object::Attribute::Type>(i)) << endl;
     }
-    cout << ind1 << "Select an attribute:" << endl;
+    os << ind0 << "Select an attribute:" << endl;
     object::Attribute::Type t{ object::Attribute::Type::INVALID };
-    auto pair{ getNumber() };
+    auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<object::Attribute::Type>()) &&
             pair.first <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()))
@@ -226,7 +238,7 @@ object::Attribute::Type pickAttribute(
             t = static_cast<object::Attribute::Type>(pair.first);
         }
         else {
-            cout << comT.errorSymbol() << comT.invalidNumber() << endl;
+            os << comT.errorSymbol() << comT.invalidNumber() << endl;
         }
     }
     return t;

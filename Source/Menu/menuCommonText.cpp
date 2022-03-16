@@ -78,8 +78,8 @@ void MenuCommonText::initCommon()
     temp.ru("Введите номер");
     initLanguageBundleMenu(temp, common_.enterNum_);
 
-    temp.en("Select a type:");
-    temp.ru("Выберите тип:");
+    temp.en("Select a type");
+    temp.ru("Выберите тип");
     initLanguageBundleMenu(temp, common_.selectType_);
 
     temp.en("Remove");
@@ -102,8 +102,8 @@ void MenuCommonText::initCommon()
     temp.ru("> ");
     initLanguageBundleMenu(temp, common_.promptSymbol_);
 
-    temp.en("!");
-    temp.ru("!");
+    temp.en("! ");
+    temp.ru("! ");
     initLanguageBundleMenu(temp, common_.errorSymbol_);
 
     temp.en("Feature not implemented yet");

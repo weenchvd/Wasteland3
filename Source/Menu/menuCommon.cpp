@@ -30,50 +30,59 @@ ostream& operator<<(ostream& os, const Indent& indent) {
 
 ///************************************************************************************************
 
-void printMenuBar(const Indent indent, int number, const common::Text& text)
+ostream& printNumBar(ostream& os, const Indent indent, int number, const common::Text& text)
 {
-    cout << indent << '\'' << number << "\' " << text << endl;
+    os << indent << '\'' << number << "\' " << text;
+    return os;
 }
 
-int getAction()
+ostream& verticalIndent(ostream& os)
+{
+    os << endl << endl;
+    return os;
+}
+
+int getAction(istream& is, ostream& os)
 {
     const auto& text{ MenuCommonText::common() };
-    cout << text.enterAction() << text.promptSymbol();
+    os << text.promptSymbol();
     string input;
-    getline(cin, input);
+    getline(is, input);
     try {
         return stoi(input);
     }
     catch (...) {
-        cout << text.errorSymbol() << text.invalidInput() << endl;
+        os << text.errorSymbol() << text.invalidInput() << endl;
         return actionCommon::INVALID;
     }
 }
 
-pair<int, bool> getNumber()
+pair<int, bool> getNumber(istream& is, ostream& os)
 {
     const auto& text{ MenuCommonText::common() };
-    cout << text.enterNumber() << text.promptSymbol();
+    os << text.promptSymbol();
     string input;
-    getline(cin, input);
+    getline(is, input);
     try {
         return { stoi(input), true };
     }
     catch (...) {
-        cout << text.errorSymbol() << text.invalidInput() << endl;
+        os << text.errorSymbol() << text.invalidInput() << endl;
         return { numeric_limits<int>::min(), false };
     }
 }
 
-YesNo getYesNo(const Indent indent)
+YesNo getYesNo(istream& is, ostream& os, const Indent indent)
 {
-    Indent ind1{ indent + Indent{} };
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
     const auto& text{ MenuCommonText::common() };
-    cout << indent << text.actions() << endl;
-    printMenuBar(ind1, common::toUnderlying(YesNo::CANCEL), text.cancel());
-    printMenuBar(ind1, common::toUnderlying(YesNo::YES), text.yes());
-    printMenuBar(ind1, common::toUnderlying(YesNo::NO), text.no());
-    auto pair{ getNumber() };
+    os << ind0 << text.actions() << endl;
+    printNumBar(os, ind1, common::toUnderlying(YesNo::CANCEL), text.cancel()) << endl;
+    printNumBar(os, ind1, common::toUnderlying(YesNo::YES), text.yes()) << endl;
+    printNumBar(os, ind1, common::toUnderlying(YesNo::NO), text.no()) << endl;
+    os << ind0 << text.enterAction() << endl;
+    auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         switch (pair.first) {
         case common::toUnderlying(YesNo::CANCEL):
@@ -83,7 +92,7 @@ YesNo getYesNo(const Indent indent)
         case common::toUnderlying(YesNo::NO):
             return YesNo::NO;
         default:
-            cout << text.errorSymbol() << text.invalidNumber() << endl;
+            os << text.errorSymbol() << text.invalidNumber() << endl;
             break;
         }
     }
