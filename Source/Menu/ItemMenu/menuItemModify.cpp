@@ -53,8 +53,7 @@ void menuItemModify(
             contextSensitiveMenuItemModify_Install(is, os, squad, iterator, ind1);
             break;
         case actionItemModify::REMOVE_MOD:
-            os << ind0 << comT.notImplemented() << endl;
-            // TODO
+            contextSensitiveMenuItemModify_Remove(is, os, squad, iterator, ind1);
             break;
         case actionCommon::EXIT:
             return;
@@ -105,6 +104,36 @@ void contextSensitiveMenuItemModify_Install(
         }
         else {
             os << comT.errorSymbol() << text.unsuitableMod() << endl;
+        }
+        break;
+    }
+    case object::Item::Type::WEAPON_MOD:
+    case object::Item::Type::AMMO:
+    default:
+        break;
+    }
+}
+
+void contextSensitiveMenuItemModify_Remove(
+    std::istream& is,
+    std::ostream& os,
+    object::Squad& squad,
+    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    const Indent indent)
+{
+    Indent ind0{ indent };
+    object::ItemVisitorType vis;
+    (*iterator)->accept(vis);
+
+    switch (vis.type()) {
+    case object::Item::Type::WEAPON: {
+        auto pairSlotNumber{ pickSlotNumber(is, os, squad, iterator, ind0) };
+        if (pairSlotNumber.second == false) break;
+        auto* weapon{ static_cast<object::Weapon*>(iterator->get()) };
+        unique_ptr<object::Item> oldMod{};
+        weapon->unsetMod(pairSlotNumber.first, oldMod);
+        if (oldMod != nullptr) {
+            squad.inventory().insert(oldMod);
         }
         break;
     }

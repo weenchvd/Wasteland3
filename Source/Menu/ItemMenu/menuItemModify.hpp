@@ -35,16 +35,15 @@ void menuItemModify(
     const Indent indent
 );
 
-//namespace actionItemWeapon {
-//
-//enum ActionItemWeapon {
-//    EQUIP = actionItem::__NEXT_ACTION_NUMBER,
-//    MODIFY
-//};
-//
-//} // namespace actionItemWeapon
-
 void contextSensitiveMenuItemModify_Install(
+    std::istream& is,
+    std::ostream& os,
+    object::Squad& squad,
+    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    const Indent indent
+);
+
+void contextSensitiveMenuItemModify_Remove(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
