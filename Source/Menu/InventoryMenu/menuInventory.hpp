@@ -55,19 +55,24 @@ constexpr auto countFrom{ 1 };
 void showItems(
     std::istream& is,
     std::ostream& os,
-    object::Roster& roster,
+    const object::Roster& roster,
     const common::Text& title,
     const Indent indent
 );
 
-void showRoster(std::istream& is, std::ostream& os, object::Roster& roster, const Indent indent);
+void showRoster(
+    std::istream& is,
+    std::ostream& os,
+    const object::Roster& roster,
+    const Indent indent
+);
 
 object::Item::Type pickItemType(std::istream& is, std::ostream& os, const Indent indent);
 
-std::pair<std::list<std::unique_ptr<object::Item>>::const_iterator, bool> pickItem(
+object::InventoryIterator pickItem(
     std::istream& is,
     std::ostream& os,
-    object::Roster& roster,
+    const object::Roster& roster,
     const Indent indent
 );
 

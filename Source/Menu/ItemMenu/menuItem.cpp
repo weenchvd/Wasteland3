@@ -10,6 +10,7 @@
 #include"menuItem.hpp"
 #include"menuItemModify.hpp"
 #include"menuItemText.hpp"
+#include<assert.h>
 
 namespace game {
 namespace menu {
@@ -20,15 +21,16 @@ void menuItem_Inventory(
     istream& is,
     ostream& os,
     object::Squad& squad,
-    list<unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent)
 {
+    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::common() };
 
-    item = squad.inventory().viewed(item);
+    squad.inventory().viewed(iterItem);
 
     while (true)
     {
@@ -39,12 +41,12 @@ void menuItem_Inventory(
         printNumBar(os, ind1, actionItem::SHOW_FULL_DESCR, text.showFullDescription()) << endl;
         printNumBar(os, ind1, actionItem::REMOVE, comT.remove()) << endl;
 
-        switch (contextSensitiveMenuItem_Inventory(is, os, squad, item, indent)) {
+        switch (contextSensitiveMenuItem_Inventory(is, os, squad, iterItem, indent)) {
         case actionItem::SHOW_FULL_DESCR:
-            printFullDescription(is, os, *item, ind1);
+            printFullDescription(is, os, iterItem, ind1);
             break;
         case actionItem::REMOVE:
-            if (removeItem(is, os, squad.inventory(), item, ind1)) return;
+            if (removeItem(is, os, squad.inventory(), iterItem, ind1)) return;
             break;
         case actionCommon::EXIT:
             return;
@@ -61,16 +63,17 @@ int contextSensitiveMenuItem_Inventory(
     istream& is,
     ostream& os,
     object::Squad& squad,
-    list<unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent
 )
 {
+    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::common() };
     object::ItemVisitorType vis;
-    (*item)->accept(vis);
+    (*iterItem.getConst())->accept(vis);
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
@@ -85,10 +88,7 @@ int contextSensitiveMenuItem_Inventory(
             // TODO
             break;
         case actionItemWeapon::MODIFY: {
-            auto pair{ squad.inventory().getIterator(item) };
-            if (pair.second == true) {
-                menuItemModify(is, os, squad, pair.first, ind1);
-            }
+            menuItemModify(is, os, squad, iterItem, ind1);
             break;
         }
         default:
@@ -110,11 +110,12 @@ int contextSensitiveMenuItem_Inventory(
 void printFullDescription(
     istream& is,
     ostream& os,
-    const unique_ptr<object::Item>& item,
+    const object::InventoryIterator& iterItem,
     const Indent indent)
 {
+    assert(iterItem.isValid() == true);
     ItemVisitorFullDescription vis;
-    item->accept(vis);
+    (*iterItem.getConst())->accept(vis);
     auto text{ vis.getFullDescription() };
     for (int i = 0; i < text.size(); ++i) {
         os << indent;
@@ -132,14 +133,15 @@ bool removeItem(
     istream& is,
     ostream& os,
     object::Inventory& inventory,
-    list<unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent)
 {
+    assert(iterItem.isValid() == true);
     const auto& text{ MenuItemText::common() };
     os << indent << text.questionDeleteItem() << endl;
     switch (getYesNo(is, os, indent)) {
     case YesNo::YES:
-        inventory.extract(item);
+        inventory.extract(iterItem);
         return true;
     case YesNo::NO:
     case YesNo::CANCEL:

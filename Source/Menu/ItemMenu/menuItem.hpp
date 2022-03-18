@@ -30,7 +30,7 @@ void menuItem_Inventory(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -47,7 +47,7 @@ int contextSensitiveMenuItem_Inventory(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -56,7 +56,7 @@ int contextSensitiveMenuItem_Inventory(
 void printFullDescription(
     std::istream& is,
     std::ostream& os,
-    const std::unique_ptr<object::Item>& item,
+    const object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -64,7 +64,7 @@ bool removeItem(
     std::istream& is,
     std::ostream& os,
     object::Inventory& inventory,
-    std::list<std::unique_ptr<object::Item>>::const_iterator item,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 

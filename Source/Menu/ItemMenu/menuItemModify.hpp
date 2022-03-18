@@ -31,7 +31,7 @@ void menuItemModify(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -39,7 +39,7 @@ void contextSensitiveMenuItemModify_Install(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -47,7 +47,7 @@ void contextSensitiveMenuItemModify_Remove(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -62,7 +62,7 @@ constexpr auto countFrom{ 1 };
 void showMods(
     std::istream& is,
     std::ostream& os,
-    std::list<std::unique_ptr<object::Item>>::const_iterator iterator,
+    const object::InventoryIterator& iterItem,
     const Indent indent
 );
 
@@ -70,7 +70,7 @@ std::pair<int, bool> pickSlotNumber(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    std::list<std::unique_ptr<object::Item>>::iterator iterator,
+    const object::InventoryIterator& iterItem,
     const Indent indent
 );
 

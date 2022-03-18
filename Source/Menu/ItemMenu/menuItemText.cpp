@@ -72,7 +72,7 @@ void MenuItemText::initModify()
 {
     LanguageBundle temp;
 
-    temp.en("Item modification  menu");
+    temp.en("Item modification menu");
     temp.ru("Меню модификации предмета");
     initLanguageBundleMenu(temp, modify_.menuName_);
 

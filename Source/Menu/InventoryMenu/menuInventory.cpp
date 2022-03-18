@@ -47,8 +47,8 @@ void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent 
             auto roster{ subMenuShowItems(is, os, squad.inventory(), ind1) };
             if (roster.second == true) {
                 auto iter{ pickItem(is, os, roster.first, ind0) };
-                if (iter.second == true) {
-                    menuItem_Inventory(is, os, squad, iter.first, ind1);
+                if (iter.isValid() == true) {
+                    menuItem_Inventory(is, os, squad, iter, ind1);
                 }
             }
             break;
@@ -113,7 +113,7 @@ pair<object::Roster, bool> subMenuShowItems(
 void showItems(
     istream& is,
     ostream& os,
-    object::Roster& roster,
+    const object::Roster& roster,
     const common::Text& title,
     const Indent indent)
 {
@@ -121,18 +121,24 @@ void showItems(
     showRoster(is, os, roster, indent + Indent{});
 }
 
-void showRoster(istream& is, ostream& os, object::Roster& roster, const Indent indent)
+void showRoster(istream& is, ostream& os, const object::Roster& roster, const Indent indent)
 {
     Indent ind0{ indent };
     const auto& text{ MenuInventoryText::common() };
 
     ItemVisitorExtendedName vis;
     int i{ itemNumber::countFrom };
-    for (auto iter{ roster.newItems().beg_ }; iter != roster.newItems().end_; ++iter) {
+    for (auto iter{ roster.newItems().beg_.getConst()};
+        iter != roster.newItems().end_.getConst();
+        ++iter)
+    {
         (*iter)->accept(vis);
         printNumBar(os, ind0, i++, '*' + vis.getExtendedName()) << endl;
     }
-    for (auto iter{ roster.oldItems().beg_ }; iter != roster.oldItems().end_; ++iter) {
+    for (auto iter{ roster.oldItems().beg_.getConst() };
+        iter != roster.oldItems().end_.getConst();
+        ++iter)
+    {
         (*iter)->accept(vis);
         printNumBar(os, ind0, i++, vis.getExtendedName()) << endl;
     }
@@ -168,10 +174,10 @@ object::Item::Type pickItemType(istream& is, ostream& os, const Indent indent)
     return t;
 }
 
-pair<list<unique_ptr<object::Item>>::const_iterator, bool> pickItem(
+object::InventoryIterator pickItem(
     istream& is,
     ostream& os,
-    object::Roster& roster,
+    const object::Roster& roster,
     const Indent indent)
 {
     Indent ind0{ indent };
@@ -180,31 +186,31 @@ pair<list<unique_ptr<object::Item>>::const_iterator, bool> pickItem(
 
     os << ind0 << text.enterItemNumber() << endl;
 
-    auto pair{ getNumber(is, os) };
-    if (pair.second == true) {
-        if (pair.first >= itemNumber::countFrom) {
+    auto pairNum{ getNumber(is, os) };
+    if (pairNum.second == true) {
+        if (pairNum.first >= itemNumber::countFrom) {
             int i{ itemNumber::countFrom };
-            auto iter = roster.newItems().beg_;
-            while (i < pair.first && iter != roster.newItems().end_) {
+            auto iter{ roster.newItems().beg_ };
+            while (i < pairNum.first && iter != roster.newItems().end_) {
                 ++i;
                 ++iter;
             }
-            if (i == pair.first && iter != roster.newItems().end_) {
-                return { iter, true };
+            if (i == pairNum.first && iter != roster.newItems().end_) {
+                return iter;
             }
 
             iter = roster.oldItems().beg_;
-            while (i < pair.first && iter != roster.oldItems().end_) {
+            while (i < pairNum.first && iter != roster.oldItems().end_) {
                 ++i;
                 ++iter;
             }
-            if (i == pair.first && iter != roster.oldItems().end_) {
-                return { iter, true };
+            if (i == pairNum.first && iter != roster.oldItems().end_) {
+                return iter;
             }
         }
         os << comT.errorSymbol() << comT.invalidNumber() << endl;
     }
-    return { list<unique_ptr<object::Item>>::const_iterator{}, false };
+    return object::InventoryIterator{};
 }
 
 const common::Text& getItemTypeName(const object::Item::Type type)

@@ -17,11 +17,39 @@ namespace object {
 
 using namespace std;
 
+InventoryIterator::InventoryIterator() noexcept
+    :
+    iter_{ list<unique_ptr<Item>>::iterator{} },
+    list_{ nullptr }
+{}
+
+InventoryIterator::InventoryIterator(
+    list<unique_ptr<Item>>::iterator iter,
+    list<unique_ptr<Item>>* list)
+    :
+    iter_{ iter },
+    list_{ list }
+{}
+
+InventoryIterator& InventoryIterator::operator++() noexcept
+{
+    ++iter_;
+    return *this;
+}
+
+InventoryIterator& InventoryIterator::operator--() noexcept
+{
+    --iter_;
+    return *this;
+}
+
+///************************************************************************************************
+
 Roster::Roster(Inventory& inventory) noexcept
     :
     pInv_           { &inventory },
-    newItems_       {},
-    oldItems_       {},
+    newItems_       { InventoryIterator{}, InventoryIterator{} },
+    oldItems_       { InventoryIterator{}, InventoryIterator{} },
     type_           { Item::Type::INVALID }
 {}
 
@@ -43,12 +71,12 @@ void Roster::refresh()
 
 ///************************************************************************************************
 
-list<unique_ptr<Item>>::const_iterator Inventory::insert(unique_ptr<Item>& item, bool isNew)
+InventoryIterator Inventory::insert(unique_ptr<Item>& item, bool isNew)
 {
     return (isNew == true) ? insert(newItems_, item) : insert(oldItems_, item);
 }
 
-list<unique_ptr<Item>>::const_iterator Inventory::insert(
+InventoryIterator Inventory::insert(
     list<unique_ptr<Item>>& receiver,
     unique_ptr<Item>& item)
 {
@@ -58,14 +86,14 @@ list<unique_ptr<Item>>::const_iterator Inventory::insert(
         }
     };
 
-    list<unique_ptr<Item>>::const_iterator ret{};
+    InventoryIterator ret{};
     if (item != nullptr) {
         auto pos{ lower_bound(receiver.begin(), receiver.end(), item, ItemLessByModel{}) };
         if (&receiver == &newItems_) {
             // inserts the item first in the receiver
             auto iter{ receiver.emplace(receiver.begin(), unique_ptr<Item>{}) };
             *iter = move(item);
-            ret = iter;
+            ret = InventoryIterator{ iter, &receiver };
             if (isAggregable(*iter) == true &&
                 pos != receiver.cend() &&
                 object::isSameModel(**pos, **iter) == true)
@@ -81,42 +109,34 @@ list<unique_ptr<Item>>::const_iterator Inventory::insert(
                 object::isSameModel(**pos, *item) == true)
             {
                 aggregate(*pos, item);
-                ret = pos;
+                ret = InventoryIterator{ pos, &receiver };
             }
             else {
                 auto iter{ receiver.emplace(pos, unique_ptr<Item>{}) };
                 *iter = move(item);
-                ret = iter;
+                ret = InventoryIterator{ iter, &receiver };
             }
         }
     }
     assert(item == nullptr);
     assert(check(receiver) == true);
+    assert(ret.isValid() == true);
     return ret;
 }
 
-unique_ptr<Item> Inventory::extract(list<unique_ptr<Item>>::const_iterator iterator)
+unique_ptr<Item> Inventory::extract(InventoryIterator& iterItem)
 {
-    return extract(find(iterator));
-}
-
-unique_ptr<Item> Inventory::extract(IteratorBundle iteratorBundle)
-{
+    assert(iterItem.isValid() == true);
     unique_ptr<Item> item{};
-    if (iteratorBundle.list_ != nullptr) {
-        item = move(*iteratorBundle.iter_);
-        assert(*iteratorBundle.iter_ == nullptr);
-        iteratorBundle.list_->erase(iteratorBundle.iter_);
-        assert(check(*iteratorBundle.list_) == true);
+    if (iterItem.isValid() == true) {
+        item = move(*iterItem.get());
+        assert(*iterItem.getConst() == nullptr);
+        iterItem.getList()->erase(iterItem.getConst());
+        assert(check(*iterItem.getList()) == true);
+        iterItem.doInvalid();
+        assert(iterItem.isValid() == false);
     }
     return item;
-}
-
-pair<list<unique_ptr<Item>>::iterator, bool> Inventory::getIterator(
-    list<unique_ptr<Item>>::const_iterator iterator)
-{
-    IteratorBundle bundle{ find(iterator) };
-    return { bundle.iter_, bundle.list_ != nullptr ? true : false };
 }
 
 bool Inventory::isAggregable(std::unique_ptr<Item>& item) const noexcept
@@ -149,8 +169,14 @@ Roster Inventory::roster()
     assert(checkAll() == true);
 
     Roster roster{ *this };
-    roster.newItems_ = { newItems_.cbegin(), newItems_.cend() };
-    roster.oldItems_ = { oldItems_.cbegin(), oldItems_.cend() };
+    roster.newItems_ = {
+        InventoryIterator{ newItems_.begin(), &newItems_ },
+        InventoryIterator{ newItems_.end(), &newItems_ }
+    };
+    roster.oldItems_ = {
+        InventoryIterator{ oldItems_.begin(), &oldItems_ },
+        InventoryIterator{ oldItems_.end(), &oldItems_ }
+    };
     return roster;
 }
 
@@ -173,32 +199,39 @@ Roster Inventory::roster(Item::Type type)
 
     Roster roster{ *this };
     roster.itemType(type);
-    roster.newItems_ = { newItems_.cbegin(), newItems_.cend() };
+    roster.newItems_ = {
+        InventoryIterator{ newItems_.begin(), &newItems_ },
+        InventoryIterator{ newItems_.end(), &newItems_ }
+    };
     roster.oldItems_ = {
-        lower_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_LowerBounds{}),
-        upper_bound(oldItems_.cbegin(), oldItems_.cend(), type, ItemType_Less_UpperBounds{})
+        InventoryIterator{
+            lower_bound(oldItems_.begin(), oldItems_.end(), type, ItemType_Less_LowerBounds{}),
+            &oldItems_
+        },
+        InventoryIterator{
+            upper_bound(oldItems_.begin(), oldItems_.end(), type, ItemType_Less_UpperBounds{}),
+            &oldItems_
+        }
     };
     return roster;
 }
 
-size_t Inventory::size()
+size_t Inventory::size() noexcept
 {
     assert(checkAll() == true);
     return newItems_.size() + oldItems_.size();
 }
 
-list<unique_ptr<Item>>::const_iterator Inventory::viewed(
-    list<unique_ptr<Item>>::const_iterator iterator) noexcept
+void Inventory::viewed(InventoryIterator& iterItem)
 {
-    for (auto iter = newItems_.begin(); iter != newItems_.end(); ++iter) {
-        if (*iterator == *iter) {
-            auto ret{ insert(oldItems_, *iter) };
-            extract(IteratorBundle{ iter, &newItems_ });
-            assert(checkAll() == true);
-            return ret;
-        }
+    assert(iterItem.isValid() == true);
+    if (iterItem.isValid() == true && iterItem.getList() == &newItems_) {
+        InventoryIterator temp{ insert(oldItems_, *iterItem.get()) };
+        extract(iterItem);
+        iterItem = move(temp);
+        assert(checkAll() == true);
+        assert(iterItem.isValid() == true);
     }
-    return iterator;
 }
 
 inline void Inventory::mergeLists()
@@ -209,22 +242,6 @@ inline void Inventory::mergeLists()
     }
     newItems_.clear();
     assert(check(newItems_) == true);
-}
-
-Inventory::IteratorBundle Inventory::find(list<unique_ptr<Item>>::const_iterator iterator)
-{
-    assert(checkAll() == true);
-    for (auto iter = newItems_.begin(); iter != newItems_.end(); ++iter) {
-        if (*iterator == *iter) {
-            return { iter, &newItems_ };
-        }
-    }
-    for (auto iter = oldItems_.begin(); iter != oldItems_.end(); ++iter) {
-        if (*iterator == *iter) {
-            return { iter, &oldItems_ };
-        }
-    }
-    return { list<unique_ptr<Item>>::iterator{}, nullptr };
 }
 
 bool Inventory::check(const list<unique_ptr<Item>>& source) const

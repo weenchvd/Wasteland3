@@ -14,29 +14,72 @@
 namespace game {
 namespace object {
 
+class InventoryIterator {
+public:
+    friend class Inventory;
+
+public:
+    InventoryIterator() noexcept;
+
+private:
+    explicit InventoryIterator(
+        std::list<std::unique_ptr<Item>>::iterator iter,
+        std::list<std::unique_ptr<Item>>* list);
+
+public:
+    bool isValid() const noexcept { return (list_ != nullptr) ? true : false; }
+
+    void doInvalid() noexcept { *this = InventoryIterator{}; }
+
+    std::list<std::unique_ptr<Item>>::iterator get() noexcept { return iter_; }
+
+    std::list<std::unique_ptr<Item>>::const_iterator getConst() const noexcept { return iter_; }
+
+private:
+    std::list<std::unique_ptr<Item>>* getList() noexcept { return list_; }
+
+public:
+    InventoryIterator& operator++() noexcept;
+
+    InventoryIterator& operator--() noexcept;
+
+    bool operator==(const InventoryIterator& rhs) const noexcept { return this->iter_ == rhs.iter_; }
+
+    bool operator!=(const InventoryIterator& rhs) const noexcept { return !(*this == rhs); }
+
+private:
+    std::list<std::unique_ptr<Item>>::iterator  iter_;
+    std::list<std::unique_ptr<Item>>*           list_;
+};
+
+///************************************************************************************************
+
 class Roster {
 public:
     friend class Inventory;
 
 public:
     struct ItemRange {
-        std::list<std::unique_ptr<Item>>::const_iterator beg_;   // beginning
-        std::list<std::unique_ptr<Item>>::const_iterator end_;   // end
+        InventoryIterator beg_;   // beginning
+        InventoryIterator end_;   // end
     };
 
 private:
-    Roster(Inventory& inventory) noexcept;
+    explicit Roster(Inventory& inventory) noexcept;
 
-public:
+private:
     void itemType(Item::Type type) noexcept;
 
+public:
     void refresh();
 
-    void clear() { *this = Roster{ *pInv_ }; }
+    const ItemRange& newItems() const noexcept { return newItems_; }
 
-    ItemRange newItems() noexcept { return newItems_; }
+    ItemRange& newItems() noexcept { return newItems_; }
 
-    ItemRange oldItems() noexcept { return oldItems_; }
+    const ItemRange& oldItems() const noexcept { return oldItems_; }
+
+    ItemRange& oldItems() noexcept { return oldItems_; }
 
 private:
     Inventory*          pInv_;
@@ -48,57 +91,38 @@ private:
 ///************************************************************************************************
 
 class Inventory {
-private:
-    struct IteratorBundle {
-        std::list<std::unique_ptr<Item>>::iterator  iter_;
-        std::list<std::unique_ptr<Item>>*           list_;
-    };
-
 public:
     Inventory() {}
 
     Inventory(const Inventory&) = delete;
     Inventory& operator=(const Inventory&) = delete;
 
-    // insert (put) an item into inventory 
-    std::list<std::unique_ptr<Item>>::const_iterator insert(
-        std::unique_ptr<Item>& item,
-        bool isNew = false
-    );
+public:
+    InventoryIterator insert(std::unique_ptr<Item>& item, bool isNew = false);
 
-    std::unique_ptr<Item> extract(std::list<std::unique_ptr<Item>>::const_iterator iterator);
-
-    std::pair<std::list<std::unique_ptr<Item>>::iterator, bool> getIterator(
-        std::list<std::unique_ptr<Item>>::const_iterator iterator
-    );
+    std::unique_ptr<Item> extract(InventoryIterator& iterItem);
 
     Roster roster();
 
     Roster roster(Item::Type type);
 
-    size_t size();
+    size_t size() noexcept;
 
-    std::list<std::unique_ptr<Item>>::const_iterator viewed(
-        std::list<std::unique_ptr<Item>>::const_iterator iterator
-    ) noexcept;
+    void viewed(InventoryIterator& iterItem);
 
-    void viewedAll() noexcept { mergeLists(); }
+    void viewedAll() { mergeLists(); }
 
 private:
-    std::list<std::unique_ptr<Item>>::const_iterator insert(
+    InventoryIterator insert(
         std::list<std::unique_ptr<Item>>& receiver,
         std::unique_ptr<Item>& item
     );
-
-    std::unique_ptr<Item> extract(IteratorBundle iteratorBundle);
 
     void mergeLists();
 
     bool isAggregable(std::unique_ptr<Item>& item) const noexcept;
 
     void aggregate(std::unique_ptr<Item>& receiver, std::unique_ptr<Item>& source);
-
-    IteratorBundle find(std::list<std::unique_ptr<Item>>::const_iterator iterator);
 
     bool check(const std::list<std::unique_ptr<Item>>& source) const;
 
