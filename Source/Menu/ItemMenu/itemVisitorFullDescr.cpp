@@ -19,6 +19,10 @@ namespace menu {
 
 using namespace std;
 
+const ItemVisitorFullDescription::text ItemVisitorFullDescription::separator_{ "----------" };
+
+///************************************************************************************************
+
 vector<WeaponList::list>            WeaponList::list_;
 bool                                WeaponList::initialized_{ false };
 
@@ -28,10 +32,10 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
 {
     reset();
 
-    constexpr auto sp{ ' ' };
-    constexpr auto x{ 'X' };
-    constexpr auto p{ '%' };
-    const auto sep{ "----------" };
+    const auto& sp  { signSpace_ };
+    const auto& x   { signX_ };
+    const auto& p   { signPercent_ };
+    const auto& sep { separator_ };
     const object::Weapon& def{ object::Weapon::weaponDefault() };
     const auto& text{ weapon.weaponText() };
     ostringstream oss;
@@ -135,10 +139,10 @@ void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) no
 {
     reset();
 
-    constexpr auto sp{ ' ' };
-    constexpr auto x{ 'X' };
-    constexpr auto p{ '%' };
-    const auto sep{ "----------" };
+    const auto& sp  { signSpace_ };
+    const auto& x   { signX_ };
+    const auto& p   { signPercent_ };
+    const auto& sep { separator_ };
     const auto& text{ weaponMod.weaponModText() };
     ostringstream oss;
     oss << weaponMod.name() << endl;
@@ -249,14 +253,16 @@ void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo) noexcept
 {
     reset();
 
-    constexpr auto sp{ ' ' };
-    const auto sep{ "----------" };
+    const auto& sp  { signSpace_ };
+    const auto& sep { separator_ };
     const auto& text{ ammo.ammoText() };
     ostringstream oss;
-    oss << ammo.name() << " (" << ammo.quantity() << ')' << endl;
+    oss << ammo.name() << endl;
     oss << text.common().itemType() << endl;
     oss << sep << endl;
     oss << ammo.description() << endl;
+    oss << sep << endl;
+    oss << text.common().quantity() << sp << ammo.quantity() << endl;
 
     /// TODO oss << price << endl;
 

@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"itemVisitorType.hpp"
+#include"itemVisitorNameType.hpp"
 #include"menuCommonText.hpp"
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
@@ -39,7 +40,7 @@ void menuItemModify(
         verticalIndent(os);
         os << ind0 << text.menuName() << endl;
         os << ind0 << text.item() << (*iterItem.getConst())->name() << endl;
-        showMods(is, os, iterItem, indent);
+        showSlotsAndMods(is, os, iterItem, indent);
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionItemModify::SHOW_FULL_DESCR, tCom.showFullDescription()) << endl;
@@ -91,7 +92,7 @@ void contextSensitiveMenuItemModify_Install(
         object::Item::Type type{ object::Item::Type::WEAPON_MOD };
         auto roster{ squad.inventory().roster(type) };
         auto title{ invTCom.inventory() + " (" + getItemTypeName(type) + "):" };
-        showItems(is, os, roster, title, ind0);
+        showModsWithTypes(is, os, roster, title, ind0);
         auto iterWeaponMod{ pickItem(is, os, roster, ind0) };
         if (iterWeaponMod.isValid() == false) break;
         auto* pWeapon{ static_cast<object::Weapon*>(iterItem.get()->get())};
@@ -150,7 +151,7 @@ void contextSensitiveMenuItemModify_Remove(
 
 ///************************************************************************************************
 
-void showMods(
+void showSlotsAndMods(
     istream& is,
     ostream& os,
     const object::InventoryIterator& iterItem,
@@ -232,6 +233,36 @@ pair<int, bool> pickSlotNumber(
         break;
     }
     return { numeric_limits<int>::min(), false };
+}
+
+void showModsWithTypes(
+    istream& is,
+    ostream& os,
+    const object::Roster& roster,
+    const common::Text& title,
+    const Indent indent)
+{
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+
+    os << ind0 << title << endl;
+
+    ItemVisitorNameType vis;
+    int i{ itemNumber::countFrom };
+    for (auto iter{ roster.newItems().beg_.getConst() };
+        iter != roster.newItems().end_.getConst();
+        ++iter)
+    {
+        (*iter)->accept(vis);
+        printNumBar(os, ind1, i++, '*' + vis.getNameType()) << endl;
+    }
+    for (auto iter{ roster.oldItems().beg_.getConst() };
+        iter != roster.oldItems().end_.getConst();
+        ++iter)
+    {
+        (*iter)->accept(vis);
+        printNumBar(os, ind1, i++, vis.getNameType()) << endl;
+    }
 }
 
 } // namespace menu

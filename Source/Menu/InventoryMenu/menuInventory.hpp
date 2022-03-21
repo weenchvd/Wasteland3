@@ -21,7 +21,9 @@ namespace actionInventory {
 enum ActionInventory {
     MONEY = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ITEMS,
-    MENU_ITEM
+    MENU_ITEM,
+    SHOW_FULL_DESCR,
+    MARK_ALL_AS_VIEWED
 };
 
 } // namespace actionInventory

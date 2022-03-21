@@ -44,6 +44,8 @@ public:
 
     const text& enterItemMenu() const noexcept;
 
+    const text& markAllAsViewed() const noexcept;
+
     const text& money() const noexcept;
 
     const text& inventory() const noexcept;
@@ -58,6 +60,8 @@ public:
 
     const text& enterItemNumber() const noexcept;
 
+    const text& listIsOutdated() const noexcept;
+
 private:
     language_bundle menuName_;
     language_bundle showMoney_;
@@ -65,6 +69,7 @@ private:
     language_bundle showAllItems_;
     language_bundle showItemsOfType_;
     language_bundle enterItem_;
+    language_bundle markAllAsViewed_;
     language_bundle money_;
     language_bundle inventory_;
     language_bundle starNewItems_;
@@ -72,6 +77,7 @@ private:
     language_bundle item_;
     language_bundle typesOfItems_;
     language_bundle enterItemNumber_;
+    language_bundle listIsOutdated_;
 };
 
 ///************************************************************************************************
@@ -147,6 +153,11 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemMe
     return enterItem_[MenuInventoryText::languageIndex()];
 }
 
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::markAllAsViewed() const noexcept
+{
+    return markAllAsViewed_[MenuInventoryText::languageIndex()];
+}
+
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::money() const noexcept
 {
     return money_[MenuInventoryText::languageIndex()];
@@ -180,6 +191,11 @@ inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::typesOfItem
 inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemNumber() const noexcept
 {
     return enterItemNumber_[MenuInventoryText::languageIndex()];
+}
+
+inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::listIsOutdated() const noexcept
+{
+    return listIsOutdated_[MenuInventoryText::languageIndex()];
 }
 
 ///************************************************************************************************

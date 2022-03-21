@@ -20,6 +20,13 @@ class ItemVisitorFullDescription : public object::ItemVisitor {
 public:
     using text = common::Text;
 
+private:
+    static const auto signSpace_    { ' ' };
+    static const auto signX_        { 'X' };
+    static const auto signPercent_  { '%' };
+    static const text separator_;
+
+
 public:
     ItemVisitorFullDescription() noexcept {}
 

@@ -69,6 +69,10 @@ void MenuInventoryText::initCommon()
     temp.ru("Войти в меню предмета");
     initLanguageBundleMenu(temp, common_.enterItem_);
 
+    temp.en("Mark all items as viewed");
+    temp.ru("Пометить все предметы как просмотренные");
+    initLanguageBundleMenu(temp, common_.markAllAsViewed_);
+
     temp.en("Money: $");
     temp.ru("Деньги: $");
     initLanguageBundleMenu(temp, common_.money_);
@@ -96,6 +100,10 @@ void MenuInventoryText::initCommon()
     temp.en("Enter the item number");
     temp.ru("Введите номер предмета");
     initLanguageBundleMenu(temp, common_.enterItemNumber_);
+
+    temp.en("The list of items is outdated. To update the list, use the command: ");
+    temp.ru("Список предметов устарел. Чтобы обновить список, используйте команду: ");
+    initLanguageBundleMenu(temp, common_.listIsOutdated_);
 }
 
 } // namespace menu

@@ -10,6 +10,7 @@
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
 #include"menuItem.hpp"
+#include"menuItemText.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
 
@@ -23,7 +24,9 @@ void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent 
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& itemT{ MenuItemText::common() };
     const auto& text{ MenuInventoryText::common() };
+    pair<object::Roster, bool> pairRoster{ object::Roster{ squad.inventory().roster() }, false};
 
     while (true)
     {
@@ -34,6 +37,8 @@ void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent 
         printNumBar(os, ind1, actionInventory::MONEY, text.showMoney()) << endl;
         printNumBar(os, ind1, actionInventory::SHOW_ITEMS, text.showItems()) << endl;
         printNumBar(os, ind1, actionInventory::MENU_ITEM, text.enterItemMenu()) << endl;
+        printNumBar(os, ind1, actionInventory::SHOW_FULL_DESCR, itemT.showFullDescription()) << endl;
+        printNumBar(os, ind1, actionInventory::MARK_ALL_AS_VIEWED, text.markAllAsViewed()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
@@ -41,18 +46,35 @@ void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent 
             os << ind1 << text.money() << squad.money() << endl;
             break;
         case actionInventory::SHOW_ITEMS:
-            subMenuShowItems(is, os, squad.inventory(), ind1);
+            pairRoster = subMenuShowItems(is, os, squad.inventory(), ind1);
             break;
         case actionInventory::MENU_ITEM: {
-            auto roster{ subMenuShowItems(is, os, squad.inventory(), ind1) };
-            if (roster.second == true) {
-                auto iter{ pickItem(is, os, roster.first, ind0) };
+            pairRoster = subMenuShowItems(is, os, squad.inventory(), ind1);
+            if (pairRoster.second == true) {
+                auto iter{ pickItem(is, os, pairRoster.first, ind0) };
                 if (iter.isValid() == true) {
                     menuItem_Inventory(is, os, squad, iter, ind1);
+                    pairRoster.second = false;
                 }
             }
             break;
         }
+        case actionInventory::SHOW_FULL_DESCR:
+            if (pairRoster.second == true) {
+                auto iter{ pickItem(is, os, pairRoster.first, ind0) };
+                if (iter.isValid() == true) {
+                    printFullDescription(is, os, iter, ind1);
+                }
+            }
+            else {
+                os << comT.errorSymbol() << text.listIsOutdated();
+                printNumBar(os, Indent{ 0 }, actionInventory::SHOW_ITEMS, text.showItems()) << endl;
+            }
+            break;
+        case actionInventory::MARK_ALL_AS_VIEWED:
+            squad.inventory().viewedAll();
+            pairRoster.second = false;
+            break;
         case actionCommon::EXIT:
             return;
         case actionCommon::INVALID:
