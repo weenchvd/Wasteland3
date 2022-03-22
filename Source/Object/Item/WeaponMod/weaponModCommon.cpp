@@ -24,18 +24,40 @@ WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id)
         { fbWeaponMod::FB_WeaponModModel_INVALID, WeaponMod__Model::INVALID },
         { fbWeaponMod::FB_WeaponModModel_BARREL_SHORTENED, WeaponMod__Model::BARREL_SHORTENED },
         { fbWeaponMod::FB_WeaponModModel_BARREL_LIGHTWEIGHT, WeaponMod__Model::BARREL_LIGHTWEIGHT },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_HAMMERFORGE_RIFLED, WeaponMod__Model::BARREL_HAMMERFORGE_RIFLED },
         { fbWeaponMod::FB_WeaponModModel_BARREL_TITANIUM_COBALT, WeaponMod__Model::BARREL_TITANIUM_COBALT },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
-        ///{ fbWeaponMod::FB_WeaponModModel_BARREL_ALLOY, WeaponMod__Model::BARREL_ALLOY },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_BROACH_RIFLED, WeaponMod__Model::BARREL_BROACH_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_COLUMBIUM, WeaponMod__Model::BARREL_COLUMBIUM },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_CUT_RIFLED, WeaponMod__Model::BARREL_CUT_RIFLED },
+        { fbWeaponMod::FB_WeaponModModel_BARREL_ALLOY, WeaponMod__Model::BARREL_ALLOY },
+
         { fbWeaponMod::FB_WeaponModModel_MAG_QUICKFIRE, WeaponMod__Model::MAG_QUICKFIRE },
         { fbWeaponMod::FB_WeaponModModel_MAG_ADVANCED_MATERIALS, WeaponMod__Model::MAG_ADVANCED_MATERIALS },
         { fbWeaponMod::FB_WeaponModModel_MAG_OVERSIZED, WeaponMod__Model::MAG_OVERSIZED },
-        ///{ fbWeaponMod::FB_WeaponModModel_MAG_MAX_CAPACITY, WeaponMod__Model::MAG_MAX_CAPACITY },
-        ///{ fbWeaponMod::FB_WeaponModModel_MAG_EXTENDED, WeaponMod__Model::MAG_EXTENDED },
-        ///{ fbWeaponMod::FB_WeaponModModel_MAG_LONG, WeaponMod__Model::MAG_LONG }
+        { fbWeaponMod::FB_WeaponModModel_MAG_MAX_CAPACITY, WeaponMod__Model::MAG_MAX_CAPACITY },
+        { fbWeaponMod::FB_WeaponModModel_MAG_EXTENDED, WeaponMod__Model::MAG_EXTENDED },
+        { fbWeaponMod::FB_WeaponModModel_MAG_LONG, WeaponMod__Model::MAG_LONG },
+
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_FARSIGHT, WeaponMod__Model::SCOPE_FARSIGHT },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_DEADEYE, WeaponMod__Model::SCOPE_DEADEYE },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_38MM, WeaponMod__Model::SCOPE_38MM },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_32MM, WeaponMod__Model::SCOPE_32MM },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_21MM, WeaponMod__Model::SCOPE_21MM },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_HOLOGRAPHIC, WeaponMod__Model::SCOPE_HOLOGRAPHIC },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_RED_DOT, WeaponMod__Model::SCOPE_RED_DOT },
+        { fbWeaponMod::FB_WeaponModModel_SCOPE_REFLEX, WeaponMod__Model::SCOPE_REFLEX },
+
+        { fbWeaponMod::FB_WeaponModModel_UB_HE_FUSE_LINKAGE, WeaponMod__Model::UB_HE_FUSE_LINKAGE },
+        { fbWeaponMod::FB_WeaponModModel_UB_PLASMA_LINKAGE, WeaponMod__Model::UB_PLASMA_LINKAGE },
+        { fbWeaponMod::FB_WeaponModModel_UB_CRYOCELL_LINKAGE, WeaponMod__Model::UB_CRYOCELL_LINKAGE },
+        { fbWeaponMod::FB_WeaponModModel_UB_INCENDIARY_LINKAGE, WeaponMod__Model::UB_INCENDIARY_LINKAGE },
+        { fbWeaponMod::FB_WeaponModModel_UB_SWAT_LIGHT, WeaponMod__Model::UB_SWAT_LIGHT },
+        { fbWeaponMod::FB_WeaponModModel_UB_TACTICAL_LIGHT, WeaponMod__Model::UB_TACTICAL_LIGHT },
+        { fbWeaponMod::FB_WeaponModModel_UB_UNDERBARREL_LIGHT, WeaponMod__Model::UB_UNDERBARREL_LIGHT },
+        { fbWeaponMod::FB_WeaponModModel_UB_COMP_ASSISTED_LS, WeaponMod__Model::UB_COMP_ASSISTED_LS },
+        { fbWeaponMod::FB_WeaponModModel_UB_ULTRAVIOLET_LS, WeaponMod__Model::UB_ULTRAVIOLET_LS },
+        { fbWeaponMod::FB_WeaponModModel_UB_SPEC_OPS_LS, WeaponMod__Model::UB_SPEC_OPS_LS },
+        { fbWeaponMod::FB_WeaponModModel_UB_LASER_SIGHT, WeaponMod__Model::UB_LASER_SIGHT }
     };
     return map.at(id);
 }

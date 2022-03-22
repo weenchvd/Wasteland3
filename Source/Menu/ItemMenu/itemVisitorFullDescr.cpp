@@ -124,8 +124,8 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
     }
     oss << text.common().hitChance() << sp
         << common::getChance(weapon.chanceHit()) << p << endl;
-    oss << text.common().critDamage() << sp << x
-        << common::getMult(weapon.multiplierCritDamage()) << endl;
+    oss << text.common().critDamage() << sp
+        << common::getMult(weapon.multiplierCritDamage()) << x << endl;
     oss << text.common().critChance() << sp
         << common::getChance(weapon.chanceCritDamage()) << p << endl;
     oss << text.common().penetration() << sp
@@ -221,8 +221,8 @@ void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) no
             << common::getChance(weaponMod.chanceHit()) << p << endl;
     }
     if (weaponMod.multiplierCritDamage() != def.multiplierCritDamage()) {
-        oss << text.common().critDamage() << sp << x
-            << common::getMult(weaponMod.multiplierCritDamage()) << endl;
+        oss << text.common().critDamage() << sp
+            << common::getMult(weaponMod.multiplierCritDamage()) << x << endl;
     }
     if (weaponMod.chanceCritDamage() != def.chanceCritDamage()) {
         oss << text.common().critChance() << sp

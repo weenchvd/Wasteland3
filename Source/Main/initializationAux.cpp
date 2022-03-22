@@ -49,9 +49,36 @@ void initializeInventory(game::object::Inventory& inventory)
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_SHORTENED));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_LIGHTWEIGHT));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_HAMMERFORGE_RIFLED), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_BROACH_RIFLED), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_COLUMBIUM));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_CUT_RIFLED), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_ALLOY));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_OVERSIZED));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_MAX_CAPACITY), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_EXTENDED));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_LONG));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_FARSIGHT), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_DEADEYE));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_38MM));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_32MM));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_21MM));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_HOLOGRAPHIC), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_RED_DOT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::SCOPE_REFLEX));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_HE_FUSE_LINKAGE), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_PLASMA_LINKAGE));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_CRYOCELL_LINKAGE));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_INCENDIARY_LINKAGE));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_SWAT_LIGHT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_TACTICAL_LIGHT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_UNDERBARREL_LIGHT));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_COMP_ASSISTED_LS));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_ULTRAVIOLET_LS));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_SPEC_OPS_LS));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::UB_LASER_SIGHT));
 
     /// ammo
     inventory.insert(f.createAmmo(Ammo::Type::A_5_56, 15), true);

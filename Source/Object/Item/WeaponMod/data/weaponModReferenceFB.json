@@ -60,6 +60,78 @@
       "armor_penetration": 1
     },
     {
+      "weapon_mod_model": "BARREL_HAMMERFORGE_RIFLED",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 7
+          }
+        ]
+      },
+      "name": {
+        "en": "HAMMERFORGE-RIFLED BARREL",
+        "ru": "СТВОЛ, НАРЕЗАННЫЙ ПРОКОВКОЙ"
+      },
+      "descrip": {
+        "en": "A shaped barrel made through an advanced technique, its strength comes from an unusually high grain structure.",
+        "ru": "Ствол, изготовленный передовым методом. Прочность обусловлена необычайно мелкозернистой структурой."
+      },
+      "dmg_min": -16,
+      "dmg_max": 16,
+      "price": 225,
+      "armor_penetration": 3
+    },
+    {
+      "weapon_mod_model": "BARREL_BROACH_RIFLED",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 4
+          }
+        ]
+      },
+      "name": {
+        "en": "BROACH-RIFLED BARREL",
+        "ru": "СТВОЛ, НАРЕЗАННЫЙ ПРОТЯЖКОЙ"
+      },
+      "descrip": {
+        "en": "The process that produces these barrels is expensive, but the product is very strong with minimal micro-fatigue.",
+        "ru": "Процесс изготовления дорогостоящий, но ствол получается очень прочный и с минимальной микроусталостью."
+      },
+      "dmg_min": -8,
+      "dmg_max": 8,
+      "price": 135,
+      "armor_penetration": 2
+    },
+    {
+      "weapon_mod_model": "BARREL_CUT_RIFLED",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 1
+          }
+        ]
+      },
+      "name": {
+        "en": "CUT-RIFLED BARREL",
+        "ru": "ГЛАДКОНАРЕЗНОЙ СТВОЛ"
+      },
+      "descrip": {
+        "en": "Simple, consistent rifling on a true bore for improved bullet velocity.",
+        "ru": "Простая нарезка в гладком стволе повышает скорость полета пули."
+      },
+      "dmg_min": -4,
+      "dmg_max": 4,
+      "price": 75,
+      "armor_penetration": 1
+    },
+    {
       "weapon_mod_model": "BARREL_TITANIUM_COBALT",
       "weapon_mod_type": "BARREL",
       "weapon_mod_requirements": {
@@ -81,6 +153,52 @@
       "dmg_min": 8,
       "dmg_max": 8,
       "price": 175
+    },
+    {
+      "weapon_mod_model": "BARREL_COLUMBIUM",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 3
+          }
+        ]
+      },
+      "name": {
+        "en": "COLUMBIUM BARREL",
+        "ru": "НИОБИЕВЫЙ СТВОЛ"
+      },
+      "descrip": {
+        "en": "Made of rare metals that demonstrate resistance to heat erosion and corrosion.",
+        "ru": "Изготовлен из редких металлов. Устойчив к коррозии и тепловому разрушению."
+      },
+      "dmg_min": 4,
+      "dmg_max": 4,
+      "price": 100
+    },
+    {
+      "weapon_mod_model": "BARREL_ALLOY",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 1
+          }
+        ]
+      },
+      "name": {
+        "en": "ALLOY BARREL",
+        "ru": "СТВОЛ ИЗ СПЛАВА"
+      },
+      "descrip": {
+        "en": "Stronger than steel, this barrel can withstand higher chamber pressures.",
+        "ru": "Сплав прочнее стали и ствол выдерживает более высокое давление в патроннике."
+      },
+      "dmg_min": 2,
+      "dmg_max": 2,
+      "price": 50
     },
     {
       "weapon_mod_model": "MAG_QUICKFIRE",
@@ -149,6 +267,497 @@
       "price": 275,
       "capacity_ammo": 8,
       "ap_per_reload": 1
+    },
+    {
+      "weapon_mod_model": "MAG_MAX_CAPACITY",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 3
+          }
+        ]
+      },
+      "name": {
+        "en": "MAX CAPACITY MAG",
+        "ru": "МАГАЗИН МАКСИМАЛЬНОЙ ЕМКОСТИ"
+      },
+      "descrip": {
+        "en": "This is as big as magazines get without becoming a pain in the ass.",
+        "ru": "Магазин максимального размера, а еще удобный в обращении."
+      },
+      "price": 100,
+      "capacity_ammo": 4
+    },
+    {
+      "weapon_mod_model": "MAG_EXTENDED",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 2
+          }
+        ]
+      },
+      "name": {
+        "en": "EXTENDED MAG",
+        "ru": "УВЕЛИЧЕННЫЙ МАГАЗИН"
+      },
+      "descrip": {
+        "en": "Bigger magazines give you more boom-boom on tap.",
+        "ru": "Более вместительные магазины позволяют дольше палить."
+      },
+      "price": 75,
+      "capacity_ammo": 2
+    },
+    {
+      "weapon_mod_model": "MAG_LONG",
+      "weapon_mod_type": "MAGAZINE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 1
+          }
+        ]
+      },
+      "name": {
+        "en": "LONG MAG",
+        "ru": "ДЛИННЫЙ МАГАЗИН"
+      },
+      "descrip": {
+        "en": "Reload less with more ammo in the mag.",
+        "ru": "В магазине больше патронов и его нужно реже перезаряжать."
+      },
+      "price": 50,
+      "capacity_ammo": 1
+    },
+    {
+      "weapon_mod_model": "SCOPE_FARSIGHT",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 9
+          }
+        ]
+      },
+      "name": {
+        "en": "FARSIGHT COMPUTER ASSISTED SCOPE",
+        "ru": "КОМПЬЮТЕРИЗОВАННЫЙ ПРИЦЕЛ 'ФАРСАЙТ'"
+      },
+      "descrip": {
+        "en": "The integrated processor on this scope uses on-screen guides to direct shooters toward center mass, even on faraway targets.",
+        "ru": "Встроенный в этот прицел процессор выводит на экран метки, указывающие стрелку на центр массы цели, в том числе на дальних дистанциях."
+      },
+      "price": 450,
+      "range_attack": 9,
+      "chance_crit_dmg": -50
+    },
+    {
+      "weapon_mod_model": "SCOPE_DEADEYE",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "DEADEYE EXPERIMENTAL SCOPE",
+        "ru": "ЭКСПЕРИМЕНТАЛЬНЫЙ ПРИЦЕЛ МЕРТВОГО ГЛАЗА"
+      },
+      "descrip": {
+        "en": "This electronic scope presents a wealth of targeting infomation but only at a limited range.",
+        "ru": "Этот электронный прицел позволяет получить множество различной информации о цели, однако лишь на ограниченной дистанции."
+      },
+      "price": 350,
+      "range_attack": -5,
+      "chance_crit_dmg": 60
+    },
+    {
+      "weapon_mod_model": "SCOPE_38MM",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 6
+          }
+        ]
+      },
+      "name": {
+        "en": "38MM MAGNIFYING SCOPE",
+        "ru": "38-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "This large lens magnifies, but also provides significant eye relief, making it a much-sought-after accessory.",
+        "ru": "Очень полезная вещь: линза не только увеличивает изображение, но и позволяет не прижимать окуляр к глазнице."
+      },
+      "price": 100,
+      "range_attack": 6
+    },
+    {
+      "weapon_mod_model": "SCOPE_32MM",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 4
+          }
+        ]
+      },
+      "name": {
+        "en": "32MM MAGNIFYING SCOPE",
+        "ru": "32-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "The large objective lens of this scope permits greater light collection and better imaging.",
+        "ru": "Крупная лизна объектива пропускает больше света и дает более четкое изображение."
+      },
+      "price": 75,
+      "range_attack": 4
+    },
+    {
+      "weapon_mod_model": "SCOPE_21MM",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 2
+          }
+        ]
+      },
+      "name": {
+        "en": "21MM MAGNIFYING SCOPE",
+        "ru": "21-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "A staple attachment from the pre-war world, this basic scope provides a modest zoom.",
+        "ru": "Стандартный оптический прибор довоенной эпохи. Имеет небольшую кратность."
+      },
+      "price": 50,
+      "range_attack": 2
+    },
+    {
+      "weapon_mod_model": "SCOPE_HOLOGRAPHIC",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 5
+          }
+        ]
+      },
+      "name": {
+        "en": "HOLOGRAPHIC SCOPE",
+        "ru": "ГОЛОГРАФИЧЕСКИЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "The most advanced reticle tech yet developed.",
+        "ru": "Самая продвинутая технология прицеливания."
+      },
+      "price": 100,
+      "chance_crit_dmg": 40
+    },
+    {
+      "weapon_mod_model": "SCOPE_RED_DOT",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 3
+          }
+        ]
+      },
+      "name": {
+        "en": "RED DOT SCOPE",
+        "ru": "КОЛЛИМАТОРНЫЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "The little dot says, 'Make the bullets go here!'",
+        "ru": "Маленькая точка как бы говорит: 'Сюда полетят пули!'"
+      },
+      "price": 75,
+      "chance_crit_dmg": 30
+    },
+    {
+      "weapon_mod_model": "SCOPE_REFLEX",
+      "weapon_mod_type": "SCOPE",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 1
+          }
+        ]
+      },
+      "name": {
+        "en": "REFLEX SCOPE",
+        "ru": "РЕФЛЕКТОРНЫЙ ПРИЦЕЛ"
+      },
+      "descrip": {
+        "en": "Old tech, but it lines up the bad guys real quick.",
+        "ru": "Технология старая, но позволяет очень быстро целиться в злодеев."
+      },
+      "price": 50,
+      "chance_crit_dmg": 20
+    },
+    {
+      "weapon_mod_model": "UB_HE_FUSE_LINKAGE",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "HE FUSE LINKAGE",
+        "ru": "ФУГАСНАЯ ПОДВОДКА"
+      },
+      "descrip": {
+        "en": "Applies high explosive microfuses to standard ammunition.",
+        "ru": "Позволяет обволакивать обычные пули слоем микроскопических разрывных капсул фугасного действия."
+      },
+      "price": 1000,
+      "armor_penetration": 99,
+      "dmg_type": "EXPLOSIVE"
+    },
+    {
+      "weapon_mod_model": "UB_PLASMA_LINKAGE",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 6
+          }
+        ]
+      },
+      "name": {
+        "en": "PLASMA LINKAGE",
+        "ru": "ПЛАЗМЕННАЯ ПОДВОДКА"
+      },
+      "descrip": {
+        "en": "This linkage transfers super-hot ionized gas to each unit of ammunition as it is fired.",
+        "ru": "С помощью этой подводки каждая пуля при выстреле обволакивается слоем перегретого ионизированного газа."
+      },
+      "price": 850,
+      "armor_penetration": 99,
+      "dmg_type": "ENERGY"
+    },
+    {
+      "weapon_mod_model": "UB_CRYOCELL_LINKAGE",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 4
+          }
+        ]
+      },
+      "name": {
+        "en": "CRYOCELL LINKAGE",
+        "ru": "КРИОГЕННАЯ ПОДВОДКА"
+      },
+      "descrip": {
+        "en": "An advanced heat pump connects the cryocell directly to the weapon's ammunition.",
+        "ru": "Усовершенствованный термонасос для прямого подсоединения криогенной капсулы к патроннику."
+      },
+      "price": 750,
+      "armor_penetration": 99,
+      "dmg_type": "COLD"
+    },
+    {
+      "weapon_mod_model": "UB_INCENDIARY_LINKAGE",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 3
+          }
+        ]
+      },
+      "name": {
+        "en": "INCENDIARY LINKAGE",
+        "ru": "ВОСПЛАМЕНИТЕЛЬНЫЙ ИНДУКТОР"
+      },
+      "descrip": {
+        "en": "Paints normal ammo with a napalm-like fluid as it moves through the weapon.",
+        "ru": "В процессе прохождения по каналу покрывает обычную пулю напалмообразной жидкостью."
+      },
+      "price": 600,
+      "armor_penetration": 99,
+      "dmg_type": "FIRE"
+    },
+    {
+      "weapon_mod_model": "UB_SWAT_LIGHT",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 5
+          }
+        ]
+      },
+      "name": {
+        "en": "SWAT LIGHT",
+        "ru": "ФОНАРЬ SWAT"
+      },
+      "descrip": {
+        "en": "A max-brightness underbarrel light that makes it near-impossible for anyone to hide from you.",
+        "ru": "Очень яркий подствольный фонарь. Остаться незамеченным будет практически невозможно."
+      },
+      "price": 175,
+      "chance_hit": 70
+    },
+    {
+      "weapon_mod_model": "UB_TACTICAL_LIGHT",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 3
+          }
+        ]
+      },
+      "name": {
+        "en": "TACTICAL LIGHT",
+        "ru": "ТАКТИЧЕСКИЙ ФОНАРЬ"
+      },
+      "descrip": {
+        "en": "A high-power light that lets you shine 'em up.",
+        "ru": "Мощный фонарь, который подсветит всех, кто прячется."
+      },
+      "price": 100,
+      "chance_hit": 50
+    },
+    {
+      "weapon_mod_model": "UB_UNDERBARREL_LIGHT",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 1
+          }
+        ]
+      },
+      "name": {
+        "en": "UNDERBARREL LIGHT",
+        "ru": "ПОДСТВОЛЬНЫЙ ФОНАРЬ"
+      },
+      "descrip": {
+        "en": "This basic underbarrel mod makes it easier to sight down targets.",
+        "ru": "Это базовая подствольная модификация упрощает наведение на цель."
+      },
+      "price": 50,
+      "chance_hit": 30
+    },
+    {
+      "weapon_mod_model": "UB_COMP_ASSISTED_LS",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 10
+          }
+        ]
+      },
+      "name": {
+        "en": "COMPUTER ASSISTED LASER SIGHT",
+        "ru": "КОМПЬЮТЕРИЗОВАННЫЙ ЛАЗЕРНЫЙ ЦЕЛЕУКАЗАТЕЛЬ"
+      },
+      "descrip": {
+        "en": "This experimental, somewhat bulky laser sight uses a computer and ambient sensors to calculate enemy vulnerabilities, then adjusts beam strength for optimal accuracy.",
+        "ru": "Этот экспериментальный, несколько громоздкий ЛЦУ оснащен компьютерным чипом и встроенными сенсорами, позволяющими вычислить уязвимые места противника и соответственно настроить мощность луча."
+      },
+      "price": 450,
+      "multiplier_crit_dmg": 25,
+      "chance_hit": -50
+    },
+    {
+      "weapon_mod_model": "UB_ULTRAVIOLET_LS",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 6
+          }
+        ]
+      },
+      "name": {
+        "en": "ULTRAVIOLET LASER SIGHT",
+        "ru": "УЛЬТРАФИОЛЕТОВЫЙ ЛЦУ"
+      },
+      "descrip": {
+        "en": "This hybrid laser shines a bright dot on targets with only a dim beam and source.",
+        "ru": "Гибридный лазер оставляет на цели яркую метку, а сам луч и его источник почти невидимы."
+      },
+      "price": 225,
+      "multiplier_crit_dmg": 15
+    },
+    {
+      "weapon_mod_model": "UB_SPEC_OPS_LS",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 6
+          }
+        ]
+      },
+      "name": {
+        "en": "SPEC-OPS LASER SIGHT",
+        "ru": "ЛЦУ СПЕЦНАЗА"
+      },
+      "descrip": {
+        "en": "A brighter, more stable laser sight that improves visibility of the target dot.",
+        "ru": "Более яркий и стабильный целеуказатель, дающий более заметную точку прицеливания."
+      },
+      "price": 135,
+      "multiplier_crit_dmg": 10
+    },
+    {
+      "weapon_mod_model": "UB_LASER_SIGHT",
+      "weapon_mod_type": "UNDERBARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 2
+          }
+        ]
+      },
+      "name": {
+        "en": "LASER SIGHT",
+        "ru": "ЛАЗЕРНЫЙ ЦЕЛЕУКАЗАТЕЛЬ"
+      },
+      "descrip": {
+        "en": "A classic sighting tool. The red beam can make it easier to aim, but can also get lost in some environments.",
+        "ru": "Классическое прицельное приспособление. Красный луч упрощает наведение на цель, но в некоторых ситуациях его может быть не видно."
+      },
+      "price": 75,
+      "multiplier_crit_dmg": 5
     }
   ],
   "ref_default": {

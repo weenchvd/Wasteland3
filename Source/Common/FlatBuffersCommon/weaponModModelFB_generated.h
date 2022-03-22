@@ -24,11 +24,30 @@ enum FB_WeaponModModel : int16_t {
   FB_WeaponModModel_MAG_MAX_CAPACITY = 12,
   FB_WeaponModModel_MAG_EXTENDED = 13,
   FB_WeaponModModel_MAG_LONG = 14,
+  FB_WeaponModModel_SCOPE_FARSIGHT = 15,
+  FB_WeaponModModel_SCOPE_DEADEYE = 16,
+  FB_WeaponModModel_SCOPE_38MM = 17,
+  FB_WeaponModModel_SCOPE_32MM = 18,
+  FB_WeaponModModel_SCOPE_21MM = 19,
+  FB_WeaponModModel_SCOPE_HOLOGRAPHIC = 20,
+  FB_WeaponModModel_SCOPE_RED_DOT = 21,
+  FB_WeaponModModel_SCOPE_REFLEX = 22,
+  FB_WeaponModModel_UB_HE_FUSE_LINKAGE = 23,
+  FB_WeaponModModel_UB_PLASMA_LINKAGE = 24,
+  FB_WeaponModModel_UB_CRYOCELL_LINKAGE = 25,
+  FB_WeaponModModel_UB_INCENDIARY_LINKAGE = 26,
+  FB_WeaponModModel_UB_SWAT_LIGHT = 27,
+  FB_WeaponModModel_UB_TACTICAL_LIGHT = 28,
+  FB_WeaponModModel_UB_UNDERBARREL_LIGHT = 29,
+  FB_WeaponModModel_UB_COMP_ASSISTED_LS = 30,
+  FB_WeaponModModel_UB_ULTRAVIOLET_LS = 31,
+  FB_WeaponModModel_UB_SPEC_OPS_LS = 32,
+  FB_WeaponModModel_UB_LASER_SIGHT = 33,
   FB_WeaponModModel_MIN = FB_WeaponModModel_INVALID,
-  FB_WeaponModModel_MAX = FB_WeaponModModel_MAG_LONG
+  FB_WeaponModModel_MAX = FB_WeaponModModel_UB_LASER_SIGHT
 };
 
-inline const FB_WeaponModModel (&EnumValuesFB_WeaponModModel())[15] {
+inline const FB_WeaponModModel (&EnumValuesFB_WeaponModModel())[34] {
   static const FB_WeaponModModel values[] = {
     FB_WeaponModModel_INVALID,
     FB_WeaponModModel_BARREL_SHORTENED,
@@ -44,13 +63,32 @@ inline const FB_WeaponModModel (&EnumValuesFB_WeaponModModel())[15] {
     FB_WeaponModModel_MAG_OVERSIZED,
     FB_WeaponModModel_MAG_MAX_CAPACITY,
     FB_WeaponModModel_MAG_EXTENDED,
-    FB_WeaponModModel_MAG_LONG
+    FB_WeaponModModel_MAG_LONG,
+    FB_WeaponModModel_SCOPE_FARSIGHT,
+    FB_WeaponModModel_SCOPE_DEADEYE,
+    FB_WeaponModModel_SCOPE_38MM,
+    FB_WeaponModModel_SCOPE_32MM,
+    FB_WeaponModModel_SCOPE_21MM,
+    FB_WeaponModModel_SCOPE_HOLOGRAPHIC,
+    FB_WeaponModModel_SCOPE_RED_DOT,
+    FB_WeaponModModel_SCOPE_REFLEX,
+    FB_WeaponModModel_UB_HE_FUSE_LINKAGE,
+    FB_WeaponModModel_UB_PLASMA_LINKAGE,
+    FB_WeaponModModel_UB_CRYOCELL_LINKAGE,
+    FB_WeaponModModel_UB_INCENDIARY_LINKAGE,
+    FB_WeaponModModel_UB_SWAT_LIGHT,
+    FB_WeaponModModel_UB_TACTICAL_LIGHT,
+    FB_WeaponModModel_UB_UNDERBARREL_LIGHT,
+    FB_WeaponModModel_UB_COMP_ASSISTED_LS,
+    FB_WeaponModModel_UB_ULTRAVIOLET_LS,
+    FB_WeaponModModel_UB_SPEC_OPS_LS,
+    FB_WeaponModModel_UB_LASER_SIGHT
   };
   return values;
 }
 
 inline const char * const *EnumNamesFB_WeaponModModel() {
-  static const char * const names[16] = {
+  static const char * const names[35] = {
     "INVALID",
     "BARREL_SHORTENED",
     "BARREL_LIGHTWEIGHT",
@@ -66,13 +104,32 @@ inline const char * const *EnumNamesFB_WeaponModModel() {
     "MAG_MAX_CAPACITY",
     "MAG_EXTENDED",
     "MAG_LONG",
+    "SCOPE_FARSIGHT",
+    "SCOPE_DEADEYE",
+    "SCOPE_38MM",
+    "SCOPE_32MM",
+    "SCOPE_21MM",
+    "SCOPE_HOLOGRAPHIC",
+    "SCOPE_RED_DOT",
+    "SCOPE_REFLEX",
+    "UB_HE_FUSE_LINKAGE",
+    "UB_PLASMA_LINKAGE",
+    "UB_CRYOCELL_LINKAGE",
+    "UB_INCENDIARY_LINKAGE",
+    "UB_SWAT_LIGHT",
+    "UB_TACTICAL_LIGHT",
+    "UB_UNDERBARREL_LIGHT",
+    "UB_COMP_ASSISTED_LS",
+    "UB_ULTRAVIOLET_LS",
+    "UB_SPEC_OPS_LS",
+    "UB_LASER_SIGHT",
     nullptr
   };
   return names;
 }
 
 inline const char *EnumNameFB_WeaponModModel(FB_WeaponModModel e) {
-  if (flatbuffers::IsOutRange(e, FB_WeaponModModel_INVALID, FB_WeaponModModel_MAG_LONG)) return "";
+  if (flatbuffers::IsOutRange(e, FB_WeaponModModel_INVALID, FB_WeaponModModel_UB_LASER_SIGHT)) return "";
   const size_t index = static_cast<size_t>(e);
   return EnumNamesFB_WeaponModModel()[index];
 }
