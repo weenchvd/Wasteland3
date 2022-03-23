@@ -1,0 +1,24 @@
+{
+  "common": {
+    "damage_vs_robots": {
+      "en": "Damage vs robots:",
+      "ru": "Урон (роботы):"
+    },
+    "damage_vs_vehicles": {
+      "en": "Damage vs vehicles:",
+      "ru": "Урон (транспорт):"
+    },
+    "damage_vs_humans": {
+      "en": "Damage vs humans:",
+      "ru": "Урон (люди):"
+    },
+    "damage_vs_animals": {
+      "en": "Damage vs animals:",
+      "ru": "Урон (животные):"
+    },
+    "damage_vs_mutants": {
+      "en": "Damage vs mutants:",
+      "ru": "Урон (мутанты):"
+    }
+  }
+}

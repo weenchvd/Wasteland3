@@ -6,6 +6,7 @@
 
 #include"ammo.hpp"
 #include"character.hpp"
+#include"damage.hpp"
 #include"initialization.hpp"
 #include"locator.hpp"
 #include"weapon.hpp"
@@ -25,6 +26,7 @@ void initializeGame()
     object::Weapon::initialize();
     object::WeaponMod::initialize();
     object::Ammo::initialize();
+    object::Damage::initialize();
 }
 
 } // namespace global

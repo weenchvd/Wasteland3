@@ -6,7 +6,9 @@
 
 #include"ammo.hpp"
 #include"attribute.hpp"
+#include"damage.hpp"
 #include"itemVisitorFullDescr.hpp"
+#include"menuItemCommon.hpp"
 #include"skill.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
@@ -106,8 +108,9 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
 
     oss << text.common().damage() << sp << weapon.damageMinimum() << '-'
         << weapon.damageMaximum() << sp << x
-        << common::getShots(weapon.shotsPerAttack()) << endl;
-    /// TODO oss << damageType << endl;
+        << common::getShots(weapon.shotsPerAttack()) << sp
+        << object::Damage::damageReferenceContainer().damageReference(weapon.damageType()).name() << endl;
+    oss << getDamageDescription(Indent{}, weapon.damageType());
     oss << text.common().ap() << sp
         << common::getAP(weapon.actionPointPerAttack()) << endl;
     oss << text.common().apReload() << sp

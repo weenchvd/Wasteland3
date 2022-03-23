@@ -18,7 +18,10 @@ set(SOURCE_CXX_LIST "item.cpp"
                     "Ammo/ammoCommon.cpp"
                     "Ammo/ammoReference.cpp"
                     "Ammo/ammoText.cpp"
+                    "Damage/damage.cpp"
                     "Damage/damageCommon.cpp"
+                    "Damage/damageReference.cpp"
+                    "Damage/damageText.cpp"
                     "Weapon/weapon.cpp"
                     "Weapon/weaponCommon.cpp"
                     "Weapon/weaponReference.cpp"
@@ -50,5 +53,6 @@ target_link_libraries(${LIBRARY_NAME}
 )
 
 add_subdirectory("Ammo")
+add_subdirectory("Damage")
 add_subdirectory("Weapon")
 add_subdirectory("WeaponMod")

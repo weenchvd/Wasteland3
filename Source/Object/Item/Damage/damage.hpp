@@ -8,6 +8,8 @@
 #define DAMAGE_HPP
 
 #include"damageCommon.hpp"
+#include"damageReference.hpp"
+#include"damageText.hpp"
 
 namespace game {
 namespace object {
@@ -16,7 +18,38 @@ class Damage {
 public:
     using Type          = Damage__Type;
 
+public:
+    static void initialize();
+
+    static bool isInitialized();
+
+public:
+    static const DamageReferenceContainer& damageReferenceContainer() noexcept {
+        return ref_;
+    }
+
+    static const DamageText& damageText() noexcept {
+        return text_;
+    }
+
+private:
+    static const DamageReferenceContainer       ref_;
+    static const DamageText                     text_;
 };
+
+///************************************************************************************************
+
+inline void Damage::initialize()
+{
+    ref_.initialize();
+    text_.initialize();
+}
+
+inline bool Damage::isInitialized()
+{
+    return ref_.isInitialized()
+        && text_.isInitialized();
+}
 
 } // namespace object
 } // namespace game

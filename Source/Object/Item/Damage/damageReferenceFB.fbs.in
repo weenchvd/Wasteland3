@@ -1,0 +1,31 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "damageTypeFB.fbs";
+include "languageBundleFB.fbs";
+
+namespace fbDamage;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_DamageReference {
+  dmg_type:fbDamage.FB_DamageType = INVALID;
+  name:fbCommon.FB_LanguageBundle;
+  descrip:fbCommon.FB_LanguageBundle;
+  damage_vs_robots:int16 = 0;
+  damage_vs_vehicles:int16 = 0;
+  damage_vs_humans:int16 = 0;
+  damage_vs_animals:int16 = 0;
+  damage_vs_mutants:int16 = 0;
+}
+
+table FB_DamageReferenceContainer {
+  refs:[FB_DamageReference];
+  ref_default:FB_DamageReference;
+}
+
+root_type FB_DamageReferenceContainer;

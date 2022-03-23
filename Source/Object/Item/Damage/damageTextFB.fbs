@@ -1,0 +1,26 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbDamage;
+
+file_identifier "DMGT";
+file_extension "bundle";
+
+table FB_DamageTextCommon {
+  damage_vs_robots:fbCommon.FB_LanguageBundle;
+  damage_vs_vehicles:fbCommon.FB_LanguageBundle;
+  damage_vs_humans:fbCommon.FB_LanguageBundle;
+  damage_vs_animals:fbCommon.FB_LanguageBundle;
+  damage_vs_mutants:fbCommon.FB_LanguageBundle;
+}
+
+table FB_DamageText {
+  common:FB_DamageTextCommon;
+}
+
+root_type FB_DamageText;

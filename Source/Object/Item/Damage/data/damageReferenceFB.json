@@ -1,0 +1,84 @@
+{
+  "refs": [
+    {
+      "dmg_type": "NORMAL",
+      "name": {
+        "en": "NORMAL DAMAGE",
+        "ru": "ОБЫЧНЫЙ УРОН"
+      },
+      "descrip": {
+        "en": "",
+        "ru": ""
+      }
+    },
+    {
+      "dmg_type": "FIRE",
+      "name": {
+        "en": "FIRE DAMAGE",
+        "ru": "ОГНЕННЫЙ УРОН"
+      },
+      "descrip": {
+        "en": "",
+        "ru": ""
+      },
+      "damage_vs_robots": -300,
+      "damage_vs_vehicles": -300,
+      "damage_vs_humans": 300,
+      "damage_vs_animals": 300,
+      "damage_vs_mutants": 300
+    },
+    {
+      "dmg_type": "COLD",
+      "name": {
+        "en": "COLD DAMAGE",
+        "ru": "ЛЕДЯНОЙ УРОН"
+      },
+      "descrip": {
+        "en": "",
+        "ru": ""
+      },
+      "damage_vs_robots": -300,
+      "damage_vs_vehicles": -300,
+      "damage_vs_humans": 300,
+      "damage_vs_animals": 300,
+      "damage_vs_mutants": 300
+    },
+    {
+      "dmg_type": "ENERGY",
+      "name": {
+        "en": "ENERGY DAMAGE",
+        "ru": "ЭНЕРГЕТИЧЕСКИЙ УРОН"
+      },
+      "descrip": {
+        "en": "",
+        "ru": ""
+      },
+      "damage_vs_robots": 300,
+      "damage_vs_vehicles": 300,
+      "damage_vs_humans": -300,
+      "damage_vs_animals": -300,
+      "damage_vs_mutants": -300
+    },
+    {
+      "dmg_type": "EXPLOSIVE",
+      "name": {
+        "en": "EXPLOSIVE DAMAGE",
+        "ru": "УРОН ОТ ВЗРЫВА"
+      },
+      "descrip": {
+        "en": "",
+        "ru": ""
+      }
+    }
+  ],
+  "ref_default": {
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    }
+  }
+}

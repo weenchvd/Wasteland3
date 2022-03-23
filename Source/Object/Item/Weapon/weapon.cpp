@@ -78,6 +78,8 @@ void Weapon::apply() noexcept
     apAttack_       = base_.apAttack_;
     apReload_       = base_.apReload_;
     shoPerAttack_   = base_.shoPerAttack_;
+    tyAmmo_         = base_.tyAmmo_;
+    tyDmg_          = base_.tyDmg_;
 
     for (unsigned int i = 0; i < slotWeaponMod_.size(); ++i) {
         if (slotWeaponMod_[i]) {
