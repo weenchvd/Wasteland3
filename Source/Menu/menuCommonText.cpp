@@ -34,9 +34,9 @@ void MenuCommonText::initialize()
     initCommon();
 
     assert(Locator::isInitialized());
-    setLanguage(Locator::getOption().getLanguage());
+    setLanguage(Locator::getOptions().optLanguage().getLanguage());
     langObs_.getDelegate().bind<&MenuCommonText::setLanguage>();
-    Locator::getOption().languageSubject().addObserver(&langObs_);
+    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

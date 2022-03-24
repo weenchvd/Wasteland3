@@ -12,12 +12,14 @@ namespace global {
 
 using namespace std;
 
-global::Factory Locator::factory_;
+global::Factory                     Locator::factory_;
 
-unique_ptr<global::PlainText> Locator::plainText_;
-unique_ptr<global::Option> Locator::option_;
+unique_ptr<global::PlainText>       Locator::plainText_;
+unique_ptr<global::Options>         Locator::options_;
 
-bool Locator::initialized_{ false };
+bool                                Locator::initialized_{ false };
+
+///************************************************************************************************
 
 void Locator::initialize()
 {
@@ -25,7 +27,7 @@ void Locator::initialize()
 
     plainText_ = Locator::getFactory().createPlainText<global::PlainText>(
         global::PlainText::Language::EN);
-    option_ = Locator::getFactory().createOption();
+    options_ = Locator::getFactory().createOptions();
 
     initialized_ = true;
 }

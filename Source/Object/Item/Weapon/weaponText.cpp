@@ -49,9 +49,9 @@ void WeaponText::initialize()
     initCommon(fb->common());
 
     assert(Locator::isInitialized());
-    setLanguage(Locator::getOption().getLanguage());
+    setLanguage(Locator::getOptions().optLanguage().getLanguage());
     langObs_.getDelegate().bind<&WeaponText::setLanguage>();
-    Locator::getOption().languageSubject().addObserver(&langObs_);
+    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

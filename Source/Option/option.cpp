@@ -4,41 +4,61 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"locator.hpp"
+#include"common.hpp"
 #include"option.hpp"
-#include<type_traits>
+#include<assert.h>
 
 namespace game {
 namespace global {
 
 using namespace std;
-using global::PlainText;
-using global::Locator;
 
-Option::Option() noexcept
+OptionLanguage::OptionLanguage() noexcept
     :
-    lang_           { Language::EN, false }
+    subj_           {},
+    curLang_        { language::EN },
+    prevLang_       { language::EN }
 {}
 
-bool Option::isModified() const noexcept
+void OptionLanguage::accept() noexcept
 {
-    return lang_.second;
-}
-
-void Option::accept() noexcept
-{
-    if (lang_.second) {
-        Locator::getPlainText().setLanguage(lang_.first);
-        langSubj_.notify(lang_.first);
-        lang_.second = false;
+    if (isModified() == true) {
+        prevLang_ = curLang_;
     }
 }
 
-void Option::reject() noexcept
+void OptionLanguage::reject() noexcept
 {
-    if (lang_.second) {
-        lang_ = { Locator::getPlainText().getLanguage(), false };
+    if (isModified() == true) {
+        curLang_ = prevLang_;
+        subj_.notify(curLang_);
     }
+}
+
+void OptionLanguage::setLanguage(language lang) noexcept
+{
+    assert(common::isValidEnum(lang));
+    if (curLang_ != lang) {
+        curLang_ = lang;
+        subj_.notify(curLang_);
+    }
+}
+
+///************************************************************************************************
+
+bool Options::isModified() const noexcept
+{
+    return optLang_.isModified();
+}
+
+void Options::acceptAll() noexcept
+{
+    optLang_.accept();
+}
+
+void Options::rejectAll() noexcept
+{
+    optLang_.reject();
 }
 
 } // namespace global

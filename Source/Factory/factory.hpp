@@ -12,6 +12,7 @@
 #include"option.hpp"
 #include"plainText.hpp"
 #include"unit.hpp"
+#include<assert.h>
 #include<memory>
 
 namespace game {
@@ -21,14 +22,15 @@ class Factory {
 public:
     template<class T>
     std::unique_ptr<object::Item> createItem(typename T::Model model) const {
-        //T::initialize();
+        assert(T::isInitialized() == true);
         return std::unique_ptr<object::Item>(new T(std::move(model)));
     }
 
     std::unique_ptr<object::Item> createAmmo(
         object::Ammo::Type type,
-        object::Ammo::ammo_quantity qty
-    ) const {
+        object::Ammo::ammo_quantity qty) const
+    {
+        assert(object::Ammo::isInitialized() == true);
         return std::unique_ptr<object::Item>(
             new object::Ammo(std::move(type), std::move(qty))
             );
@@ -36,7 +38,7 @@ public:
 
     template<class T>
     std::unique_ptr<object::Unit> createUnit(typename T::Model model) const {
-        //T::initialize();
+        assert(T::isInitialized() == true);
         return std::unique_ptr<object::Unit>(new T(std::move(model)));
     }
 
@@ -50,8 +52,8 @@ private:
         return std::unique_ptr<global::PlainText>(new T(lang));
     }
 
-    std::unique_ptr<global::Option> createOption() const {
-        return std::unique_ptr<global::Option>(new global::Option());
+    std::unique_ptr<global::Options> createOptions() const {
+        return std::unique_ptr<global::Options>(new global::Options());
     }
 
 };

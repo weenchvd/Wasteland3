@@ -48,9 +48,9 @@ void AttributeText::initialize()
     initByType(table->descr(), descr_);
 
     assert(Locator::isInitialized());
-    setLanguage(Locator::getOption().getLanguage());
+    setLanguage(Locator::getOptions().optLanguage().getLanguage());
     langObs_.getDelegate().bind<&AttributeText::setLanguage>();
-    Locator::getOption().languageSubject().addObserver(&langObs_);
+    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

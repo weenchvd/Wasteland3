@@ -7,75 +7,76 @@
 #ifndef OPTION_HPP
 #define OPTION_HPP
 
-#include"common.hpp"
 #include"observerDLL.hpp"
 #include"plainText.hpp"
-#include<assert.h>
-#include<memory>
-#include<utility>
 
 namespace game {
 namespace global {
 
-class Factory;
-
-class Option {
+class OptionLanguage {
 public:
-    using Language      = global::PlainText::Language;
+    using language = global::PlainText::Language;
 
-    friend Factory;
+    friend class Options;
 
 protected:
-    Option() noexcept;
+    OptionLanguage() noexcept;
 
 public:
-    Option(const Option&) = delete;
-    Option& operator=(const Option&) = delete;
+    OptionLanguage(const OptionLanguage&) = delete;
+    OptionLanguage& operator=(const OptionLanguage&) = delete;
 
-    bool isModified() const noexcept;
+    bool isModified() const noexcept { return curLang_ != prevLang_; }
 
     void accept() noexcept;
 
     void reject() noexcept;
 
 public:
-    global::PlainText::Language getLanguage() const noexcept;
+    language getLanguage() const noexcept { return curLang_; }
 
-    void setLanguage(global::PlainText::Language lang) noexcept;
+    void setLanguage(language lang) noexcept;
 
-    const common::SubjectDLL<void, Language>& languageSubject() const noexcept;
+    const common::SubjectDLL<void, language>& languageSubject() const noexcept { return subj_; }
 
-    common::SubjectDLL<void, Language>& languageSubject() noexcept;
+    common::SubjectDLL<void, language>& languageSubject() noexcept { return subj_; }
 
 private:
-    std::pair<Language, bool>                   lang_;
-    common::SubjectDLL<void, Language>    langSubj_;
+    common::SubjectDLL<void, language>      subj_;
+    language                                curLang_;
+    language                                prevLang_;
 };
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
-inline global::PlainText::Language Option::getLanguage() const noexcept
-{
-    return lang_.first;
-}
+class Options {
+public:
+    friend class Factory;
 
-inline void Option::setLanguage(global::PlainText::Language lang) noexcept
-{
-    assert(common::isValidEnum(lang)); // TODO check if lang == lang_
-    lang_ = { lang, true };
-}
+protected:
+    Options() noexcept {}
 
-inline const common::SubjectDLL<void, global::PlainText::Language>&
-    Option::languageSubject() const noexcept
-{
-    return langSubj_;
-}
+public:
+    Options(const Options&) = delete;
+    Options& operator=(const Options&) = delete;
 
-inline common::SubjectDLL<void, global::PlainText::Language>&
-    Option::languageSubject() noexcept
-{
-    return langSubj_;
-}
+    bool isModified() const noexcept;
+
+    void acceptAll() noexcept;
+
+    void rejectAll() noexcept;
+
+public:
+    const OptionLanguage& optLanguage() const noexcept {
+        return optLang_;
+    }
+    OptionLanguage& optLanguage() noexcept {
+        return optLang_;
+    }
+
+private:
+    OptionLanguage                  optLang_;
+};
 
 } // namespace global
 } // namespace game

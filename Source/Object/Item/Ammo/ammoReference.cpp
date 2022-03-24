@@ -55,9 +55,9 @@ void AmmoReferenceContainer::initialize()
     initContainer(fb);
 
     assert(Locator::isInitialized());
-    setLanguage(Locator::getOption().getLanguage());
+    setLanguage(Locator::getOptions().optLanguage().getLanguage());
     langObs_.getDelegate().bind<&AmmoReferenceContainer::setLanguage>();
-    Locator::getOption().languageSubject().addObserver(&langObs_);
+    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

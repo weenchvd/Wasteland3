@@ -24,20 +24,20 @@ public:
         return factory_;
     }
 
-    static global::PlainText& getPlainText() noexcept {
-        assert(option_ != nullptr);
+    static const global::PlainText& getPlainText() noexcept {
+        assert(options_ != nullptr);
         return *plainText_;
     }
 
-    static global::Option& getOption() noexcept {
-        assert(option_ != nullptr);
-        return *option_;
+    static global::Options& getOptions() noexcept {
+        assert(options_ != nullptr);
+        return *options_;
     }
 
 private:
     static global::Factory                                  factory_;
     static std::unique_ptr<global::PlainText>               plainText_;
-    static std::unique_ptr<global::Option>                  option_;
+    static std::unique_ptr<global::Options>                 options_;
 
     static bool                                             initialized_;
 };

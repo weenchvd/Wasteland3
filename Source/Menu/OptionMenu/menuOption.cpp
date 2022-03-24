@@ -37,14 +37,14 @@ void menuOption(istream& is, ostream& os, const Indent indent)
             menuLanguage(is, os, ind1);
             break;
         case actionCommon::EXIT:
-            if (global::Locator::getOption().isModified()) {
+            if (global::Locator::getOptions().isModified()) {
                 os << ind0 << "Options have been changed. Do you want to save the changes?" << endl;
                 switch (getYesNo(is, os, ind1)) {
                 case YesNo::YES:
-                    global::Locator::getOption().accept();
+                    global::Locator::getOptions().acceptAll();
                     return;
                 case YesNo::NO:
-                    global::Locator::getOption().reject();
+                    global::Locator::getOptions().rejectAll();
                     return;
                 case YesNo::CANCEL:
                 default:
@@ -78,7 +78,7 @@ void menuLanguage(istream& is, ostream& os, const Indent indent)
         verticalIndent(os);
         os << ind0 << "Language menu" << endl;
         os << ind0 << "Current language: "
-            << Locator::getPlainText().language(Locator::getOption().getLanguage()) << endl;
+            << Locator::getPlainText().language(Locator::getOptions().optLanguage().getLanguage()) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionLanguage::CHANGE_LANGUAGE, "Change language") << endl;
@@ -88,7 +88,7 @@ void menuLanguage(istream& is, ostream& os, const Indent indent)
         case actionLanguage::CHANGE_LANGUAGE: {
             PlainText::Language lang{ pickLanguage(is, os, ind1) };
             if (lang != PlainText::Language::INVALID) {
-                global::Locator::getOption().setLanguage(lang);
+                global::Locator::getOptions().optLanguage().setLanguage(lang);
             }
             break;
         }
