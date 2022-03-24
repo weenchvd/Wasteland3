@@ -12,7 +12,8 @@
 #include"menuItemText.hpp"
 #include"menuMain.hpp"
 #include"menuMainText.hpp"
-#include"menuOption.hpp"
+#include"menuOptions.hpp"
+#include"menuOptionsText.hpp"
 #include"menuSkill.hpp"
 #include<limits>
 #include<sstream>
@@ -27,6 +28,7 @@ void initializeMenu()
 {
     MenuCommonText::initialize();
     MenuMainText::initialize();
+    MenuOptionsText::initialize();
     MenuInventoryText::initialize();
     MenuItemText::initialize();
 }
@@ -57,7 +59,7 @@ void menuMain(istream& is, ostream& os, object::Squad& squad, object::Inventory&
 
         switch (getAction(is, os)) {
         case actionMain::MENU_OPTION:
-            menuOption(is, os, ind1);
+            menuOptions(is, os, ind1);
             break;
         case actionMain::MENU_SQUAD:
             menuSquad(is, os, squad, ind1);

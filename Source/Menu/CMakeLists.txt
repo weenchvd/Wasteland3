@@ -27,7 +27,8 @@ set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "ItemMenu/menuItemText.cpp"
                     "MainMenu/menuMain.cpp"
                     "MainMenu/menuMainText.cpp"
-                    "OptionMenu/menuOption.cpp"
+                    "OptionMenu/menuOptions.cpp"
+                    "OptionMenu/menuOptionsText.cpp"
                     "SkillMenu/menuSkill.cpp"
 )
 

@@ -5,46 +5,55 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"menuCommonText.hpp"
-#include"menuOption.hpp"
+#include"menuOptions.hpp"
+#include"menuOptionsText.hpp"
 #include"locator.hpp"
-#include<limits>
-#include<sstream>
-#include<string>
 
 namespace game {
 namespace menu {
 
 using namespace std;
 
-
-void menuOption(istream& is, ostream& os, const Indent indent)
+void menuOptions(istream& is, ostream& os, const Indent indent)
 {
+    using global::PlainText;
+    using global::Locator;
+
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuOptionsText::common() };
 
     while (true)
     {
         verticalIndent(os);
-        os << ind0 << "Option menu" << endl;
+        os << ind0 << text.menuName() << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionOption::LANGUAGE, "Enter the language menu") << endl;
+        printNumBar(os, ind1, actionOptions::GENERAL_OPTIONS, text.enterGeneral()) << endl;
+        printNumBar(os, ind1, actionOptions::SAVE_CHANGES, text.saveChanges()) << endl;
+        printNumBar(os, ind1, actionOptions::CANCEL_CHANGES, text.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
-        case actionOption::LANGUAGE:
-            menuLanguage(is, os, ind1);
+        case actionOptions::GENERAL_OPTIONS:
+            menuGeneralOptions(is, os, ind1);
+            break;
+        case actionOptions::SAVE_CHANGES:
+            Locator::getOptions().acceptAll();
+            break;
+        case actionOptions::CANCEL_CHANGES:
+            Locator::getOptions().rejectAll();
             break;
         case actionCommon::EXIT:
-            if (global::Locator::getOptions().isModified()) {
-                os << ind0 << "Options have been changed. Do you want to save the changes?" << endl;
+            if (Locator::getOptions().isModified()) {
+                os << ind0 << text.questionSaveChanges() << endl;
                 switch (getYesNo(is, os, ind1)) {
                 case YesNo::YES:
-                    global::Locator::getOptions().acceptAll();
+                    Locator::getOptions().acceptAll();
                     return;
                 case YesNo::NO:
-                    global::Locator::getOptions().rejectAll();
+                    Locator::getOptions().rejectAll();
                     return;
                 case YesNo::CANCEL:
                 default:
@@ -64,36 +73,63 @@ void menuOption(istream& is, ostream& os, const Indent indent)
     }
 }
 
-void menuLanguage(istream& is, ostream& os, const Indent indent)
+void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
 {
     using global::PlainText;
     using global::Locator;
 
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
+    const auto sp{ ' ' };
     const auto& comT{ MenuCommonText::common() };
+    const auto& tCom{ MenuOptionsText::common() };
+    const auto& text{ MenuOptionsText::general() };
 
     while (true)
     {
         verticalIndent(os);
-        os << ind0 << "Language menu" << endl;
-        os << ind0 << "Current language: "
+        os << ind0 << text.menuName() << endl;
+        os << ind0 << text.currentLanguage() << sp
             << Locator::getPlainText().language(Locator::getOptions().optLanguage().getLanguage()) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionLanguage::CHANGE_LANGUAGE, "Change language") << endl;
+        printNumBar(os, ind1, actionGeneralOptions::CHANGE_LANGUAGE, text.changeLanguage()) << endl;
+        printNumBar(os, ind1, actionGeneralOptions::SAVE_CHANGES, tCom.saveChanges()) << endl;
+        printNumBar(os, ind1, actionGeneralOptions::CANCEL_CHANGES, tCom.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
-        case actionLanguage::CHANGE_LANGUAGE: {
+        case actionGeneralOptions::CHANGE_LANGUAGE: {
             PlainText::Language lang{ pickLanguage(is, os, ind1) };
             if (lang != PlainText::Language::INVALID) {
-                global::Locator::getOptions().optLanguage().setLanguage(lang);
+                Locator::getOptions().optLanguage().setLanguage(lang);
             }
             break;
         }
+        case actionGeneralOptions::SAVE_CHANGES:
+            Locator::getOptions().acceptAll();
+            break;
+        case actionGeneralOptions::CANCEL_CHANGES:
+            Locator::getOptions().rejectAll();
+            break;
         case actionCommon::EXIT:
-            return;
+            if (Locator::getOptions().isModified()) {
+                os << ind0 << tCom.questionSaveChanges() << endl;
+                switch (getYesNo(is, os, ind1)) {
+                case YesNo::YES:
+                    Locator::getOptions().acceptAll();
+                    return;
+                case YesNo::NO:
+                    Locator::getOptions().rejectAll();
+                    return;
+                case YesNo::CANCEL:
+                default:
+                    break;
+                }
+            }
+            else {
+                return;
+            }
         case actionCommon::INVALID:
             break;
         default:
@@ -113,16 +149,18 @@ global::PlainText::Language pickLanguage(istream& is, ostream& os, const Indent 
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuOptionsText::aux() };
 
-    os << ind0 << "Languages:" << endl;
+    os << ind0 << text.languages() << endl;
     for (int i{ common::toUnderlying(common::firstEnum<PlainText::Language>()) };
         i <= common::toUnderlying(common::lastEnum<PlainText::Language>()); ++i)
     {
-        os << ind1 << '\'' << i << "\' "
-            << Locator::getPlainText().language(static_cast<PlainText::Language>(i)) << endl;
+        printNumBar(os, ind1, i,
+            Locator::getPlainText().language(static_cast<PlainText::Language>(i))
+        ) << endl;
     }
 
-    os << ind0 << "Select a Language:" << endl;
+    os << ind0 << text.selectLanguage() << endl;
     PlainText::Language t{ PlainText::Language::INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
