@@ -8,7 +8,6 @@
 #include"ammoReference.hpp"
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include<memory>
 #include<type_traits>
 
@@ -17,14 +16,9 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, AmmoReferenceContainer::language>
-                            AmmoReferenceContainer::langObs_;
-
-vector<AmmoReference>       AmmoReferenceContainer::refs_;
-
-underlying_type_t<AmmoReferenceContainer::language>
-                            AmmoReferenceContainer::langIndex_  { 0 };
-bool                        AmmoReferenceContainer::initialized_{ false };
+global::PlainTextBase               AmmoReferenceContainer::base_;
+vector<AmmoReference>               AmmoReferenceContainer::refs_;
+bool                                AmmoReferenceContainer::initialized_{ false };
 
 ///************************************************************************************************
 
@@ -41,9 +35,8 @@ AmmoReference::AmmoReference() noexcept
 
 void AmmoReferenceContainer::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH)
@@ -54,16 +47,10 @@ void AmmoReferenceContainer::initialize()
 
     initContainer(fb);
 
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&AmmoReferenceContainer::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
-
     initialized_ = true;
 }
 
-void AmmoReferenceContainer::initContainer(
-    const fbAmmo::FB_AmmoReferenceContainer* fb)
+void AmmoReferenceContainer::initContainer(const fbAmmo::FB_AmmoReferenceContainer* fb)
 {
     assert(fb != nullptr);
     refs_.resize(common::numberOf<Ammo__Type>());
@@ -76,13 +63,12 @@ void AmmoReferenceContainer::initContainer(
     }
 }
 
-AmmoReference AmmoReferenceContainer::initAmmoReference(
-    const fbAmmo::FB_AmmoReference* fb)
+AmmoReference AmmoReferenceContainer::initAmmoReference(const fbAmmo::FB_AmmoReference* fb)
 {
     assert(fb != nullptr);
     AmmoReference ref;
 
-    ref.type_ = toAmmoType(fb->ammo_type());
+    ref.type_           = toAmmoType(fb->ammo_type());
     assert(common::isValidEnum(ref.type_));
 
     common::initLanguageBundle(fb->name(), ref.name_);

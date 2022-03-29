@@ -8,7 +8,6 @@
 #include"damageReference.hpp"
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include<memory>
 #include<type_traits>
 
@@ -17,16 +16,10 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, DamageReferenceContainer::language>
-                        DamageReferenceContainer::langObs_;
-
-vector<DamageReference> DamageReferenceContainer::refs_;
-DamageReference         DamageReferenceContainer::refDefault_;
-
-
-underlying_type_t<DamageReferenceContainer::language>
-                        DamageReferenceContainer::langIndex_    { 0 };
-bool                    DamageReferenceContainer::initialized_  { false };
+global::PlainTextBase               DamageReferenceContainer::base_;
+vector<DamageReference>             DamageReferenceContainer::refs_;
+DamageReference                     DamageReferenceContainer::refDefault_;
+bool                                DamageReferenceContainer::initialized_{ false };
 
 ///************************************************************************************************
 
@@ -47,9 +40,8 @@ DamageReference::DamageReference() noexcept
 
 void DamageReferenceContainer::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(DAMAGE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
@@ -59,11 +51,6 @@ void DamageReferenceContainer::initialize()
     };
 
     initContainer(fb);
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&DamageReferenceContainer::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

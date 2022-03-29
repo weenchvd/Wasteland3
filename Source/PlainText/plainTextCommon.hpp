@@ -10,22 +10,11 @@
 namespace game {
 namespace global {
 
-using PlainTextBaseType             = int;
-
 enum class PlainText__Language : char {
     INVALID = -1,                   /// invalid, must be the first
     // vvv TYPES vvv
     EN,                             // english
     RU,                             // russian
-    // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
-};
-
-enum class PlainText__General : PlainTextBaseType {
-    INVALID = -1,                   /// invalid, must be the first
-    // vvv TYPES vvv
-    INVALID_ENUM,
-    NO_DATA,
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };

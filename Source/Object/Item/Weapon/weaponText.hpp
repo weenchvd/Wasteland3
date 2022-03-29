@@ -8,170 +8,147 @@
 #define WEAPON_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include"weaponCommon.hpp"
 #include"weaponTextFB_generated.h"
 #include<array>
-#include<assert.h>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
-struct WeaponTextPenalties {
+class WeaponTextPenalties {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class WeaponText;
 
-public:
+private:
     WeaponTextPenalties() noexcept {}
 
-    const text& critDamage() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& hitChance() const noexcept;
+public:
+    const text_t& critDamage() const noexcept { return critDmg_[li()]; }
 
-    const text& critChance() const noexcept;
+    const text_t& hitChance() const noexcept { return hitChance_[li()]; }
 
-    const text& strikeRate() const noexcept;
+    const text_t& critChance() const noexcept { return critChance_[li()]; }
+
+    const text_t& strikeRate() const noexcept { return strikeRate_[li()]; }
 
 private:
-    language_bundle critDmg_;
-    language_bundle hitChance_;
-    language_bundle critChance_;
-    language_bundle strikeRate_;
+    language_bundle_t critDmg_;
+    language_bundle_t hitChance_;
+    language_bundle_t critChance_;
+    language_bundle_t strikeRate_;
 };
 
 ///************************************************************************************************
 
-struct WeaponTextCommon {
+class WeaponTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class WeaponText;
 
-public:
+private:
     WeaponTextCommon() noexcept {}
 
-    const text& itemType() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& level() const noexcept;
+public:
+    const text_t& itemType() const noexcept { return itemType_[li()]; }
 
-    const text& damage() const noexcept;
+    const text_t& level() const noexcept { return level_[li()]; }
 
-    const text& ap() const noexcept;
+    const text_t& damage() const noexcept { return damage_[li()]; }
 
-    const text& apReload() const noexcept;
+    const text_t& ap() const noexcept { return ap_[li()]; }
 
-    const text& require() const noexcept;
+    const text_t& apReload() const noexcept { return apReload_[li()]; }
 
-    const text& installedMods() const noexcept;
+    const text_t& require() const noexcept { return require_[li()]; }
 
-    const text& ammoCapacity() const noexcept;
+    const text_t& installedMods() const noexcept { return mods_[li()]; }
 
-    const text& ammoType() const noexcept;
+    const text_t& ammoCapacity() const noexcept { return ammoCap_[li()]; }
 
-    const text& range() const noexcept;
+    const text_t& ammoType() const noexcept { return ammoType_[li()]; }
 
-    const text& penalty() const noexcept;
+    const text_t& range() const noexcept { return range_[li()]; }
 
-    const text& hitChance() const noexcept;
+    const text_t& penalty() const noexcept { return penalty_[li()]; }
 
-    const text& critDamage() const noexcept;
+    const text_t& hitChance() const noexcept { return hitChance_[li()]; }
 
-    const text& critChance() const noexcept;
+    const text_t& critDamage() const noexcept { return critDamage_[li()]; }
 
-    const text& penetration() const noexcept;
+    const text_t& critChance() const noexcept { return critChance_[li()]; }
 
-    const text& damageVsRobots() const noexcept;
-
-    const text& damageVsSynths() const noexcept;
-
-    const text& damageVsVehicles() const noexcept;
-
-    const text& damageVsHumans() const noexcept;
-
-    const text& damageVsAnimals() const noexcept;
-
-    const text& damageVsMutants() const noexcept;
+    const text_t& penetration() const noexcept { return penet_[li()]; }
 
 private:
-    language_bundle itemType_;
-    language_bundle level_;
-    language_bundle damage_;
-    language_bundle ap_;
-    language_bundle apReload_;
-    language_bundle require_;
-    language_bundle mods_;
-    language_bundle ammoCap_;
-    language_bundle ammoType_;
-    language_bundle range_;
-    language_bundle penalty_;
-    language_bundle hitChance_;
-    language_bundle critDamage_;
-    language_bundle critChance_;
-    language_bundle penet_;
-    language_bundle dmgRobots_;
-    language_bundle dmgSynths_;
-    language_bundle dmgVehicles_;
-    language_bundle dmgHumans_;
-    language_bundle dmgAnimals_;
-    language_bundle dmgMutants_;
+    language_bundle_t itemType_;
+    language_bundle_t level_;
+    language_bundle_t damage_;
+    language_bundle_t ap_;
+    language_bundle_t apReload_;
+    language_bundle_t require_;
+    language_bundle_t mods_;
+    language_bundle_t ammoCap_;
+    language_bundle_t ammoType_;
+    language_bundle_t range_;
+    language_bundle_t penalty_;
+    language_bundle_t hitChance_;
+    language_bundle_t critDamage_;
+    language_bundle_t critChance_;
+    language_bundle_t penet_;
 };
 
 ///************************************************************************************************
 
 class WeaponText {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
 
-    static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
-    static constexpr auto sizeType_     { common::numberOf<Weapon__Type>() };
+    static constexpr auto sizeType_{ common::numberOf<Weapon__Type>() };
 
-    using language_bundle   = std::array<text, sizeLang_>;
+    friend class Weapon;
 
-public:
+private:
     WeaponText() noexcept {}
 
+public:
     WeaponText(const WeaponText&) = delete;
     WeaponText& operator=(const WeaponText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
-    static const text& type(Weapon__Type id) noexcept;
+    static const text_t& type(Weapon__Type id) noexcept;
 
     static const WeaponTextPenalties& penalties() noexcept { return penalties_; }
 
     static const WeaponTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initByType(
         const fbWeapon::FB_WeaponTextType* fb,
-        std::array<language_bundle, sizeType_>& ar
+        std::array<language_bundle_t, sizeType_>& ar
     );
 
     static void initPenalties(const fbWeapon::FB_WeaponTextPenalties* fb);
@@ -179,158 +156,31 @@ private:
     static void initCommon(const fbWeapon::FB_WeaponTextCommon* fb);
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
-    static std::array<language_bundle, sizeType_>   type_;
+    static global::PlainTextBase                    base_;
+    static std::array<language_bundle_t, sizeType_> type_;
     static WeaponTextPenalties                      penalties_;
     static WeaponTextCommon                         common_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const WeaponTextCommon::text& WeaponTextCommon::itemType() const noexcept
+inline WeaponTextPenalties::language_index_t WeaponTextPenalties::li() const noexcept
 {
-    return itemType_[WeaponText::languageIndex()];
+    return { WeaponText::languageIndex() };
 }
 
-inline const WeaponTextCommon::text& WeaponTextCommon::level() const noexcept
+inline WeaponTextCommon::language_index_t WeaponTextCommon::li() const noexcept
 {
-    return level_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damage() const noexcept
-{
-    return damage_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::ap() const noexcept
-{
-    return ap_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::apReload() const noexcept
-{
-    return apReload_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::require() const noexcept
-{
-    return require_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::installedMods() const noexcept
-{
-    return mods_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::ammoCapacity() const noexcept
-{
-    return ammoCap_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::ammoType() const noexcept
-{
-    return ammoType_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::range() const noexcept
-{
-    return range_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::penalty() const noexcept
-{
-    return penalty_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::hitChance() const noexcept
-{
-    return hitChance_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::critDamage() const noexcept
-{
-    return critDamage_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::critChance() const noexcept
-{
-    return critChance_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::penetration() const noexcept
-{
-    return penet_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsRobots() const noexcept
-{
-    return dmgRobots_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsSynths() const noexcept
-{
-    return dmgSynths_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsVehicles() const noexcept
-{
-    return dmgVehicles_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsHumans() const noexcept
-{
-    return dmgHumans_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsAnimals() const noexcept
-{
-    return dmgAnimals_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextCommon::text& WeaponTextCommon::damageVsMutants() const noexcept
-{
-    return dmgMutants_[WeaponText::languageIndex()];
+    return { WeaponText::languageIndex() };
 }
 
 ///************************************************************************************************
 
-inline const WeaponTextPenalties::text& WeaponTextPenalties::critDamage() const noexcept
-{
-    return critDmg_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextPenalties::text& WeaponTextPenalties::hitChance() const noexcept
-{
-    return hitChance_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextPenalties::text& WeaponTextPenalties::critChance() const noexcept
-{
-    return critChance_[WeaponText::languageIndex()];
-}
-
-inline const WeaponTextPenalties::text& WeaponTextPenalties::strikeRate() const noexcept
-{
-    return strikeRate_[WeaponText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline const WeaponText::text& WeaponText::type(Weapon__Type id) noexcept
+inline const WeaponText::text_t& WeaponText::type(Weapon__Type id) noexcept
 {
     assert(common::isValidEnum(id));
-    return type_[common::toUnderlying(id)][langIndex_];
-}
-
-inline void WeaponText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return type_[common::toUnderlying(id)][languageIndex()];
 }
 
 } // namespace object

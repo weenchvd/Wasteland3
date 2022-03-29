@@ -10,123 +10,81 @@
 #include"common.hpp"
 #include"damageCommon.hpp"
 #include"damageTextFB_generated.h"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
-struct DamageTextCommon {
+class DamageTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class DamageText;
 
-public:
+private:
     DamageTextCommon() noexcept {}
 
-    const text& damageVsRobots() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& damageVsVehicles() const noexcept;
+public:
+    const text_t& damageVsRobots() const noexcept { return dmgRobots_[li()]; }
 
-    const text& damageVsHumans() const noexcept;
+    const text_t& damageVsVehicles() const noexcept { return dmgVehicles_[li()]; }
 
-    const text& damageVsAnimals() const noexcept;
+    const text_t& damageVsHumans() const noexcept { return dmgHumans_[li()]; }
 
-    const text& damageVsMutants() const noexcept;
+    const text_t& damageVsAnimals() const noexcept { return dmgAnimals_[li()]; }
+
+    const text_t& damageVsMutants() const noexcept { return dmgMutants_[li()]; }
 
 private:
-    language_bundle dmgRobots_;
-    language_bundle dmgVehicles_;
-    language_bundle dmgHumans_;
-    language_bundle dmgAnimals_;
-    language_bundle dmgMutants_;
+    language_bundle_t dmgRobots_;
+    language_bundle_t dmgVehicles_;
+    language_bundle_t dmgHumans_;
+    language_bundle_t dmgAnimals_;
+    language_bundle_t dmgMutants_;
 };
 
 ///************************************************************************************************
 
 class DamageText {
-public:
-    using text              = common::Text;
+private:
+    friend class Damage;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     DamageText() noexcept {}
 
+public:
     DamageText(const DamageText&) = delete;
     DamageText& operator=(const DamageText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const DamageTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon(const fbDamage::FB_DamageTextCommon* fb);
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static DamageTextCommon                         common_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
-inline const DamageTextCommon::text& DamageTextCommon::damageVsRobots() const noexcept
-{
-    return dmgRobots_[DamageText::languageIndex()];
-}
 
-inline const DamageTextCommon::text& DamageTextCommon::damageVsVehicles() const noexcept
+inline DamageTextCommon::language_index_t DamageTextCommon::li() const noexcept
 {
-    return dmgVehicles_[DamageText::languageIndex()];
-}
-
-inline const DamageTextCommon::text& DamageTextCommon::damageVsHumans() const noexcept
-{
-    return dmgHumans_[DamageText::languageIndex()];
-}
-
-inline const DamageTextCommon::text& DamageTextCommon::damageVsAnimals() const noexcept
-{
-    return dmgAnimals_[DamageText::languageIndex()];
-}
-
-inline const DamageTextCommon::text& DamageTextCommon::damageVsMutants() const noexcept
-{
-    return dmgMutants_[DamageText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void DamageText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { DamageText::languageIndex() };
 }
 
 } // namespace object

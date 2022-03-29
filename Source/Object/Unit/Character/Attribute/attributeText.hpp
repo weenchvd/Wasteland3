@@ -10,78 +10,66 @@
 #include"attributeCommon.hpp"
 #include"attributeTextFB_generated.h"
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
 #include<assert.h>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
 class AttributeText {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
 
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
     static constexpr auto sizeType_{ common::numberOf<Attribute__Type>() };
 
-    using language_bundle   = std::array<text, sizeLang_>;
+    friend class Attribute;
 
-public:
+private:
     AttributeText() noexcept {}
 
+public:
     AttributeText(const AttributeText&) = delete;
     AttributeText& operator=(const AttributeText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static const text& name(Attribute__Type id) noexcept;
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
-    static const text& descr(Attribute__Type id) noexcept;
+    static const text_t& name(Attribute__Type id) noexcept;
+
+    static const text_t& descr(Attribute__Type id) noexcept;
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initByType(
-        const fbAttribute::FB_AttributeTextType* table,
-        std::array<language_bundle, sizeType_>& ar
+        const fbAttribute::FB_AttributeTextType* fb,
+        std::array<language_bundle_t, sizeType_>& ar
     );
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
-    static std::array<language_bundle, sizeType_>   name_;
-    static std::array<language_bundle, sizeType_>   descr_;
-
-    static std::underlying_type_t<language>         langIndex_;
+    static global::PlainTextBase                    base_;
+    static std::array<language_bundle_t, sizeType_> name_;
+    static std::array<language_bundle_t, sizeType_> descr_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const AttributeText::text& AttributeText::name(Attribute__Type id) noexcept
+inline const AttributeText::text_t& AttributeText::name(Attribute__Type id) noexcept
 {
     assert(common::isValidEnum(id));
-    return name_[common::toUnderlying(id)][langIndex_];
+    return name_[common::toUnderlying(id)][languageIndex()];
 }
 
-inline const AttributeText::text& AttributeText::descr(Attribute__Type id) noexcept
+inline const AttributeText::text_t& AttributeText::descr(Attribute__Type id) noexcept
 {
     assert(common::isValidEnum(id));
-    return descr_[common::toUnderlying(id)][langIndex_];
-}
-
-inline void AttributeText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return descr_[common::toUnderlying(id)][languageIndex()];
 }
 
 } // namespace object

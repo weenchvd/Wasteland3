@@ -6,7 +6,6 @@
 
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include"weaponModPath.hpp"
 #include"weaponModReference.hpp"
 #include<memory>
@@ -17,31 +16,25 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, WeaponModReferenceContainer::language>
-                            WeaponModReferenceContainer::langObs_;
-
-vector<WeaponModReference>  WeaponModReferenceContainer::refs_;
-WeaponModReference          WeaponModReferenceContainer::refDefault_;
-
-
-underlying_type_t<WeaponModReferenceContainer::language>
-                            WeaponModReferenceContainer::langIndex_     { 0 };
-bool                        WeaponModReferenceContainer::initialized_   { false };
+global::PlainTextBase               WeaponModReferenceContainer::base_;
+vector<WeaponModReference>          WeaponModReferenceContainer::refs_;
+WeaponModReference                  WeaponModReferenceContainer::refDefault_;
+bool                                WeaponModReferenceContainer::initialized_{ false };
 
 ///************************************************************************************************
 
-WeaponModRequirements::WeaponModRequirements() noexcept
+WeaponModRequirements::WeaponModRequirements()
     :
     skillReq_       {},
     attrReq_        {}
 {
-    skillReq_.fill(skill_requirement{ Skill::Type::INVALID, 0 });
-    attrReq_.fill(attribute_requirement{ Attribute::Type::INVALID, 0 });
+    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, 0 });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, 0 });
 }
 
 ///************************************************************************************************
 
-WeaponModReference::WeaponModReference() noexcept
+WeaponModReference::WeaponModReference()
     :
     model_          { WeaponMod__Model::INVALID },
     type_           { WeaponMod__Type::INVALID },
@@ -69,9 +62,8 @@ WeaponModReference::WeaponModReference() noexcept
 
 void WeaponModReferenceContainer::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_MOD_REF_FB_BIN_FILE__NATIVE_REL_PATH)
@@ -81,11 +73,6 @@ void WeaponModReferenceContainer::initialize()
     };
 
     initContainer(fb);
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&WeaponModReferenceContainer::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }
@@ -106,7 +93,8 @@ void WeaponModReferenceContainer::initContainer(
 }
 
 WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
-    const fbWeaponMod::FB_WeaponModReference* fb, const bool assert)
+    const fbWeaponMod::FB_WeaponModReference* fb,
+    const bool assert)
 {
     assert(fb != nullptr);
     WeaponModReference ref;

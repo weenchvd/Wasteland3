@@ -11,24 +11,22 @@
 #include"attribute.hpp"
 #include"common.hpp"
 #include"damage.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include"skill.hpp"
 #include"weaponModCommon.hpp"
 #include"weaponModReferenceFB_generated.h"
 #include<array>
 #include<assert.h>
-#include<type_traits>
 #include<utility>
 #include<vector>
 
 namespace game {
 namespace object {
 
-struct WeaponModRequirements {
+class WeaponModRequirements {
 public:
-    using skill_requirement         = std::pair<Skill::Type, common::LevelSkill>;
-    using attribute_requirement     = std::pair<Attribute::Type, common::LevelStat>;
+    using skill_requirement_t       = std::pair<Skill::Type, common::LevelSkill>;
+    using attribute_requirement_t   = std::pair<Attribute::Type, common::LevelStat>;
 
     static constexpr auto nSkill_   { 2 };
     static constexpr auto nAttr_    { 2 };
@@ -36,35 +34,36 @@ public:
     friend class WeaponModReferenceContainer;
 
 public:
-    WeaponModRequirements() noexcept;
+    WeaponModRequirements();
 
 public:
-    const std::array<skill_requirement, nSkill_>& skillRequirements() const noexcept {
+    const std::array<skill_requirement_t, nSkill_>& skillRequirements() const noexcept {
         return skillReq_;
     }
 
-    const std::array<attribute_requirement, nAttr_>& attributeRequirements() const noexcept {
+    const std::array<attribute_requirement_t, nAttr_>& attributeRequirements() const noexcept {
         return attrReq_;
     }
 
 private:
-    std::array<skill_requirement, nSkill_>      skillReq_;
-    std::array<attribute_requirement, nAttr_>   attrReq_;
+    std::array<skill_requirement_t, nSkill_>    skillReq_;
+    std::array<attribute_requirement_t, nAttr_> attrReq_;
 };
 
 ///************************************************************************************************
 
-struct WeaponModReference {
+class WeaponModReference {
 public:
-    using text                  = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language_bundle       = std::array<text, global::PlainText::sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class WeaponModReferenceContainer;
 
 public:
-    WeaponModReference() noexcept;
+    WeaponModReference();
 
     WeaponModReference(const WeaponModReference&) = delete;
     WeaponModReference& operator=(const WeaponModReference&) = delete;
@@ -73,9 +72,13 @@ public:
 
     bool isInitialized() const noexcept { return initialized_; }
 
-    const text& name() const noexcept;
+private:
+    language_index_t li() const noexcept;
 
-    const text& descr() const noexcept;
+public:
+    const text_t& name() const noexcept { return name_[li()]; }
+
+    const text_t& descr() const noexcept { return descrip_[li()]; }
 
 public:
     WeaponMod__Model        model_;         // weapon mod model
@@ -98,8 +101,8 @@ public:
     Damage::Type            tyDmg_;         // damage type
 
 private:
-    language_bundle         name_;          // weapon name
-    language_bundle         descrip_;       // description
+    language_bundle_t       name_;          // weapon name
+    language_bundle_t       descrip_;       // description
 
     bool                    initialized_;
 };
@@ -108,29 +111,26 @@ private:
 
 class WeaponModReferenceContainer {
 private:
-    using language = global::PlainText::Language;
+    friend class WeaponMod;
 
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-public:
+private:
     WeaponModReferenceContainer() noexcept {}
 
+public:
     WeaponModReferenceContainer(const WeaponModReferenceContainer&) = delete;
     WeaponModReferenceContainer& operator=(const WeaponModReferenceContainer&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() noexcept { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const WeaponModReference& weaponModReference(WeaponMod__Model id) noexcept;
 
     static const WeaponModReference& weaponModReferenceDefault() noexcept { return refDefault_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initContainer(const fbWeaponMod::FB_WeaponModReferenceContainer* fb);
 
     static WeaponModReference initWeaponModReference(
@@ -144,42 +144,26 @@ private:
     );
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static std::vector<WeaponModReference>          refs_;
     static WeaponModReference                       refDefault_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const WeaponModReference::text& WeaponModReference::name() const noexcept
+inline WeaponModReference::language_index_t WeaponModReference::li() const noexcept
 {
-    return name_[WeaponModReferenceContainer::languageIndex()];
-}
-
-inline const WeaponModReference::text& WeaponModReference::descr() const noexcept
-{
-    return descrip_[WeaponModReferenceContainer::languageIndex()];
+    return { WeaponModReferenceContainer::languageIndex() };
 }
 
 ///************************************************************************************************
 
 inline const WeaponModReference& WeaponModReferenceContainer::weaponModReference(
-    WeaponMod__Model id
-) noexcept {
+    WeaponMod__Model id) noexcept
+{
     assert(common::isValidEnum(id));
     return refs_[common::toUnderlying(id)];
-}
-
-inline void WeaponModReferenceContainer::setLanguage(
-    WeaponModReferenceContainer::language lang
-) noexcept {
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
 }
 
 } // namespace object

@@ -8,95 +8,83 @@
 #define SKILL_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include"skillCommon.hpp"
 #include"skillTextFB_generated.h"
 #include<array>
 #include<assert.h>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
 class SkillText {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
 
-    static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
     static constexpr auto sizeType_     { common::numberOf<Skill__Type>() };
     static constexpr auto sizeGroup_    { common::numberOf<Skill__Group>() };
 
-    using language_bundle   = std::array<text, sizeLang_>;
+    friend class Skill;
 
-public:
+private:
     SkillText() noexcept {}
 
+public:
     SkillText(const SkillText&) = delete;
     SkillText& operator=(const SkillText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static const text& name(Skill__Type id) noexcept;
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
-    static const text& descr(Skill__Type id) noexcept;
+    static const text_t& name(Skill__Type id) noexcept;
 
-    static const text& group(Skill__Group id) noexcept;
+    static const text_t& descr(Skill__Type id) noexcept;
+
+    static const text_t& group(Skill__Group id) noexcept;
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initByType(
-        const fbSkill::FB_SkillTextType* table,
-        std::array<language_bundle, sizeType_>& ar
+        const fbSkill::FB_SkillTextType* fb,
+        std::array<language_bundle_t, sizeType_>& ar
     );
 
     static void initByGroup(
-        const fbSkill::FB_SkillTextGroup* table,
-        std::array<language_bundle, sizeGroup_>& ar
+        const fbSkill::FB_SkillTextGroup* fb,
+        std::array<language_bundle_t, sizeGroup_>& ar
     );
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
-    static std::array<language_bundle, sizeType_>   name_;
-    static std::array<language_bundle, sizeType_>   descr_;
-    static std::array<language_bundle, sizeGroup_>  group_;
-
-    static std::underlying_type_t<language>         langIndex_;
-    static bool                                     initialized_;
+    static global::PlainTextBase                        base_;
+    static std::array<language_bundle_t, sizeType_>     name_;
+    static std::array<language_bundle_t, sizeType_>     descr_;
+    static std::array<language_bundle_t, sizeGroup_>    group_;
+    static bool                                         initialized_;
 };
 
 ///************************************************************************************************
 
-inline const SkillText::text& SkillText::name(Skill__Type id) noexcept
+inline const SkillText::text_t& SkillText::name(Skill__Type id) noexcept
 {
     assert(common::isValidEnum(id));
-    return name_[common::toUnderlying(id)][langIndex_];
+    return name_[common::toUnderlying(id)][languageIndex()];
 }
 
-inline const SkillText::text& SkillText::descr(Skill__Type id) noexcept
+inline const SkillText::text_t& SkillText::descr(Skill__Type id) noexcept
 {
     assert(common::isValidEnum(id));
-    return descr_[common::toUnderlying(id)][langIndex_];
+    return descr_[common::toUnderlying(id)][languageIndex()];
 }
 
-inline const SkillText::text& SkillText::group(Skill__Group id) noexcept
+inline const SkillText::text_t& SkillText::group(Skill__Group id) noexcept
 {
     assert(common::isValidEnum(id));
-    return group_[common::toUnderlying(id)][langIndex_];
-}
-
-inline void SkillText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return group_[common::toUnderlying(id)][languageIndex()];
 }
 
 } // namespace object

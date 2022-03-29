@@ -37,7 +37,6 @@ add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Ammo"
-                           #PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Armor"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Damage"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/Weapon"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/WeaponMod"

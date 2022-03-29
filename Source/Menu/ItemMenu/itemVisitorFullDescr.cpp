@@ -198,8 +198,10 @@ void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) no
             << common::getShots(weaponMod.shotsPerAttack()) << p << endl;
     }
     if (weaponMod.damageType() != def.damageType()) {
-        oss << text.common().damageType() << sp << endl;
-        /// TODO        << << endl;
+        oss << text.common().damageType() << sp
+            << object::Damage::damageReferenceContainer().damageReference(
+                weaponMod.damageType()).name() << endl;
+        oss << getDamageDescription(Indent{}, weaponMod.damageType());
     }
     if (weaponMod.actionPointPerAttack() != def.actionPointPerAttack()) {
         oss << text.common().ap() << sp

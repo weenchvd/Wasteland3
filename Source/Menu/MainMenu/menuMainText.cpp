@@ -4,39 +4,26 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"locator.hpp"
 #include"menuCommon.hpp"
 #include"menuMainText.hpp"
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 using namespace std;
 
-common::ObserverDLL<void, MenuMainText::language> MenuMainText::langObs_;
-
-MenuMainTextCommon MenuMainText::common_;
-
-underlying_type_t<MenuMainText::language>   MenuMainText::langIndex_    { 0 };
-bool                                        MenuMainText::initialized_  { false };
+global::PlainTextBase                       MenuMainText::base_;
+MenuMainTextCommon                          MenuMainText::common_;
+bool                                        MenuMainText::initialized_{ false };
 
 ///************************************************************************************************
 
 void MenuMainText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
-
-    assert(sizeLang_ > 0);
+    base_.initialize();
 
     initCommon();
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&MenuMainText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

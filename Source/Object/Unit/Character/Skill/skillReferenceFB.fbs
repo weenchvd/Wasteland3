@@ -152,12 +152,12 @@ struct FB_LeadershipDistribution {
 }
 
 table FB_Skill {
-  min_skill_points:int16;
-  max_skill_points:int16;
-  init_skill_points:int16;
-  min_skill_level:int8;
-  max_skill_level:int8;
-  init_skill_level:int8;
+  min_skill_points:int16 = 0;
+  max_skill_points:int16 = 0;
+  init_skill_points:int16 = 0;
+  min_skill_level:int8 = 0;
+  max_skill_level:int8 = 0;
+  init_skill_level:int8 = 0;
   point_skill_distr:FB_PointSkillDistribution;
   automatic_distr:FB_AutomaticWeaponsDistribution;
   big_guns_distr:FB_BigGunsDistribution;

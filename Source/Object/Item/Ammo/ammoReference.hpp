@@ -10,22 +10,21 @@
 #include"ammoCommon.hpp"
 #include"ammoReferenceFB_generated.h"
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
 #include<assert.h>
-#include<type_traits>
 #include<vector>
 
 namespace game {
 namespace object {
 
-struct AmmoReference {
+class AmmoReference {
 public:
-    using text                  = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language_bundle       = std::array<text, global::PlainText::sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class AmmoReferenceContainer;
 
@@ -39,17 +38,21 @@ public:
 
     bool isInitialized() const noexcept { return initialized_; }
 
-    const text& name() const noexcept;
+private:
+    language_index_t li() const noexcept;
 
-    const text& descr() const noexcept;
+public:
+    const text_t& name() const noexcept { return name_[li()]; }
+
+    const text_t& descr() const noexcept { return descrip_[li()]; }
 
 public:
     Ammo__Type              type_;          // ammo type (kind)
     common::Price           price_;
 
 private:
-    language_bundle         name_;          // weapon name
-    language_bundle         descrip_;       // description
+    language_bundle_t       name_;          // weapon name
+    language_bundle_t       descrip_;       // description
 
     bool                    initialized_;
 };
@@ -58,69 +61,48 @@ private:
 
 class AmmoReferenceContainer {
 private:
-    using language = global::PlainText::Language;
+    friend class Ammo;
 
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-public:
+private:
     AmmoReferenceContainer() noexcept {}
 
+public:
     AmmoReferenceContainer(const AmmoReferenceContainer&) = delete;
     AmmoReferenceContainer& operator=(const AmmoReferenceContainer&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() noexcept { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const AmmoReference& ammoReference(Ammo__Type id) noexcept;
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initContainer(const fbAmmo::FB_AmmoReferenceContainer* fb);
 
-    static AmmoReference initAmmoReference(
-        const fbAmmo::FB_AmmoReference* fb
-    );
+    static AmmoReference initAmmoReference(const fbAmmo::FB_AmmoReference* fb);
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static std::vector<AmmoReference>               refs_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const AmmoReference::text& AmmoReference::name() const noexcept
+inline AmmoReference::language_index_t AmmoReference::li() const noexcept
 {
-    return name_[AmmoReferenceContainer::languageIndex()];
-}
-
-inline const AmmoReference::text& AmmoReference::descr() const noexcept
-{
-    return descrip_[AmmoReferenceContainer::languageIndex()];
+    return { AmmoReferenceContainer::languageIndex() };
 }
 
 ///************************************************************************************************
 
 inline const AmmoReference& AmmoReferenceContainer::ammoReference(
-    Ammo__Type id
-) noexcept {
+    Ammo__Type id) noexcept
+{
     assert(common::isValidEnum(id));
     return refs_[common::toUnderlying(id)];
-}
-
-inline void AmmoReferenceContainer::setLanguage(
-    AmmoReferenceContainer::language lang
-) noexcept {
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
 }
 
 } // namespace object

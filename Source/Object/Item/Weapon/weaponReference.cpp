@@ -6,7 +6,6 @@
 
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include"weaponPath.hpp"
 #include"weaponReference.hpp"
 #include<memory>
@@ -17,26 +16,21 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, WeaponReferenceContainer::language>
-                            WeaponReferenceContainer::langObs_;
-
-vector<WeaponReference>     WeaponReferenceContainer::refs_;
-WeaponReference             WeaponReferenceContainer::refMinimal_;
-WeaponReference             WeaponReferenceContainer::refDefault_;
-
-underlying_type_t<WeaponReferenceContainer::language>
-                            WeaponReferenceContainer::langIndex_    { 0 };
-bool                        WeaponReferenceContainer::initialized_  { false };
+global::PlainTextBase               WeaponReferenceContainer::base_;
+vector<WeaponReference>             WeaponReferenceContainer::refs_;
+WeaponReference                     WeaponReferenceContainer::refMinimal_;
+WeaponReference                     WeaponReferenceContainer::refDefault_;
+bool                                WeaponReferenceContainer::initialized_{ false };
 
 ///************************************************************************************************
 
-WeaponRequirements::WeaponRequirements() noexcept
+WeaponRequirements::WeaponRequirements()
     :
     skillReq_       {},
     attrReq_        {}
 {
-    skillReq_.fill(skill_requirement{ Skill::Type::INVALID, 0 });
-    attrReq_.fill(attribute_requirement{ Attribute::Type::INVALID, 0 });
+    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, 0 });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, 0 });
 }
 
 ///************************************************************************************************
@@ -53,16 +47,15 @@ bool WeaponPenalties::isPresented() const noexcept
 {
     assert(WeaponReferenceContainer::weaponReferenceDefault().isInitialized());
     const WeaponPenalties& def{ WeaponReferenceContainer::weaponReferenceDefault().penalties_ };
-    if (mulCritDmg_ != def.mulCritDmg_) return true;
-    if (chaHit_     != def.chaHit_)     return true;
-    if (chaCritDmg_ != def.chaCritDmg_) return true;
-    if (strike_     != def.strike_)     return true;
-    return false;
+    return  mulCritDmg_ != def.mulCritDmg_ ||
+            chaHit_     != def.chaHit_ ||
+            chaCritDmg_ != def.chaCritDmg_ ||
+            strike_     != def.strike_;
 }
 
 ///************************************************************************************************
 
-WeaponReference::WeaponReference() noexcept
+WeaponReference::WeaponReference()
     :
     model_          { Weapon__Model::INVALID },
     type_           { Weapon__Type::INVALID },
@@ -95,9 +88,8 @@ WeaponReference::WeaponReference() noexcept
 
 void WeaponReferenceContainer::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH)
@@ -107,11 +99,6 @@ void WeaponReferenceContainer::initialize()
     };
 
     initContainer(fb);
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&WeaponReferenceContainer::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }
@@ -133,7 +120,8 @@ void WeaponReferenceContainer::initContainer(
 }
 
 WeaponReference WeaponReferenceContainer::initWeaponReference(
-    const fbWeapon::FB_WeaponReference* fb, const bool assert)
+    const fbWeapon::FB_WeaponReference* fb,
+    const bool assert)
 {
     assert(fb != nullptr);
     WeaponReference ref;

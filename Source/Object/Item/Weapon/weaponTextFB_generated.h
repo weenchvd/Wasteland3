@@ -299,13 +299,7 @@ struct FB_WeaponTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table 
     VT_BASE_HIT_CHANCE = 26,
     VT_CRIT_DAMAGE = 28,
     VT_CRIT_CHANCE = 30,
-    VT_PENETRATION = 32,
-    VT_DAMAGE_VS_ROBOTS = 34,
-    VT_DAMAGE_VS_SYNTHS = 36,
-    VT_DAMAGE_VS_VEHICLES = 38,
-    VT_DAMAGE_VS_HUMANS = 40,
-    VT_DAMAGE_VS_ANIMALS = 42,
-    VT_DAMAGE_VS_MUTANTS = 44
+    VT_PENETRATION = 32
   };
   const fbCommon::FB_LanguageBundle *item_type() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_ITEM_TYPE);
@@ -352,24 +346,6 @@ struct FB_WeaponTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table 
   const fbCommon::FB_LanguageBundle *penetration() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_PENETRATION);
   }
-  const fbCommon::FB_LanguageBundle *damage_vs_robots() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_ROBOTS);
-  }
-  const fbCommon::FB_LanguageBundle *damage_vs_synths() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_SYNTHS);
-  }
-  const fbCommon::FB_LanguageBundle *damage_vs_vehicles() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_VEHICLES);
-  }
-  const fbCommon::FB_LanguageBundle *damage_vs_humans() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_HUMANS);
-  }
-  const fbCommon::FB_LanguageBundle *damage_vs_animals() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_ANIMALS);
-  }
-  const fbCommon::FB_LanguageBundle *damage_vs_mutants() const {
-    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_DAMAGE_VS_MUTANTS);
-  }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyOffset(verifier, VT_ITEM_TYPE) &&
@@ -402,18 +378,6 @@ struct FB_WeaponTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table 
            verifier.VerifyTable(crit_chance()) &&
            VerifyOffset(verifier, VT_PENETRATION) &&
            verifier.VerifyTable(penetration()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_ROBOTS) &&
-           verifier.VerifyTable(damage_vs_robots()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_SYNTHS) &&
-           verifier.VerifyTable(damage_vs_synths()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_VEHICLES) &&
-           verifier.VerifyTable(damage_vs_vehicles()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_HUMANS) &&
-           verifier.VerifyTable(damage_vs_humans()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_ANIMALS) &&
-           verifier.VerifyTable(damage_vs_animals()) &&
-           VerifyOffset(verifier, VT_DAMAGE_VS_MUTANTS) &&
-           verifier.VerifyTable(damage_vs_mutants()) &&
            verifier.EndTable();
   }
 };
@@ -467,24 +431,6 @@ struct FB_WeaponTextCommonBuilder {
   void add_penetration(flatbuffers::Offset<fbCommon::FB_LanguageBundle> penetration) {
     fbb_.AddOffset(FB_WeaponTextCommon::VT_PENETRATION, penetration);
   }
-  void add_damage_vs_robots(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_robots) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_ROBOTS, damage_vs_robots);
-  }
-  void add_damage_vs_synths(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_synths) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_SYNTHS, damage_vs_synths);
-  }
-  void add_damage_vs_vehicles(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_vehicles) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_VEHICLES, damage_vs_vehicles);
-  }
-  void add_damage_vs_humans(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_humans) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_HUMANS, damage_vs_humans);
-  }
-  void add_damage_vs_animals(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_animals) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_ANIMALS, damage_vs_animals);
-  }
-  void add_damage_vs_mutants(flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_mutants) {
-    fbb_.AddOffset(FB_WeaponTextCommon::VT_DAMAGE_VS_MUTANTS, damage_vs_mutants);
-  }
   explicit FB_WeaponTextCommonBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
@@ -512,20 +458,8 @@ inline flatbuffers::Offset<FB_WeaponTextCommon> CreateFB_WeaponTextCommon(
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> base_hit_chance = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> crit_damage = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> crit_chance = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> penetration = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_robots = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_synths = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_vehicles = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_humans = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_animals = 0,
-    flatbuffers::Offset<fbCommon::FB_LanguageBundle> damage_vs_mutants = 0) {
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> penetration = 0) {
   FB_WeaponTextCommonBuilder builder_(_fbb);
-  builder_.add_damage_vs_mutants(damage_vs_mutants);
-  builder_.add_damage_vs_animals(damage_vs_animals);
-  builder_.add_damage_vs_humans(damage_vs_humans);
-  builder_.add_damage_vs_vehicles(damage_vs_vehicles);
-  builder_.add_damage_vs_synths(damage_vs_synths);
-  builder_.add_damage_vs_robots(damage_vs_robots);
   builder_.add_penetration(penetration);
   builder_.add_crit_chance(crit_chance);
   builder_.add_crit_damage(crit_damage);

@@ -15,32 +15,34 @@ namespace game {
 namespace global {
 
 class Locator {
+private:
+    Locator() noexcept {}
+
 public:
+    Locator(const Locator&) = delete;
+    Locator& operator=(const Locator&) = delete;
+
     static void initialize();
 
     static bool isInitialized() { return initialized_; }
 
-    static const global::Factory& getFactory() noexcept {
-        return factory_;
-    }
+public:
+    static const global::Factory& getFactory() noexcept { return factory_; }
 
-    static const global::PlainText& getPlainText() noexcept {
-        assert(options_ != nullptr);
-        return *plainText_;
-    }
-
-    static global::Options& getOptions() noexcept {
-        assert(options_ != nullptr);
-        return *options_;
-    }
+    static global::Options& getOptions() noexcept;
 
 private:
     static global::Factory                                  factory_;
-    static std::unique_ptr<global::PlainText>               plainText_;
     static std::unique_ptr<global::Options>                 options_;
-
     static bool                                             initialized_;
 };
+
+///************************************************************************************************
+
+inline global::Options& Locator::getOptions() noexcept {
+    assert(options_ != nullptr);
+    return *options_;
+}
 
 } // namespace global
 } // namespace game

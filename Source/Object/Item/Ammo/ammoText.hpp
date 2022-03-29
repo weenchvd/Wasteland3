@@ -10,100 +10,72 @@
 #include"ammoCommon.hpp"
 #include"ammoTextFB_generated.h"
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
-#include<type_traits>
 
 namespace game {
 namespace object {
 
-struct AmmoTextCommon {
+class AmmoTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class AmmoText;
 
-public:
+private:
     AmmoTextCommon() noexcept {}
 
-    const text& itemType() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& quantity() const noexcept;
+public:
+    const text_t& itemType() const noexcept { return itemType_[li()]; }
+
+    const text_t& quantity() const noexcept { return qty_[li()]; }
 
 private:
-    language_bundle itemType_;
-    language_bundle qty_;
+    language_bundle_t itemType_;
+    language_bundle_t qty_;
 };
 
 ///************************************************************************************************
 
 class AmmoText {
-public:
-    using text              = common::Text;
+private:
+    friend class Ammo;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_     { global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     AmmoText() noexcept {}
 
+public:
     AmmoText(const AmmoText&) = delete;
     AmmoText& operator=(const AmmoText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const AmmoTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon(const fbAmmo::FB_AmmoTextCommon* fb);
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static AmmoTextCommon                           common_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const AmmoTextCommon::text& AmmoTextCommon::itemType() const noexcept
+inline AmmoTextCommon::language_index_t AmmoTextCommon::li() const noexcept
 {
-    return itemType_[AmmoText::languageIndex()];
-}
-
-inline const AmmoTextCommon::text& AmmoTextCommon::quantity() const noexcept
-{
-    return qty_[AmmoText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void AmmoText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { AmmoText::languageIndex() };
 }
 
 } // namespace object

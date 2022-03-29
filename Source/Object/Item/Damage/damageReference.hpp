@@ -10,23 +10,21 @@
 #include"common.hpp"
 #include"damageCommon.hpp"
 #include"damageReferenceFB_generated.h"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
 #include<assert.h>
-#include<type_traits>
-#include<utility>
 #include<vector>
 
 namespace game {
 namespace object {
 
-struct DamageReference {
+class DamageReference {
 public:
-    using text                  = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language_bundle       = std::array<text, global::PlainText::sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class DamageReferenceContainer;
 
@@ -40,9 +38,13 @@ public:
 
     bool isInitialized() const noexcept { return initialized_; }
 
-    const text& name() const noexcept;
+private:
+    language_index_t li() const noexcept;
 
-    const text& descr() const noexcept;
+public:
+    const text_t& name() const noexcept { return name_[li()]; }
+
+    const text_t& descr() const noexcept { return descrip_[li()]; }
 
 public:
     Damage__Type            type_;          // damage type
@@ -53,8 +55,8 @@ public:
     common::Bonus           dmgMutants_;    // damage bonus vs mutants
 
 private:
-    language_bundle         name_;          // damage name
-    language_bundle         descrip_;       // description
+    language_bundle_t       name_;          // damage name
+    language_bundle_t       descrip_;       // description
 
     bool                    initialized_;
 };
@@ -63,29 +65,26 @@ private:
 
 class DamageReferenceContainer {
 private:
-    using language = global::PlainText::Language;
+    friend class Damage;
 
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-public:
+private:
     DamageReferenceContainer() noexcept {}
 
+public:
     DamageReferenceContainer(const DamageReferenceContainer&) = delete;
     DamageReferenceContainer& operator=(const DamageReferenceContainer&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() noexcept { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const DamageReference& damageReference(Damage__Type id) noexcept;
 
     static const DamageReference& damageReferenceDefault() noexcept { return refDefault_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initContainer(const fbDamage::FB_DamageReferenceContainer* fb);
 
     static DamageReference initDamageReference(
@@ -94,42 +93,26 @@ private:
     );
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static std::vector<DamageReference>             refs_;
     static DamageReference                          refDefault_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const DamageReference::text& DamageReference::name() const noexcept
+inline DamageReference::language_index_t DamageReference::li() const noexcept
 {
-    return name_[DamageReferenceContainer::languageIndex()];
-}
-
-inline const DamageReference::text& DamageReference::descr() const noexcept
-{
-    return descrip_[DamageReferenceContainer::languageIndex()];
+    return { DamageReferenceContainer::languageIndex() };
 }
 
 ///************************************************************************************************
 
 inline const DamageReference& DamageReferenceContainer::damageReference(
-    Damage__Type id
-) noexcept {
+    Damage__Type id) noexcept
+{
     assert(common::isValidEnum(id));
     return refs_[common::toUnderlying(id)];
-}
-
-inline void DamageReferenceContainer::setLanguage(
-    DamageReferenceContainer::language lang
-) noexcept {
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
 }
 
 } // namespace object

@@ -4,86 +4,54 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef PLAINTEXT_HPP
-#define PLAINTEXT_HPP
+#ifndef PLAIN_TEXT_HPP
+#define PLAIN_TEXT_HPP
 
 #include"common.hpp"
-#include"plainTextCommon.hpp"
+#include"plainTextBase.hpp"
 #include<array>
 
 namespace game {
 namespace global {
 
-template<class T, size_t size>
-void fillAll(std::array<T, size> a, const T& filler) {
-    for (auto& t : a) {
-        t = filler;
-    }
-}
-
-const common::Text invalidEnum{ u8"INVALID ENUM" };
-const common::Text eng_NoData{ u8"NO DATA" };
-const common::Text rus_NoData{ u8"НЕТ ДАННЫХ" };
-
-///************************************************************************************************
-
 class PlainText {
 public:
-    using Language      = PlainText__Language;
-    using General       = PlainText__General;
-
-    static constexpr auto sizeLang_{ common::numberOf<PlainText::Language>() };
+    using text_t            = common::Text;
+    using language_t        = global::PlainTextBase::Language;
 
 private:
-    using text          = common::Text;
-
-    friend class Factory;
-
-    static constexpr auto sizeCommon_{ common::numberOf<PlainText::General>() };
-
-protected:
-    PlainText(PlainText::Language lang);
+    static constexpr auto sizeLang_{ global::PlainTextBase::sizeLang_ };
 
 public:
+    PlainText() noexcept {}
+
     PlainText(const PlainText&) = delete;
     PlainText& operator=(const PlainText&) = delete;
 
-    ~PlainText() noexcept {}
+    static void initialize();
 
-    PlainText::Language getLanguage() const noexcept {
-        return current_;
-    }
+    static bool isInitialized() { return initialized_; }
 
-    void setLanguage(PlainText::Language lang);
-
-public:
-    const text& language(PlainText::Language id) const noexcept;
-
-    const text& common(PlainText::General id) const noexcept;
+    static const text_t& language(language_t lang) noexcept;
 
 private:
-    void initialize();
-    void initializeEN();
-    void initializeRU();
-
-    void fill();
-
-    const text& getDefault() const noexcept;
-
-    void initCommonEN();
-
-    void initCommonRU();
+    static void initLanguage();
 
 private:
-
-protected:
-    PlainText::Language                                 current_;
-    std::array<text, sizeLang_>                         lang_;
-    std::array<text, sizeCommon_>                       common_;
-
+    static PlainTextBase                            base_;
+    static std::array<text_t, sizeLang_>            lang_;
+    static bool                                     initialized_;
 };
+
+///************************************************************************************************
+
+inline const PlainText::text_t& PlainText::language(language_t lang) noexcept
+{
+    assert(common::isValidEnum(lang));
+    return lang_[common::toUnderlying(lang)];
+}
 
 } // namespace global
 } // namespace game
 
-#endif // !PLAINTEXT_HPP
+#endif // !PLAIN_TEXT_HPP

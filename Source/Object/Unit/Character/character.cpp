@@ -98,10 +98,10 @@ Character::Character(Character::Model model)
     attrib_             { make_unique<Attribute>(*this) },
     skill_              { make_unique<Skill>(*this) }
 {
-    attrib_->addPoint(Attribute::attributeReference().initAttrPoints_);
-    attrib_->addLevelToAll(Attribute::attributeReference().initAttrLevel_);
+    attrib_->addPoint(Attribute::attributeReference().initialAttributePoints());
+    attrib_->addLevelToAll(Attribute::attributeReference().initialAttributeLevel());
     attrib_->accept();
-    skill_->addPoint(Skill::skillReference().initSkillPoints_);
+    skill_->addPoint(Skill::skillReference().initialSkillPoints());
     skill_->accept();
 }
 

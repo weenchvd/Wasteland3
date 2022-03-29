@@ -5,7 +5,6 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"locator.hpp"
-#include<type_traits>
 
 namespace game {
 namespace global {
@@ -13,10 +12,7 @@ namespace global {
 using namespace std;
 
 global::Factory                     Locator::factory_;
-
-unique_ptr<global::PlainText>       Locator::plainText_;
 unique_ptr<global::Options>         Locator::options_;
-
 bool                                Locator::initialized_{ false };
 
 ///************************************************************************************************
@@ -25,8 +21,6 @@ void Locator::initialize()
 {
     if (isInitialized()) return;
 
-    plainText_ = Locator::getFactory().createPlainText<global::PlainText>(
-        global::PlainText::Language::EN);
     options_ = Locator::getFactory().createOptions();
 
     initialized_ = true;

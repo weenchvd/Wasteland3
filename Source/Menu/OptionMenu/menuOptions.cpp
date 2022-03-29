@@ -8,6 +8,7 @@
 #include"menuOptions.hpp"
 #include"menuOptionsText.hpp"
 #include"locator.hpp"
+#include"plainText.hpp"
 
 namespace game {
 namespace menu {
@@ -76,6 +77,7 @@ void menuOptions(istream& is, ostream& os, const Indent indent)
 void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
 {
     using global::PlainText;
+    using global::PlainTextBase;
     using global::Locator;
 
     Indent ind0{ indent };
@@ -90,7 +92,7 @@ void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
         verticalIndent(os);
         os << ind0 << text.menuName() << endl;
         os << ind0 << text.currentLanguage() << sp
-            << Locator::getPlainText().language(Locator::getOptions().optLanguage().getLanguage()) << endl;
+            << PlainText::language(Locator::getOptions().optLanguage().getLanguage()) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionGeneralOptions::CHANGE_LANGUAGE, text.changeLanguage()) << endl;
@@ -100,8 +102,8 @@ void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
 
         switch (getAction(is, os)) {
         case actionGeneralOptions::CHANGE_LANGUAGE: {
-            PlainText::Language lang{ pickLanguage(is, os, ind1) };
-            if (lang != PlainText::Language::INVALID) {
+            PlainTextBase::Language lang{ pickLanguage(is, os, ind1) };
+            if (lang != PlainTextBase::Language::INVALID) {
                 Locator::getOptions().optLanguage().setLanguage(lang);
             }
             break;
@@ -141,9 +143,10 @@ void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
 
 ///************************************************************************************************
 
-global::PlainText::Language pickLanguage(istream& is, ostream& os, const Indent indent)
+global::PlainTextBase::Language pickLanguage(istream& is, ostream& os, const Indent indent)
 {
     using global::PlainText;
+    using global::PlainTextBase;
     using global::Locator;
 
     Indent ind0{ indent };
@@ -152,22 +155,22 @@ global::PlainText::Language pickLanguage(istream& is, ostream& os, const Indent 
     const auto& text{ MenuOptionsText::aux() };
 
     os << ind0 << text.languages() << endl;
-    for (int i{ common::toUnderlying(common::firstEnum<PlainText::Language>()) };
-        i <= common::toUnderlying(common::lastEnum<PlainText::Language>()); ++i)
+    for (int i{ common::toUnderlying(common::firstEnum<PlainTextBase::Language>()) };
+        i <= common::toUnderlying(common::lastEnum<PlainTextBase::Language>()); ++i)
     {
         printNumBar(os, ind1, i,
-            Locator::getPlainText().language(static_cast<PlainText::Language>(i))
+            PlainText::language(static_cast<PlainTextBase::Language>(i))
         ) << endl;
     }
 
     os << ind0 << text.selectLanguage() << endl;
-    PlainText::Language t{ PlainText::Language::INVALID };
+    PlainTextBase::Language t{ PlainTextBase::Language::INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
-        if (pair.first >= common::toUnderlying(common::firstEnum<PlainText::Language>()) &&
-            pair.first <= common::toUnderlying(common::lastEnum<PlainText::Language>()))
+        if (pair.first >= common::toUnderlying(common::firstEnum<PlainTextBase::Language>()) &&
+            pair.first <= common::toUnderlying(common::lastEnum<PlainTextBase::Language>()))
         {
-            t = static_cast<PlainText::Language>(pair.first);
+            t = static_cast<PlainTextBase::Language>(pair.first);
         }
         else {
             os << comT.errorSymbol() << comT.invalidNumber() << endl;

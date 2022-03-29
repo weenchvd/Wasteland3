@@ -8,7 +8,7 @@
 #define MENU_OPTIONS_HPP
 
 #include"menuCommon.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<iostream>
 
 namespace game {
@@ -40,7 +40,7 @@ void menuGeneralOptions(std::istream& is, std::ostream& os, const Indent indent)
 
 ///************************************************************************************************
 
-global::PlainText::Language pickLanguage(std::istream& is, std::ostream& os, const Indent indent);
+global::PlainTextBase::Language pickLanguage(std::istream& is, std::ostream& os, const Indent indent);
 
 } // namespace menu
 } // namespace game

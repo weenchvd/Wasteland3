@@ -15,12 +15,18 @@
 namespace game {
 namespace object {
 
-struct AttributeReference {
-    using PointAttribute    = common::PointAttribute;
-    using LevelStat         = common::LevelStat;
+class AttributeReference {
+public:
+    using point_t = common::PointAttribute;
+    using level_t = common::LevelStat;
 
+private:
+    friend class Attribute;
+
+private:
     AttributeReference() noexcept {}
 
+public:
     AttributeReference(const AttributeReference&) = delete;
     AttributeReference& operator=(const AttributeReference&) = delete;
 
@@ -28,18 +34,22 @@ struct AttributeReference {
 
     static bool isInitialized() { return initialized_; }
 
-private:
-    static void initPointDist(const fbAttribute::FB_Attribute* attribute);
-    static void initCoordDist(const fbAttribute::FB_Attribute* attribute);
-    static void initLuckDist(const fbAttribute::FB_Attribute* attribute);
-    static void initAwareDist(const fbAttribute::FB_Attribute* attribute);
-    static void initStrDist(const fbAttribute::FB_Attribute* attribute);
-    static void initSpeedDist(const fbAttribute::FB_Attribute* attribute);
-    static void initIntDist(const fbAttribute::FB_Attribute* attribute);
-    static void initCharismaDist(const fbAttribute::FB_Attribute* attribute);
+    static point_t initialAttributePoints() noexcept { return initAttrPoints_; }
 
-public:
-    static common::Distribution<PointAttribute>     pDist_;             // distribution of attribute points
+    static point_t initialAttributeLevel() noexcept { return initAttrLevel_; }
+
+private:
+    static void initPointDist(const fbAttribute::FB_Attribute* fb);
+    static void initCoordDist(const fbAttribute::FB_Attribute* fb);
+    static void initLuckDist(const fbAttribute::FB_Attribute* fb);
+    static void initAwareDist(const fbAttribute::FB_Attribute* fb);
+    static void initStrDist(const fbAttribute::FB_Attribute* fb);
+    static void initSpeedDist(const fbAttribute::FB_Attribute* fb);
+    static void initIntDist(const fbAttribute::FB_Attribute* fb);
+    static void initCharismaDist(const fbAttribute::FB_Attribute* fb);
+
+private:
+    static common::Distribution<point_t>            pDist_;     // distribution of attribute points
     static common::Distribution<EffectAttCoord>     cooDist_;
     static common::Distribution<EffectAttLuck>      lucDist_;
     static common::Distribution<EffectAttAware>     awaDist_;
@@ -48,13 +58,12 @@ public:
     static common::Distribution<EffectAttInt>       intDist_;
     static common::Distribution<EffectAttCha>       chaDist_;
 
-
-    static PointAttribute                   minAttrPoints_;     // min attribute points
-    static PointAttribute                   maxAttrPoints_;     // max attribute points
-    static PointAttribute                   initAttrPoints_;    // initial attribute points
-    static LevelStat                        minAttrLevel_;      // min attribute level
-    static LevelStat                        maxAttrLevel_;      // max attribute level
-    static LevelStat                        initAttrLevel_;     // initial attribute level
+    static point_t                          minAttrPoints_;     // min attribute points
+    static point_t                          maxAttrPoints_;     // max attribute points
+    static point_t                          initAttrPoints_;    // initial attribute points
+    static level_t                          minAttrLevel_;      // min attribute level
+    static level_t                          maxAttrLevel_;      // max attribute level
+    static level_t                          initAttrLevel_;     // initial attribute level
     static bool                             initialized_;
 };
 

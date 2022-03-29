@@ -13,7 +13,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "plainText")
-set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp")
+set(SOURCE_CXX_LIST "plainText.cpp"
+                    "plainTextBase.cpp"
+)
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
 
@@ -23,4 +25,6 @@ target_include_directories(${LIBRARY_NAME}
 
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC common
+                      PUBLIC locator
+                      PUBLIC observer
 )

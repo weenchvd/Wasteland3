@@ -8,7 +8,6 @@
 #include"attributeText.hpp"
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include<assert.h>
 #include<memory>
 
@@ -17,76 +16,67 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, AttributeText::language> AttributeText::langObs_;
-
-array<AttributeText::language_bundle, AttributeText::sizeType_> AttributeText::name_;
-array<AttributeText::language_bundle, AttributeText::sizeType_> AttributeText::descr_;
-
-underlying_type_t<AttributeText::language>  AttributeText::langIndex_   { 0 };
-bool                                        AttributeText::initialized_ { false };
+global::PlainTextBase                       AttributeText::base_;
+array<AttributeText::language_bundle_t, AttributeText::sizeType_>
+                                            AttributeText::name_;
+array<AttributeText::language_bundle_t, AttributeText::sizeType_>
+                                            AttributeText::descr_;
+bool                                        AttributeText::initialized_{ false };
 
 ///************************************************************************************************
 
 void AttributeText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
-    assert(sizeLang_ > 0);
-    assert(sizeType_ > 0);
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-
-    const fbAttribute::FB_AttributeText* table{
+    const fbAttribute::FB_AttributeText* fb{
         fbAttribute::GetFB_AttributeText(buffer.get())
     };
-    assert(table != nullptr);
 
-    initByType(table->name(), name_);
-    initByType(table->descr(), descr_);
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&AttributeText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
+    assert(fb != nullptr);
+    initByType(fb->name(), name_);
+    initByType(fb->descr(), descr_);
 
     initialized_ = true;
 }
 
 void AttributeText::initByType(
-    const fbAttribute::FB_AttributeTextType* table,
-    array<language_bundle, sizeType_>& ar)
+    const fbAttribute::FB_AttributeTextType* fb,
+    array<language_bundle_t, sizeType_>& ar)
 {
-    assert(table != nullptr);
+    assert(sizeType_ > 0);
+    assert(fb != nullptr);
 
     common::initLanguageBundle(
-        table->coordination(),
+        fb->coordination(),
         ar[common::toUnderlying(Attribute__Type::COORDINATION)]
     );
     common::initLanguageBundle(
-        table->luck(),
+        fb->luck(),
         ar[common::toUnderlying(Attribute__Type::LUCK)]
     );
     common::initLanguageBundle(
-        table->awareness(),
+        fb->awareness(),
         ar[common::toUnderlying(Attribute__Type::AWARENESS)]
     );
     common::initLanguageBundle(
-        table->strength(),
+        fb->strength(),
         ar[common::toUnderlying(Attribute__Type::STRENGTH)]
     );
     common::initLanguageBundle(
-        table->speed(),
+        fb->speed(),
         ar[common::toUnderlying(Attribute__Type::SPEED)]
     );
     common::initLanguageBundle(
-        table->intelligence(),
+        fb->intelligence(),
         ar[common::toUnderlying(Attribute__Type::INTELLIGENCE)]
     );
     common::initLanguageBundle(
-        table->charisma(),
+        fb->charisma(),
         ar[common::toUnderlying(Attribute__Type::CHARISMA)]
     );
 }

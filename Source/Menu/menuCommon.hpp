@@ -8,7 +8,7 @@
 #define MENU_COMMON_HPP
 
 #include"common.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include"specStorage.hpp"
 #include<array>
 #include<iostream>
@@ -124,14 +124,11 @@ common::Text fillWithPlaseholders(
 
 class LanguageBundle {
 public:
-    using text              = common::Text;
-    
+    using text_t = common::Text;
+
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ 2 };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_t        = global::PlainTextBase::Language;
 
 public:
     LanguageBundle() noexcept {}
@@ -139,29 +136,27 @@ public:
     LanguageBundle(const LanguageBundle&) = delete;
     LanguageBundle& operator=(const LanguageBundle&) = delete;
 
-    size_t size() const noexcept { return bundle_.size(); }
+    size_t size() const noexcept;
 
-    void en(text t) {
-        bundle_[common::toUnderlying(language::EN)] = std::move(t);
-    }
-    text& en() {
-        return bundle_[common::toUnderlying(language::EN)];
+    text_t& operator[](size_t index) noexcept {
+        return bundle_[index];
     }
 
-    void ru(text t) {
-        bundle_[common::toUnderlying(language::RU)] = std::move(t);
+    void en(text_t t) {
+        bundle_[common::toUnderlying(language_t::EN)] = std::move(t);
     }
-    text& ru() {
-        return bundle_[common::toUnderlying(language::RU)];
+
+    void ru(text_t t) {
+        bundle_[common::toUnderlying(language_t::RU)] = std::move(t);
     }
 
 private:
-    language_bundle bundle_;
+    language_bundle_t bundle_;
 };
 
 void initLanguageBundleMenu(
     LanguageBundle& bundle,
-    std::array<common::Text, global::PlainText::sizeLang_>& target
+    std::array<common::Text, global::PlainTextBase::sizeLang_>& target
 );
 
 } // namespace menu

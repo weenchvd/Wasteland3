@@ -6,7 +6,6 @@
 
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include"skillPath.hpp"
 #include"skillText.hpp"
 #include<assert.h>
@@ -17,163 +16,155 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, SkillText::language> SkillText::langObs_;
-
-array<SkillText::language_bundle, SkillText::sizeType_>     SkillText::name_;
-array<SkillText::language_bundle, SkillText::sizeType_>     SkillText::descr_;
-array<SkillText::language_bundle, SkillText::sizeGroup_>    SkillText::group_;
-
-underlying_type_t<SkillText::language>      SkillText::langIndex_   { 0 };
-bool                                        SkillText::initialized_ { false };
+global::PlainTextBase                       SkillText::base_;
+array<SkillText::language_bundle_t, SkillText::sizeType_>
+                                            SkillText::name_;
+array<SkillText::language_bundle_t, SkillText::sizeType_>
+                                            SkillText::descr_;
+array<SkillText::language_bundle_t, SkillText::sizeGroup_>
+                                            SkillText::group_;
+bool                                        SkillText::initialized_{ false };
 
 ///************************************************************************************************
 
 void SkillText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
-    assert(sizeLang_ > 0);
-    assert(sizeType_ > 0);
-    assert(sizeGroup_ > 0);
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
-
-    const fbSkill::FB_SkillText* table{
+    const fbSkill::FB_SkillText* fb{
         fbSkill::GetFB_SkillText(buffer.get())
     };
-    assert(table != nullptr);
 
-    initByType(table->name(), name_);
-    initByType(table->descr(), descr_);
-    initByGroup(table->group(), group_);
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&SkillText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
+    assert(fb != nullptr);
+    initByType(fb->name(), name_);
+    initByType(fb->descr(), descr_);
+    initByGroup(fb->group(), group_);
 
     initialized_ = true;
 }
 
 void SkillText::initByType(
-    const fbSkill::FB_SkillTextType* table,
-    array<language_bundle, sizeType_>& ar)
+    const fbSkill::FB_SkillTextType* fb,
+    array<language_bundle_t, sizeType_>& ar)
 {
-    assert(table != nullptr);
+    assert(sizeType_ > 0);
+    assert(fb != nullptr);
 
     common::initLanguageBundle(
-        table->automatic_weapons(),
+        fb->automatic_weapons(),
         ar[common::toUnderlying(Skill__Type::AUTOMATIC_WEAPONS)]
     );
     common::initLanguageBundle(
-        table->big_guns(),
+        fb->big_guns(),
         ar[common::toUnderlying(Skill__Type::BIG_GUNS)]
     );
     common::initLanguageBundle(
-        table->brawling(),
+        fb->brawling(),
         ar[common::toUnderlying(Skill__Type::BRAWLING)]
     );
     common::initLanguageBundle(
-        table->melee_combat(),
+        fb->melee_combat(),
         ar[common::toUnderlying(Skill__Type::MELEE_COMBAT)]
     );
     common::initLanguageBundle(
-        table->small_arms(),
+        fb->small_arms(),
         ar[common::toUnderlying(Skill__Type::SMALL_ARMS)]
     );
     common::initLanguageBundle(
-        table->sniper_rifles(),
+        fb->sniper_rifles(),
         ar[common::toUnderlying(Skill__Type::SNIPER_RIFLES)]
     );
     common::initLanguageBundle(
-        table->animal_whisperer(),
+        fb->animal_whisperer(),
         ar[common::toUnderlying(Skill__Type::ANIMAL_WHISPERER)]
     );
     common::initLanguageBundle(
-        table->explosives(),
+        fb->explosives(),
         ar[common::toUnderlying(Skill__Type::EXPLOSIVES)]
     );
     common::initLanguageBundle(
-        table->first_aid(),
+        fb->first_aid(),
         ar[common::toUnderlying(Skill__Type::FIRST_AID)]
     );
     common::initLanguageBundle(
-        table->sneaky_shit(),
+        fb->sneaky_shit(),
         ar[common::toUnderlying(Skill__Type::SNEAKY_SHIT)]
     );
     common::initLanguageBundle(
-        table->weird_science(),
+        fb->weird_science(),
         ar[common::toUnderlying(Skill__Type::WEIRD_SCIENCE)]
     );
     common::initLanguageBundle(
-        table->armor_modding(),
+        fb->armor_modding(),
         ar[common::toUnderlying(Skill__Type::ARMOR_MODDING)]
     );
     common::initLanguageBundle(
-        table->lockpicking(),
+        fb->lockpicking(),
         ar[common::toUnderlying(Skill__Type::LOCKPICKING)]
     );
     common::initLanguageBundle(
-        table->nerd_stuff(),
+        fb->nerd_stuff(),
         ar[common::toUnderlying(Skill__Type::NERD_STUFF)]
     );
     common::initLanguageBundle(
-        table->mechanics(),
+        fb->mechanics(),
         ar[common::toUnderlying(Skill__Type::MECHANICS)]
     );
     common::initLanguageBundle(
-        table->survival(),
+        fb->survival(),
         ar[common::toUnderlying(Skill__Type::SURVIVAL)]
     );
     common::initLanguageBundle(
-        table->toaster_repair(),
+        fb->toaster_repair(),
         ar[common::toUnderlying(Skill__Type::TOASTER_REPAIR)]
     );
     common::initLanguageBundle(
-        table->weapon_modding(),
+        fb->weapon_modding(),
         ar[common::toUnderlying(Skill__Type::WEAPON_MODDING)]
     );
     common::initLanguageBundle(
-        table->barter(),
+        fb->barter(),
         ar[common::toUnderlying(Skill__Type::BARTER)]
     );
     common::initLanguageBundle(
-        table->hard_ass(),
+        fb->hard_ass(),
         ar[common::toUnderlying(Skill__Type::HARD_ASS)]
     );
     common::initLanguageBundle(
-        table->kiss_ass(),
+        fb->kiss_ass(),
         ar[common::toUnderlying(Skill__Type::KISS_ASS)]
     );
     common::initLanguageBundle(
-        table->leadership(),
+        fb->leadership(),
         ar[common::toUnderlying(Skill__Type::LEADERSHIP)]
     );
 }
 
 void SkillText::initByGroup(
-    const fbSkill::FB_SkillTextGroup* table,
-    array<language_bundle, sizeGroup_>& ar)
+    const fbSkill::FB_SkillTextGroup* fb,
+    array<language_bundle_t, sizeGroup_>& ar)
 {
-    assert(table != nullptr);
+    assert(sizeGroup_ > 0);
+    assert(fb != nullptr);
 
     common::initLanguageBundle(
-        table->combat(),
+        fb->combat(),
         ar[common::toUnderlying(Skill__Group::COMBAT)]
     );
     common::initLanguageBundle(
-        table->general(),
+        fb->general(),
         ar[common::toUnderlying(Skill__Group::GENERAL)]
     );
     common::initLanguageBundle(
-        table->exploration(),
+        fb->exploration(),
         ar[common::toUnderlying(Skill__Group::EXPLORATION)]
     );
     common::initLanguageBundle(
-        table->social(),
+        fb->social(),
         ar[common::toUnderlying(Skill__Group::SOCIAL)]
     );
 }

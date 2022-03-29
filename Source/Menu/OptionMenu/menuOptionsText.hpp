@@ -8,129 +8,118 @@
 #define MENU_OPTIONS_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 struct MenuOptionsTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuOptionsText;
 
-public:
+private:
     MenuOptionsTextCommon() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& enterGeneral() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& questionSaveChanges() const noexcept;
+    const text_t& enterGeneral() const noexcept { return enterGeneral_[li()]; }
 
-    const text& saveChanges() const noexcept;
+    const text_t& questionSaveChanges() const noexcept { return questionSaveChanges_[li()]; }
 
-    const text& cancelChanges() const noexcept;
+    const text_t& saveChanges() const noexcept { return saveChanges_[li()]; }
+
+    const text_t& cancelChanges() const noexcept { return cancelChanges_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle enterGeneral_;
-    language_bundle questionSaveChanges_;
-    language_bundle saveChanges_;
-    language_bundle cancelChanges_;
+    language_bundle_t menuName_;
+    language_bundle_t enterGeneral_;
+    language_bundle_t questionSaveChanges_;
+    language_bundle_t saveChanges_;
+    language_bundle_t cancelChanges_;
 };
 
 ///************************************************************************************************
 
 struct MenuOptionsTextGeneral {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuOptionsText;
 
-public:
+private:
     MenuOptionsTextGeneral() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& currentLanguage() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& changeLanguage() const noexcept;
+    const text_t& currentLanguage() const noexcept { return currentLanguage_[li()]; }
+
+    const text_t& changeLanguage() const noexcept { return changeLanguage_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle currentLanguage_;
-    language_bundle changeLanguage_;
+    language_bundle_t menuName_;
+    language_bundle_t currentLanguage_;
+    language_bundle_t changeLanguage_;
 };
 
 ///************************************************************************************************
 
 struct MenuOptionsTextAux {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuOptionsText;
 
-public:
+private:
     MenuOptionsTextAux() noexcept {}
 
-    const text& languages() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& selectLanguage() const noexcept;
+public:
+    const text_t& languages() const noexcept { return languages_[li()]; }
+
+    const text_t& selectLanguage() const noexcept { return selectLanguage_[li()]; }
 
 private:
-    language_bundle languages_;
-    language_bundle selectLanguage_;
+    language_bundle_t languages_;
+    language_bundle_t selectLanguage_;
 };
 
 ///************************************************************************************************
 
 class MenuOptionsText {
-public:
-    using text              = common::Text;
-
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     MenuOptionsText() noexcept {}
 
+public:
     MenuOptionsText(const MenuOptionsText&) = delete;
     MenuOptionsText& operator=(const MenuOptionsText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const MenuOptionsTextCommon& common() noexcept { return common_; }
 
@@ -139,8 +128,6 @@ public:
     static const MenuOptionsTextAux& aux() noexcept { return aux_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon();
 
     static void initGeneral();
@@ -148,79 +135,28 @@ private:
     static void initAux();
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static MenuOptionsTextCommon                    common_;
     static MenuOptionsTextGeneral                   general_;
     static MenuOptionsTextAux                       aux_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const MenuOptionsTextCommon::text& MenuOptionsTextCommon::menuName() const noexcept
+inline MenuOptionsTextCommon::language_index_t MenuOptionsTextCommon::li() const noexcept
 {
-    return menuName_[MenuOptionsText::languageIndex()];
+    return { MenuOptionsText::languageIndex() };
 }
 
-inline const MenuOptionsTextCommon::text& MenuOptionsTextCommon::enterGeneral() const noexcept
+inline MenuOptionsTextGeneral::language_index_t MenuOptionsTextGeneral::li() const noexcept
 {
-    return enterGeneral_[MenuOptionsText::languageIndex()];
+    return { MenuOptionsText::languageIndex() };
 }
 
-inline const MenuOptionsTextCommon::text& MenuOptionsTextCommon::questionSaveChanges() const noexcept
+inline MenuOptionsTextAux::language_index_t MenuOptionsTextAux::li() const noexcept
 {
-    return questionSaveChanges_[MenuOptionsText::languageIndex()];
-}
-
-inline const MenuOptionsTextCommon::text& MenuOptionsTextCommon::saveChanges() const noexcept
-{
-    return saveChanges_[MenuOptionsText::languageIndex()];
-}
-
-inline const MenuOptionsTextCommon::text& MenuOptionsTextCommon::cancelChanges() const noexcept
-{
-    return cancelChanges_[MenuOptionsText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline const MenuOptionsTextGeneral::text& MenuOptionsTextGeneral::menuName() const noexcept
-{
-    return menuName_[MenuOptionsText::languageIndex()];
-}
-
-inline const MenuOptionsTextGeneral::text& MenuOptionsTextGeneral::currentLanguage() const noexcept
-{
-    return currentLanguage_[MenuOptionsText::languageIndex()];
-}
-
-inline const MenuOptionsTextGeneral::text& MenuOptionsTextGeneral::changeLanguage() const noexcept
-{
-    return changeLanguage_[MenuOptionsText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline const MenuOptionsTextAux::text& MenuOptionsTextAux::languages() const noexcept
-{
-    return languages_[MenuOptionsText::languageIndex()];
-}
-
-inline const MenuOptionsTextAux::text& MenuOptionsTextAux::selectLanguage() const noexcept
-{
-    return selectLanguage_[MenuOptionsText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void MenuOptionsText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { MenuOptionsText::languageIndex() };
 }
 
 } // namespace menu

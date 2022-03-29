@@ -16,8 +16,8 @@ using namespace std;
 OptionLanguage::OptionLanguage() noexcept
     :
     subj_           {},
-    curLang_        { language::EN },
-    prevLang_       { language::EN }
+    curLang_        { language_t::EN },
+    prevLang_       { language_t::EN }
 {}
 
 void OptionLanguage::accept() noexcept
@@ -35,7 +35,7 @@ void OptionLanguage::reject() noexcept
     }
 }
 
-void OptionLanguage::setLanguage(language lang) noexcept
+void OptionLanguage::setLanguage(language_t lang) noexcept
 {
     assert(common::isValidEnum(lang));
     if (curLang_ != lang) {

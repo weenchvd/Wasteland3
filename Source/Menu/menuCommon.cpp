@@ -150,18 +150,29 @@ common::Text fillWithPlaseholders(
 
 ///************************************************************************************************
 
-void initLanguageBundleMenu(
-    LanguageBundle& bundle,
-    std::array<common::Text, global::PlainText::sizeLang_>& target)
+size_t LanguageBundle::size() const noexcept
 {
-    using lang = global::PlainText::Language;
-    using text = common::Text;
-    assert(bundle.size() == target.size());
-
-    target[common::toUnderlying(lang::EN)] = move(bundle.en());
-    target[common::toUnderlying(lang::RU)] = move(bundle.ru());
+    size_t size{ 0 };
+    for (int i = 0; i < bundle_.size(); ++i) {
+        if (bundle_[i].size() > 0) ++size;
+    }
+    return size;
 }
 
+void initLanguageBundleMenu(
+    LanguageBundle& bundle,
+    std::array<common::Text, global::PlainTextBase::sizeLang_>& target)
+{
+    using lang = global::PlainTextBase::Language;
+    assert(bundle.size() == target.size());
+
+    for (size_t i{ common::toUnderlying(common::firstEnum<lang>()) };
+        i <= common::toUnderlying(common::lastEnum<lang>());
+        ++i)
+    {
+        target[i] = move(bundle[i]);
+    }
+}
 
 } // namespace menu
 } // namespace game

@@ -8,139 +8,84 @@
 #define MENU_MAIN_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 struct MenuMainTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuMainText;
 
-public:
+private:
     MenuMainTextCommon() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& exit() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& enterOptions() const noexcept;
+    const text_t& exit() const noexcept { return exit_[li()]; }
 
-    const text& enterSquad() const noexcept;
+    const text_t& enterOptions() const noexcept { return enterOpt_[li()]; }
 
-    const text& enterInventory() const noexcept;
+    const text_t& enterSquad() const noexcept { return enterSquad_[li()]; }
 
-    const text& enterShop() const noexcept;
+    const text_t& enterInventory() const noexcept { return enterInvent_[li()]; }
 
-    const text& enterTrade() const noexcept;
+    const text_t& enterShop() const noexcept { return enterShop_[li()]; }
+
+    const text_t& enterTrade() const noexcept { return enterTrade_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle exit_;
-    language_bundle enterOpt_;
-    language_bundle enterSquad_;
-    language_bundle enterInvent_;
-    language_bundle enterShop_;
-    language_bundle enterTrade_;
+    language_bundle_t menuName_;
+    language_bundle_t exit_;
+    language_bundle_t enterOpt_;
+    language_bundle_t enterSquad_;
+    language_bundle_t enterInvent_;
+    language_bundle_t enterShop_;
+    language_bundle_t enterTrade_;
 };
 
 ///************************************************************************************************
 
 class MenuMainText {
-public:
-    using text              = common::Text;
-
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     MenuMainText() noexcept {}
 
+public:
     MenuMainText(const MenuMainText&) = delete;
     MenuMainText& operator=(const MenuMainText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const MenuMainTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon();
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static MenuMainTextCommon                       common_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const MenuMainTextCommon::text& MenuMainTextCommon::menuName() const noexcept
+inline MenuMainTextCommon::language_index_t MenuMainTextCommon::li() const noexcept
 {
-    return menuName_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::exit() const noexcept
-{
-    return exit_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::enterOptions() const noexcept
-{
-    return enterOpt_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::enterSquad() const noexcept
-{
-    return enterSquad_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::enterInventory() const noexcept
-{
-    return enterInvent_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::enterShop() const noexcept
-{
-    return enterShop_[MenuMainText::languageIndex()];
-}
-
-inline const MenuMainTextCommon::text& MenuMainTextCommon::enterTrade() const noexcept
-{
-    return enterTrade_[MenuMainText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void MenuMainText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { MenuMainText::languageIndex() };
 }
 
 } // namespace menu

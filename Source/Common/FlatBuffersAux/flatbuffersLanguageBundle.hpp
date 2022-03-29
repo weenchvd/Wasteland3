@@ -9,7 +9,7 @@
 
 #include"common.hpp"
 #include"languageBundleFB_generated.h"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
 
 namespace game {
@@ -18,7 +18,7 @@ namespace common {
 // @brief Initialize all languages
 void initLanguageBundle(
     const fbCommon::FB_LanguageBundle* bundle,
-    std::array<common::Text, global::PlainText::sizeLang_>& target
+    std::array<common::Text, global::PlainTextBase::sizeLang_>& target
 );
 
 } // namespace common

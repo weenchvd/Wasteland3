@@ -8,7 +8,6 @@
 #include"ammoText.hpp"
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include<assert.h>
 #include<memory>
 
@@ -17,36 +16,26 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, AmmoText::language> AmmoText::langObs_;
-
-AmmoTextCommon AmmoText::common_;
-
-underlying_type_t<AmmoText::language>       AmmoText::langIndex_   { 0 };
-bool                                        AmmoText::initialized_ { false };
+global::PlainTextBase                       AmmoText::base_;
+AmmoTextCommon                              AmmoText::common_;
+bool                                        AmmoText::initialized_{ false };
 
 ///************************************************************************************************
 
 void AmmoText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
-    assert(sizeLang_ > 0);
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
     const fbAmmo::FB_AmmoText* fb{
         fbAmmo::GetFB_AmmoText(buffer.get())
     };
+
     assert(fb != nullptr);
-
     initCommon(fb->common());
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&AmmoText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }

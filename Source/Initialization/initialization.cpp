@@ -9,9 +9,9 @@
 #include"damage.hpp"
 #include"initialization.hpp"
 #include"locator.hpp"
+#include"plainText.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
-#include<assert.h>
 
 namespace game {
 namespace global {
@@ -22,11 +22,14 @@ void initializeGame()
 {
     global::Locator::initialize();
 
+    global::PlainText::initialize();
+
     object::Character::initialize();
-    object::Weapon::initialize();
-    object::WeaponMod::initialize();
+
     object::Ammo::initialize();
     object::Damage::initialize();
+    object::Weapon::initialize();
+    object::WeaponMod::initialize();
 }
 
 } // namespace global

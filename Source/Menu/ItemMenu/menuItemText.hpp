@@ -8,207 +8,130 @@
 #define MENU_ITEM_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 struct MenuItemTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuItemText;
 
-public:
+private:
     MenuItemTextCommon() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& showFullDescription() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& questionDeleteItem() const noexcept;
+    const text_t& showFullDescription() const noexcept { return showFullDescr_[li()]; }
 
-    const text& equip() const noexcept;
+    const text_t& questionDeleteItem() const noexcept { return questionDelete_[li()]; }
 
-    const text& modify() const noexcept;
+    const text_t& equip() const noexcept { return equip_[li()]; }
+
+    const text_t& modify() const noexcept { return modify_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle showFullDescr_;
-    language_bundle questionDelete_;
-    language_bundle equip_;
-    language_bundle modify_;
+    language_bundle_t menuName_;
+    language_bundle_t showFullDescr_;
+    language_bundle_t questionDelete_;
+    language_bundle_t equip_;
+    language_bundle_t modify_;
 };
 
 ///************************************************************************************************
 
 struct MenuItemTextModify {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuItemText;
 
-public:
+private:
     MenuItemTextModify() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& item() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& mods() const noexcept;
+    const text_t& item() const noexcept { return item_[li()]; }
 
-    const text& installMod() const noexcept;
+    const text_t& mods() const noexcept { return mods_[li()]; }
 
-    const text& removeMod() const noexcept;
+    const text_t& installMod() const noexcept { return installMod_[li()]; }
 
-    const text& enterSlotNumber() const noexcept;
+    const text_t& removeMod() const noexcept { return removeMod_[li()]; }
 
-    const text& unsuitableMod() const noexcept;
+    const text_t& enterSlotNumber() const noexcept { return enterSlotNumber_[li()]; }
+
+    const text_t& unsuitableMod() const noexcept { return unsuitableMod_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle item_;
-    language_bundle mods_;
-    language_bundle installMod_;
-    language_bundle removeMod_;
-    language_bundle enterSlotNumber_;
-    language_bundle unsuitableMod_;
+    language_bundle_t menuName_;
+    language_bundle_t item_;
+    language_bundle_t mods_;
+    language_bundle_t installMod_;
+    language_bundle_t removeMod_;
+    language_bundle_t enterSlotNumber_;
+    language_bundle_t unsuitableMod_;
 };
 
 ///************************************************************************************************
 
 class MenuItemText {
-public:
-    using text              = common::Text;
-
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     MenuItemText() noexcept {}
 
+public:
     MenuItemText(const MenuItemText&) = delete;
     MenuItemText& operator=(const MenuItemText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const MenuItemTextCommon& common() noexcept { return common_; }
 
     static const MenuItemTextModify& modify() noexcept { return modify_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon();
 
     static void initModify();
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static MenuItemTextCommon                       common_;
     static MenuItemTextModify                       modify_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const MenuItemTextCommon::text& MenuItemTextCommon::menuName() const noexcept
+inline MenuItemTextCommon::language_index_t MenuItemTextCommon::li() const noexcept
 {
-    return menuName_[MenuItemText::languageIndex()];
+    return { MenuItemText::languageIndex() };
 }
 
-inline const MenuItemTextCommon::text& MenuItemTextCommon::showFullDescription() const noexcept
+inline MenuItemTextModify::language_index_t MenuItemTextModify::li() const noexcept
 {
-    return showFullDescr_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextCommon::text& MenuItemTextCommon::questionDeleteItem() const noexcept
-{
-    return questionDelete_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextCommon::text& MenuItemTextCommon::equip() const noexcept
-{
-    return equip_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextCommon::text& MenuItemTextCommon::modify() const noexcept
-{
-    return modify_[MenuItemText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline const MenuItemTextModify::text& MenuItemTextModify::menuName() const noexcept
-{
-    return menuName_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::item() const noexcept
-{
-    return item_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::mods() const noexcept
-{
-    return mods_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::installMod() const noexcept
-{
-    return installMod_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::removeMod() const noexcept
-{
-    return removeMod_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::enterSlotNumber() const noexcept
-{
-    return enterSlotNumber_[MenuItemText::languageIndex()];
-}
-
-inline const MenuItemTextModify::text& MenuItemTextModify::unsuitableMod() const noexcept
-{
-    return unsuitableMod_[MenuItemText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void MenuItemText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { MenuItemText::languageIndex() };
 }
 
 } // namespace menu

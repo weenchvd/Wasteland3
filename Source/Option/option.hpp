@@ -8,18 +8,18 @@
 #define OPTION_HPP
 
 #include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 
 namespace game {
 namespace global {
 
 class OptionLanguage {
 public:
-    using language = global::PlainText::Language;
+    using language_t = global::PlainTextBase::Language;
 
     friend class Options;
 
-protected:
+private:
     OptionLanguage() noexcept;
 
 public:
@@ -33,18 +33,18 @@ public:
     void reject() noexcept;
 
 public:
-    language getLanguage() const noexcept { return curLang_; }
+    language_t getLanguage() const noexcept { return curLang_; }
 
-    void setLanguage(language lang) noexcept;
+    void setLanguage(language_t lang) noexcept;
 
-    const common::SubjectDLL<void, language>& languageSubject() const noexcept { return subj_; }
+    const common::SubjectDLL<void, language_t>& languageSubject() const noexcept { return subj_; }
 
-    common::SubjectDLL<void, language>& languageSubject() noexcept { return subj_; }
+    common::SubjectDLL<void, language_t>& languageSubject() noexcept { return subj_; }
 
 private:
-    common::SubjectDLL<void, language>      subj_;
-    language                                curLang_;
-    language                                prevLang_;
+    common::SubjectDLL<void, language_t>    subj_;
+    language_t                              curLang_;
+    language_t                              prevLang_;
 };
 
 ///************************************************************************************************
@@ -53,7 +53,7 @@ class Options {
 public:
     friend class Factory;
 
-protected:
+private:
     Options() noexcept {}
 
 public:
@@ -67,12 +67,9 @@ public:
     void rejectAll() noexcept;
 
 public:
-    const OptionLanguage& optLanguage() const noexcept {
-        return optLang_;
-    }
-    OptionLanguage& optLanguage() noexcept {
-        return optLang_;
-    }
+    const OptionLanguage& optLanguage() const noexcept { return optLang_; }
+
+    OptionLanguage& optLanguage() noexcept { return optLang_; }
 
 private:
     OptionLanguage                  optLang_;

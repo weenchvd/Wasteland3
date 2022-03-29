@@ -15,12 +15,18 @@
 namespace game {
 namespace object {
 
-struct SkillReference {
-    using PointSkill        = common::PointSkill;
-    using LevelStat         = common::LevelStat;
+class SkillReference {
+public:
+    using point_t = common::PointSkill;
+    using level_t = common::LevelStat;
 
+private:
+    friend class Skill;
+
+private:
     SkillReference() noexcept {}
 
+public:
     SkillReference(const SkillReference&) = delete;
     SkillReference& operator=(const SkillReference&) = delete;
 
@@ -28,27 +34,31 @@ struct SkillReference {
 
     static bool isInitialized() { return initialized_; }
 
-private:
-    static void initPointDist(const fbSkill::FB_Skill* skill);
-    static void initAutomaticDist(const fbSkill::FB_Skill* skill);
-    static void initBigGunsDist(const fbSkill::FB_Skill* skill);
-    static void initBrawlingDist(const fbSkill::FB_Skill* skill);
-    static void initMeleeDist(const fbSkill::FB_Skill* skill);
-    static void initSmallArmsDist(const fbSkill::FB_Skill* skill);
-    static void initSniperDist(const fbSkill::FB_Skill* skill);
-    static void initAnimalDist(const fbSkill::FB_Skill* skill);
-    static void initExplosiveDist(const fbSkill::FB_Skill* skill);
-    static void initFirstAidDist(const fbSkill::FB_Skill* skill);
-    static void initSneakyShitDist(const fbSkill::FB_Skill* skill);
-    static void initWeirdScienceDist(const fbSkill::FB_Skill* skill);
-    static void initMechanicsDist(const fbSkill::FB_Skill* skill);
-    static void initSurvivalDist(const fbSkill::FB_Skill* skill);
-    static void initWeaponModDist(const fbSkill::FB_Skill* skill);
-    static void initBarterDist(const fbSkill::FB_Skill* skill);
-    static void initLeadershipDist(const fbSkill::FB_Skill* skill);
+    static point_t initialSkillPoints() noexcept { return initSkillPoints_; }
 
-public:
-    static common::Distribution<PointSkill>                 pDist_;             // distribution of skill points
+    static point_t initialSkillLevel() noexcept { return initSkillLevel_; }
+
+private:
+    static void initPointDist(const fbSkill::FB_Skill* fb);
+    static void initAutomaticDist(const fbSkill::FB_Skill* fb);
+    static void initBigGunsDist(const fbSkill::FB_Skill* fb);
+    static void initBrawlingDist(const fbSkill::FB_Skill* fb);
+    static void initMeleeDist(const fbSkill::FB_Skill* fb);
+    static void initSmallArmsDist(const fbSkill::FB_Skill* fb);
+    static void initSniperDist(const fbSkill::FB_Skill* fb);
+    static void initAnimalDist(const fbSkill::FB_Skill* fb);
+    static void initExplosiveDist(const fbSkill::FB_Skill* fb);
+    static void initFirstAidDist(const fbSkill::FB_Skill* fb);
+    static void initSneakyShitDist(const fbSkill::FB_Skill* fb);
+    static void initWeirdScienceDist(const fbSkill::FB_Skill* fb);
+    static void initMechanicsDist(const fbSkill::FB_Skill* fb);
+    static void initSurvivalDist(const fbSkill::FB_Skill* fb);
+    static void initWeaponModDist(const fbSkill::FB_Skill* fb);
+    static void initBarterDist(const fbSkill::FB_Skill* fb);
+    static void initLeadershipDist(const fbSkill::FB_Skill* fb);
+
+private:
+    static common::Distribution<point_t>                    pDist_;         // distribution of skill points
     static common::Distribution<EffectSkillAutomatic>       automDist_;
     static common::Distribution<EffectSkillBigGuns>         bigGunsDist_;
     static common::Distribution<EffectSkillBrawling>        brawlDist_;
@@ -66,12 +76,12 @@ public:
     static common::Distribution<EffectSkillBarter>          barterDist_;
     static common::Distribution<EffectSkillLeadership>      leaderDist_;
 
-    static PointSkill                       minSkillPoints_;    // min skill points
-    static PointSkill                       maxSkillPoints_;    // max skill points
-    static PointSkill                       initSkillPoints_;   // initial skill points
-    static LevelStat                        minSkillLevel_;     // min skill level
-    static LevelStat                        maxSkillLevel_;     // max skill level
-    static LevelStat                        initSkillLevel_;    // initial skill level
+    static point_t                          minSkillPoints_;    // min skill points
+    static point_t                          maxSkillPoints_;    // max skill points
+    static point_t                          initSkillPoints_;   // initial skill points
+    static level_t                          minSkillLevel_;     // min skill level
+    static level_t                          maxSkillLevel_;     // max skill level
+    static level_t                          initSkillLevel_;    // initial skill level
     static bool                             initialized_;
 };
 

@@ -8,203 +8,108 @@
 #define MENU_INVENTORY_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 struct MenuInventoryTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuInventoryText;
 
-public:
+private:
     MenuInventoryTextCommon() noexcept {}
 
-    const text& menuName() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& showMoney() const noexcept;
+public:
+    const text_t& menuName() const noexcept { return menuName_[li()]; }
 
-    const text& showItems() const noexcept;
+    const text_t& showMoney() const noexcept { return showMoney_[li()]; }
 
-    const text& showAllItems() const noexcept;
+    const text_t& showItems() const noexcept { return showItems_[li()]; }
 
-    const text& showItemsOfType() const noexcept;
+    const text_t& showAllItems() const noexcept { return showAllItems_[li()]; }
 
-    const text& enterItemMenu() const noexcept;
+    const text_t& showItemsOfType() const noexcept { return showItemsOfType_[li()]; }
 
-    const text& markAllAsViewed() const noexcept;
+    const text_t& enterItemMenu() const noexcept { return enterItem_[li()]; }
 
-    const text& money() const noexcept;
+    const text_t& markAllAsViewed() const noexcept { return markAllAsViewed_[li()]; }
 
-    const text& inventory() const noexcept;
+    const text_t& money() const noexcept { return money_[li()]; }
 
-    const text& starNewItems() const noexcept;
+    const text_t& inventory() const noexcept { return inventory_[li()]; }
 
-    const text& shop() const noexcept;
+    const text_t& starNewItems() const noexcept { return starNewItems_[li()]; }
 
-    const text& item() const noexcept;
+    const text_t& shop() const noexcept { return shop_[li()]; }
 
-    const text& typesOfItems() const noexcept;
+    const text_t& item() const noexcept { return item_[li()]; }
 
-    const text& enterItemNumber() const noexcept;
+    const text_t& typesOfItems() const noexcept { return typesOfItems_[li()]; }
 
-    const text& listIsOutdated() const noexcept;
+    const text_t& enterItemNumber() const noexcept { return enterItemNumber_[li()]; }
+
+    const text_t& listIsOutdated() const noexcept { return listIsOutdated_[li()]; }
 
 private:
-    language_bundle menuName_;
-    language_bundle showMoney_;
-    language_bundle showItems_;
-    language_bundle showAllItems_;
-    language_bundle showItemsOfType_;
-    language_bundle enterItem_;
-    language_bundle markAllAsViewed_;
-    language_bundle money_;
-    language_bundle inventory_;
-    language_bundle starNewItems_;
-    language_bundle shop_;
-    language_bundle item_;
-    language_bundle typesOfItems_;
-    language_bundle enterItemNumber_;
-    language_bundle listIsOutdated_;
+    language_bundle_t menuName_;
+    language_bundle_t showMoney_;
+    language_bundle_t showItems_;
+    language_bundle_t showAllItems_;
+    language_bundle_t showItemsOfType_;
+    language_bundle_t enterItem_;
+    language_bundle_t markAllAsViewed_;
+    language_bundle_t money_;
+    language_bundle_t inventory_;
+    language_bundle_t starNewItems_;
+    language_bundle_t shop_;
+    language_bundle_t item_;
+    language_bundle_t typesOfItems_;
+    language_bundle_t enterItemNumber_;
+    language_bundle_t listIsOutdated_;
 };
 
 ///************************************************************************************************
 
 class MenuInventoryText {
-public:
-    using text              = common::Text;
-
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     MenuInventoryText() noexcept {}
 
+public:
     MenuInventoryText(const MenuInventoryText&) = delete;
     MenuInventoryText& operator=(const MenuInventoryText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const MenuInventoryTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon();
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
-    static MenuInventoryTextCommon                       common_;
-
-    static std::underlying_type_t<language>         langIndex_;
+    static global::PlainTextBase                    base_;
+    static MenuInventoryTextCommon                  common_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::menuName() const noexcept
+inline MenuInventoryTextCommon::language_index_t MenuInventoryTextCommon::li() const noexcept
 {
-    return menuName_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showMoney() const noexcept
-{
-    return showMoney_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showItems() const noexcept
-{
-    return showItems_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showAllItems() const noexcept
-{
-    return showAllItems_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::showItemsOfType() const noexcept
-{
-    return showItemsOfType_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemMenu() const noexcept
-{
-    return enterItem_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::markAllAsViewed() const noexcept
-{
-    return markAllAsViewed_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::money() const noexcept
-{
-    return money_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::inventory() const noexcept
-{
-    return inventory_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::starNewItems() const noexcept
-{
-    return starNewItems_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::shop() const noexcept
-{
-    return shop_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::item() const noexcept
-{
-    return item_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::typesOfItems() const noexcept
-{
-    return typesOfItems_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::enterItemNumber() const noexcept
-{
-    return enterItemNumber_[MenuInventoryText::languageIndex()];
-}
-
-inline const MenuInventoryTextCommon::text& MenuInventoryTextCommon::listIsOutdated() const noexcept
-{
-    return listIsOutdated_[MenuInventoryText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void MenuInventoryText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { MenuInventoryText::languageIndex() };
 }
 
 } // namespace menu

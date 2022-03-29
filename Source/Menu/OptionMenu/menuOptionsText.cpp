@@ -4,43 +4,30 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"locator.hpp"
 #include"menuCommon.hpp"
 #include"menuOptionsText.hpp"
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 using namespace std;
 
-common::ObserverDLL<void, MenuOptionsText::language> MenuOptionsText::langObs_;
-
-MenuOptionsTextCommon                           MenuOptionsText::common_;
-MenuOptionsTextGeneral                          MenuOptionsText::general_;
-MenuOptionsTextAux                              MenuOptionsText::aux_;
-
-underlying_type_t<MenuOptionsText::language>    MenuOptionsText::langIndex_     { 0 };
-bool                                            MenuOptionsText::initialized_   { false };
+global::PlainTextBase                       MenuOptionsText::base_;
+MenuOptionsTextCommon                       MenuOptionsText::common_;
+MenuOptionsTextGeneral                      MenuOptionsText::general_;
+MenuOptionsTextAux                          MenuOptionsText::aux_;
+bool                                        MenuOptionsText::initialized_{ false };
 
 ///************************************************************************************************
 
 void MenuOptionsText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
-
-    assert(sizeLang_ > 0);
+    base_.initialize();
 
     initCommon();
     initGeneral();
     initAux();
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&MenuOptionsText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }
@@ -56,10 +43,6 @@ void MenuOptionsText::initCommon()
     temp.en("Enter the general options menu");
     temp.ru("Войти в меню общих настроек");
     initLanguageBundleMenu(temp, common_.enterGeneral_);
-
-    temp.en("Options have been changed. Do you want to save the changes?");
-    temp.ru("Настройки были изменены. Вы хотите сохранить изменения?");
-    initLanguageBundleMenu(temp, common_.questionSaveChanges_);
 
     temp.en("Options have been changed. Do you want to save the changes?");
     temp.ru("Настройки были изменены. Вы хотите сохранить изменения?");

@@ -37,12 +37,6 @@ table FB_WeaponModTextCommon {
   crit_damage:fbCommon.FB_LanguageBundle;
   crit_chance:fbCommon.FB_LanguageBundle;
   penetration:fbCommon.FB_LanguageBundle;
-  damage_vs_robots:fbCommon.FB_LanguageBundle;
-  damage_vs_synths:fbCommon.FB_LanguageBundle;
-  damage_vs_vehicles:fbCommon.FB_LanguageBundle;
-  damage_vs_humans:fbCommon.FB_LanguageBundle;
-  damage_vs_animals:fbCommon.FB_LanguageBundle;
-  damage_vs_mutants:fbCommon.FB_LanguageBundle;
 }
 
 table FB_WeaponModText {

@@ -15,10 +15,10 @@ using namespace std;
 
 void initLanguageBundle(
     const fbCommon::FB_LanguageBundle* bundle,
-    array<common::Text, global::PlainText::sizeLang_>& target
+    array<common::Text, global::PlainTextBase::sizeLang_>& target
 )
 {
-    using lang = global::PlainText::Language;
+    using lang = global::PlainTextBase::Language;
     using text = common::Text;
     assert(bundle != nullptr);
 

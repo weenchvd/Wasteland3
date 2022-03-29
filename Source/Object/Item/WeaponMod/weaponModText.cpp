@@ -6,7 +6,6 @@
 
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
-#include"locator.hpp"
 #include"weaponModPath.hpp"
 #include"weaponModText.hpp"
 #include<assert.h>
@@ -17,47 +16,38 @@ namespace object {
 
 using namespace std;
 
-common::ObserverDLL<void, WeaponModText::language> WeaponModText::langObs_;
-
-array<WeaponModText::language_bundle, WeaponModText::sizeType_> WeaponModText::type_;
-WeaponModTextCommon                                             WeaponModText::common_;
-
-underlying_type_t<WeaponModText::language>  WeaponModText::langIndex_   { 0 };
-bool                                        WeaponModText::initialized_ { false };
+global::PlainTextBase                       WeaponModText::base_;
+array<WeaponModText::language_bundle_t, WeaponModText::sizeType_>
+                                            WeaponModText::type_;
+WeaponModTextCommon                         WeaponModText::common_;
+bool                                        WeaponModText::initialized_{ false };
 
 ///************************************************************************************************
 
 void WeaponModText::initialize()
 {
-    using global::Locator;
-
     if (isInitialized()) return;
+    base_.initialize();
 
-    assert(sizeLang_ > 0);
-    assert(sizeType_ > 0);
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(WEAPON_MOD_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
     };
     const fbWeaponMod::FB_WeaponModText* fb{
         fbWeaponMod::GetFB_WeaponModText(buffer.get())
     };
-    assert(fb != nullptr);
 
+    assert(fb != nullptr);
     initByType(fb->type(), type_);
     initCommon(fb->common());
-
-    assert(Locator::isInitialized());
-    setLanguage(Locator::getOptions().optLanguage().getLanguage());
-    langObs_.getDelegate().bind<&WeaponModText::setLanguage>();
-    Locator::getOptions().optLanguage().languageSubject().addObserver(&langObs_);
 
     initialized_ = true;
 }
 
 void WeaponModText::initByType(
     const fbWeaponMod::FB_WeaponModTextType* fb,
-    array<language_bundle, sizeType_>& ar)
+    array<language_bundle_t, sizeType_>& ar)
 {
+    assert(sizeType_ > 0);
     assert(fb != nullptr);
 
     common::initLanguageBundle(
@@ -109,12 +99,6 @@ void WeaponModText::initCommon(const fbWeaponMod::FB_WeaponModTextCommon* fb)
     common::initLanguageBundle(fb->crit_damage(), common_.critDamage_);
     common::initLanguageBundle(fb->crit_chance(), common_.critChance_);
     common::initLanguageBundle(fb->penetration(), common_.penet_);
-    common::initLanguageBundle(fb->damage_vs_robots(), common_.dmgRobots_);
-    common::initLanguageBundle(fb->damage_vs_synths(), common_.dmgSynths_);
-    common::initLanguageBundle(fb->damage_vs_vehicles(), common_.dmgVehicles_);
-    common::initLanguageBundle(fb->damage_vs_humans(), common_.dmgHumans_);
-    common::initLanguageBundle(fb->damage_vs_animals(), common_.dmgAnimals_);
-    common::initLanguageBundle(fb->damage_vs_mutants(), common_.dmgMutants_);
 }
 
 } // namespace object

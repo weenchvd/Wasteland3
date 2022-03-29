@@ -8,211 +8,111 @@
 #define MENU_COMMON_TEXT_HPP
 
 #include"common.hpp"
-#include"observerDLL.hpp"
-#include"plainText.hpp"
+#include"plainTextBase.hpp"
 #include<array>
-#include<assert.h>
 
 namespace game {
 namespace menu {
 
 struct MenuCommonTextCommon {
 public:
-    using text              = common::Text;
+    using text_t = common::Text;
 
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
+    using language_bundle_t = std::array<text_t, global::PlainTextBase::sizeLang_>;
+    using language_index_t  = decltype(global::PlainTextBase::languageIndex());
 
     friend class MenuCommonText;
 
-public:
+private:
     MenuCommonTextCommon() noexcept {}
 
-    const text& actions() const noexcept;
+    language_index_t li() const noexcept;
 
-    const text& exitMenu() const noexcept;
+public:
+    const text_t& actions() const noexcept { return actions_[li()]; }
 
-    const text& invalidInput() const noexcept;
+    const text_t& exitMenu() const noexcept { return exitMenu_[li()]; }
 
-    const text& invalidType() const noexcept;
+    const text_t& invalidInput() const noexcept { return invalidInput_[li()]; }
 
-    const text& invalidNumber() const noexcept;
+    const text_t& invalidType() const noexcept { return invalidType_[li()]; }
 
-    const text& unknownAction() const noexcept;
+    const text_t& invalidNumber() const noexcept { return invalidNumber_[li()]; }
 
-    const text& enterAction() const noexcept;
+    const text_t& unknownAction() const noexcept { return unknownAct_[li()]; }
 
-    const text& enterNumber() const noexcept;
+    const text_t& enterAction() const noexcept { return enterAct_[li()]; }
 
-    const text& selectType() const noexcept;
+    const text_t& enterNumber() const noexcept { return enterNum_[li()]; }
 
-    const text& remove() const noexcept;
+    const text_t& selectType() const noexcept { return selectType_[li()]; }
 
-    const text& yes() const noexcept;
+    const text_t& remove() const noexcept { return remove_[li()]; }
 
-    const text& no() const noexcept;
+    const text_t& yes() const noexcept { return yes_[li()]; }
 
-    const text& cancel() const noexcept;
+    const text_t& no() const noexcept { return no_[li()]; }
 
-    const text& promptSymbol() const noexcept;
+    const text_t& cancel() const noexcept { return cancel_[li()]; }
 
-    const text& errorSymbol() const noexcept;
+    const text_t& promptSymbol() const noexcept { return promptSymbol_[li()]; }
 
-    const text& notImplemented() const noexcept;
+    const text_t& errorSymbol() const noexcept { return errorSymbol_[li()]; }
+
+    const text_t& notImplemented() const noexcept { return notImplemented_[li()]; }
 
 private:
-    language_bundle actions_;
-    language_bundle exitMenu_;
-    language_bundle invalidInput_;
-    language_bundle invalidType_;
-    language_bundle invalidNumber_;
-    language_bundle unknownAct_;
-    language_bundle enterAct_;
-    language_bundle enterNum_;
-    language_bundle selectType_;
-    language_bundle remove_;
-    language_bundle yes_;
-    language_bundle no_;
-    language_bundle cancel_;
-    language_bundle promptSymbol_;
-    language_bundle errorSymbol_;
-    language_bundle notImplemented_;
+    language_bundle_t actions_;
+    language_bundle_t exitMenu_;
+    language_bundle_t invalidInput_;
+    language_bundle_t invalidType_;
+    language_bundle_t invalidNumber_;
+    language_bundle_t unknownAct_;
+    language_bundle_t enterAct_;
+    language_bundle_t enterNum_;
+    language_bundle_t selectType_;
+    language_bundle_t remove_;
+    language_bundle_t yes_;
+    language_bundle_t no_;
+    language_bundle_t cancel_;
+    language_bundle_t promptSymbol_;
+    language_bundle_t errorSymbol_;
+    language_bundle_t notImplemented_;
 };
 
 ///************************************************************************************************
 
 class MenuCommonText {
-public:
-    using text              = common::Text;
-
 private:
-    using language          = global::PlainText::Language;
-
-    static constexpr auto sizeLang_{ global::PlainText::sizeLang_ };
-
-    using language_bundle   = std::array<text, sizeLang_>;
-
-public:
     MenuCommonText() noexcept {}
 
+public:
     MenuCommonText(const MenuCommonText&) = delete;
     MenuCommonText& operator=(const MenuCommonText&) = delete;
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
 
-    static auto languageIndex() noexcept { return langIndex_; }
+    static auto languageIndex() noexcept { return base_.languageIndex(); }
 
     static const MenuCommonTextCommon& common() noexcept { return common_; }
 
 private:
-    static void setLanguage(language lang) noexcept;
-
     static void initCommon();
 
 private:
-    static common::ObserverDLL<void, language>      langObs_;
-
+    static global::PlainTextBase                    base_;
     static MenuCommonTextCommon                     common_;
-
-    static std::underlying_type_t<language>         langIndex_;
     static bool                                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::actions() const noexcept
+inline MenuCommonTextCommon::language_index_t MenuCommonTextCommon::li() const noexcept
 {
-    return actions_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::exitMenu() const noexcept
-{
-    return exitMenu_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::invalidInput() const noexcept
-{
-    return invalidInput_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::invalidType() const noexcept
-{
-    return invalidType_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::invalidNumber() const noexcept
-{
-    return invalidNumber_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::unknownAction() const noexcept
-{
-    return unknownAct_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::enterAction() const noexcept
-{
-    return enterAct_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::enterNumber() const noexcept
-{
-    return enterNum_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::selectType() const noexcept
-{
-    return selectType_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::remove() const noexcept
-{
-    return remove_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::yes() const noexcept
-{
-    return yes_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::no() const noexcept
-{
-    return no_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::cancel() const noexcept
-{
-    return cancel_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::promptSymbol() const noexcept
-{
-    return promptSymbol_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::errorSymbol() const noexcept
-{
-    return errorSymbol_[MenuCommonText::languageIndex()];
-}
-
-inline const MenuCommonTextCommon::text& MenuCommonTextCommon::notImplemented() const noexcept
-{
-    return notImplemented_[MenuCommonText::languageIndex()];
-}
-
-///************************************************************************************************
-
-inline void MenuCommonText::setLanguage(language lang) noexcept
-{
-    assert(common::isValidEnum(lang));
-    assert(common::toUnderlying(lang) >= 0 && common::toUnderlying(lang) < sizeLang_);
-    langIndex_ = common::toUnderlying(lang);
+    return { MenuCommonText::languageIndex() };
 }
 
 } // namespace menu

@@ -18,38 +18,40 @@ namespace object {
 
 using namespace std;
 
-common::Distribution<AttributeReference::PointAttribute>    AttributeReference::pDist_{
-    std::vector<AttributeReference::PointAttribute>()
+common::Distribution<AttributeReference::point_t>           AttributeReference::pDist_{
+    vector<AttributeReference::point_t>{}
 };
 common::Distribution<EffectAttCoord>                        AttributeReference::cooDist_{
-    std::vector<EffectAttCoord>()
+    vector<EffectAttCoord>{}
 };
 common::Distribution<EffectAttLuck>                         AttributeReference::lucDist_{
-    std::vector<EffectAttLuck>()
+    vector<EffectAttLuck>{}
 };
 common::Distribution<EffectAttAware>                        AttributeReference::awaDist_{
-    std::vector<EffectAttAware>()
+    vector<EffectAttAware>{}
 };
 common::Distribution<EffectAttStr>                          AttributeReference::strDist_{
-    std::vector<EffectAttStr>()
+    vector<EffectAttStr>{}
 };
 common::Distribution<EffectAttSpeed>                        AttributeReference::spdDist_{
-    std::vector<EffectAttSpeed>()
+    vector<EffectAttSpeed>{}
 };
 common::Distribution<EffectAttInt>                          AttributeReference::intDist_{
-    std::vector<EffectAttInt>()
+    vector<EffectAttInt>{}
 };
 common::Distribution<EffectAttCha>                          AttributeReference::chaDist_{
-    std::vector<EffectAttCha>()
+    vector<EffectAttCha>{}
 };
 
-common::PointAttribute  AttributeReference::minAttrPoints_  { 0 };
-common::PointAttribute  AttributeReference::maxAttrPoints_  { 0 };
-common::PointAttribute  AttributeReference::initAttrPoints_ { 0 };
-common::LevelStat       AttributeReference::minAttrLevel_   { 0 };
-common::LevelStat       AttributeReference::maxAttrLevel_   { 0 };
-common::LevelStat       AttributeReference::initAttrLevel_  { 0 };
-bool                    AttributeReference::initialized_    { false };
+AttributeReference::point_t             AttributeReference::minAttrPoints_  { 0 };
+AttributeReference::point_t             AttributeReference::maxAttrPoints_  { 0 };
+AttributeReference::point_t             AttributeReference::initAttrPoints_ { 0 };
+AttributeReference::level_t             AttributeReference::minAttrLevel_   { 0 };
+AttributeReference::level_t             AttributeReference::maxAttrLevel_   { 0 };
+AttributeReference::level_t             AttributeReference::initAttrLevel_  { 0 };
+bool                                    AttributeReference::initialized_    { false };
+
+///************************************************************************************************
 
 void AttributeReference::initialize()
 {
@@ -58,40 +60,42 @@ void AttributeReference::initialize()
     unique_ptr<char[]> buffer{
         common::getFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
     };
+    const fbAttribute::FB_Attribute* fb{
+        fbAttribute::GetFB_Attribute(buffer.get())
+    };
 
-    const fbAttribute::FB_Attribute* att =
-        fbAttribute::GetFB_Attribute(buffer.get());
-    assert(att != nullptr);
+    initPointDist(fb);
+    initCoordDist(fb);
+    initLuckDist(fb);
+    initAwareDist(fb);
+    initStrDist(fb);
+    initSpeedDist(fb);
+    initIntDist(fb);
+    initCharismaDist(fb);
 
-    initPointDist(att);
-    initCoordDist(att);
-    initLuckDist(att);
-    initAwareDist(att);
-    initStrDist(att);
-    initSpeedDist(att);
-    initIntDist(att);
-    initCharismaDist(att);
-
-    minAttrPoints_      = { att->min_attr_points() };
-    maxAttrPoints_      = { att->max_attr_points() };
-    initAttrPoints_     = { att->init_attr_points() };
-    minAttrLevel_       = { att->min_attr_level() };
-    maxAttrLevel_       = { att->max_attr_level() };
-    initAttrLevel_      = { att->init_attr_level() };
+    assert(fb != nullptr);
+    minAttrPoints_      = { fb->min_attr_points() };
+    maxAttrPoints_      = { fb->max_attr_points() };
+    initAttrPoints_     = { fb->init_attr_points() };
+    minAttrLevel_       = { fb->min_attr_level() };
+    maxAttrLevel_       = { fb->max_attr_level() };
+    initAttrLevel_      = { fb->init_attr_level() };
 
     initialized_        = true;
 }
 
-void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* fb)
 {
-    pDist_ = move(common::Distribution<AttributeReference::PointAttribute>{
-        common::convertToVector<common::PointAttribute>(attribute->point_attr_distr()->p())
+    assert(fb != nullptr);
+    pDist_ = move(common::Distribution<AttributeReference::point_t>{
+        common::convertToVector<common::PointAttribute>(fb->point_attr_distr()->p())
     });
 }
 
-void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->coord_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->coord_distr();
 
     cooDist_ = move(common::Distribution<EffectAttCoord>{
         common::initializeDistribution<EffectAttCoord,
@@ -106,9 +110,10 @@ void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* attribut
     });
 }
 
-void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->luck_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->luck_distr();
 
     lucDist_ = move(common::Distribution<EffectAttLuck>{
         common::initializeDistribution<EffectAttLuck,
@@ -135,9 +140,10 @@ void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* attribute
     });
 }
 
-void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->aware_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->aware_distr();
 
     awaDist_ = move(common::Distribution<EffectAttAware>{
         common::initializeDistribution<EffectAttAware,
@@ -152,9 +158,10 @@ void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* attribut
     });
 }
 
-void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->str_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->str_distr();
 
     strDist_ = move(common::Distribution<EffectAttStr>{
         common::initializeDistribution<EffectAttStr,
@@ -171,9 +178,10 @@ void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* attribute)
     });
 }
 
-void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->speed_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->speed_distr();
 
     spdDist_ = move(common::Distribution<EffectAttSpeed>{
         common::initializeDistribution<EffectAttSpeed,
@@ -188,9 +196,10 @@ void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* attribut
     });
 }
 
-void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->int_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->int_distr();
 
     intDist_ = move(common::Distribution<EffectAttInt>{
         common::initializeDistribution<EffectAttInt,
@@ -209,9 +218,10 @@ void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* attribute)
     });
 }
 
-void AttributeReference::initCharismaDist(const fbAttribute::FB_Attribute* attribute)
+void AttributeReference::initCharismaDist(const fbAttribute::FB_Attribute* fb)
 {
-    const auto* dist = attribute->cha_distr();
+    assert(fb != nullptr);
+    const auto* dist = fb->cha_distr();
 
     chaDist_ = move(common::Distribution<EffectAttCha>{
         common::initializeDistribution<EffectAttCha,
