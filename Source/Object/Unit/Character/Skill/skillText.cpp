@@ -10,6 +10,7 @@
 #include"skillText.hpp"
 #include<assert.h>
 #include<memory>
+#include<stdlib.h>
 
 namespace game {
 namespace object {
@@ -32,9 +33,10 @@ void SkillText::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbSkill::FB_SkillText* fb{
         fbSkill::GetFB_SkillText(buffer.get())
     };

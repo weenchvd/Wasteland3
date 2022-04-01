@@ -4,10 +4,11 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef OPTION_HPP
-#define OPTION_HPP
+#ifndef OPTIONS_HPP
+#define OPTIONS_HPP
 
 #include"observerDLL.hpp"
+#include"optionsFB_generated.h"
 #include"plainTextBase.hpp"
 
 namespace game {
@@ -28,7 +29,7 @@ public:
 
     bool isModified() const noexcept { return curLang_ != prevLang_; }
 
-    void accept() noexcept;
+    bool accept() noexcept;
 
     void reject() noexcept;
 
@@ -50,21 +51,43 @@ private:
 ///************************************************************************************************
 
 class Options {
-public:
+private:
+    static constexpr char* optionsJSONFileName_ { u8"config.json" };
+    static constexpr char* optionsBinFileName_  { u8"config" };
+
     friend class Factory;
 
 private:
-    Options() noexcept {}
+    Options();
 
 public:
     Options(const Options&) = delete;
     Options& operator=(const Options&) = delete;
+
+    static void initialize();
 
     bool isModified() const noexcept;
 
     void acceptAll() noexcept;
 
     void rejectAll() noexcept;
+
+    bool saveOptionsToFiles();
+
+    bool loadOptionsFromFiles();
+
+private:
+    bool saveOptionsToJSON();
+
+    bool saveOptionsToBin();
+
+    flatbuffers::FlatBufferBuilder saveOptions();
+
+    bool loadOptionsFromJSON();
+
+    bool loadOptionsFromBin();
+
+    bool loadOptions(const fbOptions::FB_Options* fb);
 
 public:
     const OptionLanguage& optLanguage() const noexcept { return optLang_; }
@@ -78,4 +101,4 @@ private:
 } // namespace global
 } // namespace game
 
-#endif // !OPTION_HPP
+#endif // !OPTIONS_HPP

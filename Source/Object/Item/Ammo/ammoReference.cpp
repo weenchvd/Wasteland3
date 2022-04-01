@@ -9,6 +9,7 @@
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
 #include<memory>
+#include<stdlib.h>
 #include<type_traits>
 
 namespace game {
@@ -38,9 +39,10 @@ void AmmoReferenceContainer::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbAmmo::FB_AmmoReferenceContainer* fb{
         fbAmmo::GetFB_AmmoReferenceContainer(buffer.get())
     };

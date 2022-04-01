@@ -9,6 +9,7 @@
 #include"flatbuffersAux.hpp"
 #include"flatbuffersLanguageBundle.hpp"
 #include<memory>
+#include<stdlib.h>
 #include<type_traits>
 
 namespace game {
@@ -43,9 +44,10 @@ void DamageReferenceContainer::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(DAMAGE_REF_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(DAMAGE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbDamage::FB_DamageReferenceContainer* fb{
         fbDamage::GetFB_DamageReferenceContainer(buffer.get())
     };

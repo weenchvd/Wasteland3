@@ -10,6 +10,7 @@
 #include"flatbuffersLanguageBundle.hpp"
 #include<assert.h>
 #include<memory>
+#include<stdlib.h>
 
 namespace game {
 namespace object {
@@ -27,9 +28,10 @@ void DamageText::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(DAMAGE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(DAMAGE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbDamage::FB_DamageText* fb{
         fbDamage::GetFB_DamageText(buffer.get())
     };

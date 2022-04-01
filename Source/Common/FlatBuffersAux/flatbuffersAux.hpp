@@ -28,7 +28,13 @@ std::vector<T> convertToVector(const U* a)
     return v;
 }
 
-std::unique_ptr<char[]> getFlatBuffer(const char* fileName);
+bool readBinFlatBuffer(const char* fileName, std::unique_ptr<char[]>& receiver) noexcept;
+
+bool writeBinFlatBuffer(
+    const char* fileName,
+    const uint8_t* buffer,
+    const size_t bufferSize
+) noexcept;
 
 } // namespace common
 } // namespace game

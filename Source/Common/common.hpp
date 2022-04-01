@@ -9,6 +9,7 @@
 
 #include<assert.h>
 #include<string>
+#include<sys/stat.h>
 #include<type_traits>
 
 namespace game {
@@ -177,6 +178,19 @@ constexpr auto lastEnum() noexcept
     auto e{ static_cast<Enum>(toUnderlying(Enum::NUMBER_OF) - 1) };
     assert(isValidEnum(e));
     return e;
+}
+
+///************************************************************************************************
+
+inline bool fileExists(const std::string& fileName)
+{
+    return fileExists(fileName.c_str());
+}
+
+inline bool fileExists(const char* fileName)
+{
+    struct stat buffer;
+    return (stat(fileName, &buffer) == 0);
 }
 
 } // namespace common

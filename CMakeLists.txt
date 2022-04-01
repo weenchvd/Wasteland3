@@ -18,6 +18,7 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/Install")
 #**********************************************************************
 set(W3EXEC__BIN_DIR "${CMAKE_BINARY_DIR}/Source/Main")
 set(W3DATA__DIR__REL_PATH_FROM_W3EXEC "W3_data")
+set(SYSTEM__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/System")
 set(ASSETS__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/Assets")
 
 set(FB_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/Source/Common/FlatBuffersCommon")

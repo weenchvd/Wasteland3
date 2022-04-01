@@ -9,7 +9,7 @@
 
 #include"ammo.hpp"
 #include"item.hpp"
-#include"option.hpp"
+#include"options.hpp"
 #include"unit.hpp"
 #include<assert.h>
 #include<memory>

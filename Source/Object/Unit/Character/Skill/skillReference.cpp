@@ -10,6 +10,7 @@
 #include"skillReference.hpp"
 #include<assert.h>
 #include<memory>
+#include<stdlib.h>
 #include<type_traits>
 #include<vector>
 
@@ -84,9 +85,10 @@ void SkillReference::initialize()
 {
     if (isInitialized()) return;
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(SKILL_REF_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(SKILL_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbSkill::FB_Skill* fb{
         fbSkill::GetFB_Skill(buffer.get())
     };

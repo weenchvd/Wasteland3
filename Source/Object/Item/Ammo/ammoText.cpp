@@ -10,6 +10,7 @@
 #include"flatbuffersLanguageBundle.hpp"
 #include<assert.h>
 #include<memory>
+#include<stdlib.h>
 
 namespace game {
 namespace object {
@@ -27,9 +28,10 @@ void AmmoText::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbAmmo::FB_AmmoText* fb{
         fbAmmo::GetFB_AmmoText(buffer.get())
     };

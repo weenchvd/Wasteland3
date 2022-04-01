@@ -9,6 +9,7 @@
 #include"weaponPath.hpp"
 #include"weaponReference.hpp"
 #include<memory>
+#include<stdlib.h>
 #include<type_traits>
 
 namespace game {
@@ -91,9 +92,10 @@ void WeaponReferenceContainer::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbWeapon::FB_WeaponReferenceContainer* fb{
         fbWeapon::GetFB_WeaponReferenceContainer(buffer.get())
     };

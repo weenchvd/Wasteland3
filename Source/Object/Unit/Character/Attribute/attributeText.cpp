@@ -10,6 +10,7 @@
 #include"flatbuffersLanguageBundle.hpp"
 #include<assert.h>
 #include<memory>
+#include<stdlib.h>
 
 namespace game {
 namespace object {
@@ -30,9 +31,10 @@ void AttributeText::initialize()
     if (isInitialized()) return;
     base_.initialize();
 
-    unique_ptr<char[]> buffer{
-        common::getFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH)
-    };
+    unique_ptr<char[]> buffer{};
+    if (!common::readBinFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+        abort();
+    }
     const fbAttribute::FB_AttributeText* fb{
         fbAttribute::GetFB_AttributeText(buffer.get())
     };

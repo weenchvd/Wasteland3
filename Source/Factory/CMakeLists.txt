@@ -24,6 +24,6 @@ target_include_directories(${LIBRARY_NAME}
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC item
                       PUBLIC plainText
-                      PUBLIC option
+                      PUBLIC options
                       PUBLIC unit
 )
