@@ -8,7 +8,6 @@
 #define DELEGATE_HPP
 
 #include<assert.h>
-#include<utility>
 
 namespace game {
 namespace common {
@@ -39,8 +38,11 @@ private:
 
 public:
     // @brief Empty storage. Must be initialized by one of the "bind(...)".
-    Delegate()
-        : data_{ nullptr, nullptr } {}
+    Delegate() noexcept
+        :
+        inst_{ nullptr },
+        func_{ nullptr }
+    {}
 
     Delegate(const Delegate&) = delete;
     Delegate& operator=(const Delegate&) = delete;
@@ -51,27 +53,31 @@ public:
     template<R(*Function)(Ts...)>
     void bind()
     {
-        data_.first = nullptr;
-        data_.second = &freeFunction<Function>;
+        assert(Function != nullptr);
+        inst_ = nullptr;
+        func_ = &freeFunction<Function>;
     }
 
     // @brief Bind a NON-const class member function (initialize the Delegate).
     template<class U, R(U::* Function)(Ts...)>
     void bind(U* instance)
     {
-        data_.first = instance;
-        data_.second = &memberFunction<U, Function>;
+        assert(Function != nullptr);
+        assert(instance != nullptr);
+        inst_ = instance;
+        func_ = &memberFunction<U, Function>;
     }
 
     // @brief Call the binded function with the arguments "args".
     R invoke(Ts... args) const
     {
-        assert(data_.second != nullptr);
-        return data_.second(data_.first, args...);
+        assert(func_ != nullptr);
+        return func_(inst_, args...);
     }
 
 private:
-    std::pair<InstancePtr, FunctionPtr> data_;
+    InstancePtr inst_;
+    FunctionPtr func_;
 };
 
 } // namespace common

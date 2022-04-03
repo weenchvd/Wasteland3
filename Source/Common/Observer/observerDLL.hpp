@@ -49,6 +49,7 @@ private:
     ObserverDLL*                    next_;
 };
 
+///************************************************************************************************
 
 // @brief Subject Double Linked List
 template<class R, class... Ts>
@@ -77,7 +78,7 @@ private:
     ObserverDLL<R, Ts...>           head_;
 };
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 template<class R, class... Ts>
 inline void SubjectDLL<R, Ts...>::addObserver(ObserverDLL<R, Ts...>* obs) noexcept
