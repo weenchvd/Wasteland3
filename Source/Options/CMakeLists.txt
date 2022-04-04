@@ -18,10 +18,6 @@ set(OPTIONS_FB_SCHEMA_FILE_EXTENSION "${FB_SCHEMA_FILE_EXTENSION}")
 set(OPTIONS_FB_SCHEMA_FILE_NAME "${OPTIONS_FB_FILE_STEM}.${OPTIONS_FB_SCHEMA_FILE_EXTENSION}")
 file(REAL_PATH "${OPTIONS_FB_SCHEMA_FILE_NAME}" OPTIONS_FB_SCHEMA_FILE)
 
-file(TO_NATIVE_PATH
-  "${SYSTEM__DIR__REL_PATH_FROM_W3EXEC}/${OPTIONS_FB_SCHEMA_FILE_NAME}"
-  OPTIONS_FB_SCHEMA_FILE__NATIVE_REL_PATH
-)
 cmake_language(CALL create_file "${OPTIONS_FB_SCHEMA_FILE_NAME}.in")
 configure_file("${OPTIONS_FB_SCHEMA_FILE_NAME}.in"
                "${CMAKE_CURRENT_SOURCE_DIR}/${OPTIONS_FB_SCHEMA_FILE_NAME}"
@@ -42,13 +38,6 @@ if(WIN32)
 endif()
 
 #**********************************************************************
-# create header file with paths
-set(OPTIONS_PATH_FILE_NAME "optionsPath.hpp")
-cmake_language(CALL create_file "${OPTIONS_PATH_FILE_NAME}.in")
-configure_file("${OPTIONS_PATH_FILE_NAME}.in"
-               "${CMAKE_CURRENT_SOURCE_DIR}/${OPTIONS_PATH_FILE_NAME}"
-)
-
 include(generateSchemaHeader.cmake)
 
 #**********************************************************************
