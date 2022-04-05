@@ -15,7 +15,7 @@ namespace menu {
 
 class ItemVisitorExtendedName : public object::ItemVisitor {
 public:
-    using text = common::Text;
+    using text_t = common::Text;
 
 public:
     ItemVisitorExtendedName() noexcept {}
@@ -28,28 +28,28 @@ public:
     virtual ~ItemVisitorExtendedName() noexcept {}
 
 public:
-    virtual void visitWeapon(object::Weapon& weapon) noexcept override;
+    virtual void visitWeapon(object::Weapon& weapon) override;
 
-    virtual void visitWeaponMod(object::WeaponMod& weaponMod) noexcept override;
+    virtual void visitWeaponMod(object::WeaponMod& weaponMod) override;
 
-    virtual void visitArmor(object::Armor& armor) noexcept override;
+    virtual void visitArmor(object::Armor& armor) override;
 
-    virtual void visitArmorMod(object::ArmorMod& armorMod) noexcept override;
+    virtual void visitArmorMod(object::ArmorMod& armorMod) override;
 
-    virtual void visitAmmo(object::Ammo& ammo) noexcept override;
+    virtual void visitAmmo(object::Ammo& ammo) override;
 
-    virtual void visitJunk(object::Junk& junk) noexcept override;
+    virtual void visitJunk(object::Junk& junk) override;
 
 public:
-    text getExtendedName() noexcept { return text_; }
+    const text_t& getExtendedName() const noexcept { return text_; }
 
 private:
     void reset() noexcept {
-        text_ = text{};
+        text_ = text_t{};
     }
 
 private:
-    text text_;          // extended name
+    text_t text_;          // extended name
 };
 
 } // namespace menu

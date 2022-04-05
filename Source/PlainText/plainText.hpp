@@ -9,6 +9,7 @@
 
 #include"common.hpp"
 #include"plainTextBase.hpp"
+#include"plainTextText.hpp"
 #include<array>
 
 namespace game {
@@ -30,9 +31,11 @@ public:
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_ && text_.isInitialized(); }
 
     static const text_t& language(language_t lang) noexcept;
+
+    static const PlainTextText& plainTextText() noexcept { return text_; }
 
 private:
     static void initLanguage();
@@ -40,6 +43,7 @@ private:
 private:
     static PlainTextBase                            base_;
     static std::array<text_t, sizeLang_>            lang_;
+    static const PlainTextText                      text_;
     static bool                                     initialized_;
 };
 

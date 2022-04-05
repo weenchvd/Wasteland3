@@ -18,14 +18,14 @@ namespace menu {
 
 class ItemVisitorFullDescription : public object::ItemVisitor {
 public:
-    using text = common::Text;
+    using text_t = common::Text;
 
 private:
-    static const auto signSpace_    { ' ' };
-    static const auto signX_        { 'X' };
-    static const auto signPercent_  { '%' };
-    static const text separator_;
-
+    static constexpr auto signSpace_    { ' ' };
+    static constexpr auto signX_        { 'X' };
+    static constexpr auto signPercent_  { '%' };
+    static constexpr auto signDollar_   { '$' };
+    static constexpr auto separator_    { "----------" };
 
 public:
     ItemVisitorFullDescription() noexcept {}
@@ -38,35 +38,35 @@ public:
     virtual ~ItemVisitorFullDescription() noexcept {}
 
 public:
-    virtual void visitWeapon(object::Weapon& weapon) noexcept override;
+    virtual void visitWeapon(object::Weapon& weapon) override;
 
-    virtual void visitWeaponMod(object::WeaponMod& weaponMod) noexcept override;
+    virtual void visitWeaponMod(object::WeaponMod& weaponMod) override;
 
-    virtual void visitArmor(object::Armor& armor) noexcept override;
+    virtual void visitArmor(object::Armor& armor) override;
 
-    virtual void visitArmorMod(object::ArmorMod& armorMod) noexcept override;
+    virtual void visitArmorMod(object::ArmorMod& armorMod) override;
 
-    virtual void visitAmmo(object::Ammo& ammo) noexcept override;
+    virtual void visitAmmo(object::Ammo& ammo) override;
 
-    virtual void visitJunk(object::Junk& junk) noexcept override;
+    virtual void visitJunk(object::Junk& junk) override;
 
 public:
-    text getFullDescription() noexcept { return text_; }
+    const text_t& getFullDescription() const noexcept { return text_; }
 
 private:
     void reset() noexcept {
-        text_ = text{};
+        text_ = text_t{};
     }
 
 private:
-    text text_;          // full description
+    text_t text_;          // full description
 };
 
 ///************************************************************************************************
 
 class WeaponList {
 public:
-    using list                  = std::vector<object::Weapon__Type>;
+    using list_t = std::vector<object::Weapon__Type>;
 
 private:
     static constexpr auto sizeWeaponType_   { common::numberOf<object::Weapon__Type>() };
@@ -75,20 +75,20 @@ private:
 public:
     WeaponList() noexcept {}
 
-    static void initialize() noexcept;
+    static void initialize();
 
-    static bool isInitialized() { return initialized_; }
+    static bool isInitialized() noexcept { return initialized_; }
 
-    static const list& getList(object::WeaponMod__Type id) noexcept;
+    static const list_t& getList(object::WeaponMod__Type id);
 
 private:
-    static std::vector<list>        list_;
+    static std::vector<list_t>      list_;
     static bool                     initialized_;
 };
 
 ///************************************************************************************************
 
-inline const WeaponList::list& WeaponList::getList(object::WeaponMod__Type id) noexcept
+inline const WeaponList::list_t& WeaponList::getList(object::WeaponMod__Type id)
 {
     assert(common::isValidEnum(id));
     initialize();

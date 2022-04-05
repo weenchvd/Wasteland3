@@ -16,7 +16,7 @@ namespace menu {
 
 using namespace std;
 
-void ItemVisitorNameType::visitWeapon(object::Weapon& weapon) noexcept
+void ItemVisitorNameType::visitWeapon(object::Weapon& weapon)
 {
     reset();
 
@@ -29,7 +29,7 @@ void ItemVisitorNameType::visitWeapon(object::Weapon& weapon) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorNameType::visitWeaponMod(object::WeaponMod& weaponMod) noexcept
+void ItemVisitorNameType::visitWeaponMod(object::WeaponMod& weaponMod)
 {
     reset();
 
@@ -42,17 +42,17 @@ void ItemVisitorNameType::visitWeaponMod(object::WeaponMod& weaponMod) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorNameType::visitArmor(object::Armor& armor) noexcept
+void ItemVisitorNameType::visitArmor(object::Armor& armor)
 {
     reset();
 }
 
-void ItemVisitorNameType::visitArmorMod(object::ArmorMod& armorMod) noexcept
+void ItemVisitorNameType::visitArmorMod(object::ArmorMod& armorMod)
 {
     reset();
 }
 
-void ItemVisitorNameType::visitAmmo(object::Ammo& ammo) noexcept
+void ItemVisitorNameType::visitAmmo(object::Ammo& ammo)
 {
     reset();
 
@@ -64,7 +64,7 @@ void ItemVisitorNameType::visitAmmo(object::Ammo& ammo) noexcept
     text_ = oss.str();
 }
 
-void ItemVisitorNameType::visitJunk(object::Junk& junk) noexcept
+void ItemVisitorNameType::visitJunk(object::Junk& junk)
 {
     reset();
 }

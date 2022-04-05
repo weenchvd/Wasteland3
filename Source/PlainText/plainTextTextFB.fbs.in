@@ -1,0 +1,22 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbPlainText;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_PlainTextTextCommon {
+  price:fbCommon.FB_LanguageBundle;
+}
+
+table FB_PlainTextText {
+  common:FB_PlainTextTextCommon;
+}
+
+root_type FB_PlainTextText;

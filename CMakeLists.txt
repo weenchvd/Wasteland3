@@ -6,7 +6,7 @@
 
 cmake_minimum_required(VERSION 3.20)
 
-project("Wasteland3"  VERSION 0.2.0)
+project("Wasteland3"  VERSION 0.2.1)
 
 option(GAME_ENABLE_TEST "Enable tests for game" OFF)
 

@@ -13,6 +13,7 @@ using namespace std;
 
 PlainTextBase                                   PlainText::base_;
 array<PlainText::text_t, PlainText::sizeLang_>  PlainText::lang_;
+const PlainTextText                             PlainText::text_;
 bool                                            PlainText::initialized_{ false };
 
 ///************************************************************************************************
@@ -21,6 +22,7 @@ void PlainText::initialize()
 {
     if (isInitialized()) return;
     base_.initialize();
+    text_.initialize();
 
     initLanguage();
 

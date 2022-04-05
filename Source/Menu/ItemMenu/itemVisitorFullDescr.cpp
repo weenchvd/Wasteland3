@@ -9,6 +9,7 @@
 #include"damage.hpp"
 #include"itemVisitorFullDescr.hpp"
 #include"menuItemCommon.hpp"
+#include"plainText.hpp"
 #include"skill.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
@@ -21,22 +22,19 @@ namespace menu {
 
 using namespace std;
 
-const ItemVisitorFullDescription::text ItemVisitorFullDescription::separator_{ "----------" };
-
-///************************************************************************************************
-
-vector<WeaponList::list>            WeaponList::list_;
+vector<WeaponList::list_t>          WeaponList::list_;
 bool                                WeaponList::initialized_{ false };
 
 ///************************************************************************************************
 
-void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
+void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon)
 {
     reset();
 
     const auto& sp  { signSpace_ };
     const auto& x   { signX_ };
     const auto& p   { signPercent_ };
+    const auto& d   { signDollar_ };
     const auto& sep { separator_ };
     const object::Weapon& def{ object::Weapon::weaponDefault() };
     const auto& text{ weapon.weaponText() };
@@ -133,18 +131,21 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon) noexcept
         << common::getChance(weapon.chanceCritDamage()) << p << endl;
     oss << text.common().penetration() << sp
         << common::getArmor(weapon.armorPenetration()) << endl;
-    /// TODO oss << price << endl;
+
+    oss << global::PlainText::plainTextText().common().price() << sp
+        << d << weapon.price() << endl;
 
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) noexcept
+void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod)
 {
     reset();
 
     const auto& sp  { signSpace_ };
     const auto& x   { signX_ };
     const auto& p   { signPercent_ };
+    const auto& d   { signDollar_ };
     const auto& sep { separator_ };
     const auto& text{ weaponMod.weaponModText() };
     ostringstream oss;
@@ -239,26 +240,28 @@ void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod) no
     }
     oss << std::noshowpos;
 
-    /// TODO oss << price << endl;
+    oss << global::PlainText::plainTextText().common().price() << sp
+        << d << weaponMod.price() << endl;
 
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitArmor(object::Armor& armor) noexcept
+void ItemVisitorFullDescription::visitArmor(object::Armor& armor)
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitArmorMod(object::ArmorMod& armorMod) noexcept
+void ItemVisitorFullDescription::visitArmorMod(object::ArmorMod& armorMod)
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo) noexcept
+void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo)
 {
     reset();
 
     const auto& sp  { signSpace_ };
+    const auto& d   { signDollar_ };
     const auto& sep { separator_ };
     const auto& text{ ammo.ammoText() };
     ostringstream oss;
@@ -269,19 +272,20 @@ void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo) noexcept
     oss << sep << endl;
     oss << text.common().quantity() << sp << ammo.quantity() << endl;
 
-    /// TODO oss << price << endl;
+    oss << global::PlainText::plainTextText().common().price() << sp
+        << d << ammo.price() << endl;
 
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitJunk(object::Junk& junk) noexcept
+void ItemVisitorFullDescription::visitJunk(object::Junk& junk)
 {
     reset();
 }
 
 ///************************************************************************************************
 
-void WeaponList::initialize() noexcept
+void WeaponList::initialize()
 {
     if (isInitialized()) return;
 
