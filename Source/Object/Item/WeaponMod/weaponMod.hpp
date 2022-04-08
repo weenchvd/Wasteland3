@@ -28,9 +28,8 @@ class Weapon;
 
 class WeaponMod : public Item {
 public:
-    using Model         = WeaponMod__Model;
-    using Type          = WeaponMod__Type;
-    using text          = common::Text;
+    using Model = WeaponMod__Model;
+    using Type  = WeaponMod__Type;
 
 private:
     friend global::Factory;
@@ -56,7 +55,7 @@ public:
 
     void apply(Weapon& weapon) noexcept;
 
-/// weapon mod parameters
+///********** unchangeable weapon mod parameters (from reference)
 public:
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPON_MOD;
@@ -78,11 +77,11 @@ public:
         return base_.requirements_;
     }
 
-    virtual const text& name() const noexcept override {
+    virtual const common::Text& name() const noexcept override {
         return base_.name();
     }
 
-    const text& description() const noexcept {
+    const common::Text& description() const noexcept {
         return base_.descr();
     }
 
@@ -106,6 +105,10 @@ public:
         return base_.capAmmo_;
     }
 
+    common::Angle angleCone() const noexcept {
+        return base_.angleCone_;
+    }
+
     common::Multiplier multiplierCritDamage() const noexcept {
         return base_.mulCritDmg_;
     }
@@ -116,6 +119,22 @@ public:
 
     common::Chance chanceCritDamage() const noexcept {
         return base_.chaCritDmg_;
+    }
+
+    common::Bonus bonusSneakAttackDamage() const noexcept {
+        return base_.bonSneakDmg_;
+    }
+
+    common::Bonus bonusNormalDamage() const noexcept {
+        return base_.bonNormDmg_;
+    }
+
+    common::Bonus bonusMeleeDamage() const noexcept {
+        return base_.bonMeleeDmg_;
+    }
+
+    common::Bonus bonusRangedDamage() const noexcept {
+        return base_.bonRangeDmg_;
     }
 
     common::Armor armorPenetration() const noexcept {
@@ -170,8 +189,8 @@ inline void WeaponMod::initialize()
 
 inline bool WeaponMod::isInitialized()
 {
-    return ref_.isInitialized()
-        && text_.isInitialized();
+    return ref_.isInitialized() &&
+           text_.isInitialized();
 }
 
 } // namespace object

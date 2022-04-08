@@ -241,6 +241,25 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     if (weaponMod.rangeAttack() != def.rangeAttack()) {
         oss << text.common().range() << sp << weaponMod.rangeAttack() << endl;
     }
+    if (weaponMod.angleCone() != def.angleCone()) {
+        oss << text.common().coneAngle() << sp << weaponMod.angleCone() << endl;
+    }
+    if (weaponMod.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
+        oss << text.common().bonSneakDamage() << sp
+            << common::getBonus(weaponMod.bonusSneakAttackDamage()) << p << endl;
+    }
+    if (weaponMod.bonusNormalDamage() != def.bonusNormalDamage()) {
+        oss << text.common().bonNormDamage() << sp
+            << common::getBonus(weaponMod.bonusNormalDamage()) << p << endl;
+    }
+    if (weaponMod.bonusMeleeDamage() != def.bonusMeleeDamage()) {
+        oss << text.common().bonMeleeDamage() << sp
+            << common::getBonus(weaponMod.bonusMeleeDamage()) << p << endl;
+    }
+    if (weaponMod.bonusRangedDamage() != def.bonusRangedDamage()) {
+        oss << text.common().bonRangeDamage() << sp
+            << common::getBonus(weaponMod.bonusRangedDamage()) << p << endl;
+    }
     if (weaponMod.chanceHit() != def.chanceHit()) {
         oss << text.common().hitChance() << sp
             << common::getChance(weaponMod.chanceHit()) << p << endl;

@@ -9,9 +9,9 @@
 #include "attributeTypeFB_generated.h"
 #include "damageTypeFB_generated.h"
 #include "weaponModTypeFB_generated.h"
-#include "weaponModModelFB_generated.h"
 #include "skillTypeFB_generated.h"
 #include "languageBundleFB_generated.h"
+#include "weaponModModelFB_generated.h"
 #include "ammoTypeFB_generated.h"
 
 namespace fbWeaponMod {
@@ -153,15 +153,20 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
     VT_PRICE = 18,
     VT_RANGE_ATTACK = 20,
     VT_CAPACITY_AMMO = 22,
-    VT_MULTIPLIER_CRIT_DMG = 24,
-    VT_CHANCE_HIT = 26,
-    VT_CHANCE_CRIT_DMG = 28,
-    VT_ARMOR_PENETRATION = 30,
-    VT_AP_PER_ATTACK = 32,
-    VT_AP_PER_RELOAD = 34,
-    VT_SHOTS_PER_ATTACK = 36,
-    VT_AMMO_TYPE = 38,
-    VT_DMG_TYPE = 40
+    VT_ANGLE_CONE = 24,
+    VT_MULTIPLIER_CRIT_DMG = 26,
+    VT_CHANCE_HIT = 28,
+    VT_CHANCE_CRIT_DMG = 30,
+    VT_BONUS_SNEAK_DMG = 32,
+    VT_BONUS_NORMAL_DMG = 34,
+    VT_BONUS_MELEE_DMG = 36,
+    VT_BONUS_RANGE_DMG = 38,
+    VT_ARMOR_PENETRATION = 40,
+    VT_AP_PER_ATTACK = 42,
+    VT_AP_PER_RELOAD = 44,
+    VT_SHOTS_PER_ATTACK = 46,
+    VT_AMMO_TYPE = 48,
+    VT_DMG_TYPE = 50
   };
   fbWeaponMod::FB_WeaponModModel weapon_mod_model() const {
     return static_cast<fbWeaponMod::FB_WeaponModModel>(GetField<int16_t>(VT_WEAPON_MOD_MODEL, 0));
@@ -193,6 +198,9 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   int16_t capacity_ammo() const {
     return GetField<int16_t>(VT_CAPACITY_AMMO, 0);
   }
+  int16_t angle_cone() const {
+    return GetField<int16_t>(VT_ANGLE_CONE, 0);
+  }
   int16_t multiplier_crit_dmg() const {
     return GetField<int16_t>(VT_MULTIPLIER_CRIT_DMG, 0);
   }
@@ -201,6 +209,18 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   }
   int16_t chance_crit_dmg() const {
     return GetField<int16_t>(VT_CHANCE_CRIT_DMG, 0);
+  }
+  int16_t bonus_sneak_dmg() const {
+    return GetField<int16_t>(VT_BONUS_SNEAK_DMG, 0);
+  }
+  int16_t bonus_normal_dmg() const {
+    return GetField<int16_t>(VT_BONUS_NORMAL_DMG, 0);
+  }
+  int16_t bonus_melee_dmg() const {
+    return GetField<int16_t>(VT_BONUS_MELEE_DMG, 0);
+  }
+  int16_t bonus_range_dmg() const {
+    return GetField<int16_t>(VT_BONUS_RANGE_DMG, 0);
   }
   int8_t armor_penetration() const {
     return GetField<int8_t>(VT_ARMOR_PENETRATION, 0);
@@ -235,9 +255,14 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
            VerifyField<int16_t>(verifier, VT_PRICE) &&
            VerifyField<int16_t>(verifier, VT_RANGE_ATTACK) &&
            VerifyField<int16_t>(verifier, VT_CAPACITY_AMMO) &&
+           VerifyField<int16_t>(verifier, VT_ANGLE_CONE) &&
            VerifyField<int16_t>(verifier, VT_MULTIPLIER_CRIT_DMG) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_HIT) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_CRIT_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_SNEAK_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_NORMAL_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_MELEE_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_RANGE_DMG) &&
            VerifyField<int8_t>(verifier, VT_ARMOR_PENETRATION) &&
            VerifyField<int8_t>(verifier, VT_AP_PER_ATTACK) &&
            VerifyField<int8_t>(verifier, VT_AP_PER_RELOAD) &&
@@ -282,6 +307,9 @@ struct FB_WeaponModReferenceBuilder {
   void add_capacity_ammo(int16_t capacity_ammo) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_CAPACITY_AMMO, capacity_ammo, 0);
   }
+  void add_angle_cone(int16_t angle_cone) {
+    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_ANGLE_CONE, angle_cone, 0);
+  }
   void add_multiplier_crit_dmg(int16_t multiplier_crit_dmg) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_MULTIPLIER_CRIT_DMG, multiplier_crit_dmg, 0);
   }
@@ -290,6 +318,18 @@ struct FB_WeaponModReferenceBuilder {
   }
   void add_chance_crit_dmg(int16_t chance_crit_dmg) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_CHANCE_CRIT_DMG, chance_crit_dmg, 0);
+  }
+  void add_bonus_sneak_dmg(int16_t bonus_sneak_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_BONUS_SNEAK_DMG, bonus_sneak_dmg, 0);
+  }
+  void add_bonus_normal_dmg(int16_t bonus_normal_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_BONUS_NORMAL_DMG, bonus_normal_dmg, 0);
+  }
+  void add_bonus_melee_dmg(int16_t bonus_melee_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_BONUS_MELEE_DMG, bonus_melee_dmg, 0);
+  }
+  void add_bonus_range_dmg(int16_t bonus_range_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_BONUS_RANGE_DMG, bonus_range_dmg, 0);
   }
   void add_armor_penetration(int8_t armor_penetration) {
     fbb_.AddElement<int8_t>(FB_WeaponModReference::VT_ARMOR_PENETRATION, armor_penetration, 0);
@@ -332,9 +372,14 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
     int16_t price = 0,
     int16_t range_attack = 0,
     int16_t capacity_ammo = 0,
+    int16_t angle_cone = 0,
     int16_t multiplier_crit_dmg = 0,
     int16_t chance_hit = 0,
     int16_t chance_crit_dmg = 0,
+    int16_t bonus_sneak_dmg = 0,
+    int16_t bonus_normal_dmg = 0,
+    int16_t bonus_melee_dmg = 0,
+    int16_t bonus_range_dmg = 0,
     int8_t armor_penetration = 0,
     int8_t ap_per_attack = 0,
     int8_t ap_per_reload = 0,
@@ -345,9 +390,14 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
   builder_.add_descrip(descrip);
   builder_.add_name(name);
   builder_.add_weapon_mod_requirements(weapon_mod_requirements);
+  builder_.add_bonus_range_dmg(bonus_range_dmg);
+  builder_.add_bonus_melee_dmg(bonus_melee_dmg);
+  builder_.add_bonus_normal_dmg(bonus_normal_dmg);
+  builder_.add_bonus_sneak_dmg(bonus_sneak_dmg);
   builder_.add_chance_crit_dmg(chance_crit_dmg);
   builder_.add_chance_hit(chance_hit);
   builder_.add_multiplier_crit_dmg(multiplier_crit_dmg);
+  builder_.add_angle_cone(angle_cone);
   builder_.add_capacity_ammo(capacity_ammo);
   builder_.add_range_attack(range_attack);
   builder_.add_price(price);

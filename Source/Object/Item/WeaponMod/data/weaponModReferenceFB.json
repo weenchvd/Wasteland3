@@ -24,9 +24,14 @@
       "price": 600,
       "range_attack": 0,
       "capacity_ammo": 0,
+      "angle_cone": 0,
       "multiplier_crit_dmg": 0,
       "chance_hit": -100,
       "chance_crit_dmg": 0,
+      "bonus_sneak_dmg": 0,
+      "bonus_normal_dmg": 0,
+      "bonus_melee_dmg": 0,
+      "bonus_range_dmg": 0,
       "armor_penetration": 0,
       "ap_per_attack": 0,
       "ap_per_reload": 0,
@@ -199,6 +204,75 @@
       "dmg_min": 2,
       "dmg_max": 2,
       "price": 50
+    },
+    {
+      "weapon_mod_model": "BARREL_PHASE_SILENCER",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 8
+          }
+        ]
+      },
+      "name": {
+        "en": "PHASE SILENCER",
+        "ru": "ФАЗОВЫЙ ДЕМПФЕР"
+      },
+      "descrip": {
+        "en": "Sophisticated chambers redirect gases to achive sound cancellation.",
+        "ru": "Сложная система камер для отвода пороховых газов позволяет стрелять практически бесшумно."
+      },
+      "price": 300,
+      "bonus_sneak_dmg": 300,
+      "armor_penetration": 4
+    },
+    {
+      "weapon_mod_model": "BARREL_SOUND_SUPRESSOR",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 5
+          }
+        ]
+      },
+      "name": {
+        "en": "SOUND SUPRESSOR",
+        "ru": "ЗВУКОГАСИТЕЛЬ"
+      },
+      "descrip": {
+        "en": "A screw-on attachment that significantly reduces the volume of bullet reports.",
+        "ru": "Устройство с винтовым креплением, значительно снижающее громкость выстрела."
+      },
+      "price": 150,
+      "bonus_sneak_dmg": 200,
+      "armor_penetration": 3
+    },
+    {
+      "weapon_mod_model": "BARREL_BLAST_MUFFLER",
+      "weapon_mod_type": "BARREL",
+      "weapon_mod_requirements": {
+        "skill": [
+          {
+            "type": "WEAPON_MODDING",
+            "level": 2
+          }
+        ]
+      },
+      "name": {
+        "en": "BLAST MUFFLER",
+        "ru": "ГЛУШИТЕЛЬ"
+      },
+      "descrip": {
+        "en": "Simple baffles redirect sound away from the target.",
+        "ru": "Простые дефлекторы направляют звук выстрела в сторону от цели."
+      },
+      "price": 50,
+      "bonus_sneak_dmg": 100,
+      "armor_penetration": 2
     },
     {
       "weapon_mod_model": "MAG_QUICKFIRE",
@@ -532,6 +606,7 @@
         "ru": "Позволяет обволакивать обычные пули слоем микроскопических разрывных капсул фугасного действия."
       },
       "price": 1000,
+      "bonus_range_dmg": -100,
       "armor_penetration": 99,
       "dmg_type": "EXPLOSIVE"
     },
@@ -555,6 +630,7 @@
         "ru": "С помощью этой подводки каждая пуля при выстреле обволакивается слоем перегретого ионизированного газа."
       },
       "price": 850,
+      "bonus_range_dmg": -100,
       "armor_penetration": 99,
       "dmg_type": "ENERGY"
     },
@@ -578,6 +654,7 @@
         "ru": "Усовершенствованный термонасос для прямого подсоединения криогенной капсулы к патроннику."
       },
       "price": 750,
+      "bonus_range_dmg": -100,
       "armor_penetration": 99,
       "dmg_type": "COLD"
     },
@@ -601,6 +678,7 @@
         "ru": "В процессе прохождения по каналу покрывает обычную пулю напалмообразной жидкостью."
       },
       "price": 600,
+      "bonus_range_dmg": -100,
       "armor_penetration": 99,
       "dmg_type": "FIRE"
     },

@@ -144,7 +144,12 @@ struct FB_WeaponModTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
     VT_BASE_HIT_CHANCE = 26,
     VT_CRIT_DAMAGE = 28,
     VT_CRIT_CHANCE = 30,
-    VT_PENETRATION = 32
+    VT_CONE_ANGLE = 32,
+    VT_BONUS_SNEAK_DAMAGE = 34,
+    VT_BONUS_NORM_DAMAGE = 36,
+    VT_BONUS_MELEE_DAMAGE = 38,
+    VT_BONUS_RANGE_DAMAGE = 40,
+    VT_PENETRATION = 42
   };
   const fbCommon::FB_LanguageBundle *item_type() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_ITEM_TYPE);
@@ -188,6 +193,21 @@ struct FB_WeaponModTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
   const fbCommon::FB_LanguageBundle *crit_chance() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_CRIT_CHANCE);
   }
+  const fbCommon::FB_LanguageBundle *cone_angle() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_CONE_ANGLE);
+  }
+  const fbCommon::FB_LanguageBundle *bonus_sneak_damage() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BONUS_SNEAK_DAMAGE);
+  }
+  const fbCommon::FB_LanguageBundle *bonus_norm_damage() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BONUS_NORM_DAMAGE);
+  }
+  const fbCommon::FB_LanguageBundle *bonus_melee_damage() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BONUS_MELEE_DAMAGE);
+  }
+  const fbCommon::FB_LanguageBundle *bonus_range_damage() const {
+    return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_BONUS_RANGE_DAMAGE);
+  }
   const fbCommon::FB_LanguageBundle *penetration() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_PENETRATION);
   }
@@ -221,6 +241,16 @@ struct FB_WeaponModTextCommon FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tab
            verifier.VerifyTable(crit_damage()) &&
            VerifyOffset(verifier, VT_CRIT_CHANCE) &&
            verifier.VerifyTable(crit_chance()) &&
+           VerifyOffset(verifier, VT_CONE_ANGLE) &&
+           verifier.VerifyTable(cone_angle()) &&
+           VerifyOffset(verifier, VT_BONUS_SNEAK_DAMAGE) &&
+           verifier.VerifyTable(bonus_sneak_damage()) &&
+           VerifyOffset(verifier, VT_BONUS_NORM_DAMAGE) &&
+           verifier.VerifyTable(bonus_norm_damage()) &&
+           VerifyOffset(verifier, VT_BONUS_MELEE_DAMAGE) &&
+           verifier.VerifyTable(bonus_melee_damage()) &&
+           VerifyOffset(verifier, VT_BONUS_RANGE_DAMAGE) &&
+           verifier.VerifyTable(bonus_range_damage()) &&
            VerifyOffset(verifier, VT_PENETRATION) &&
            verifier.VerifyTable(penetration()) &&
            verifier.EndTable();
@@ -273,6 +303,21 @@ struct FB_WeaponModTextCommonBuilder {
   void add_crit_chance(flatbuffers::Offset<fbCommon::FB_LanguageBundle> crit_chance) {
     fbb_.AddOffset(FB_WeaponModTextCommon::VT_CRIT_CHANCE, crit_chance);
   }
+  void add_cone_angle(flatbuffers::Offset<fbCommon::FB_LanguageBundle> cone_angle) {
+    fbb_.AddOffset(FB_WeaponModTextCommon::VT_CONE_ANGLE, cone_angle);
+  }
+  void add_bonus_sneak_damage(flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_sneak_damage) {
+    fbb_.AddOffset(FB_WeaponModTextCommon::VT_BONUS_SNEAK_DAMAGE, bonus_sneak_damage);
+  }
+  void add_bonus_norm_damage(flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_norm_damage) {
+    fbb_.AddOffset(FB_WeaponModTextCommon::VT_BONUS_NORM_DAMAGE, bonus_norm_damage);
+  }
+  void add_bonus_melee_damage(flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_melee_damage) {
+    fbb_.AddOffset(FB_WeaponModTextCommon::VT_BONUS_MELEE_DAMAGE, bonus_melee_damage);
+  }
+  void add_bonus_range_damage(flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_range_damage) {
+    fbb_.AddOffset(FB_WeaponModTextCommon::VT_BONUS_RANGE_DAMAGE, bonus_range_damage);
+  }
   void add_penetration(flatbuffers::Offset<fbCommon::FB_LanguageBundle> penetration) {
     fbb_.AddOffset(FB_WeaponModTextCommon::VT_PENETRATION, penetration);
   }
@@ -303,9 +348,19 @@ inline flatbuffers::Offset<FB_WeaponModTextCommon> CreateFB_WeaponModTextCommon(
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> base_hit_chance = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> crit_damage = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> crit_chance = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> cone_angle = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_sneak_damage = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_norm_damage = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_melee_damage = 0,
+    flatbuffers::Offset<fbCommon::FB_LanguageBundle> bonus_range_damage = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> penetration = 0) {
   FB_WeaponModTextCommonBuilder builder_(_fbb);
   builder_.add_penetration(penetration);
+  builder_.add_bonus_range_damage(bonus_range_damage);
+  builder_.add_bonus_melee_damage(bonus_melee_damage);
+  builder_.add_bonus_norm_damage(bonus_norm_damage);
+  builder_.add_bonus_sneak_damage(bonus_sneak_damage);
+  builder_.add_cone_angle(cone_angle);
   builder_.add_crit_chance(crit_chance);
   builder_.add_crit_damage(crit_damage);
   builder_.add_base_hit_chance(base_hit_chance);

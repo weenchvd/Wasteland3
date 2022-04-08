@@ -60,6 +60,16 @@ public:
 
     const text_t& critChance() const noexcept { return critChance_[li()]; }
 
+    const text_t& coneAngle() const noexcept { return coneAngle_[li()]; }
+
+    const text_t& bonSneakDamage() const noexcept { return bonSneakDmg_[li()]; }
+
+    const text_t& bonNormDamage() const noexcept { return bonNormDmg_[li()]; }
+
+    const text_t& bonMeleeDamage() const noexcept { return bonMeleeDmg_[li()]; }
+
+    const text_t& bonRangeDamage() const noexcept { return bonRangeDmg_[li()]; }
+
     const text_t& penetration() const noexcept { return penet_[li()]; }
 
 private:
@@ -77,6 +87,11 @@ private:
     language_bundle_t hitChance_;
     language_bundle_t critDamage_;
     language_bundle_t critChance_;
+    language_bundle_t coneAngle_;
+    language_bundle_t bonSneakDmg_;
+    language_bundle_t bonNormDmg_;
+    language_bundle_t bonMeleeDmg_;
+    language_bundle_t bonRangeDmg_;
     language_bundle_t penet_;
 };
 

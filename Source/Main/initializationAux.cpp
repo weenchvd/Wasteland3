@@ -53,6 +53,9 @@ void initializeInventory(game::object::Inventory& inventory)
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_BROACH_RIFLED), true);
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_COLUMBIUM));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_CUT_RIFLED), true);
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_PHASE_SILENCER));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_SOUND_SUPRESSOR));
+    inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_BLAST_MUFFLER));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::BARREL_ALLOY));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_ADVANCED_MATERIALS));
     inventory.insert(f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE));

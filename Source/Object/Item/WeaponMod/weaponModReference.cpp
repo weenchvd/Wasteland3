@@ -47,9 +47,14 @@ WeaponModReference::WeaponModReference()
     price_          { 0 },
     rangeAttack_    { 0 },
     capAmmo_        { 0 },
+    angleCone_      { 0 },
     mulCritDmg_     { 0 },
     chaHit_         { 0 },
     chaCritDmg_     { 0 },
+    bonSneakDmg_    { 0 },
+    bonNormDmg_     { 0 },
+    bonMeleeDmg_    { 0 },
+    bonRangeDmg_    { 0 },
     armorPen_       { 0 },
     apAttack_       { 0 },
     apReload_       { 0 },
@@ -114,9 +119,14 @@ WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
     ref.price_          = { fb->price() };
     ref.rangeAttack_    = { fb->range_attack() };
     ref.capAmmo_        = { fb->capacity_ammo() };
+    ref.angleCone_      = { fb->angle_cone() };
     ref.mulCritDmg_     = { fb->multiplier_crit_dmg() };
     ref.chaHit_         = { fb->chance_hit() };
     ref.chaCritDmg_     = { fb->chance_crit_dmg() };
+    ref.bonSneakDmg_    = { fb->bonus_sneak_dmg() };
+    ref.bonNormDmg_     = { fb->bonus_normal_dmg() };
+    ref.bonMeleeDmg_    = { fb->bonus_melee_dmg() };
+    ref.bonRangeDmg_    = { fb->bonus_range_dmg() };
     ref.armorPen_       = { fb->armor_penetration() };
     ref.apAttack_       = { fb->ap_per_attack() };
     ref.apReload_       = { fb->ap_per_reload() };

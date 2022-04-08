@@ -100,6 +100,11 @@ void WeaponModText::initCommon(const fbWeaponMod::FB_WeaponModTextCommon* fb)
     common::initLanguageBundle(fb->base_hit_chance(), common_.hitChance_);
     common::initLanguageBundle(fb->crit_damage(), common_.critDamage_);
     common::initLanguageBundle(fb->crit_chance(), common_.critChance_);
+    common::initLanguageBundle(fb->cone_angle(), common_.coneAngle_);
+    common::initLanguageBundle(fb->bonus_sneak_damage(), common_.bonSneakDmg_);
+    common::initLanguageBundle(fb->bonus_norm_damage(), common_.bonNormDmg_);
+    common::initLanguageBundle(fb->bonus_melee_damage(), common_.bonMeleeDmg_);
+    common::initLanguageBundle(fb->bonus_range_damage(), common_.bonRangeDmg_);
     common::initLanguageBundle(fb->penetration(), common_.penet_);
 }
 
