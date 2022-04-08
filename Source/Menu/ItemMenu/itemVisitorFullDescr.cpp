@@ -123,6 +123,25 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon)
     if (weapon.rangeAttack() != def.rangeAttack()) {
         oss << text.common().range() << sp << weapon.rangeAttack() << endl;
     }
+    if (weapon.angleCone() != def.angleCone()) {
+        oss << text.common().coneAngle() << sp << weapon.angleCone() << endl;
+    }
+    if (weapon.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
+        oss << text.common().bonSneakDamage() << sp
+            << common::getBonus(weapon.bonusSneakAttackDamage()) << p << endl;
+    }
+    if (weapon.bonusNormalDamage() != def.bonusNormalDamage()) {
+        oss << text.common().bonNormDamage() << sp
+            << common::getBonus(weapon.bonusNormalDamage()) << p << endl;
+    }
+    if (weapon.bonusMeleeDamage() != def.bonusMeleeDamage()) {
+        oss << text.common().bonMeleeDamage() << sp
+            << common::getBonus(weapon.bonusMeleeDamage()) << p << endl;
+    }
+    if (weapon.bonusRangedDamage() != def.bonusRangedDamage()) {
+        oss << text.common().bonRangeDamage() << sp
+            << common::getBonus(weapon.bonusRangedDamage()) << p << endl;
+    }
     oss << text.common().hitChance() << sp
         << common::getChance(weapon.chanceHit()) << p << endl;
     oss << text.common().critDamage() << sp

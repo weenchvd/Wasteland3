@@ -53,9 +53,14 @@ table FB_WeaponReference {
   price:int16 = 0;
   range_attack:int16 = 0;
   capacity_ammo:int16 = 0;
+  angle_cone:int16 = 0;
   multiplier_crit_dmg:int16 = 0;
   chance_hit:int16 = 0;
   chance_crit_dmg:int16 = 0;
+  bonus_sneak_dmg:int16 = 0;
+  bonus_normal_dmg:int16 = 0;
+  bonus_melee_dmg:int16 = 0;
+  bonus_range_dmg:int16 = 0;
   weapon_level:int8 = 0;
   armor_penetration:int8 = 0;
   ap_per_attack:int8 = 0;

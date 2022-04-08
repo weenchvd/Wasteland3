@@ -50,6 +50,11 @@ table FB_WeaponTextCommon {
   base_hit_chance:fbCommon.FB_LanguageBundle;
   crit_damage:fbCommon.FB_LanguageBundle;
   crit_chance:fbCommon.FB_LanguageBundle;
+  cone_angle:fbCommon.FB_LanguageBundle;
+  bonus_sneak_damage:fbCommon.FB_LanguageBundle;
+  bonus_norm_damage:fbCommon.FB_LanguageBundle;
+  bonus_melee_damage:fbCommon.FB_LanguageBundle;
+  bonus_range_damage:fbCommon.FB_LanguageBundle;
   penetration:fbCommon.FB_LanguageBundle;
 }
 

@@ -28,13 +28,13 @@ namespace object {
 
 class Weapon : public Item {
 public:
-    using Model         = Weapon__Model;
-    using Type          = Weapon__Type;
+    using Model = Weapon__Model;
+    using Type  = Weapon__Type;
 
 private:
     friend global::Factory;
 
-    static constexpr auto nWMSlots_{ WeaponReference::nWMSlots_ };
+    static constexpr auto nWMSlots_{ WeaponReference::nWMSlots_ }; // number of weapon mod slots
     static constexpr auto initAmmo_{ 0 };
 
 private:
@@ -61,7 +61,7 @@ public:
 private:
     void check() noexcept;
 
-/// weapon parameters
+///********** unchangeable weapon parameters (from reference)
 public:
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::WEAPON;
@@ -103,13 +103,8 @@ public:
         return base_.level_;
     }
 
-    common::Multiplier multiplierCritDamage() const noexcept {
-        return mulCritDmg_;
-    }
-    void multiplierCritDamageAdd(common::Multiplier shift) noexcept {
-        mulCritDmg_ += shift;
-    }
-
+///********** changeable weapon parameters
+public:
     common::Damage damageMinimum() const noexcept {
         return dmgMin_;
     }
@@ -122,6 +117,36 @@ public:
     }
     void damageMaximumAdd(common::Damage shift) noexcept {
         dmgMax_ += shift;
+    }
+
+    common::Range rangeAttack() const noexcept {
+        return rangeAttack_;
+    }
+    void rangeAttackAdd(common::Range shift) noexcept {
+        rangeAttack_ += shift;
+    }
+
+    common::Capacity capacityAmmo() const noexcept {
+        return capAmmo_;
+    }
+    void capacityAmmoAdd(common::Capacity shift) noexcept {
+        capAmmo_ += shift;
+    }
+    void reloadAmmo(Ammo& ammo) noexcept;
+    void unloadAmmo(Ammo& ammo) noexcept;
+
+    common::Angle angleCone() const noexcept {
+        return angleCone_;
+    }
+    void angleConeAdd(common::Angle shift) noexcept {
+        angleCone_ += shift;
+    }
+
+    common::Multiplier multiplierCritDamage() const noexcept {
+        return mulCritDmg_;
+    }
+    void multiplierCritDamageAdd(common::Multiplier shift) noexcept {
+        mulCritDmg_ += shift;
     }
 
     common::Chance chanceHit() const noexcept {
@@ -138,25 +163,39 @@ public:
         chaCritDmg_ += shift;
     }
 
+    common::Bonus bonusSneakAttackDamage() const noexcept {
+        return bonSneakDmg_;
+    }
+    void bonusSneakAttackDamageAdd(common::Bonus shift) noexcept {
+        bonSneakDmg_ += shift;
+    }
+
+    common::Bonus bonusNormalDamage() const noexcept {
+        return bonNormDmg_;
+    }
+    void bonusNormalDamageAdd(common::Bonus shift) noexcept {
+        bonNormDmg_ += shift;
+    }
+
+    common::Bonus bonusMeleeDamage() const noexcept {
+        return bonMeleeDmg_;
+    }
+    void bonusMeleeDamageAdd(common::Bonus shift) noexcept {
+        bonMeleeDmg_ += shift;
+    }
+
+    common::Bonus bonusRangedDamage() const noexcept {
+        return bonRangeDmg_;
+    }
+    void bonusRangedDamageAdd(common::Bonus shift) noexcept {
+        bonRangeDmg_ += shift;
+    }
+
     common::Armor armorPenetration() const noexcept {
         return armorPen_;
     }
     void armorPenetrationAdd(common::Armor shift) noexcept {
         armorPen_ += shift;
-    }
-
-    common::Range rangeAttack() const noexcept {
-        return rangeAttack_;
-    }
-    void rangeAttackAdd(common::Range shift) noexcept {
-        rangeAttack_ += shift;
-    }
-
-    common::NumberShots shotsPerAttack() const noexcept {
-        return shoPerAttack_;
-    }
-    void shotsPerAttackAdd(common::NumberShots shift) noexcept {
-        shoPerAttack_ += shift;
     }
 
     common::ActionPoint actionPointPerAttack() const noexcept {
@@ -173,15 +212,12 @@ public:
         apReload_ += shift;
     }
 
-    common::Capacity capacityAmmo() const noexcept {
-        return capAmmo_;
+    common::NumberShots shotsPerAttack() const noexcept {
+        return shoPerAttack_;
     }
-    void capacityAmmoAdd(common::Capacity shift) noexcept {
-        capAmmo_ += shift;
+    void shotsPerAttackAdd(common::NumberShots shift) noexcept {
+        shoPerAttack_ += shift;
     }
-
-    void reloadAmmo(Ammo& ammo) noexcept;
-    void unloadAmmo(Ammo& ammo) noexcept;
 
     Ammo::Type ammoType() const noexcept {
         return tyAmmo_;
@@ -191,9 +227,7 @@ public:
     Damage::Type damageType() const noexcept {
         return tyDmg_;
     }
-    void damageType(Damage::Type type) noexcept {
-        tyDmg_ = type;
-    }
+    void damageType(Damage::Type type) noexcept;
 
 public:
     const common::Slot<WeaponMod, nWMSlots_>& slotMod() const noexcept {
@@ -225,10 +259,15 @@ private:
     common::Damage              dmgMax_;        // max damage per hit
     common::Range               rangeAttack_;   // attack range
     common::Capacity            capAmmo_;       // ammo capacity
-    common::Capacity            loadedAmmo_;    // loaded ammo
+    common::Capacity            capLoadedAmmo_; // loaded ammo
+    common::Angle               angleCone_;     // cone angle of attack
     common::Multiplier          mulCritDmg_;    // crit damage multiplier
     common::Chance              chaHit_;        // base hit chance
     common::Chance              chaCritDmg_;    // base critical damage chance
+    common::Bonus               bonSneakDmg_;   // sneak attack damage bonus
+    common::Bonus               bonNormDmg_;    // normal damage bonus
+    common::Bonus               bonMeleeDmg_;   // melee damage bonus
+    common::Bonus               bonRangeDmg_;   // ranged damage bonus
     common::Armor               armorPen_;      // penetration
     common::ActionPoint         apAttack_;      // action points per attack
     common::ActionPoint         apReload_;      // action points per reload
@@ -252,8 +291,8 @@ inline void Weapon::initialize()
 
 inline bool Weapon::isInitialized()
 {
-    return ref_.isInitialized()
-        && text_.isInitialized();
+    return ref_.isInitialized() &&
+           text_.isInitialized();
 }
 
 } // namespace object

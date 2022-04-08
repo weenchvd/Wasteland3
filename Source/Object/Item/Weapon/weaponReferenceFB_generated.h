@@ -230,16 +230,21 @@ struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_PRICE = 22,
     VT_RANGE_ATTACK = 24,
     VT_CAPACITY_AMMO = 26,
-    VT_MULTIPLIER_CRIT_DMG = 28,
-    VT_CHANCE_HIT = 30,
-    VT_CHANCE_CRIT_DMG = 32,
-    VT_WEAPON_LEVEL = 34,
-    VT_ARMOR_PENETRATION = 36,
-    VT_AP_PER_ATTACK = 38,
-    VT_AP_PER_RELOAD = 40,
-    VT_SHOTS_PER_ATTACK = 42,
-    VT_AMMO_TYPE = 44,
-    VT_DMG_TYPE = 46
+    VT_ANGLE_CONE = 28,
+    VT_MULTIPLIER_CRIT_DMG = 30,
+    VT_CHANCE_HIT = 32,
+    VT_CHANCE_CRIT_DMG = 34,
+    VT_BONUS_SNEAK_DMG = 36,
+    VT_BONUS_NORMAL_DMG = 38,
+    VT_BONUS_MELEE_DMG = 40,
+    VT_BONUS_RANGE_DMG = 42,
+    VT_WEAPON_LEVEL = 44,
+    VT_ARMOR_PENETRATION = 46,
+    VT_AP_PER_ATTACK = 48,
+    VT_AP_PER_RELOAD = 50,
+    VT_SHOTS_PER_ATTACK = 52,
+    VT_AMMO_TYPE = 54,
+    VT_DMG_TYPE = 56
   };
   fbWeapon::FB_WeaponModel weapon_model() const {
     return static_cast<fbWeapon::FB_WeaponModel>(GetField<int16_t>(VT_WEAPON_MODEL, 0));
@@ -277,6 +282,9 @@ struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   int16_t capacity_ammo() const {
     return GetField<int16_t>(VT_CAPACITY_AMMO, 0);
   }
+  int16_t angle_cone() const {
+    return GetField<int16_t>(VT_ANGLE_CONE, 0);
+  }
   int16_t multiplier_crit_dmg() const {
     return GetField<int16_t>(VT_MULTIPLIER_CRIT_DMG, 0);
   }
@@ -285,6 +293,18 @@ struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
   int16_t chance_crit_dmg() const {
     return GetField<int16_t>(VT_CHANCE_CRIT_DMG, 0);
+  }
+  int16_t bonus_sneak_dmg() const {
+    return GetField<int16_t>(VT_BONUS_SNEAK_DMG, 0);
+  }
+  int16_t bonus_normal_dmg() const {
+    return GetField<int16_t>(VT_BONUS_NORMAL_DMG, 0);
+  }
+  int16_t bonus_melee_dmg() const {
+    return GetField<int16_t>(VT_BONUS_MELEE_DMG, 0);
+  }
+  int16_t bonus_range_dmg() const {
+    return GetField<int16_t>(VT_BONUS_RANGE_DMG, 0);
   }
   int8_t weapon_level() const {
     return GetField<int8_t>(VT_WEAPON_LEVEL, 0);
@@ -326,9 +346,14 @@ struct FB_WeaponReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int16_t>(verifier, VT_PRICE) &&
            VerifyField<int16_t>(verifier, VT_RANGE_ATTACK) &&
            VerifyField<int16_t>(verifier, VT_CAPACITY_AMMO) &&
+           VerifyField<int16_t>(verifier, VT_ANGLE_CONE) &&
            VerifyField<int16_t>(verifier, VT_MULTIPLIER_CRIT_DMG) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_HIT) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_CRIT_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_SNEAK_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_NORMAL_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_MELEE_DMG) &&
+           VerifyField<int16_t>(verifier, VT_BONUS_RANGE_DMG) &&
            VerifyField<int8_t>(verifier, VT_WEAPON_LEVEL) &&
            VerifyField<int8_t>(verifier, VT_ARMOR_PENETRATION) &&
            VerifyField<int8_t>(verifier, VT_AP_PER_ATTACK) &&
@@ -380,6 +405,9 @@ struct FB_WeaponReferenceBuilder {
   void add_capacity_ammo(int16_t capacity_ammo) {
     fbb_.AddElement<int16_t>(FB_WeaponReference::VT_CAPACITY_AMMO, capacity_ammo, 0);
   }
+  void add_angle_cone(int16_t angle_cone) {
+    fbb_.AddElement<int16_t>(FB_WeaponReference::VT_ANGLE_CONE, angle_cone, 0);
+  }
   void add_multiplier_crit_dmg(int16_t multiplier_crit_dmg) {
     fbb_.AddElement<int16_t>(FB_WeaponReference::VT_MULTIPLIER_CRIT_DMG, multiplier_crit_dmg, 0);
   }
@@ -388,6 +416,18 @@ struct FB_WeaponReferenceBuilder {
   }
   void add_chance_crit_dmg(int16_t chance_crit_dmg) {
     fbb_.AddElement<int16_t>(FB_WeaponReference::VT_CHANCE_CRIT_DMG, chance_crit_dmg, 0);
+  }
+  void add_bonus_sneak_dmg(int16_t bonus_sneak_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponReference::VT_BONUS_SNEAK_DMG, bonus_sneak_dmg, 0);
+  }
+  void add_bonus_normal_dmg(int16_t bonus_normal_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponReference::VT_BONUS_NORMAL_DMG, bonus_normal_dmg, 0);
+  }
+  void add_bonus_melee_dmg(int16_t bonus_melee_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponReference::VT_BONUS_MELEE_DMG, bonus_melee_dmg, 0);
+  }
+  void add_bonus_range_dmg(int16_t bonus_range_dmg) {
+    fbb_.AddElement<int16_t>(FB_WeaponReference::VT_BONUS_RANGE_DMG, bonus_range_dmg, 0);
   }
   void add_weapon_level(int8_t weapon_level) {
     fbb_.AddElement<int8_t>(FB_WeaponReference::VT_WEAPON_LEVEL, weapon_level, 0);
@@ -435,9 +475,14 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReference(
     int16_t price = 0,
     int16_t range_attack = 0,
     int16_t capacity_ammo = 0,
+    int16_t angle_cone = 0,
     int16_t multiplier_crit_dmg = 0,
     int16_t chance_hit = 0,
     int16_t chance_crit_dmg = 0,
+    int16_t bonus_sneak_dmg = 0,
+    int16_t bonus_normal_dmg = 0,
+    int16_t bonus_melee_dmg = 0,
+    int16_t bonus_range_dmg = 0,
     int8_t weapon_level = 0,
     int8_t armor_penetration = 0,
     int8_t ap_per_attack = 0,
@@ -451,9 +496,14 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReference(
   builder_.add_weapon_penalties(weapon_penalties);
   builder_.add_weapon_requirements(weapon_requirements);
   builder_.add_weapon_mod_types(weapon_mod_types);
+  builder_.add_bonus_range_dmg(bonus_range_dmg);
+  builder_.add_bonus_melee_dmg(bonus_melee_dmg);
+  builder_.add_bonus_normal_dmg(bonus_normal_dmg);
+  builder_.add_bonus_sneak_dmg(bonus_sneak_dmg);
   builder_.add_chance_crit_dmg(chance_crit_dmg);
   builder_.add_chance_hit(chance_hit);
   builder_.add_multiplier_crit_dmg(multiplier_crit_dmg);
+  builder_.add_angle_cone(angle_cone);
   builder_.add_capacity_ammo(capacity_ammo);
   builder_.add_range_attack(range_attack);
   builder_.add_price(price);
@@ -485,9 +535,14 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReferenceDirect(
     int16_t price = 0,
     int16_t range_attack = 0,
     int16_t capacity_ammo = 0,
+    int16_t angle_cone = 0,
     int16_t multiplier_crit_dmg = 0,
     int16_t chance_hit = 0,
     int16_t chance_crit_dmg = 0,
+    int16_t bonus_sneak_dmg = 0,
+    int16_t bonus_normal_dmg = 0,
+    int16_t bonus_melee_dmg = 0,
+    int16_t bonus_range_dmg = 0,
     int8_t weapon_level = 0,
     int8_t armor_penetration = 0,
     int8_t ap_per_attack = 0,
@@ -510,9 +565,14 @@ inline flatbuffers::Offset<FB_WeaponReference> CreateFB_WeaponReferenceDirect(
       price,
       range_attack,
       capacity_ammo,
+      angle_cone,
       multiplier_crit_dmg,
       chance_hit,
       chance_crit_dmg,
+      bonus_sneak_dmg,
+      bonus_normal_dmg,
+      bonus_melee_dmg,
+      bonus_range_dmg,
       weapon_level,
       armor_penetration,
       ap_per_attack,

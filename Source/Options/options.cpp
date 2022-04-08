@@ -171,6 +171,7 @@ bool Options::loadOptions(const fbOptions::FB_Options* fb)
     }
 
     optLang_.setLanguage(set.lang_);
+    acceptAll();
     return true;
 }
 

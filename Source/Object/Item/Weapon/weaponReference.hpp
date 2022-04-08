@@ -112,9 +112,14 @@ public:
     common::Price           price_;         // price
     common::Range           rangeAttack_;   // attack range
     common::Capacity        capAmmo_;       // ammo capacity
+    common::Angle           angleCone_;     // cone angle of attack
     common::Multiplier      mulCritDmg_;    // critical damage multiplier
     common::Chance          chaHit_;        // base hit chance
     common::Chance          chaCritDmg_;    // base critical damage chance
+    common::Bonus           bonSneakDmg_;   // sneak attack damage bonus
+    common::Bonus           bonNormDmg_;    // normal damage bonus
+    common::Bonus           bonMeleeDmg_;   // melee damage bonus
+    common::Bonus           bonRangeDmg_;   // ranged damage bonus
     common::Level           level_;         // weapon level
     common::Armor           armorPen_;      // penetration
     common::ActionPoint     apAttack_;      // action points per attack

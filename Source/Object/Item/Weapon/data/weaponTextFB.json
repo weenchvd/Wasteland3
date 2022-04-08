@@ -132,6 +132,26 @@
       "en": "Crit chance:",
       "ru": "Вероятность крит. попадания:"
     },
+    "cone_angle": {
+      "en": "Cone angle of attack:",
+      "ru": "Конусный угол атаки:"
+    },
+    "bonus_sneak_damage": {
+      "en": "Sneak attack damage bonus:",
+      "ru": "Бонус к урону от скрытой атаки:"
+    },
+    "bonus_norm_damage": {
+      "en": "Normal damage bonus:",
+      "ru": "Бонус к обычному урону:"
+    },
+    "bonus_melee_damage": {
+      "en": "Melee damage bonus:",
+      "ru": "Бонус к урону в ближнем бою:"
+    },
+    "bonus_range_damage": {
+      "en": "Ranged damage bonus:",
+      "ru": "Бонус к урону в дальнем бою:"
+    },
     "penetration": {
       "en": "Penetration:",
       "ru": "Пробивание:"
