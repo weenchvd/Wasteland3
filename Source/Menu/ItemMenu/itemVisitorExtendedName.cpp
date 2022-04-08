@@ -15,7 +15,7 @@ namespace menu {
 
 using namespace std;
 
-void ItemVisitorExtendedName::visitWeapon(object::Weapon& weapon)
+void ItemVisitorExtendedName::visitWeapon(const object::Weapon& weapon)
 {
     reset();
 
@@ -46,7 +46,7 @@ void ItemVisitorExtendedName::visitWeapon(object::Weapon& weapon)
     text_ = oss.str();
 }
 
-void ItemVisitorExtendedName::visitWeaponMod(object::WeaponMod& weaponMod)
+void ItemVisitorExtendedName::visitWeaponMod(const object::WeaponMod& weaponMod)
 {
     reset();
 
@@ -56,17 +56,17 @@ void ItemVisitorExtendedName::visitWeaponMod(object::WeaponMod& weaponMod)
     text_ = oss.str();
 }
 
-void ItemVisitorExtendedName::visitArmor(object::Armor& armor)
+void ItemVisitorExtendedName::visitArmor(const object::Armor& armor)
 {
     reset();
 }
 
-void ItemVisitorExtendedName::visitArmorMod(object::ArmorMod& armorMod)
+void ItemVisitorExtendedName::visitArmorMod(const object::ArmorMod& armorMod)
 {
     reset();
 }
 
-void ItemVisitorExtendedName::visitAmmo(object::Ammo& ammo)
+void ItemVisitorExtendedName::visitAmmo(const object::Ammo& ammo)
 {
     reset();
 
@@ -76,7 +76,7 @@ void ItemVisitorExtendedName::visitAmmo(object::Ammo& ammo)
     text_ = oss.str();
 }
 
-void ItemVisitorExtendedName::visitJunk(object::Junk& junk)
+void ItemVisitorExtendedName::visitJunk(const object::Junk& junk)
 {
     reset();
 }

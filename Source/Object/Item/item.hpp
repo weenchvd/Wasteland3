@@ -34,7 +34,7 @@ public:
 
     virtual const common::Text& name() const noexcept = 0;
 
-    virtual void accept(ItemVisitor& visitor) noexcept {};
+    virtual void accept(ItemVisitor& visitor) const noexcept {};
 };
 
 ///------------------------------------------------------------------------------------------------

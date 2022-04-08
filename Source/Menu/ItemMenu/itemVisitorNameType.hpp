@@ -28,17 +28,17 @@ public:
     virtual ~ItemVisitorNameType() noexcept {}
 
 public:
-    virtual void visitWeapon(object::Weapon& weapon) override;
+    virtual void visitWeapon(const object::Weapon& weapon) override;
 
-    virtual void visitWeaponMod(object::WeaponMod& weaponMod) override;
+    virtual void visitWeaponMod(const object::WeaponMod& weaponMod) override;
 
-    virtual void visitArmor(object::Armor& armor) override;
+    virtual void visitArmor(const object::Armor& armor) override;
 
-    virtual void visitArmorMod(object::ArmorMod& armorMod) override;
+    virtual void visitArmorMod(const object::ArmorMod& armorMod) override;
 
-    virtual void visitAmmo(object::Ammo& ammo) override;
+    virtual void visitAmmo(const object::Ammo& ammo) override;
 
-    virtual void visitJunk(object::Junk& junk) override;
+    virtual void visitJunk(const object::Junk& junk) override;
 
 public:
     const text_t& getNameType() const noexcept { return text_; }

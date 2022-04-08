@@ -25,32 +25,32 @@ public:
     virtual ~ItemVisitorType() noexcept {}
 
 public:
-    virtual void visitWeapon(Weapon& weapon) noexcept override {
+    virtual void visitWeapon(const Weapon& weapon) noexcept override {
         reset();
         type_ = Item::Type::WEAPON;
     }
 
-    virtual void visitWeaponMod(WeaponMod& weaponMod) noexcept override {
+    virtual void visitWeaponMod(const WeaponMod& weaponMod) noexcept override {
         reset();
         type_ = Item::Type::WEAPON_MOD;
     }
 
-    virtual void visitArmor(Armor& armor) noexcept override {
+    virtual void visitArmor(const Armor& armor) noexcept override {
         reset();
         // TODO type_ = Item::Type::ARMOR;
     }
 
-    virtual void visitArmorMod(ArmorMod& armorMod) noexcept override {
+    virtual void visitArmorMod(const ArmorMod& armorMod) noexcept override {
         reset();
         // TODO type_ = Item::Type::ARMOR_MOD;
     }
 
-    virtual void visitAmmo(Ammo& ammo) noexcept override {
+    virtual void visitAmmo(const Ammo& ammo) noexcept override {
         reset();
         type_ = Item::Type::AMMO;
     }
 
-    virtual void visitJunk(Junk& junk) noexcept override {
+    virtual void visitJunk(const Junk& junk) noexcept override {
         reset();
         // TODO type_ = Item::Type::JUNK;
     }

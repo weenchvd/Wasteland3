@@ -45,7 +45,7 @@ public:
 
     static bool isInitialized();
 
-    virtual void accept(ItemVisitor& visitor) noexcept override {
+    virtual void accept(ItemVisitor& visitor) const noexcept override {
         visitor.visitAmmo(*this);
     }
 

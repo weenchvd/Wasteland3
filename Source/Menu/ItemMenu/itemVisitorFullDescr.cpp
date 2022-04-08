@@ -27,7 +27,7 @@ bool                                WeaponList::initialized_{ false };
 
 ///************************************************************************************************
 
-void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon)
+void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
 {
     reset();
 
@@ -157,7 +157,7 @@ void ItemVisitorFullDescription::visitWeapon(object::Weapon& weapon)
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod)
+void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponMod)
 {
     reset();
 
@@ -265,17 +265,17 @@ void ItemVisitorFullDescription::visitWeaponMod(object::WeaponMod& weaponMod)
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitArmor(object::Armor& armor)
+void ItemVisitorFullDescription::visitArmor(const object::Armor& armor)
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitArmorMod(object::ArmorMod& armorMod)
+void ItemVisitorFullDescription::visitArmorMod(const object::ArmorMod& armorMod)
 {
     reset();
 }
 
-void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo)
+void ItemVisitorFullDescription::visitAmmo(const object::Ammo& ammo)
 {
     reset();
 
@@ -297,7 +297,7 @@ void ItemVisitorFullDescription::visitAmmo(object::Ammo& ammo)
     text_ = oss.str();
 }
 
-void ItemVisitorFullDescription::visitJunk(object::Junk& junk)
+void ItemVisitorFullDescription::visitJunk(const object::Junk& junk)
 {
     reset();
 }

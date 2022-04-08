@@ -30,12 +30,12 @@ public:
     virtual ~ItemVisitor() noexcept {}
 
 public:
-    virtual void visitWeapon(Weapon& weapon) = 0;
-    virtual void visitWeaponMod(WeaponMod& weaponMod) = 0;
-    virtual void visitArmor(Armor& armor) = 0;
-    virtual void visitArmorMod(ArmorMod& armorMod) = 0;
-    virtual void visitAmmo(Ammo& ammo) = 0;
-    virtual void visitJunk(Junk& junk) = 0;
+    virtual void visitWeapon(const Weapon& weapon) = 0;
+    virtual void visitWeaponMod(const WeaponMod& weaponMod) = 0;
+    virtual void visitArmor(const Armor& armor) = 0;
+    virtual void visitArmorMod(const ArmorMod& armorMod) = 0;
+    virtual void visitAmmo(const Ammo& ammo) = 0;
+    virtual void visitJunk(const Junk& junk) = 0;
 };
 
 } // namespace object
