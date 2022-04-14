@@ -63,14 +63,13 @@ WeaponReference::WeaponReference()
     weaponModTypes_ {},
     requirements_   {},
     penalties_      {},
+    attack_         {},
     name_           {},
     descrip_        {},
     dmgMin_         { 0 },
     dmgMax_         { 0 },
     price_          { 0 },
-    rangeAttack_    { 0 },
     capAmmo_        { 0 },
-    angleCone_      { 0 },
     mulCritDmg_     { 0 },
     chaHit_         { 0 },
     chaCritDmg_     { 0 },
@@ -96,6 +95,7 @@ void WeaponReferenceContainer::initialize()
 {
     if (isInitialized()) return;
     base_.initialize();
+    Attack::initialize();
 
     unique_ptr<char[]> buffer{};
     if (!common::readBinFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
@@ -115,15 +115,16 @@ void WeaponReferenceContainer::initContainer(
 {
     assert(fb != nullptr);
     refs_.resize(common::numberOf<Weapon__Model>());
-    const auto* v{ fb->refs() };
+    const auto* v{ fb->ref_values() };
     assert(refs_.size() == v->size());
     for (size_t i = 0; i < v->size(); ++i) {
         WeaponReference ref{ initWeaponReference(v->Get(i)) };
         const auto pos{ common::toUnderlying(ref.model_) };
         refs_[pos] = move(ref);
     }
-    refMinimal_ = initWeaponReference(fb->ref_minimal(), false);
-    refDefault_ = initWeaponReference(fb->ref_default(), false);
+    refMinimal_ = initWeaponReference(fb->ref_minimal_values(), false);
+    refDefault_ = initWeaponReference(fb->ref_default_values(), false);
+    initWeaponReference(fb->sample_of_all_fields(), false);
 }
 
 WeaponReference WeaponReferenceContainer::initWeaponReference(
@@ -143,10 +144,14 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
         ref.weaponModTypes_[i] = toWeaponModType(
             static_cast<fbWeaponMod::FB_WeaponModType>(modTypes->Get(i))
         );
-        assert(common::isValidEnum(ref.weaponModTypes_[i]));
+#ifndef NDEBUG
+        if (assert) {
+            assert(common::isValidEnum(ref.weaponModTypes_[i]));
+        }
+#endif
     }
 
-    initWeaponRequirements(fb->weapon_requirements(), ref.requirements_);
+    initWeaponRequirements(fb->weapon_requirements(), ref.requirements_, assert);
 
     const auto* penalties{ fb->weapon_penalties() };
     assert(penalties != nullptr);
@@ -155,15 +160,15 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.penalties_.chaCritDmg_  = { penalties->chance_crit_dmg() };
     ref.penalties_.strike_      = { penalties->strike_rate() };
 
+    ref.attack_ = Attack::initAttack(fb->attack(), assert);
+
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
     ref.dmgMin_         = { fb->dmg_min() };
     ref.dmgMax_         = { fb->dmg_max() };
     ref.price_          = { fb->price() };
-    ref.rangeAttack_    = { fb->range_attack() };
     ref.capAmmo_        = { fb->capacity_ammo() };
-    ref.angleCone_      = { fb->angle_cone() };
     ref.mulCritDmg_     = { fb->multiplier_crit_dmg() };
     ref.chaHit_         = { fb->chance_hit() };
     ref.chaCritDmg_     = { fb->chance_crit_dmg() };
@@ -182,9 +187,10 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
     ref.initialized_    = true;
 
 #ifndef NDEBUG
-    if (assert == true) {
+    if (assert) {
         assert(common::isValidEnum(ref.model_));
         assert(common::isValidEnum(ref.type_));
+        assert(common::isValidEnum(ref.attack_.type()));
         assert(common::isValidEnum(ref.tyAmmo_));
         assert(common::isValidEnum(ref.tyDmg_));
     }
@@ -195,25 +201,34 @@ WeaponReference WeaponReferenceContainer::initWeaponReference(
 
 void WeaponReferenceContainer::initWeaponRequirements(
     const fbWeapon::FB_WeaponRequirements* fb,
-    WeaponRequirements& requirements)
+    WeaponRequirements& requirements,
+    const bool assert)
 {
     assert(fb != nullptr);
     if (fb->skill() != nullptr) {
         const auto* ptr{ fb->skill() };
         assert(ptr->size() <= requirements.skillReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
-            requirements.skillReq_[i].first = toSkillType(ptr->Get(i)->type());
-            assert(common::isValidEnum(requirements.skillReq_[i].first));
-            requirements.skillReq_[i].second = { ptr->Get(i)->level() };
+            requirements.skillReq_[i].first     = toSkillType(ptr->Get(i)->type());
+            requirements.skillReq_[i].second    = { ptr->Get(i)->level() };
+#ifndef NDEBUG
+            if (assert) {
+                assert(common::isValidEnum(requirements.skillReq_[i].first));
+            }
+#endif
         }
     }
     if (fb->attr() != nullptr) {
         const auto* ptr{ fb->attr() };
         assert(ptr->size() <= requirements.attrReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
-            requirements.attrReq_[i].first = toAttributeType(ptr->Get(i)->type());
-            assert(common::isValidEnum(requirements.attrReq_[i].first));
+            requirements.attrReq_[i].first  = toAttributeType(ptr->Get(i)->type());
             requirements.attrReq_[i].second = { ptr->Get(i)->level() };
+#ifndef NDEBUG
+            if (assert) {
+                assert(common::isValidEnum(requirements.attrReq_[i].first));
+            }
+#endif
         }
     }
 }

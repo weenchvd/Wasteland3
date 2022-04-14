@@ -1,5 +1,129 @@
 {
-  "refs": [
+  "sample_of_all_fields": {
+    "weapon_model": "INVALID",
+    "weapon_type": "INVALID",
+    "weapon_mod_types": [
+      "INVALID",
+      "INVALID",
+      "INVALID",
+      "INVALID"
+    ],
+    "weapon_requirements": {
+      "skill": [
+        {
+          "type": "INVALID",
+          "level": 0
+        },
+        {
+          "type": "INVALID",
+          "level": 0
+        }
+      ],
+      "attr": [
+        {
+          "type": "INVALID",
+          "level": 0
+        },
+        {
+          "type": "INVALID",
+          "level": 0
+        }
+      ]
+    },
+    "weapon_penalties": {
+      "multiplier_crit_dmg": 0,
+      "chance_hit": 0,
+      "chance_crit_dmg": 0,
+      "strike_rate": 0
+    },
+    "attack": {
+      "attack_type": "INVALID",
+      "attack_range": 0,
+      "range_of_bounces": 0,
+      "range_of_conical_area": 0,
+      "radius_of_circular_area": 0,
+      "quantity_of_bounces": 0,
+      "angle_of_conical_area": 0
+    },
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    },
+    "dmg_min": 0,
+    "dmg_max": 0,
+    "price": 0,
+    "capacity_ammo": 0,
+    "multiplier_crit_dmg": 0,
+    "chance_hit": 0,
+    "chance_crit_dmg": 0,
+    "bonus_sneak_dmg": 0,
+    "bonus_normal_dmg": 0,
+    "bonus_melee_dmg": 0,
+    "bonus_range_dmg": 0,
+    "weapon_level": 0,
+    "armor_penetration": 0,
+    "ap_per_attack": 0,
+    "ap_per_reload": 0,
+    "shots_per_attack": 0,
+    "ammo_type": "INVALID",
+    "dmg_type": "INVALID"
+  },
+  "ref_minimal_values": {
+    "weapon_model": "INVALID",
+    "weapon_type": "INVALID",
+    "weapon_mod_types": [],
+    "weapon_requirements": {},
+    "weapon_penalties": {},
+    "attack": {},
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    },
+    "dmg_min": 1,
+    "dmg_max": 1,
+    "price": 0,
+    "capacity_ammo": 1,
+    "multiplier_crit_dmg": 0,
+    "chance_hit": -10000,
+    "chance_crit_dmg": -10000,
+    "bonus_sneak_dmg": -10000,
+    "bonus_normal_dmg": -10000,
+    "bonus_melee_dmg": -10000,
+    "bonus_range_dmg": -10000,
+    "weapon_level": 1,
+    "armor_penetration": 0,
+    "ap_per_attack": 1,
+    "ap_per_reload": 1,
+    "shots_per_attack": 1,
+    "ammo_type": "INVALID",
+    "dmg_type": "INVALID"
+  },
+  "ref_default_values": {
+    "weapon_mod_types": [],
+    "weapon_requirements": {},
+    "weapon_penalties": {},
+    "attack": {},
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    }
+  },
+
+
+
+  "ref_values": [
     {
       "weapon_model": "AR_KALASH97",
       "weapon_type": "AR",
@@ -15,14 +139,16 @@
             "type": "AUTOMATIC_WEAPONS",
             "level": 6
           }
-        ],
-        "attr": []
+        ]
       },
       "weapon_penalties": {
-        "multiplier_crit_dmg": 0,
         "chance_hit": -100,
         "chance_crit_dmg": -1000,
         "strike_rate": -1000
+      },
+      "attack": {
+        "attack_type": "SINGLE_TARGET",
+        "attack_range": 18
       },
       "name": {
         "en": "KALASH 97",
@@ -35,16 +161,9 @@
       "dmg_min": 26,
       "dmg_max": 32,
       "price": 1175,
-      "range_attack": 18,
       "capacity_ammo": 25,
-      "angle_cone": 0,
       "multiplier_crit_dmg": 150,
       "chance_hit": 750,
-      "chance_crit_dmg": 0,
-      "bonus_sneak_dmg": 0,
-      "bonus_normal_dmg": 0,
-      "bonus_melee_dmg": 0,
-      "bonus_range_dmg": 0,
       "weapon_level": 17,
       "armor_penetration": 18,
       "ap_per_attack": 4,
@@ -75,6 +194,10 @@
         "chance_crit_dmg": -1000,
         "strike_rate": -1000
       },
+      "attack": {
+        "attack_type": "SINGLE_TARGET",
+        "attack_range": 18
+      },
       "name": {
         "en": "SOCOM ASSAULT RIFLE",
         "ru": "ШТУРМОВАЯ ВИНТОВКА SOCOM"
@@ -86,7 +209,6 @@
       "dmg_min": 40,
       "dmg_max": 48,
       "price": 1800,
-      "range_attack": 18,
       "capacity_ammo": 30,
       "multiplier_crit_dmg": 150,
       "chance_hit": 750,
@@ -120,6 +242,10 @@
         "chance_crit_dmg": -1000,
         "strike_rate": -1000
       },
+      "attack": {
+        "attack_type": "SINGLE_TARGET",
+        "attack_range": 12
+      },
       "name": {
         "en": "RIPPER",
         "ru": "ПОТРОШИТЕЛЬ"
@@ -131,7 +257,6 @@
       "dmg_min": 27,
       "dmg_max": 37,
       "price": 1630,
-      "range_attack": 12,
       "capacity_ammo": 30,
       "multiplier_crit_dmg": 160,
       "chance_hit": 650,
@@ -143,53 +268,5 @@
       "ammo_type": "A_D45",
       "dmg_type": "NORMAL"
     }
-  ],
-  "ref_minimal": {
-    "weapon_model": "INVALID",
-    "weapon_type": "INVALID",
-    "weapon_mod_types": [],
-    "weapon_requirements": {},
-    "weapon_penalties": {},
-    "name": {
-      "en": "",
-      "ru": ""
-    },
-    "descrip": {
-      "en": "",
-      "ru": ""
-    },
-    "dmg_min": 1,
-    "dmg_max": 1,
-    "price": 0,
-    "range_attack": 1,
-    "capacity_ammo": 1,
-    "angle_cone": 1,
-    "multiplier_crit_dmg": 0,
-    "chance_hit": -10000,
-    "chance_crit_dmg": -10000,
-    "bonus_sneak_dmg": -10000,
-    "bonus_normal_dmg": -10000,
-    "bonus_melee_dmg": -10000,
-    "bonus_range_dmg": -10000,
-    "weapon_level": 1,
-    "armor_penetration": 0,
-    "ap_per_attack": 1,
-    "ap_per_reload": 1,
-    "shots_per_attack": 1,
-    "ammo_type": "INVALID",
-    "dmg_type": "INVALID"
-  },
-  "ref_default": {
-    "weapon_mod_types": [],
-    "weapon_requirements": {},
-    "weapon_penalties": {},
-    "name": {
-      "en": "",
-      "ru": ""
-    },
-    "descrip": {
-      "en": "",
-      "ru": ""
-    }
-  }
+  ]
 }

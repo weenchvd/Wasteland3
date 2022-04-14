@@ -1,0 +1,13 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+#ifndef ATTACK_PATH_HPP
+#define ATTACK_PATH_HPP
+
+#cmakedefine ATTACK_REF_FB_BIN_FILE__NATIVE_REL_PATH u8R"(@ATTACK_REF_FB_BIN_FILE__NATIVE_REL_PATH@)"
+#cmakedefine ATTACK_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(@ATTACK_TEXT_FB_BIN_FILE__NATIVE_REL_PATH@)"
+
+#endif // !ATTACK_PATH_HPP

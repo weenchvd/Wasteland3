@@ -112,10 +112,6 @@
       "en": "Ammo type:",
       "ru": "Тип боеприпасов:"
     },
-    "range": {
-      "en": "Range:",
-      "ru": "Дальность:"
-    },
     "failed_req_penalty": {
       "en": "Failed requirement penalty:",
       "ru": "Штраф за невыполнение требования:"
@@ -131,10 +127,6 @@
     "crit_chance": {
       "en": "Crit chance:",
       "ru": "Вероятность крит. попадания:"
-    },
-    "cone_angle": {
-      "en": "Cone angle of attack:",
-      "ru": "Конусный угол атаки:"
     },
     "bonus_sneak_damage": {
       "en": "Sneak attack damage bonus:",

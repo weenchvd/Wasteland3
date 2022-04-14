@@ -1,0 +1,40 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbAttack;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_AttackTextType {
+  single_target:fbCommon.FB_LanguageBundle;
+  chain_of_single_targets:fbCommon.FB_LanguageBundle;
+  straight_line:fbCommon.FB_LanguageBundle;
+  conical_area_behind_target:fbCommon.FB_LanguageBundle;
+  conical_area:fbCommon.FB_LanguageBundle;
+  remote_circular_area:fbCommon.FB_LanguageBundle;
+  circular_area:fbCommon.FB_LanguageBundle;
+}
+
+table FB_AttackTextCommon {
+  attack_type:fbCommon.FB_LanguageBundle;
+  attack_range:fbCommon.FB_LanguageBundle;
+  range_of_bounces:fbCommon.FB_LanguageBundle;
+  range_of_conical_area:fbCommon.FB_LanguageBundle;
+  radius_of_circular_area:fbCommon.FB_LanguageBundle;
+  quantity_of_bounces:fbCommon.FB_LanguageBundle;
+  angle_of_conical_area:fbCommon.FB_LanguageBundle;
+  point_blank:fbCommon.FB_LanguageBundle;
+}
+
+table FB_AttackText {
+  type:FB_AttackTextType;
+  common:FB_AttackTextCommon;
+}
+
+root_type FB_AttackText;

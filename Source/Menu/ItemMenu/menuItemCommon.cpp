@@ -85,5 +85,46 @@ common::Text getDamageDescription(
     return oss.str();
 }
 
+common::Text getAttackDescription(
+    const Indent indent,
+    const object::Attack& attack)
+{
+    ostringstream oss;
+    const auto sp{ ' ' };
+    const auto& text{ attack.attackText() };
+    oss << indent << text.common().attackType() << sp << text.type(attack.type()) << endl;
+    oss << indent << text.common().attackRange() << sp;
+    if (attack.range() != attack.pointBlank()) {
+        oss << attack.range();
+    }
+    else {
+        oss << text.common().pointBlank();
+    }
+    oss << endl;
+
+    if (attack.rangeOfBouncesIsPresented()) {
+        oss << indent << text.common().rangeOfBounces() << sp
+            << attack.rangeOfBounces() << endl;
+    }
+    if (attack.rangeOfConicalAreaIsPresented()) {
+        oss << indent << text.common().rangeOfConicalArea() << sp
+            << attack.rangeOfConicalArea() << endl;
+    }
+    if (attack.radiusOfCircularAreaIsPresented()) {
+        oss << indent << text.common().radiusOfCircularArea() << sp
+            << attack.radiusOfCircularArea() << endl;
+    }
+    if (attack.quantityOfBouncesIsPresented()) {
+        oss << indent << text.common().qtyOfBounces() << sp
+            << attack.quantityOfBounces() << endl;
+    }
+    if (attack.angleOfConicalAreaIsPresented()) {
+        oss << indent << text.common().angleOfConicalArea() << sp
+            << attack.angleOfConicalArea() << endl;
+    }
+
+    return oss.str();
+}
+
 } // namespace menu
 } // namespace game

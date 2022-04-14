@@ -1,0 +1,29 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbAttack;
+
+enum FB_AttackType:int8 {
+  INVALID = 0,
+
+  SINGLE_TARGET,
+  CHAIN_OF_SINGLE_TARGETS,
+  STRAIGHT_LINE,
+  CONICAL_AREA_BEHIND_TARGET,
+  CONICAL_AREA,
+  REMOTE_CIRCULAR_AREA,
+  CIRCULAR_AREA
+}
+
+table FB_Attack {
+  attack_type:fbAttack.FB_AttackType = INVALID;
+  attack_range:int16 = 0;
+  range_of_bounces:int16 = 0;
+  range_of_conical_area:int16 = 0;
+  radius_of_circular_area:int16 = 0;
+  quantity_of_bounces:int16 = 0;
+  angle_of_conical_area:int16 = 0;
+}

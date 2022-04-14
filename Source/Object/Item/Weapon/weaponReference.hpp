@@ -8,6 +8,7 @@
 #define WEAPON_REFERENCE_HPP
 
 #include"ammo.hpp"
+#include"attack.hpp"
 #include"attribute.hpp"
 #include"common.hpp"
 #include"damage.hpp"
@@ -106,13 +107,12 @@ public:
     weapon_mod_types_t      weaponModTypes_;// list of slot types
     WeaponRequirements      requirements_;
     WeaponPenalties         penalties_;
+    Attack                  attack_;
 
     common::Damage          dmgMin_;        // min damage per hit
     common::Damage          dmgMax_;        // max damage per hit
     common::Price           price_;         // price
-    common::Range           rangeAttack_;   // attack range
     common::Capacity        capAmmo_;       // ammo capacity
-    common::Angle           angleCone_;     // cone angle of attack
     common::Multiplier      mulCritDmg_;    // critical damage multiplier
     common::Chance          chaHit_;        // base hit chance
     common::Chance          chaCritDmg_;    // base critical damage chance
@@ -150,7 +150,9 @@ public:
 
     static void initialize();
 
-    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
+    static bool isInitialized() noexcept {
+        return initialized_ && base_.isInitialized() && Attack::isInitialized();
+    }
 
     static auto languageIndex() noexcept { return base_.languageIndex(); }
 
@@ -170,7 +172,8 @@ private:
 
     static void initWeaponRequirements(
         const fbWeapon::FB_WeaponRequirements* fb,
-        WeaponRequirements& requirements
+        WeaponRequirements& requirements,
+        const bool assert
     );
 
 private:

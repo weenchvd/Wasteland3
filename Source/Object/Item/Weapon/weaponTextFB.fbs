@@ -45,12 +45,10 @@ table FB_WeaponTextCommon {
   installed_mods:fbCommon.FB_LanguageBundle;
   ammo_capacity:fbCommon.FB_LanguageBundle;
   ammo_type:fbCommon.FB_LanguageBundle;
-  range:fbCommon.FB_LanguageBundle;
   failed_req_penalty:fbCommon.FB_LanguageBundle;
   base_hit_chance:fbCommon.FB_LanguageBundle;
   crit_damage:fbCommon.FB_LanguageBundle;
   crit_chance:fbCommon.FB_LanguageBundle;
-  cone_angle:fbCommon.FB_LanguageBundle;
   bonus_sneak_damage:fbCommon.FB_LanguageBundle;
   bonus_norm_damage:fbCommon.FB_LanguageBundle;
   bonus_melee_damage:fbCommon.FB_LanguageBundle;

@@ -83,6 +83,14 @@ cmake_language(CALL create_flatbuffers_schema_file
 )
 
 #**********************************************************************
+# create Flatbuffers schema file for FB_Attack
+set(ATTACK_FB_FILE_STEM "attackFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${ATTACK_FB_FILE_STEM}"
+)
+
+#**********************************************************************
 set(LIBRARY_NAME "flatbuffersCommon")
 set(HEADER_CXX_LIST "${LANGUAGE_BUNDLE_FB_FILE_STEM}_generated.h"
                     "${ATTRIBUTE_TYPE_FB_FILE_STEM}_generated.h"
@@ -93,6 +101,7 @@ set(HEADER_CXX_LIST "${LANGUAGE_BUNDLE_FB_FILE_STEM}_generated.h"
                     "${DAMAGE_TYPE_FB_FILE_STEM}_generated.h"
                     "${WEAPON_MOD_TYPE_FB_FILE_STEM}_generated.h"
                     "${WEAPON_MOD_MODEL_FB_FILE_STEM}_generated.h"
+                    "${ATTACK_FB_FILE_STEM}_generated.h"
 )
 
 add_library(${LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})

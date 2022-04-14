@@ -7,6 +7,7 @@
 #ifndef MENU_ITEM_COMMON_HPP
 #define MENU_ITEM_COMMON_HPP
 
+#include"attack.hpp"
 #include"common.hpp"
 #include"damage.hpp"
 #include"menuCommon.hpp"
@@ -17,6 +18,11 @@ namespace menu {
 common::Text getDamageDescription(
     const Indent indent,
     const object::Damage::Type type
+);
+
+common::Text getAttackDescription(
+    const Indent indent,
+    const object::Attack& attack
 );
 
 } // namespace menu

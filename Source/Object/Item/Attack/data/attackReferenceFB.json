@@ -1,0 +1,49 @@
+{
+  "sample_of_all_fields": {
+    "attack_type": "INVALID",
+    "attack_range": 0,
+    "range_of_bounces": 0,
+    "range_of_conical_area": 0,
+    "radius_of_circular_area": 0,
+    "quantity_of_bounces": 0,
+    "angle_of_conical_area": 0
+  },
+  "default_values": {},
+  "minimal_values": [
+    {
+      "attack_type": "SINGLE_TARGET",
+      "attack_range": 1
+    },
+    {
+      "attack_type": "CHAIN_OF_SINGLE_TARGETS",
+      "attack_range": 1,
+      "range_of_bounces": 1,
+      "quantity_of_bounces": 0
+    },
+    {
+      "attack_type": "STRAIGHT_LINE",
+      "attack_range": 1
+    },
+    {
+      "attack_type": "CONICAL_AREA_BEHIND_TARGET",
+      "attack_range": 1,
+      "range_of_conical_area": 1,
+      "angle_of_conical_area": 1
+    },
+    {
+      "attack_type": "CONICAL_AREA",
+      "attack_range": 1,
+      "angle_of_conical_area": 1
+    },
+    {
+      "attack_type": "REMOTE_CIRCULAR_AREA",
+      "attack_range": 1,
+      "radius_of_circular_area": 1
+    },
+    {
+      "attack_type": "CIRCULAR_AREA",
+      "attack_range": 1
+    }
+  ],
+  "range_point_blank": 1
+}

@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 include "ammoTypeFB.fbs";
+include "attackFB.fbs";
 include "attributeTypeFB.fbs";
 include "damageTypeFB.fbs";
 include "languageBundleFB.fbs";
@@ -46,6 +47,7 @@ table FB_WeaponReference {
   weapon_mod_types:[fbWeaponMod.FB_WeaponModType];
   weapon_requirements:FB_WeaponRequirements;
   weapon_penalties:FB_WeaponPenalties;
+  attack:fbAttack.FB_Attack;
   name:fbCommon.FB_LanguageBundle;
   descrip:fbCommon.FB_LanguageBundle;
   dmg_min:int16 = 0;
@@ -71,9 +73,10 @@ table FB_WeaponReference {
 }
 
 table FB_WeaponReferenceContainer {
-  refs:[FB_WeaponReference];
-  ref_minimal:FB_WeaponReference;
-  ref_default:FB_WeaponReference;
+  sample_of_all_fields:FB_WeaponReference;
+  ref_minimal_values:FB_WeaponReference;
+  ref_default_values:FB_WeaponReference;
+  ref_values:[FB_WeaponReference];
 }
 
 root_type FB_WeaponReferenceContainer;

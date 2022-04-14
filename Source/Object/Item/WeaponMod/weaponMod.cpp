@@ -37,9 +37,9 @@ void WeaponMod::apply(Weapon& weapon) noexcept
 {
     weapon.damageMinimumAdd(damageMinimum());
     weapon.damageMaximumAdd(damageMaximum());
-    weapon.rangeAttackAdd(rangeAttack());
+    ///weapon.rangeAttackAdd(rangeAttack());
     weapon.capacityAmmoAdd(capacityAmmo());
-    weapon.angleConeAdd(angleCone());
+    ///weapon.angleConeAdd(angleCone());
     weapon.multiplierCritDamageAdd(multiplierCritDamage());
     weapon.chanceHitAdd(chanceHit());
     weapon.chanceCritDamageAdd(chanceCritDamage());

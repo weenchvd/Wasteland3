@@ -105,6 +105,13 @@ public:
 
 ///********** changeable weapon parameters
 public:
+    const Attack& attack() const noexcept {
+        return attack_;
+    }
+    Attack& attack() noexcept {
+        return attack_;
+    }
+
     common::Damage damageMinimum() const noexcept {
         return dmgMin_;
     }
@@ -119,13 +126,6 @@ public:
         dmgMax_ += shift;
     }
 
-    common::Range rangeAttack() const noexcept {
-        return rangeAttack_;
-    }
-    void rangeAttackAdd(common::Range shift) noexcept {
-        rangeAttack_ += shift;
-    }
-
     common::Capacity capacityAmmo() const noexcept {
         return capAmmo_;
     }
@@ -134,13 +134,6 @@ public:
     }
     void reloadAmmo(Ammo& ammo) noexcept;
     void unloadAmmo(Ammo& ammo) noexcept;
-
-    common::Angle angleCone() const noexcept {
-        return angleCone_;
-    }
-    void angleConeAdd(common::Angle shift) noexcept {
-        angleCone_ += shift;
-    }
 
     common::Multiplier multiplierCritDamage() const noexcept {
         return mulCritDmg_;
@@ -255,12 +248,11 @@ public:
 private:
     const WeaponReference&      base_;          // reference, sample, template
 
+    Attack                      attack_;
     common::Damage              dmgMin_;        // min damage per hit
     common::Damage              dmgMax_;        // max damage per hit
-    common::Range               rangeAttack_;   // attack range
     common::Capacity            capAmmo_;       // ammo capacity
     common::Capacity            capLoadedAmmo_; // loaded ammo
-    common::Angle               angleCone_;     // cone angle of attack
     common::Multiplier          mulCritDmg_;    // crit damage multiplier
     common::Chance              chaHit_;        // base hit chance
     common::Chance              chaCritDmg_;    // base critical damage chance

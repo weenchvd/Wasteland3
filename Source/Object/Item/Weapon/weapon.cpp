@@ -22,12 +22,11 @@ const WeaponText                    Weapon::text_;
 Weapon::Weapon(Weapon::Model model) noexcept
     :
     base_           { ref_.weaponReference(model) },
+    attack_         { base_.attack_ },
     dmgMin_         { base_.dmgMin_ },
     dmgMax_         { base_.dmgMax_ },
-    rangeAttack_    { base_.rangeAttack_ },
     capAmmo_        { base_.capAmmo_ },
     capLoadedAmmo_  { initAmmo_ },
-    angleCone_      { base_.angleCone_ },
     mulCritDmg_     { base_.mulCritDmg_ },
     chaHit_         { base_.chaHit_ },
     chaCritDmg_     { base_.chaCritDmg_ },
@@ -50,12 +49,11 @@ Weapon::Weapon(Weapon::Model model) noexcept
 Weapon::Weapon(const WeaponReference& ref) noexcept
     :
     base_           { ref },
+    attack_         { base_.attack_ },
     dmgMin_         { base_.dmgMin_ },
     dmgMax_         { base_.dmgMax_ },
-    rangeAttack_    { base_.rangeAttack_ },
     capAmmo_        { base_.capAmmo_ },
     capLoadedAmmo_  { initAmmo_ },
-    angleCone_      { base_.angleCone_ },
     mulCritDmg_     { base_.mulCritDmg_ },
     chaHit_         { base_.chaHit_ },
     chaCritDmg_     { base_.chaCritDmg_ },
@@ -77,11 +75,10 @@ Weapon::Weapon(const WeaponReference& ref) noexcept
 
 void Weapon::apply() noexcept
 {
+    attack_         = base_.attack_;
     dmgMin_         = base_.dmgMin_;
     dmgMax_         = base_.dmgMax_;
-    rangeAttack_    = base_.rangeAttack_;
     capAmmo_        = base_.capAmmo_;
-    angleCone_      = base_.angleCone_;
     mulCritDmg_     = base_.mulCritDmg_;
     chaHit_         = base_.chaHit_;
     chaCritDmg_     = base_.chaCritDmg_;
@@ -108,11 +105,10 @@ void Weapon::apply() noexcept
 void Weapon::check() noexcept
 {
     const WeaponReference& refMin = ref_.weaponReferenceMinimal();
+    /// TODO check attack_;
     if (dmgMin_         < refMin.dmgMin_)           dmgMin_         = refMin.dmgMin_;
     if (dmgMax_         < refMin.dmgMax_)           dmgMax_         = refMin.dmgMax_;
-    if (rangeAttack_    < refMin.rangeAttack_)      rangeAttack_    = refMin.rangeAttack_;
     if (capAmmo_        < refMin.capAmmo_)          capAmmo_        = refMin.capAmmo_;
-    /// TODO if (angleCone_      < refMin.angleCone_)        angleCone_      = refMin.angleCone_;
     if (mulCritDmg_     < refMin.mulCritDmg_)       mulCritDmg_     = refMin.mulCritDmg_;
     if (chaHit_         < refMin.chaHit_)           chaHit_         = refMin.chaHit_;
     if (chaCritDmg_     < refMin.chaCritDmg_)       chaCritDmg_     = refMin.chaCritDmg_;

@@ -1,0 +1,21 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "attackFB.fbs";
+
+namespace fbAttack;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_AttackContainer {
+  sample_of_all_fields:FB_Attack;
+  default_values:FB_Attack;
+  minimal_values:[FB_Attack];
+  range_point_blank:int16 = 0;
+}
+
+root_type FB_AttackContainer;

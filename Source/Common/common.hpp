@@ -24,6 +24,7 @@ using Range                 = short int;
 using Capacity              = short int;
 using Constitution          = short int;
 using Angle                 = short int;
+using Quantity              = short int;
 
 using Multiplier            = short int;    // 0.01X (1X == 100 Multiplier)
 using Chance                = short int;    // 0.1% (1% == 10 Chance)

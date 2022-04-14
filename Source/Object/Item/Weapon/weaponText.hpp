@@ -83,8 +83,6 @@ public:
 
     const text_t& ammoType() const noexcept { return ammoType_[li()]; }
 
-    const text_t& range() const noexcept { return range_[li()]; }
-
     const text_t& penalty() const noexcept { return penalty_[li()]; }
 
     const text_t& hitChance() const noexcept { return hitChance_[li()]; }
@@ -92,8 +90,6 @@ public:
     const text_t& critDamage() const noexcept { return critDamage_[li()]; }
 
     const text_t& critChance() const noexcept { return critChance_[li()]; }
-
-    const text_t& coneAngle() const noexcept { return coneAngle_[li()]; }
 
     const text_t& bonSneakDamage() const noexcept { return bonSneakDmg_[li()]; }
 
@@ -115,12 +111,10 @@ private:
     language_bundle_t mods_;
     language_bundle_t ammoCap_;
     language_bundle_t ammoType_;
-    language_bundle_t range_;
     language_bundle_t penalty_;
     language_bundle_t hitChance_;
     language_bundle_t critDamage_;
     language_bundle_t critChance_;
-    language_bundle_t coneAngle_;
     language_bundle_t bonSneakDmg_;
     language_bundle_t bonNormDmg_;
     language_bundle_t bonMeleeDmg_;

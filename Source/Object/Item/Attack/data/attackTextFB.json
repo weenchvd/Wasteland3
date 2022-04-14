@@ -1,0 +1,66 @@
+{
+  "type": {
+    "single_target": {
+      "en": "Single target",
+      "ru": "Одиночная цель"
+    },
+    "chain_of_single_targets": {
+      "en": "Chain of targets",
+      "ru": "Цепочка целей"
+    },
+    "straight_line": {
+      "en": "Straight line",
+      "ru": "Прямая линия"
+    },
+    "conical_area_behind_target": {
+      "en": "Conical area behind a target",
+      "ru": "Коническая область позади цели"
+    },
+    "conical_area": {
+      "en": "Conical area",
+      "ru": "Коническая область"
+    },
+    "remote_circular_area": {
+      "en": "Remote circular area",
+      "ru": "Удаленная круговая область"
+    },
+    "circular_area": {
+      "en": "Circular area",
+      "ru": "Круговая область"
+    }
+  },
+  "common": {
+    "attack_type": {
+      "en": "Attack type:",
+      "ru": "Тип атаки:"
+    },
+    "attack_range": {
+      "en": "Attack range:",
+      "ru": "Дальность атаки:"
+    },
+    "range_of_bounces": {
+      "en": "Range of bounces:",
+      "ru": "Дальность отскоков:"
+    },
+    "range_of_conical_area": {
+      "en": "Range of the conical area:",
+      "ru": "Дальность конической области:"
+    },
+    "radius_of_circular_area": {
+      "en": "Radius of the circular area:",
+      "ru": "Радиус круговой области:"
+    },
+    "quantity_of_bounces": {
+      "en": "Quantity of bounces:",
+      "ru": "Количество отскоков:"
+    },
+    "angle_of_conical_area": {
+      "en": "Angle of the conical area:",
+      "ru": "Угол конической области:"
+    },
+    "point_blank": {
+      "en": "Point blank",
+      "ru": "В упор"
+    }
+  }
+}
