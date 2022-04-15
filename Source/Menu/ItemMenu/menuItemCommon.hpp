@@ -11,6 +11,7 @@
 #include"common.hpp"
 #include"damage.hpp"
 #include"menuCommon.hpp"
+#include<iostream>
 
 namespace game {
 namespace menu {
@@ -20,9 +21,11 @@ common::Text getDamageDescription(
     const object::Damage::Type type
 );
 
-common::Text getAttackDescription(
+void printAttackDescription(
+    std::ostream& os,
     const Indent indent,
-    const object::Attack& attack
+    const object::Attack& attack,
+    const bool printAttackType = true
 );
 
 } // namespace menu

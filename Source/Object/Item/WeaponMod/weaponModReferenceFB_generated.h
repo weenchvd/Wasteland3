@@ -6,12 +6,13 @@
 
 #include "flatbuffers/flatbuffers.h"
 
+#include "weaponModModelFB_generated.h"
 #include "attributeTypeFB_generated.h"
 #include "damageTypeFB_generated.h"
+#include "attackFB_generated.h"
 #include "weaponModTypeFB_generated.h"
 #include "skillTypeFB_generated.h"
 #include "languageBundleFB_generated.h"
-#include "weaponModModelFB_generated.h"
 #include "ammoTypeFB_generated.h"
 
 namespace fbWeaponMod {
@@ -146,27 +147,26 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
     VT_WEAPON_MOD_MODEL = 4,
     VT_WEAPON_MOD_TYPE = 6,
     VT_WEAPON_MOD_REQUIREMENTS = 8,
-    VT_NAME = 10,
-    VT_DESCRIP = 12,
-    VT_DMG_MIN = 14,
-    VT_DMG_MAX = 16,
-    VT_PRICE = 18,
-    VT_RANGE_ATTACK = 20,
+    VT_ATTACK = 10,
+    VT_NAME = 12,
+    VT_DESCRIP = 14,
+    VT_DMG_MIN = 16,
+    VT_DMG_MAX = 18,
+    VT_PRICE = 20,
     VT_CAPACITY_AMMO = 22,
-    VT_ANGLE_CONE = 24,
-    VT_MULTIPLIER_CRIT_DMG = 26,
-    VT_CHANCE_HIT = 28,
-    VT_CHANCE_CRIT_DMG = 30,
-    VT_BONUS_SNEAK_DMG = 32,
-    VT_BONUS_NORMAL_DMG = 34,
-    VT_BONUS_MELEE_DMG = 36,
-    VT_BONUS_RANGE_DMG = 38,
-    VT_ARMOR_PENETRATION = 40,
-    VT_AP_PER_ATTACK = 42,
-    VT_AP_PER_RELOAD = 44,
-    VT_SHOTS_PER_ATTACK = 46,
-    VT_AMMO_TYPE = 48,
-    VT_DMG_TYPE = 50
+    VT_MULTIPLIER_CRIT_DMG = 24,
+    VT_CHANCE_HIT = 26,
+    VT_CHANCE_CRIT_DMG = 28,
+    VT_BONUS_SNEAK_DMG = 30,
+    VT_BONUS_NORMAL_DMG = 32,
+    VT_BONUS_MELEE_DMG = 34,
+    VT_BONUS_RANGE_DMG = 36,
+    VT_ARMOR_PENETRATION = 38,
+    VT_AP_PER_ATTACK = 40,
+    VT_AP_PER_RELOAD = 42,
+    VT_SHOTS_PER_ATTACK = 44,
+    VT_AMMO_TYPE = 46,
+    VT_DMG_TYPE = 48
   };
   fbWeaponMod::FB_WeaponModModel weapon_mod_model() const {
     return static_cast<fbWeaponMod::FB_WeaponModModel>(GetField<int16_t>(VT_WEAPON_MOD_MODEL, 0));
@@ -176,6 +176,9 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   }
   const fbWeaponMod::FB_WeaponModRequirements *weapon_mod_requirements() const {
     return GetPointer<const fbWeaponMod::FB_WeaponModRequirements *>(VT_WEAPON_MOD_REQUIREMENTS);
+  }
+  const fbAttack::FB_Attack *attack() const {
+    return GetPointer<const fbAttack::FB_Attack *>(VT_ATTACK);
   }
   const fbCommon::FB_LanguageBundle *name() const {
     return GetPointer<const fbCommon::FB_LanguageBundle *>(VT_NAME);
@@ -192,14 +195,8 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   int16_t price() const {
     return GetField<int16_t>(VT_PRICE, 0);
   }
-  int16_t range_attack() const {
-    return GetField<int16_t>(VT_RANGE_ATTACK, 0);
-  }
   int16_t capacity_ammo() const {
     return GetField<int16_t>(VT_CAPACITY_AMMO, 0);
-  }
-  int16_t angle_cone() const {
-    return GetField<int16_t>(VT_ANGLE_CONE, 0);
   }
   int16_t multiplier_crit_dmg() const {
     return GetField<int16_t>(VT_MULTIPLIER_CRIT_DMG, 0);
@@ -246,6 +243,8 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
            VerifyField<int8_t>(verifier, VT_WEAPON_MOD_TYPE) &&
            VerifyOffset(verifier, VT_WEAPON_MOD_REQUIREMENTS) &&
            verifier.VerifyTable(weapon_mod_requirements()) &&
+           VerifyOffset(verifier, VT_ATTACK) &&
+           verifier.VerifyTable(attack()) &&
            VerifyOffset(verifier, VT_NAME) &&
            verifier.VerifyTable(name()) &&
            VerifyOffset(verifier, VT_DESCRIP) &&
@@ -253,9 +252,7 @@ struct FB_WeaponModReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
            VerifyField<int16_t>(verifier, VT_DMG_MIN) &&
            VerifyField<int16_t>(verifier, VT_DMG_MAX) &&
            VerifyField<int16_t>(verifier, VT_PRICE) &&
-           VerifyField<int16_t>(verifier, VT_RANGE_ATTACK) &&
            VerifyField<int16_t>(verifier, VT_CAPACITY_AMMO) &&
-           VerifyField<int16_t>(verifier, VT_ANGLE_CONE) &&
            VerifyField<int16_t>(verifier, VT_MULTIPLIER_CRIT_DMG) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_HIT) &&
            VerifyField<int16_t>(verifier, VT_CHANCE_CRIT_DMG) &&
@@ -286,6 +283,9 @@ struct FB_WeaponModReferenceBuilder {
   void add_weapon_mod_requirements(flatbuffers::Offset<fbWeaponMod::FB_WeaponModRequirements> weapon_mod_requirements) {
     fbb_.AddOffset(FB_WeaponModReference::VT_WEAPON_MOD_REQUIREMENTS, weapon_mod_requirements);
   }
+  void add_attack(flatbuffers::Offset<fbAttack::FB_Attack> attack) {
+    fbb_.AddOffset(FB_WeaponModReference::VT_ATTACK, attack);
+  }
   void add_name(flatbuffers::Offset<fbCommon::FB_LanguageBundle> name) {
     fbb_.AddOffset(FB_WeaponModReference::VT_NAME, name);
   }
@@ -301,14 +301,8 @@ struct FB_WeaponModReferenceBuilder {
   void add_price(int16_t price) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_PRICE, price, 0);
   }
-  void add_range_attack(int16_t range_attack) {
-    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_RANGE_ATTACK, range_attack, 0);
-  }
   void add_capacity_ammo(int16_t capacity_ammo) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_CAPACITY_AMMO, capacity_ammo, 0);
-  }
-  void add_angle_cone(int16_t angle_cone) {
-    fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_ANGLE_CONE, angle_cone, 0);
   }
   void add_multiplier_crit_dmg(int16_t multiplier_crit_dmg) {
     fbb_.AddElement<int16_t>(FB_WeaponModReference::VT_MULTIPLIER_CRIT_DMG, multiplier_crit_dmg, 0);
@@ -365,14 +359,13 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
     fbWeaponMod::FB_WeaponModModel weapon_mod_model = fbWeaponMod::FB_WeaponModModel_INVALID,
     fbWeaponMod::FB_WeaponModType weapon_mod_type = fbWeaponMod::FB_WeaponModType_INVALID,
     flatbuffers::Offset<fbWeaponMod::FB_WeaponModRequirements> weapon_mod_requirements = 0,
+    flatbuffers::Offset<fbAttack::FB_Attack> attack = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> name = 0,
     flatbuffers::Offset<fbCommon::FB_LanguageBundle> descrip = 0,
     int16_t dmg_min = 0,
     int16_t dmg_max = 0,
     int16_t price = 0,
-    int16_t range_attack = 0,
     int16_t capacity_ammo = 0,
-    int16_t angle_cone = 0,
     int16_t multiplier_crit_dmg = 0,
     int16_t chance_hit = 0,
     int16_t chance_crit_dmg = 0,
@@ -389,6 +382,7 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
   FB_WeaponModReferenceBuilder builder_(_fbb);
   builder_.add_descrip(descrip);
   builder_.add_name(name);
+  builder_.add_attack(attack);
   builder_.add_weapon_mod_requirements(weapon_mod_requirements);
   builder_.add_bonus_range_dmg(bonus_range_dmg);
   builder_.add_bonus_melee_dmg(bonus_melee_dmg);
@@ -397,9 +391,7 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
   builder_.add_chance_crit_dmg(chance_crit_dmg);
   builder_.add_chance_hit(chance_hit);
   builder_.add_multiplier_crit_dmg(multiplier_crit_dmg);
-  builder_.add_angle_cone(angle_cone);
   builder_.add_capacity_ammo(capacity_ammo);
-  builder_.add_range_attack(range_attack);
   builder_.add_price(price);
   builder_.add_dmg_max(dmg_max);
   builder_.add_dmg_min(dmg_min);
@@ -417,22 +409,28 @@ inline flatbuffers::Offset<FB_WeaponModReference> CreateFB_WeaponModReference(
 struct FB_WeaponModReferenceContainer FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   typedef FB_WeaponModReferenceContainerBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
-    VT_REFS = 4,
-    VT_REF_DEFAULT = 6
+    VT_SAMPLE_OF_ALL_FIELDS = 4,
+    VT_REF_DEFAULT_VALUES = 6,
+    VT_REF_VALUES = 8
   };
-  const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *refs() const {
-    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *>(VT_REFS);
+  const fbWeaponMod::FB_WeaponModReference *sample_of_all_fields() const {
+    return GetPointer<const fbWeaponMod::FB_WeaponModReference *>(VT_SAMPLE_OF_ALL_FIELDS);
   }
-  const fbWeaponMod::FB_WeaponModReference *ref_default() const {
-    return GetPointer<const fbWeaponMod::FB_WeaponModReference *>(VT_REF_DEFAULT);
+  const fbWeaponMod::FB_WeaponModReference *ref_default_values() const {
+    return GetPointer<const fbWeaponMod::FB_WeaponModReference *>(VT_REF_DEFAULT_VALUES);
+  }
+  const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *ref_values() const {
+    return GetPointer<const flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *>(VT_REF_VALUES);
   }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
-           VerifyOffset(verifier, VT_REFS) &&
-           verifier.VerifyVector(refs()) &&
-           verifier.VerifyVectorOfTables(refs()) &&
-           VerifyOffset(verifier, VT_REF_DEFAULT) &&
-           verifier.VerifyTable(ref_default()) &&
+           VerifyOffset(verifier, VT_SAMPLE_OF_ALL_FIELDS) &&
+           verifier.VerifyTable(sample_of_all_fields()) &&
+           VerifyOffset(verifier, VT_REF_DEFAULT_VALUES) &&
+           verifier.VerifyTable(ref_default_values()) &&
+           VerifyOffset(verifier, VT_REF_VALUES) &&
+           verifier.VerifyVector(ref_values()) &&
+           verifier.VerifyVectorOfTables(ref_values()) &&
            verifier.EndTable();
   }
 };
@@ -441,11 +439,14 @@ struct FB_WeaponModReferenceContainerBuilder {
   typedef FB_WeaponModReferenceContainer Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
-  void add_refs(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> refs) {
-    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REFS, refs);
+  void add_sample_of_all_fields(flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> sample_of_all_fields) {
+    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_SAMPLE_OF_ALL_FIELDS, sample_of_all_fields);
   }
-  void add_ref_default(flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default) {
-    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REF_DEFAULT, ref_default);
+  void add_ref_default_values(flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default_values) {
+    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REF_DEFAULT_VALUES, ref_default_values);
+  }
+  void add_ref_values(flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> ref_values) {
+    fbb_.AddOffset(FB_WeaponModReferenceContainer::VT_REF_VALUES, ref_values);
   }
   explicit FB_WeaponModReferenceContainerBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
@@ -460,23 +461,27 @@ struct FB_WeaponModReferenceContainerBuilder {
 
 inline flatbuffers::Offset<FB_WeaponModReferenceContainer> CreateFB_WeaponModReferenceContainer(
     flatbuffers::FlatBufferBuilder &_fbb,
-    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> refs = 0,
-    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default = 0) {
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> sample_of_all_fields = 0,
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default_values = 0,
+    flatbuffers::Offset<flatbuffers::Vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>> ref_values = 0) {
   FB_WeaponModReferenceContainerBuilder builder_(_fbb);
-  builder_.add_ref_default(ref_default);
-  builder_.add_refs(refs);
+  builder_.add_ref_values(ref_values);
+  builder_.add_ref_default_values(ref_default_values);
+  builder_.add_sample_of_all_fields(sample_of_all_fields);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<FB_WeaponModReferenceContainer> CreateFB_WeaponModReferenceContainerDirect(
     flatbuffers::FlatBufferBuilder &_fbb,
-    const std::vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *refs = nullptr,
-    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default = 0) {
-  auto refs__ = refs ? _fbb.CreateVector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>(*refs) : 0;
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> sample_of_all_fields = 0,
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference> ref_default_values = 0,
+    const std::vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>> *ref_values = nullptr) {
+  auto ref_values__ = ref_values ? _fbb.CreateVector<flatbuffers::Offset<fbWeaponMod::FB_WeaponModReference>>(*ref_values) : 0;
   return fbWeaponMod::CreateFB_WeaponModReferenceContainer(
       _fbb,
-      refs__,
-      ref_default);
+      sample_of_all_fields,
+      ref_default_values,
+      ref_values__);
 }
 
 inline const fbWeaponMod::FB_WeaponModReferenceContainer *GetFB_WeaponModReferenceContainer(const void *buf) {

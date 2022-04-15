@@ -167,13 +167,13 @@ private:
 
     static WeaponReference initWeaponReference(
         const fbWeapon::FB_WeaponReference* fb,
-        const bool assert = true
+        const bool verify = true
     );
 
     static void initWeaponRequirements(
         const fbWeapon::FB_WeaponRequirements* fb,
         WeaponRequirements& requirements,
-        const bool assert
+        const bool verify
     );
 
 private:

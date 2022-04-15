@@ -8,6 +8,7 @@
 #define WEAPON_MOD_REFERENCE_HPP
 
 #include"ammo.hpp"
+#include"attack.hpp"
 #include"attribute.hpp"
 #include"common.hpp"
 #include"damage.hpp"
@@ -84,13 +85,12 @@ public:
     WeaponMod__Model        model_;         // weapon mod model
     WeaponMod__Type         type_;          // weapon mod type (kind)
     WeaponModRequirements   requirements_;
+    Attack                  attack_;
 
     common::Damage          dmgMin_;        // min damage per hit
     common::Damage          dmgMax_;        // max damage per hit
     common::Price           price_;         // price
-    common::Range           rangeAttack_;   // attack range
     common::Capacity        capAmmo_;       // ammo capacity
-    common::Angle           angleCone_;     // cone angle of attack
     common::Multiplier      mulCritDmg_;    // critical damage multiplier
     common::Chance          chaHit_;        // base hit chance
     common::Chance          chaCritDmg_;    // base critical damage chance
@@ -127,7 +127,9 @@ public:
 
     static void initialize();
 
-    static bool isInitialized() noexcept { return initialized_ && base_.isInitialized(); }
+    static bool isInitialized() noexcept {
+        return initialized_ && base_.isInitialized() && Attack::isInitialized();
+    }
 
     static auto languageIndex() noexcept { return base_.languageIndex(); }
 
@@ -140,12 +142,13 @@ private:
 
     static WeaponModReference initWeaponModReference(
         const fbWeaponMod::FB_WeaponModReference* fb,
-        const bool assert = true
+        const bool verify = true
     );
 
     static void initWeaponModRequirements(
         const fbWeaponMod::FB_WeaponModRequirements* fb,
-        WeaponModRequirements& requirements
+        WeaponModRequirements& requirements,
+        const bool verify
     );
 
 private:

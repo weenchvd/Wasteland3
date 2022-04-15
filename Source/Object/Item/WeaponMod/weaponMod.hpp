@@ -77,6 +77,10 @@ public:
         return base_.requirements_;
     }
 
+    const Attack& attack() const noexcept {
+        return base_.attack_;
+    }
+
     virtual const common::Text& name() const noexcept override {
         return base_.name();
     }
@@ -97,16 +101,8 @@ public:
         return base_.price_;
     }
 
-    common::Range rangeAttack() const noexcept {
-        return base_.rangeAttack_;
-    }
-
     common::Capacity capacityAmmo() const noexcept {
         return base_.capAmmo_;
-    }
-
-    common::Angle angleCone() const noexcept {
-        return base_.angleCone_;
     }
 
     common::Multiplier multiplierCritDamage() const noexcept {

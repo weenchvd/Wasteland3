@@ -1,5 +1,80 @@
 {
-  "refs": [
+  "sample_of_all_fields": {
+    "weapon_mod_model": "INVALID",
+    "weapon_mod_type": "INVALID",
+    "weapon_mod_requirements": {
+      "skill": [
+        {
+          "type": "INVALID",
+          "level": 0
+        },
+        {
+          "type": "INVALID",
+          "level": 0
+        }
+      ],
+      "attr": [
+        {
+          "type": "INVALID",
+          "level": 0
+        },
+        {
+          "type": "INVALID",
+          "level": 0
+        }
+      ]
+    },
+    "attack": {
+      "attack_type": "INVALID",
+      "attack_range": 0,
+      "range_of_bounces": 0,
+      "range_of_conical_area": 0,
+      "radius_of_circular_area": 0,
+      "quantity_of_bounces": 0,
+      "angle_of_conical_area": 0
+    },
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    },
+    "dmg_min": 0,
+    "dmg_max": 0,
+    "price": 0,
+    "capacity_ammo": 0,
+    "multiplier_crit_dmg": 0,
+    "chance_hit": 0,
+    "chance_crit_dmg": 0,
+    "bonus_sneak_dmg": 0,
+    "bonus_normal_dmg": 0,
+    "bonus_melee_dmg": 0,
+    "bonus_range_dmg": 0,
+    "armor_penetration": 0,
+    "ap_per_attack": 0,
+    "ap_per_reload": 0,
+    "shots_per_attack": 0,
+    "ammo_type": "INVALID",
+    "dmg_type": "INVALID"
+  },
+  "ref_default_values": {
+    "weapon_mod_requirements": {},
+    "attack": {},
+    "name": {
+      "en": "",
+      "ru": ""
+    },
+    "descrip": {
+      "en": "",
+      "ru": ""
+    }
+  },
+
+
+
+  "ref_values": [
     {
       "weapon_mod_model": "BARREL_SHORTENED",
       "weapon_mod_type": "BARREL",
@@ -11,6 +86,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "SHORTENED BARREL",
         "ru": "УКОРОЧЕННЫЙ СТВОЛ"
@@ -22,22 +98,7 @@
       "dmg_min": 20,
       "dmg_max": 20,
       "price": 600,
-      "range_attack": 0,
-      "capacity_ammo": 0,
-      "angle_cone": 0,
-      "multiplier_crit_dmg": 0,
-      "chance_hit": -100,
-      "chance_crit_dmg": 0,
-      "bonus_sneak_dmg": 0,
-      "bonus_normal_dmg": 0,
-      "bonus_melee_dmg": 0,
-      "bonus_range_dmg": 0,
-      "armor_penetration": 0,
-      "ap_per_attack": 0,
-      "ap_per_reload": 0,
-      "shots_per_attack": 0,
-      "ammo_type": "INVALID",
-      "dmg_type": "INVALID"
+      "chance_hit": -100
     },
     {
       "weapon_mod_model": "BARREL_LIGHTWEIGHT",
@@ -50,6 +111,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "LIGHTWEIGHT BARREL",
         "ru": "ОБЛЕГЧЕННЫЙ СТВОЛ"
@@ -75,6 +137,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "HAMMERFORGE-RIFLED BARREL",
         "ru": "СТВОЛ, НАРЕЗАННЫЙ ПРОКОВКОЙ"
@@ -99,6 +162,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "BROACH-RIFLED BARREL",
         "ru": "СТВОЛ, НАРЕЗАННЫЙ ПРОТЯЖКОЙ"
@@ -123,6 +187,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "CUT-RIFLED BARREL",
         "ru": "ГЛАДКОНАРЕЗНОЙ СТВОЛ"
@@ -147,6 +212,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "TITANIUM-COBALT BARREL",
         "ru": "СТВОЛ ИЗ ТИТАНА И КОБАЛЬТА"
@@ -170,6 +236,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "COLUMBIUM BARREL",
         "ru": "НИОБИЕВЫЙ СТВОЛ"
@@ -193,6 +260,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "ALLOY BARREL",
         "ru": "СТВОЛ ИЗ СПЛАВА"
@@ -216,6 +284,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "PHASE SILENCER",
         "ru": "ФАЗОВЫЙ ДЕМПФЕР"
@@ -239,6 +308,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "SOUND SUPRESSOR",
         "ru": "ЗВУКОГАСИТЕЛЬ"
@@ -262,6 +332,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "BLAST MUFFLER",
         "ru": "ГЛУШИТЕЛЬ"
@@ -285,6 +356,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "QUICKFIRE MAG",
         "ru": "МАГАЗИН ДЛЯ БЫСТРОЙ СТРЕЛЬБЫ"
@@ -307,6 +379,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "ADVANCED MATERIALS MAG",
         "ru": "МАГАЗИН ИЗ УЛУЧШЕННЫХ МАТЕРИАЛОВ"
@@ -330,6 +403,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "OVERSIZED MAG",
         "ru": "ЧРЕЗМЕРНО БОЛЬШОЙ МАГАЗИН"
@@ -353,6 +427,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "MAX CAPACITY MAG",
         "ru": "МАГАЗИН МАКСИМАЛЬНОЙ ЕМКОСТИ"
@@ -375,6 +450,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "EXTENDED MAG",
         "ru": "УВЕЛИЧЕННЫЙ МАГАЗИН"
@@ -397,6 +473,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "LONG MAG",
         "ru": "ДЛИННЫЙ МАГАЗИН"
@@ -419,6 +496,9 @@
           }
         ]
       },
+      "attack": {
+        "attack_range": 9
+      },
       "name": {
         "en": "FARSIGHT COMPUTER ASSISTED SCOPE",
         "ru": "КОМПЬЮТЕРИЗОВАННЫЙ ПРИЦЕЛ 'ФАРСАЙТ'"
@@ -428,7 +508,6 @@
         "ru": "Встроенный в этот прицел процессор выводит на экран метки, указывающие стрелку на центр массы цели, в том числе на дальних дистанциях."
       },
       "price": 450,
-      "range_attack": 9,
       "chance_crit_dmg": -50
     },
     {
@@ -442,6 +521,9 @@
           }
         ]
       },
+      "attack": {
+        "attack_range": -5
+      },
       "name": {
         "en": "DEADEYE EXPERIMENTAL SCOPE",
         "ru": "ЭКСПЕРИМЕНТАЛЬНЫЙ ПРИЦЕЛ МЕРТВОГО ГЛАЗА"
@@ -451,7 +533,6 @@
         "ru": "Этот электронный прицел позволяет получить множество различной информации о цели, однако лишь на ограниченной дистанции."
       },
       "price": 350,
-      "range_attack": -5,
       "chance_crit_dmg": 60
     },
     {
@@ -465,6 +546,9 @@
           }
         ]
       },
+      "attack": {
+        "attack_range": 6
+      },
       "name": {
         "en": "38MM MAGNIFYING SCOPE",
         "ru": "38-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
@@ -473,8 +557,7 @@
         "en": "This large lens magnifies, but also provides significant eye relief, making it a much-sought-after accessory.",
         "ru": "Очень полезная вещь: линза не только увеличивает изображение, но и позволяет не прижимать окуляр к глазнице."
       },
-      "price": 100,
-      "range_attack": 6
+      "price": 100
     },
     {
       "weapon_mod_model": "SCOPE_32MM",
@@ -487,6 +570,9 @@
           }
         ]
       },
+      "attack": {
+        "attack_range": 4
+      },
       "name": {
         "en": "32MM MAGNIFYING SCOPE",
         "ru": "32-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
@@ -495,8 +581,7 @@
         "en": "The large objective lens of this scope permits greater light collection and better imaging.",
         "ru": "Крупная лизна объектива пропускает больше света и дает более четкое изображение."
       },
-      "price": 75,
-      "range_attack": 4
+      "price": 75
     },
     {
       "weapon_mod_model": "SCOPE_21MM",
@@ -509,6 +594,9 @@
           }
         ]
       },
+      "attack": {
+        "attack_range": 2
+      },
       "name": {
         "en": "21MM MAGNIFYING SCOPE",
         "ru": "21-ММ ОПТИЧЕСКИЙ ПРИЦЕЛ"
@@ -517,8 +605,7 @@
         "en": "A staple attachment from the pre-war world, this basic scope provides a modest zoom.",
         "ru": "Стандартный оптический прибор довоенной эпохи. Имеет небольшую кратность."
       },
-      "price": 50,
-      "range_attack": 2
+      "price": 50
     },
     {
       "weapon_mod_model": "SCOPE_HOLOGRAPHIC",
@@ -531,6 +618,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "HOLOGRAPHIC SCOPE",
         "ru": "ГОЛОГРАФИЧЕСКИЙ ПРИЦЕЛ"
@@ -553,6 +641,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "RED DOT SCOPE",
         "ru": "КОЛЛИМАТОРНЫЙ ПРИЦЕЛ"
@@ -575,6 +664,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "REFLEX SCOPE",
         "ru": "РЕФЛЕКТОРНЫЙ ПРИЦЕЛ"
@@ -597,6 +687,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "HE FUSE LINKAGE",
         "ru": "ФУГАСНАЯ ПОДВОДКА"
@@ -621,6 +712,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "PLASMA LINKAGE",
         "ru": "ПЛАЗМЕННАЯ ПОДВОДКА"
@@ -645,6 +737,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "CRYOCELL LINKAGE",
         "ru": "КРИОГЕННАЯ ПОДВОДКА"
@@ -669,6 +762,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "INCENDIARY LINKAGE",
         "ru": "ВОСПЛАМЕНИТЕЛЬНЫЙ ИНДУКТОР"
@@ -693,6 +787,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "SWAT LIGHT",
         "ru": "ФОНАРЬ SWAT"
@@ -715,6 +810,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "TACTICAL LIGHT",
         "ru": "ТАКТИЧЕСКИЙ ФОНАРЬ"
@@ -737,6 +833,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "UNDERBARREL LIGHT",
         "ru": "ПОДСТВОЛЬНЫЙ ФОНАРЬ"
@@ -759,6 +856,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "COMPUTER ASSISTED LASER SIGHT",
         "ru": "КОМПЬЮТЕРИЗОВАННЫЙ ЛАЗЕРНЫЙ ЦЕЛЕУКАЗАТЕЛЬ"
@@ -782,6 +880,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "ULTRAVIOLET LASER SIGHT",
         "ru": "УЛЬТРАФИОЛЕТОВЫЙ ЛЦУ"
@@ -804,6 +903,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "SPEC-OPS LASER SIGHT",
         "ru": "ЛЦУ СПЕЦНАЗА"
@@ -826,6 +926,7 @@
           }
         ]
       },
+      "attack": {},
       "name": {
         "en": "LASER SIGHT",
         "ru": "ЛАЗЕРНЫЙ ЦЕЛЕУКАЗАТЕЛЬ"
@@ -837,16 +938,5 @@
       "price": 75,
       "multiplier_crit_dmg": 5
     }
-  ],
-  "ref_default": {
-    "weapon_mod_requirements": {},
-    "name": {
-      "en": "",
-      "ru": ""
-    },
-    "descrip": {
-      "en": "",
-      "ru": ""
-    }
-  }
+  ]
 }

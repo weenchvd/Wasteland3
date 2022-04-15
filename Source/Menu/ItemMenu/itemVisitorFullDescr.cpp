@@ -109,7 +109,7 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
         << common::getShots(weapon.shotsPerAttack()) << sp
         << object::Damage::damageReferenceContainer().damageReference(weapon.damageType()).name() << endl;
     oss << getDamageDescription(Indent{}, weapon.damageType());
-    oss << getAttackDescription(Indent{ 0 }, weapon.attack());
+    printAttackDescription(oss, Indent{ 0 }, weapon.attack());
     oss << text.common().ap() << sp
         << common::getAP(weapon.actionPointPerAttack()) << endl;
     oss << text.common().apReload() << sp
@@ -218,6 +218,9 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
                 weaponMod.damageType()).name() << endl;
         oss << getDamageDescription(Indent{}, weaponMod.damageType());
     }
+
+    printAttackDescription(oss, Indent{ 0 }, weaponMod.attack(), false);
+
     if (weaponMod.actionPointPerAttack() != def.actionPointPerAttack()) {
         oss << text.common().ap() << sp
             << common::getAP(weaponMod.actionPointPerAttack()) << endl;
@@ -232,12 +235,6 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     if (weaponMod.ammoType() != def.ammoType()) {
         oss << text.common().ammoType() << sp
             << object::Ammo::ammoReferenceContainer().ammoReference(weaponMod.ammoType()).name() << endl;
-    }
-    if (weaponMod.rangeAttack() != def.rangeAttack()) {
-        oss << text.common().range() << sp << weaponMod.rangeAttack() << endl;
-    }
-    if (weaponMod.angleCone() != def.angleCone()) {
-        oss << text.common().coneAngle() << sp << weaponMod.angleCone() << endl;
     }
     if (weaponMod.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
         oss << text.common().bonSneakDamage() << sp

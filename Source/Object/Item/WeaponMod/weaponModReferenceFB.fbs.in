@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 include "ammoTypeFB.fbs";
+include "attackFB.fbs";
 include "attributeTypeFB.fbs";
 include "damageTypeFB.fbs";
 include "languageBundleFB.fbs";
@@ -36,14 +37,13 @@ table FB_WeaponModReference {
   weapon_mod_model:fbWeaponMod.FB_WeaponModModel = INVALID;
   weapon_mod_type:fbWeaponMod.FB_WeaponModType = INVALID;
   weapon_mod_requirements:FB_WeaponModRequirements;
+  attack:fbAttack.FB_Attack;
   name:fbCommon.FB_LanguageBundle;
   descrip:fbCommon.FB_LanguageBundle;
   dmg_min:int16 = 0;
   dmg_max:int16 = 0;
   price:int16 = 0;
-  range_attack:int16 = 0;
   capacity_ammo:int16 = 0;
-  angle_cone:int16 = 0;
   multiplier_crit_dmg:int16 = 0;
   chance_hit:int16 = 0;
   chance_crit_dmg:int16 = 0;
@@ -60,8 +60,9 @@ table FB_WeaponModReference {
 }
 
 table FB_WeaponModReferenceContainer {
-  refs:[FB_WeaponModReference];
-  ref_default:FB_WeaponModReference;
+  sample_of_all_fields:FB_WeaponModReference;
+  ref_default_values:FB_WeaponModReference;
+  ref_values:[FB_WeaponModReference];
 }
 
 root_type FB_WeaponModReferenceContainer;

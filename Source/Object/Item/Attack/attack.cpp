@@ -60,13 +60,35 @@ void Attack::initialize()
     initialized_ = true;
 }
 
-Attack Attack::initAttack(const fbAttack::FB_Attack* fb, const bool assert)
+void Attack::apply(const Attack& rhs) noexcept
+{
+    range_ += rhs.range_;
+    if (!common::isValidEnum(rhs.type_) || type_ != rhs.type_) return;
+    if (rhs.rangeOfBouncesIsPresented()) {
+        rangeOfBouncesAdd(rhs.quantityOfBounces());
+    }
+    if (rhs.rangeOfConicalAreaIsPresented()) {
+        rangeOfConicalAreaAdd(rhs.rangeOfConicalArea());
+    }
+    if (rhs.radiusOfCircularAreaIsPresented()) {
+        radiusOfCircularAreaAdd(rhs.radiusOfCircularArea());
+    }
+    if (rhs.quantityOfBouncesIsPresented()) {
+        quantityOfBouncesAdd(rhs.quantityOfBounces());
+    }
+    if (rhs.angleOfConicalAreaIsPresented()) {
+        angleOfConicalAreaAdd(rhs.angleOfConicalArea());
+    }
+}
+
+Attack Attack::initAttack(const fbAttack::FB_Attack* fb, const bool verify)
 {
     assert(fb != nullptr);
     assert(defaultInitialized_);
     const auto& def{ default_ };
 
     Attack attack{ toAttackType(fb->attack_type()) };
+    assert((verify ? common::isValidEnum(attack.type()) : true));
     attack.data1_ = def.data1_;
     attack.data2_ = def.data2_;
     attack.range_ = def.range_;
@@ -89,13 +111,6 @@ Attack Attack::initAttack(const fbAttack::FB_Attack* fb, const bool assert)
     if (fb->attack_range() != def.range_) {
         attack.rangeAdd(fb->attack_range());
     }
-
-#ifndef NDEBUG
-    if (assert) {
-        assert(common::isValidEnum(attack.type()));
-    }
-#endif
-
     return attack;
 }
 

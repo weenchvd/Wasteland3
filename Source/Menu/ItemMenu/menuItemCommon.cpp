@@ -14,7 +14,7 @@ namespace menu {
 using namespace std;
 
 void printDamageEffect(
-    std::ostream& os,
+    ostream& os,
     const Indent indent,
     const object::DamageReference& reference,
     const bool isPositiveEffect)
@@ -85,45 +85,47 @@ common::Text getDamageDescription(
     return oss.str();
 }
 
-common::Text getAttackDescription(
+void printAttackDescription(
+    ostream& os,
     const Indent indent,
-    const object::Attack& attack)
+    const object::Attack& attack,
+    const bool printAttackType)
 {
-    ostringstream oss;
     const auto sp{ ' ' };
     const auto& text{ attack.attackText() };
-    oss << indent << text.common().attackType() << sp << text.type(attack.type()) << endl;
-    oss << indent << text.common().attackRange() << sp;
-    if (attack.range() != attack.pointBlank()) {
-        oss << attack.range();
+    if (printAttackType && common::isValidEnum(attack.type())) {
+        os << indent << text.common().attackType() << sp << text.type(attack.type()) << endl;
     }
-    else {
-        oss << text.common().pointBlank();
+    if (attack.rangeIsPresented()) {
+        os << indent << text.common().attackRange() << sp;
+        if (attack.range() != attack.pointBlank()) {
+            os << attack.range();
+        }
+        else {
+            os << text.common().pointBlank();
+        }
+        os << endl;
     }
-    oss << endl;
-
     if (attack.rangeOfBouncesIsPresented()) {
-        oss << indent << text.common().rangeOfBounces() << sp
+        os << indent << text.common().rangeOfBounces() << sp
             << attack.rangeOfBounces() << endl;
     }
     if (attack.rangeOfConicalAreaIsPresented()) {
-        oss << indent << text.common().rangeOfConicalArea() << sp
+        os << indent << text.common().rangeOfConicalArea() << sp
             << attack.rangeOfConicalArea() << endl;
     }
     if (attack.radiusOfCircularAreaIsPresented()) {
-        oss << indent << text.common().radiusOfCircularArea() << sp
+        os << indent << text.common().radiusOfCircularArea() << sp
             << attack.radiusOfCircularArea() << endl;
     }
     if (attack.quantityOfBouncesIsPresented()) {
-        oss << indent << text.common().qtyOfBounces() << sp
+        os << indent << text.common().qtyOfBounces() << sp
             << attack.quantityOfBounces() << endl;
     }
     if (attack.angleOfConicalAreaIsPresented()) {
-        oss << indent << text.common().angleOfConicalArea() << sp
+        os << indent << text.common().angleOfConicalArea() << sp
             << attack.angleOfConicalArea() << endl;
     }
-
-    return oss.str();
 }
 
 } // namespace menu

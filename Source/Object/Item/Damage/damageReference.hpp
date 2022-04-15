@@ -89,7 +89,7 @@ private:
 
     static DamageReference initDamageReference(
         const fbDamage::FB_DamageReference* fb,
-        const bool assert = true
+        const bool verify = true
     );
 
 private:

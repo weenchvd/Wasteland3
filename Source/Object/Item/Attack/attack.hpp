@@ -46,6 +46,8 @@ public:
 
     static bool isInitialized() noexcept { return initialized_ && text_.isInitialized(); }
 
+    void apply(const Attack& rhs) noexcept;
+
 public:
     common::Range rangeOfBounces() const noexcept;
     void          rangeOfBouncesAdd(common::Range shift) noexcept;
@@ -68,23 +70,24 @@ public:
     bool          angleOfConicalAreaIsPresented() const noexcept;
 
     common::Range range() const noexcept;
-    void rangeAdd(common::Range shift) noexcept;
+    void          rangeAdd(common::Range shift) noexcept;
+    bool          rangeIsPresented() const noexcept;
 
     Type type() const noexcept { return type_; }
 
 private:
-    bool rangeOfBouncesAssertType() const noexcept;
+    bool rangeOfBouncesVerifyType() const noexcept;
 
-    bool rangeOfConicalAreaAssertType() const noexcept;
+    bool rangeOfConicalAreaVerifyType() const noexcept;
 
-    bool radiusOfCircularAreaAssertType() const noexcept;
+    bool radiusOfCircularAreaVerifyType() const noexcept;
 
-    bool quantityOfBouncesAssertType() const noexcept;
+    bool quantityOfBouncesVerifyType() const noexcept;
 
-    bool angleOfConicalAreaAssertType() const noexcept;
+    bool angleOfConicalAreaVerifyType() const noexcept;
 
 public:
-    static Attack initAttack(const fbAttack::FB_Attack* fb, const bool assert = true);
+    static Attack initAttack(const fbAttack::FB_Attack* fb, const bool verify = true);
 
     static common::Range pointBlank() noexcept { return rangePointBlank_; }
 
@@ -116,132 +119,136 @@ private:
 
 inline common::Range Attack::rangeOfBounces() const noexcept
 {
-    assert(rangeOfBouncesAssertType());
+    assert(rangeOfBouncesVerifyType());
     return data1_.rangeOfBounces_;
 }
 
 inline void Attack::rangeOfBouncesAdd(common::Range shift) noexcept
 {
-    assert(rangeOfBouncesAssertType());
+    assert(rangeOfBouncesVerifyType());
     data1_.rangeOfBounces_ += shift;
 }
 
 inline bool Attack::rangeOfBouncesIsPresented() const noexcept
 {
     assert(defaultInitialized_);
-    return rangeOfBouncesAssertType() &&
+    return rangeOfBouncesVerifyType() &&
            data1_.rangeOfBounces_ != default_.data1_.rangeOfBounces_;
 }
 
 inline common::Range Attack::rangeOfConicalArea() const noexcept
 {
-    assert(rangeOfConicalAreaAssertType());
+    assert(rangeOfConicalAreaVerifyType());
     return data1_.rangeOfConicalArea_;
 }
 
 inline void Attack::rangeOfConicalAreaAdd(common::Range shift) noexcept
 {
-    assert(rangeOfConicalAreaAssertType());
+    assert(rangeOfConicalAreaVerifyType());
     data1_.rangeOfConicalArea_ += shift;
 }
 
 inline bool Attack::rangeOfConicalAreaIsPresented() const noexcept
 {
     assert(defaultInitialized_);
-    return rangeOfConicalAreaAssertType() &&
+    return rangeOfConicalAreaVerifyType() &&
            data1_.rangeOfConicalArea_ != default_.data1_.rangeOfConicalArea_;
 }
 
 inline common::Range Attack::radiusOfCircularArea() const noexcept
 {
-    assert(radiusOfCircularAreaAssertType());
+    assert(radiusOfCircularAreaVerifyType());
     return data1_.rangeRadiusOfCircArea_;
 }
 
 inline void Attack::radiusOfCircularAreaAdd(common::Range shift) noexcept
 {
-    assert(radiusOfCircularAreaAssertType());
+    assert(radiusOfCircularAreaVerifyType());
     data1_.rangeRadiusOfCircArea_ += shift;
 }
 
 inline bool Attack::radiusOfCircularAreaIsPresented() const noexcept
 {
     assert(defaultInitialized_);
-    return radiusOfCircularAreaAssertType() &&
+    return radiusOfCircularAreaVerifyType() &&
            data1_.rangeRadiusOfCircArea_ != default_.data1_.rangeRadiusOfCircArea_;
 }
 
 inline common::Quantity Attack::quantityOfBounces() const noexcept
 {
-    assert(quantityOfBouncesAssertType());
+    assert(quantityOfBouncesVerifyType());
     return data2_.qtyOfBounces_;
 }
 
 inline void Attack::quantityOfBouncesAdd(common::Quantity shift) noexcept
 {
-    assert(quantityOfBouncesAssertType());
+    assert(quantityOfBouncesVerifyType());
     data2_.qtyOfBounces_ += shift;
 }
 
 inline bool Attack::quantityOfBouncesIsPresented() const noexcept
 {
     assert(defaultInitialized_);
-    return quantityOfBouncesAssertType() &&
+    return quantityOfBouncesVerifyType() &&
            data2_.qtyOfBounces_ != default_.data2_.qtyOfBounces_;
 }
 
 inline common::Angle Attack::angleOfConicalArea() const noexcept
 {
-    assert(angleOfConicalAreaAssertType());
+    assert(angleOfConicalAreaVerifyType());
     return data2_.angleOfConicalArea_;
 }
 
 inline void Attack::angleOfConicalAreaAdd(common::Angle shift) noexcept
 {
-    assert(angleOfConicalAreaAssertType());
+    assert(angleOfConicalAreaVerifyType());
     data2_.angleOfConicalArea_ += shift;
 }
 
 inline bool Attack::angleOfConicalAreaIsPresented() const noexcept
 {
     assert(defaultInitialized_);
-    return angleOfConicalAreaAssertType() &&
+    return angleOfConicalAreaVerifyType() &&
            data2_.angleOfConicalArea_ != default_.data2_.angleOfConicalArea_;
 }
 
 inline common::Range Attack::range() const noexcept
 {
-    assert(common::isValidEnum(type_));
     return range_;
 }
 
 inline void Attack::rangeAdd(common::Range shift) noexcept
 {
-    assert(common::isValidEnum(type_));
     range_ += shift;
 }
 
-inline bool Attack::rangeOfBouncesAssertType() const noexcept
+inline bool Attack::rangeIsPresented() const noexcept
+{
+    assert(defaultInitialized_);
+    return range_ != default_.range_;
+}
+
+inline bool Attack::rangeOfBouncesVerifyType() const noexcept
 {
     return type_ == Type::CHAIN_OF_SINGLE_TARGETS;
 }
 
-inline bool Attack::rangeOfConicalAreaAssertType() const noexcept
+inline bool Attack::rangeOfConicalAreaVerifyType() const noexcept
 {
     return type_ == Type::CONICAL_AREA_BEHIND_TARGET;
 }
 
-inline bool Attack::radiusOfCircularAreaAssertType() const noexcept
+inline bool Attack::radiusOfCircularAreaVerifyType() const noexcept
 {
     return type_ == Type::REMOTE_CIRCULAR_AREA;
 }
 
-inline bool Attack::quantityOfBouncesAssertType() const noexcept
+inline bool Attack::quantityOfBouncesVerifyType() const noexcept
 {
     return type_ == Type::CHAIN_OF_SINGLE_TARGETS;
 }
 
-inline bool Attack::angleOfConicalAreaAssertType() const noexcept
+inline bool Attack::angleOfConicalAreaVerifyType() const noexcept
 {
     return type_ == Type::CONICAL_AREA_BEHIND_TARGET ||
            type_ == Type::CONICAL_AREA;

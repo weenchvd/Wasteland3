@@ -73,12 +73,13 @@ void DamageReferenceContainer::initContainer(
 }
 
 DamageReference DamageReferenceContainer::initDamageReference(
-    const fbDamage::FB_DamageReference* fb, const bool assert)
+    const fbDamage::FB_DamageReference* fb, const bool verify)
 {
     assert(fb != nullptr);
     DamageReference ref;
 
     ref.type_           = toDamageType(fb->dmg_type());
+    assert((verify ? common::isValidEnum(ref.type_) : true));
 
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);
@@ -90,13 +91,6 @@ DamageReference DamageReferenceContainer::initDamageReference(
     ref.dmgMutants_     = { fb->damage_vs_mutants() };
 
     ref.initialized_    = true;
-
-#ifndef NDEBUG
-    if (assert == true) {
-        assert(common::isValidEnum(ref.type_));
-    }
-#endif
-
     return ref;
 }
 

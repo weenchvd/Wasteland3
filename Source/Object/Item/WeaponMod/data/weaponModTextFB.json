@@ -70,10 +70,6 @@
       "en": "Ammo type:",
       "ru": "Тип боеприпасов:"
     },
-    "range": {
-      "en": "Range:",
-      "ru": "Дальность:"
-    },
     "base_hit_chance": {
       "en": "Base hit chance:",
       "ru": "Базовый шанс попадания:"
@@ -85,10 +81,6 @@
     "crit_chance": {
       "en": "Crit chance:",
       "ru": "Вероятность крит. попадания:"
-    },
-    "cone_angle": {
-      "en": "Cone angle of attack:",
-      "ru": "Конусный угол атаки:"
     },
     "bonus_sneak_damage": {
       "en": "Sneak attack damage bonus:",
