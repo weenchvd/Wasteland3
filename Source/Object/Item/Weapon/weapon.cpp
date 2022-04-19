@@ -98,28 +98,27 @@ void Weapon::apply() noexcept
             slotWeaponMod_[i]->apply(*this);
         }
     }
-
-    check();
 }
 
-void Weapon::check() noexcept
+bool Weapon::hasValidValues() const noexcept
 {
-    const WeaponReference& refMin = ref_.weaponReferenceMinimal();
-    /// TODO check attack_;
-    if (dmgMin_         < refMin.dmgMin_)           dmgMin_         = refMin.dmgMin_;
-    if (dmgMax_         < refMin.dmgMax_)           dmgMax_         = refMin.dmgMax_;
-    if (capAmmo_        < refMin.capAmmo_)          capAmmo_        = refMin.capAmmo_;
-    if (mulCritDmg_     < refMin.mulCritDmg_)       mulCritDmg_     = refMin.mulCritDmg_;
-    if (chaHit_         < refMin.chaHit_)           chaHit_         = refMin.chaHit_;
-    if (chaCritDmg_     < refMin.chaCritDmg_)       chaCritDmg_     = refMin.chaCritDmg_;
-    if (bonSneakDmg_    < refMin.bonSneakDmg_)      bonSneakDmg_    = refMin.bonSneakDmg_;
-    if (bonNormDmg_     < refMin.bonNormDmg_)       bonNormDmg_     = refMin.bonNormDmg_;
-    if (bonMeleeDmg_    < refMin.bonMeleeDmg_)      bonMeleeDmg_    = refMin.bonMeleeDmg_;
-    if (bonRangeDmg_    < refMin.bonRangeDmg_)      bonRangeDmg_    = refMin.bonRangeDmg_;
-    if (armorPen_       < refMin.armorPen_)         armorPen_       = refMin.armorPen_;
-    if (apAttack_       < refMin.apAttack_)         apAttack_       = refMin.apAttack_;
-    if (apReload_       < refMin.apReload_)         apReload_       = refMin.apReload_;
-    if (shoPerAttack_   < refMin.shoPerAttack_)     shoPerAttack_   = refMin.shoPerAttack_;
+    const WeaponReference& min{ ref_.weaponReferenceMinimal() };
+    if (!attack_.hasValidValues())              return false;
+    if (dmgMin_         < min.dmgMin_)          return false;
+    if (dmgMax_         < min.dmgMax_)          return false;
+    if (capAmmo_        < min.capAmmo_)         return false;
+    if (mulCritDmg_     < min.mulCritDmg_)      return false;
+    if (chaHit_         < min.chaHit_)          return false;
+    if (chaCritDmg_     < min.chaCritDmg_)      return false;
+    if (bonSneakDmg_    < min.bonSneakDmg_)     return false;
+    if (bonNormDmg_     < min.bonNormDmg_)      return false;
+    if (bonMeleeDmg_    < min.bonMeleeDmg_)     return false;
+    if (bonRangeDmg_    < min.bonRangeDmg_)     return false;
+    if (armorPen_       < min.armorPen_)        return false;
+    if (apAttack_       < min.apAttack_)        return false;
+    if (apReload_       < min.apReload_)        return false;
+    if (shoPerAttack_   < min.shoPerAttack_)    return false;
+    return true;
 }
 
 void Weapon::reloadAmmo(Ammo& ammo) noexcept
@@ -163,9 +162,13 @@ bool Weapon::setMod(
     bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)
 ) noexcept
 {
+    assert(hasValidValues());
     if (slotWeaponMod_.set(slotNumber, source, typeChecker)) {
-        this->apply();
-        return true;
+        apply();
+        if (hasValidValues()) return true;
+        slotWeaponMod_.unset(slotNumber, source);
+        apply();
+        assert(hasValidValues());
     }
     return false;
 }

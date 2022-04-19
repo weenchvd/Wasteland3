@@ -48,6 +48,8 @@ public:
 
     void apply(const Attack& rhs) noexcept;
 
+    bool hasValidValues() const noexcept;
+
 public:
     common::Range rangeOfBounces() const noexcept;
     void          rangeOfBouncesAdd(common::Range shift) noexcept;

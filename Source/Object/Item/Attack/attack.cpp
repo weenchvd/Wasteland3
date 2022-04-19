@@ -81,6 +81,29 @@ void Attack::apply(const Attack& rhs) noexcept
     }
 }
 
+bool Attack::hasValidValues() const noexcept
+{
+    const auto& min{ minimalValues(type()) };
+    assert(type() == min.type());
+    if (range() < min.range())                                      return false;
+    if (rangeOfBouncesIsPresented()) {
+        if (rangeOfBounces() < min.rangeOfBounces())                return false;
+    }
+    if (rangeOfConicalAreaIsPresented()) {
+        if (rangeOfConicalArea() < min.rangeOfConicalArea())        return false;
+    }
+    if (radiusOfCircularAreaIsPresented()) {
+        if (radiusOfCircularArea() < min.radiusOfCircularArea())    return false;
+    }
+    if (quantityOfBouncesIsPresented()) {
+        if (quantityOfBounces() < min.quantityOfBounces())          return false;
+    }
+    if (angleOfConicalAreaIsPresented()) {
+        if (angleOfConicalArea() < min.angleOfConicalArea())        return false;
+    }
+    return true;
+}
+
 Attack Attack::initAttack(const fbAttack::FB_Attack* fb, const bool verify)
 {
     assert(fb != nullptr);

@@ -59,7 +59,7 @@ public:
     void apply() noexcept;
 
 private:
-    void check() noexcept;
+    bool hasValidValues() const noexcept;
 
 ///********** unchangeable weapon parameters (from reference)
 public:
