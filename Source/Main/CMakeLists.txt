@@ -30,4 +30,4 @@ target_link_libraries(${EXEC_NAME}
 )
 
 # Add tests and install targets if needed.
-install(TARGETS ${EXEC_NAME} CONFIGURATIONS ${CMAKE_BUILD_TYPE} DESTINATION "${CMAKE_BUILD_TYPE}")
+install(TARGETS ${EXEC_NAME} DESTINATION "${W3EXEC__INSTALL_DIR}")

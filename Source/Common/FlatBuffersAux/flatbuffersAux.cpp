@@ -4,7 +4,10 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"botan/hash.h"
+#include"botan/hex.h"
 #include"flatbuffersAux.hpp"
+#include"flatbuffersAuxDefine.hpp"
 #include<iostream>
 #include<fstream>
 #include<stdlib.h>
@@ -13,8 +16,9 @@ namespace game {
 namespace common {
 
 using namespace std;
-
-bool readBinFlatBuffer(const char* fileName, unique_ptr<char[]>& receiver) noexcept
+bool readBinFlatBuffer(const char* fileName,
+                       std::unique_ptr<char[]>& receiver,
+                       const char* fileHash) noexcept
 {
     constexpr int nAttempts{ 10 };
     if (fileName == nullptr) return false;
@@ -35,6 +39,13 @@ bool readBinFlatBuffer(const char* fileName, unique_ptr<char[]>& receiver) noexc
         ifs.read(temp.get(), length);
         if (!ifs.good()) return false;
         ifs.close();
+        if (fileHash != nullptr) {
+            unique_ptr<Botan::HashFunction> hash{
+                Botan::HashFunction::create(DEFAULT_BOTAN_FILE_HASH_FUNC)
+            };
+            hash->update(reinterpret_cast<uint8_t*>(temp.get()), length);
+            if (string{ fileHash } != Botan::hex_encode(hash->final(), false)) return false;
+        }
         swap(receiver, temp);
         return true;
     }
@@ -43,10 +54,9 @@ bool readBinFlatBuffer(const char* fileName, unique_ptr<char[]>& receiver) noexc
     }
 }
 
-bool writeBinFlatBuffer(
-    const char* fileName,
-    const uint8_t* buffer,
-    const size_t bufferSize) noexcept
+bool writeBinFlatBuffer(const char* fileName,
+                        const uint8_t* buffer,
+                        const size_t bufferSize) noexcept
 {
     constexpr int nAttempts{ 10 };
     if (fileName == nullptr || buffer == nullptr || bufferSize == 0) return false;

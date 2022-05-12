@@ -29,7 +29,9 @@ void DamageText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(DAMAGE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(DAMAGE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        DAMAGE_TEXT_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbDamage::FB_DamageText* fb{

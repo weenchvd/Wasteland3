@@ -9,4 +9,6 @@
 
 #define PLAINTEXT_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(W3_data\Assets\plainTextTextFB_c32a6346448f1dbf.bundle)"
 
+#define PLAINTEXT_TEXT_FB_BIN_FILE__HASH u8R"(187fcba6ec78c2040f644be2d6c98b6367016a6efec979f9041e1aac308a18fc)"
+
 #endif // !PLAINTEXT_PATH_HPP

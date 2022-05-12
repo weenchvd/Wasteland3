@@ -47,7 +47,9 @@ void Attack::initialize()
     text_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(ATTACK_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(ATTACK_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        ATTACK_REF_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbAttack::FB_AttackContainer* fb{

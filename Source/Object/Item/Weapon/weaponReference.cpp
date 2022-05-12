@@ -98,7 +98,9 @@ void WeaponReferenceContainer::initialize()
     Attack::initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(WEAPON_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        WEAPON_REF_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbWeapon::FB_WeaponReferenceContainer* fb{

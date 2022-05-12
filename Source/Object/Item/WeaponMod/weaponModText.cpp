@@ -31,7 +31,9 @@ void WeaponModText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(WEAPON_MOD_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(WEAPON_MOD_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        WEAPON_MOD_TEXT_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbWeaponMod::FB_WeaponModText* fb{

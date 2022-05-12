@@ -45,7 +45,9 @@ void DamageReferenceContainer::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(DAMAGE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(DAMAGE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        DAMAGE_REF_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbDamage::FB_DamageReferenceContainer* fb{

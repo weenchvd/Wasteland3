@@ -29,7 +29,9 @@ void AmmoText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer)) {
+    if (!common::readBinFlatBuffer(AMMO_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+        AMMO_TEXT_FB_BIN_FILE__HASH))
+    {
         abort();
     }
     const fbAmmo::FB_AmmoText* fb{
