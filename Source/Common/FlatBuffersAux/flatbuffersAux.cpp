@@ -6,6 +6,7 @@
 
 #include"botan/hash.h"
 #include"botan/hex.h"
+#include"exception.hpp"
 #include"flatbuffersAux.hpp"
 #include"flatbuffersAuxDefine.hpp"
 #include<iostream>
@@ -16,42 +17,39 @@ namespace game {
 namespace common {
 
 using namespace std;
-bool readBinFlatBuffer(const char* fileName,
+
+void readBinFlatBuffer(const char* fileName,
                        std::unique_ptr<char[]>& receiver,
-                       const char* fileHash) noexcept
+                       const char* fileHash)
 {
     constexpr int nAttempts{ 10 };
-    if (fileName == nullptr) return false;
+    if (fileName == nullptr) throw common::IOError{ u8"Filename is nullptr" };
 
-    try {
-        ifstream ifs;
-        bool opened{ false };
-        for (int i = 0; !opened && i < nAttempts; ++i) {
-            ifs.open(fileName, ios::binary | ios::in);
-            opened = ifs.is_open();
-        }
-        if (!opened) return false;
-        ifs.seekg(0, ios::end);
-        auto length{ ifs.tellg() };
-        if (length <= 0) return false;
-        ifs.seekg(0, ios::beg);
-        unique_ptr<char[]> temp{ new char[length] };
-        ifs.read(temp.get(), length);
-        if (!ifs.good()) return false;
-        ifs.close();
-        if (fileHash != nullptr) {
-            unique_ptr<Botan::HashFunction> hash{
-                Botan::HashFunction::create(DEFAULT_BOTAN_FILE_HASH_FUNC)
-            };
-            hash->update(reinterpret_cast<uint8_t*>(temp.get()), length);
-            if (string{ fileHash } != Botan::hex_encode(hash->final(), false)) return false;
-        }
-        swap(receiver, temp);
-        return true;
+    ifstream ifs;
+    bool opened{ false };
+    for (int i = 0; !opened && i < nAttempts; ++i) {
+        ifs.open(fileName, ios::binary | ios::in);
+        opened = ifs.is_open();
     }
-    catch (...) {
-        return false;
+    if (!opened) throw common::IOError{ fileName, u8"is not open" };
+    ifs.seekg(0, ios::end);
+    auto length{ ifs.tellg() };
+    if (length <= 0) throw common::IOError{ fileName, u8"has zero length" };
+    ifs.seekg(0, ios::beg);
+    unique_ptr<char[]> temp{ new char[length] };
+    ifs.read(temp.get(), length);
+    if (!ifs.good()) throw common::IOError{ fileName, u8"not read" };
+    ifs.close();
+    if (fileHash != nullptr) {
+        unique_ptr<Botan::HashFunction> hash{
+            Botan::HashFunction::create(DEFAULT_BOTAN_FILE_HASH_FUNC)
+        };
+        hash->update(reinterpret_cast<uint8_t*>(temp.get()), length);
+        if (string{ fileHash } != Botan::hex_encode(hash->final(), false)) {
+            throw common::CorruptedFile{ fileName };
+        }
     }
+    swap(receiver, temp);
 }
 
 bool writeBinFlatBuffer(const char* fileName,

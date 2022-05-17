@@ -34,11 +34,8 @@ void SkillText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        SKILL_TEXT_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(SKILL_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              SKILL_TEXT_FB_BIN_FILE__HASH);
     const fbSkill::FB_SkillText* fb{
         fbSkill::GetFB_SkillText(buffer.get())
     };

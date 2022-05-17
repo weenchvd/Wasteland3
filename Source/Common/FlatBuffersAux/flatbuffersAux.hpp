@@ -28,9 +28,9 @@ std::vector<T> convertToVector(const U* a)
     return v;
 }
 
-bool readBinFlatBuffer(const char* fileName,
+void readBinFlatBuffer(const char* fileName,
                        std::unique_ptr<char[]>& receiver,
-                       const char* fileHash = nullptr) noexcept;
+                       const char* fileHash = nullptr);
 
 bool writeBinFlatBuffer(const char* fileName,
                         const uint8_t* buffer,

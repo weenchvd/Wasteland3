@@ -29,11 +29,8 @@ void PlainTextText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(PLAINTEXT_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        PLAINTEXT_TEXT_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(PLAINTEXT_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              PLAINTEXT_TEXT_FB_BIN_FILE__HASH);
     const fbPlainText::FB_PlainTextText* fb{
         fbPlainText::GetFB_PlainTextText(buffer.get())
     };

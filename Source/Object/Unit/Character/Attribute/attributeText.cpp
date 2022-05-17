@@ -32,11 +32,8 @@ void AttributeText::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        ATTRIBUTE_TEXT_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(ATTRIBUTE_TEXT_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              ATTRIBUTE_TEXT_FB_BIN_FILE__HASH);
     const fbAttribute::FB_AttributeText* fb{
         fbAttribute::GetFB_AttributeText(buffer.get())
     };

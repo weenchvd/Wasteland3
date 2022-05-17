@@ -8,6 +8,7 @@
 #define LOCATOR_HPP
 
 #include"factory.hpp"
+#include<iostream>
 #include<memory>
 #include<assert.h>
 
@@ -30,6 +31,8 @@ public:
     static const global::Factory& getFactory() noexcept { return factory_; }
 
     static global::Options& getOptions() noexcept;
+
+    static std::ostream& getErrorStream() noexcept { return std::cerr; }
 
 private:
     static global::Factory                                  factory_;

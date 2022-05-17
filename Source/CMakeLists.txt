@@ -7,7 +7,6 @@
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 add_subdirectory("Common")
-add_subdirectory("Error")
 add_subdirectory("Factory")
 add_subdirectory("Initialization")
 add_subdirectory("Locator")

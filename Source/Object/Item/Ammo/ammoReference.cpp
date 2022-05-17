@@ -40,11 +40,8 @@ void AmmoReferenceContainer::initialize()
     base_.initialize();
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        AMMO_REF_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(AMMO_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              AMMO_REF_FB_BIN_FILE__HASH);
     const fbAmmo::FB_AmmoReferenceContainer* fb{
         fbAmmo::GetFB_AmmoReferenceContainer(buffer.get())
     };

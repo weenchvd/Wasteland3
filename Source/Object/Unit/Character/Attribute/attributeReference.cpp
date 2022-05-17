@@ -59,11 +59,8 @@ void AttributeReference::initialize()
     if (isInitialized()) return;
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        ATTRIBUTE_REF_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              ATTRIBUTE_REF_FB_BIN_FILE__HASH);
     const fbAttribute::FB_Attribute* fb{
         fbAttribute::GetFB_Attribute(buffer.get())
     };

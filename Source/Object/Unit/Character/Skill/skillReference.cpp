@@ -86,11 +86,8 @@ void SkillReference::initialize()
     if (isInitialized()) return;
 
     unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(SKILL_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
-        SKILL_REF_FB_BIN_FILE__HASH))
-    {
-        abort();
-    }
+    common::readBinFlatBuffer(SKILL_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
+                              SKILL_REF_FB_BIN_FILE__HASH);
     const fbSkill::FB_Skill* fb{
         fbSkill::GetFB_Skill(buffer.get())
     };

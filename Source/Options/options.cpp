@@ -151,10 +151,14 @@ bool Options::loadOptionsFromJSON()
 
 bool Options::loadOptionsFromBin()
 {
-    unique_ptr<char[]> buffer{};
-    if (!common::readBinFlatBuffer(optionsBinFileName_, buffer)) return false;
-
-    return loadOptions(fbOptions::GetFB_Options(buffer.get()));
+    try {
+        unique_ptr<char[]> buffer{};
+        common::readBinFlatBuffer(optionsBinFileName_, buffer);
+        return loadOptions(fbOptions::GetFB_Options(buffer.get()));
+    }
+    catch (...) {
+        return false;
+    }
 }
 
 bool Options::loadOptions(const fbOptions::FB_Options* fb)
