@@ -52,29 +52,25 @@ void readBinFlatBuffer(const char* fileName,
     swap(receiver, temp);
 }
 
-bool writeBinFlatBuffer(const char* fileName,
+void writeBinFlatBuffer(const char* fileName,
                         const uint8_t* buffer,
-                        const size_t bufferSize) noexcept
+                        const size_t bufferSize)
 {
     constexpr int nAttempts{ 10 };
-    if (fileName == nullptr || buffer == nullptr || bufferSize == 0) return false;
+    if (fileName == nullptr) throw common::IOError{ u8"Filename is nullptr" };
+    if (buffer == nullptr) throw common::IOError{ u8"Buffer is nullptr" };
+    if (bufferSize == 0) throw common::IOError{ u8"Buffer size is 0" };
 
-    try {
-        ofstream ofs;
-        bool opened{ false };
-        for (int i = 0; !opened && i < nAttempts; ++i) {
-            ofs.open(fileName, ios::binary | ios::out);
-            opened = ofs.is_open();
-        }
-        if (!opened) return false;
-        ofs.write(reinterpret_cast<const char*>(buffer), bufferSize);
-        if (!ofs.good()) return false;
-        ofs.close();
-        return true;
+    ofstream ofs;
+    bool opened{ false };
+    for (int i = 0; !opened && i < nAttempts; ++i) {
+        ofs.open(fileName, ios::binary | ios::out);
+        opened = ofs.is_open();
     }
-    catch (...) {
-        return false;
-    }
+    if (!opened) throw common::IOError{ fileName, u8"is not open" };
+    ofs.write(reinterpret_cast<const char*>(buffer), bufferSize);
+    if (!ofs.good()) throw common::IOError{ fileName, u8"not written" };
+    ofs.close();
 }
 
 } // namespace common

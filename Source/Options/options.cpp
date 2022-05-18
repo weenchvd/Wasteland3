@@ -59,8 +59,11 @@ Options::Options()
     optLang_{}
 {
     initialize();
-    loadOptionsFromFiles();
-    saveOptionsToFiles();
+    try {
+        loadOptionsFromFiles();
+        saveOptionsToFiles();
+    }
+    catch (...) {}
 }
 
 void Options::initialize()
@@ -95,8 +98,7 @@ bool Options::saveOptionsToFiles()
 
 bool Options::loadOptionsFromFiles()
 {
-    if (loadOptionsFromJSON()) return true;
-    return loadOptionsFromBin();
+    return loadOptionsFromJSON() || loadOptionsFromBin();
 }
 
 bool Options::saveOptionsToJSON()
@@ -114,9 +116,9 @@ bool Options::saveOptionsToJSON()
 bool Options::saveOptionsToBin()
 {
     flatbuffers::FlatBufferBuilder builder{ saveOptions() };
-    return common::writeBinFlatBuffer(optionsBinFileName_,
-                                      builder.GetBufferPointer(),
-                                      builder.GetSize());
+    common::writeBinFlatBuffer(optionsBinFileName_,
+        builder.GetBufferPointer(), builder.GetSize());
+    return true;
 }
 
 flatbuffers::FlatBufferBuilder Options::saveOptions()
@@ -151,14 +153,9 @@ bool Options::loadOptionsFromJSON()
 
 bool Options::loadOptionsFromBin()
 {
-    try {
-        unique_ptr<char[]> buffer{};
-        common::readBinFlatBuffer(optionsBinFileName_, buffer);
-        return loadOptions(fbOptions::GetFB_Options(buffer.get()));
-    }
-    catch (...) {
-        return false;
-    }
+    unique_ptr<char[]> buffer{};
+    common::readBinFlatBuffer(optionsBinFileName_, buffer);
+    return loadOptions(fbOptions::GetFB_Options(buffer.get()));
 }
 
 bool Options::loadOptions(const fbOptions::FB_Options* fb)

@@ -32,9 +32,9 @@ void readBinFlatBuffer(const char* fileName,
                        std::unique_ptr<char[]>& receiver,
                        const char* fileHash = nullptr);
 
-bool writeBinFlatBuffer(const char* fileName,
+void writeBinFlatBuffer(const char* fileName,
                         const uint8_t* buffer,
-                        const size_t bufferSize) noexcept;
+                        const size_t bufferSize);
 
 } // namespace common
 } // namespace game
