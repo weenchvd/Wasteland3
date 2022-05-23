@@ -40,7 +40,7 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
     const auto& text{ weapon.weaponText() };
     ostringstream oss;
     oss << weapon.name() << endl;
-    oss << text.common().level() << sp << common::getLv(weapon.level()) << sp
+    oss << text.common().level() << sp << weapon.level() << sp
         << text.type(weapon.type()) << endl;
     oss << weapon.description() << endl;
     oss << sep << endl;
@@ -67,8 +67,7 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
     const auto& skillReq{ weapon.requirements().skillRequirements() };
     for (int i = 0; i < skillReq.size(); ++i) {
         if (skillReq[i].first != skillReqDefaultType) {
-            oss << text.common().require() << sp
-                << common::getLvSkill(skillReq[i].second) << sp
+            oss << text.common().require() << sp << skillReq[i].second << sp
                 << object::SkillText::name(skillReq[i].first) << endl;
         }
     }
@@ -76,8 +75,7 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
     const auto& attrReq{ weapon.requirements().attributeRequirements() };
     for (int i = 0; i < attrReq.size(); ++i) {
         if (attrReq[i].first != attrReqDefaultType) {
-            oss << text.common().require() << sp
-                << common::getLvStat(attrReq[i].second) << sp
+            oss << text.common().require() << sp << attrReq[i].second << sp
                 << object::AttributeText::name(attrReq[i].first) << endl;
         }
     }
@@ -87,33 +85,33 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
         const object::WeaponPenalties& pen{ def.penalties() };
         if (weapon.penalties().mulCritDmg_ != pen.mulCritDmg_) {
             oss << text.penalties().critDamage() << sp
-                << common::getMult(weapon.penalties().mulCritDmg_) << p << endl;
+                << weapon.penalties().mulCritDmg_ << p << endl;
         }
         if (weapon.penalties().chaHit_ != pen.chaHit_) {
             oss << text.penalties().hitChance() << sp
-                << common::getChance(weapon.penalties().chaHit_) << p << endl;
+                << weapon.penalties().chaHit_ << p << endl;
         }
         if (weapon.penalties().chaCritDmg_ != pen.chaCritDmg_) {
             oss << text.penalties().critChance() << sp
-                << common::getChance(weapon.penalties().chaCritDmg_) << p << endl;
+                << weapon.penalties().chaCritDmg_ << p << endl;
         }
         if (weapon.penalties().strike_ != pen.strike_) {
             oss << text.penalties().strikeRate() << sp
-                << common::getStrike(weapon.penalties().strike_) << p << endl;
+                << weapon.penalties().strike_ << p << endl;
         }
     }
     oss << sep << endl;
 
     oss << text.common().damage() << sp << weapon.damageMinimum() << '-'
         << weapon.damageMaximum() << sp << x
-        << common::getShots(weapon.shotsPerAttack()) << sp
+        << weapon.shotsPerAttack() << sp
         << object::Damage::damageReferenceContainer().damageReference(weapon.damageType()).name() << endl;
     oss << getDamageDescription(Indent{}, weapon.damageType());
     printAttackDescription(oss, Indent{ 0 }, weapon.attack());
     oss << text.common().ap() << sp
-        << common::getAP(weapon.actionPointPerAttack()) << endl;
+        << weapon.actionPointPerAttack() << endl;
     oss << text.common().apReload() << sp
-        << common::getAP(weapon.actionPointPerReload()) << endl;
+        << weapon.actionPointPerReload() << endl;
     if (weapon.capacityAmmo() != def.capacityAmmo()) {
         oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo() << endl;
     }
@@ -123,28 +121,24 @@ void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
     }
     if (weapon.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
         oss << text.common().bonSneakDamage() << sp
-            << common::getBonus(weapon.bonusSneakAttackDamage()) << p << endl;
+            << weapon.bonusSneakAttackDamage() << p << endl;
     }
     if (weapon.bonusNormalDamage() != def.bonusNormalDamage()) {
         oss << text.common().bonNormDamage() << sp
-            << common::getBonus(weapon.bonusNormalDamage()) << p << endl;
+            << weapon.bonusNormalDamage() << p << endl;
     }
     if (weapon.bonusMeleeDamage() != def.bonusMeleeDamage()) {
         oss << text.common().bonMeleeDamage() << sp
-            << common::getBonus(weapon.bonusMeleeDamage()) << p << endl;
+            << weapon.bonusMeleeDamage() << p << endl;
     }
     if (weapon.bonusRangedDamage() != def.bonusRangedDamage()) {
         oss << text.common().bonRangeDamage() << sp
-            << common::getBonus(weapon.bonusRangedDamage()) << p << endl;
+            << weapon.bonusRangedDamage() << p << endl;
     }
-    oss << text.common().hitChance() << sp
-        << common::getChance(weapon.chanceHit()) << p << endl;
-    oss << text.common().critDamage() << sp
-        << common::getMult(weapon.multiplierCritDamage()) << x << endl;
-    oss << text.common().critChance() << sp
-        << common::getChance(weapon.chanceCritDamage()) << p << endl;
-    oss << text.common().penetration() << sp
-        << common::getArmor(weapon.armorPenetration()) << endl;
+    oss << text.common().hitChance() << sp << weapon.chanceHit() << p << endl;
+    oss << text.common().critDamage() << sp << weapon.multiplierCritDamage() << x << endl;
+    oss << text.common().critChance() << sp << weapon.chanceCritDamage() << p << endl;
+    oss << text.common().penetration() << sp << weapon.armorPenetration() << endl;
 
     oss << global::PlainText::plainTextText().common().price() << sp
         << d << weapon.price() << endl;
@@ -174,8 +168,7 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     const auto& skillReq{ weaponMod.requirements().skillRequirements() };
     for (int i = 0; i < skillReq.size(); ++i) {
         if (skillReq[i].first != skillReqDefaultType) {
-            oss << text.common().require() << sp
-                << common::getLvSkill(skillReq[i].second) << sp
+            oss << text.common().require() << sp << skillReq[i].second << sp
                 << object::SkillText::name(skillReq[i].first) << endl;
         }
     }
@@ -183,8 +176,7 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     const auto& attrReq{ weaponMod.requirements().attributeRequirements() };
     for (int i = 0; i < attrReq.size(); ++i) {
         if (attrReq[i].first != attrReqDefaultType) {
-            oss << text.common().require() << sp
-                << common::getLvStat(attrReq[i].second) << sp
+            oss << text.common().require() << sp << attrReq[i].second << sp
                 << object::AttributeText::name(attrReq[i].first) << endl;
         }
     }
@@ -209,8 +201,7 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
         oss << text.common().maxDamage() << sp << weaponMod.damageMaximum() << endl;
     }
     if (weaponMod.shotsPerAttack() != def.shotsPerAttack()) {
-        oss << text.common().shots() << sp
-            << common::getShots(weaponMod.shotsPerAttack()) << p << endl;
+        oss << text.common().shots() << sp << weaponMod.shotsPerAttack() << p << endl;
     }
     if (weaponMod.damageType() != def.damageType()) {
         oss << text.common().damageType() << sp
@@ -222,12 +213,10 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     printAttackDescription(oss, Indent{ 0 }, weaponMod.attack(), false);
 
     if (weaponMod.actionPointPerAttack() != def.actionPointPerAttack()) {
-        oss << text.common().ap() << sp
-            << common::getAP(weaponMod.actionPointPerAttack()) << endl;
+        oss << text.common().ap() << sp << weaponMod.actionPointPerAttack() << endl;
     }
     if (weaponMod.actionPointPerReload() != def.actionPointPerReload()) {
-        oss << text.common().apReload() << sp
-            << common::getAP(weaponMod.actionPointPerReload()) << endl;
+        oss << text.common().apReload() << sp << weaponMod.actionPointPerReload() << endl;
     }
     if (weaponMod.capacityAmmo() != def.capacityAmmo()) {
         oss << text.common().ammoCapacity() << sp << weaponMod.capacityAmmo() << endl;
@@ -238,35 +227,32 @@ void ItemVisitorFullDescription::visitWeaponMod(const object::WeaponMod& weaponM
     }
     if (weaponMod.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
         oss << text.common().bonSneakDamage() << sp
-            << common::getBonus(weaponMod.bonusSneakAttackDamage()) << p << endl;
+            << weaponMod.bonusSneakAttackDamage() << p << endl;
     }
     if (weaponMod.bonusNormalDamage() != def.bonusNormalDamage()) {
         oss << text.common().bonNormDamage() << sp
-            << common::getBonus(weaponMod.bonusNormalDamage()) << p << endl;
+            << weaponMod.bonusNormalDamage() << p << endl;
     }
     if (weaponMod.bonusMeleeDamage() != def.bonusMeleeDamage()) {
         oss << text.common().bonMeleeDamage() << sp
-            << common::getBonus(weaponMod.bonusMeleeDamage()) << p << endl;
+            << weaponMod.bonusMeleeDamage() << p << endl;
     }
     if (weaponMod.bonusRangedDamage() != def.bonusRangedDamage()) {
         oss << text.common().bonRangeDamage() << sp
-            << common::getBonus(weaponMod.bonusRangedDamage()) << p << endl;
+            << weaponMod.bonusRangedDamage() << p << endl;
     }
     if (weaponMod.chanceHit() != def.chanceHit()) {
-        oss << text.common().hitChance() << sp
-            << common::getChance(weaponMod.chanceHit()) << p << endl;
+        oss << text.common().hitChance() << sp << weaponMod.chanceHit() << p << endl;
     }
     if (weaponMod.multiplierCritDamage() != def.multiplierCritDamage()) {
-        oss << text.common().critDamage() << sp
-            << common::getMult(weaponMod.multiplierCritDamage()) << x << endl;
+        oss << text.common().critDamage() << sp << weaponMod.multiplierCritDamage() << x << endl;
     }
     if (weaponMod.chanceCritDamage() != def.chanceCritDamage()) {
-        oss << text.common().critChance() << sp
-            << common::getChance(weaponMod.chanceCritDamage()) << p << endl;
+        oss << text.common().critChance() << sp << weaponMod.chanceCritDamage() << p << endl;
     }
     if (weaponMod.armorPenetration() != def.armorPenetration()) {
         oss << text.common().penetration() << sp
-            << common::getArmor(weaponMod.armorPenetration()) << endl;
+            << weaponMod.armorPenetration() << endl;
     }
     oss << std::noshowpos;
 

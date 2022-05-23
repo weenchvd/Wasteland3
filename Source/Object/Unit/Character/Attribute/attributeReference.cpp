@@ -75,12 +75,12 @@ void AttributeReference::initialize()
     initCharismaDist(fb);
 
     assert(fb != nullptr);
-    minAttrPoints_      = { fb->min_attr_points() };
-    maxAttrPoints_      = { fb->max_attr_points() };
-    initAttrPoints_     = { fb->init_attr_points() };
-    minAttrLevel_       = { fb->min_attr_level() };
-    maxAttrLevel_       = { fb->max_attr_level() };
-    initAttrLevel_      = { fb->init_attr_level() };
+    minAttrPoints_      = common::PointAttribute{ fb->min_attr_points() };
+    maxAttrPoints_      = common::PointAttribute{ fb->max_attr_points() };
+    initAttrPoints_     = common::PointAttribute{ fb->init_attr_points() };
+    minAttrLevel_       = common::LevelStat     { fb->min_attr_level() };
+    maxAttrLevel_       = common::LevelStat     { fb->max_attr_level() };
+    initAttrLevel_      = common::LevelStat     { fb->init_attr_level() };
 
     initialized_        = true;
 }

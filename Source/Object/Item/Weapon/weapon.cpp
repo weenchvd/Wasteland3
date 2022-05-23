@@ -126,27 +126,27 @@ void Weapon::reloadAmmo(Ammo& ammo) noexcept
     assert(ammo.type() == ammoType());
     if (ammo.type() != ammoType()) return;
     common::Capacity qty{ capacityAmmo() - capLoadedAmmo_ };
-    if (ammo.quantity() < qty) {
-        qty = ammo.quantity();
+    if (ammo.quantity() < common::toUnderlying(qty)) {
+        qty = common::Capacity{ ammo.quantity() };
     }
-    ammo.quantityAdd(-qty);
+    ammo.quantityAdd(-common::toUnderlying(qty));
     capLoadedAmmo_ = qty;
-    assert(capLoadedAmmo_ >= 0);
+    assert(common::toUnderlying(capLoadedAmmo_) >= 0);
 }
 
 void Weapon::unloadAmmo(Ammo& ammo) noexcept
 {
     assert(ammo.type() == ammoType());
     if (ammo.type() != ammoType()) return;
-    ammo.quantityAdd(capLoadedAmmo_);
-    capLoadedAmmo_ = 0;
+    ammo.quantityAdd(common::toUnderlying(capLoadedAmmo_));
+    capLoadedAmmo_ = common::Capacity{ 0 };
 }
 
 void Weapon::ammoType(Ammo::Type type) noexcept
 {
     assert(common::isValidEnum(type));
-    assert(capLoadedAmmo_ == 0);
-    if (capLoadedAmmo_ > 0) return;
+    assert(common::toUnderlying(capLoadedAmmo_) == 0);
+    if (common::toUnderlying(capLoadedAmmo_) > 0) return;
     tyAmmo_ = type;
 }
 

@@ -111,12 +111,12 @@ void SkillReference::initialize()
     initLeadershipDist(fb);
 
     assert(fb != nullptr);
-    minSkillPoints_     = { fb->min_skill_points() };
-    maxSkillPoints_     = { fb->max_skill_points() };
-    initSkillPoints_    = { fb->init_skill_points() };
-    minSkillLevel_      = { fb->min_skill_level() };
-    maxSkillLevel_      = { fb->max_skill_level() };
-    initSkillLevel_     = { fb->init_skill_level() };
+    minSkillPoints_     = common::PointSkill{ fb->min_skill_points() };
+    maxSkillPoints_     = common::PointSkill{ fb->max_skill_points() };
+    initSkillPoints_    = common::PointSkill{ fb->init_skill_points() };
+    minSkillLevel_      = common::LevelStat { fb->min_skill_level() };
+    maxSkillLevel_      = common::LevelStat { fb->max_skill_level() };
+    initSkillLevel_     = common::LevelStat { fb->init_skill_level() };
 
     initialized_        = true;
 }

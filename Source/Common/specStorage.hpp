@@ -73,11 +73,18 @@ bool changeLevel(
 ) noexcept
 {
     auto curLevel = static_cast<long long int>(curentLevel.get());
-    auto newLevel = curLevel + shift;
-    if (newLevel >= curentLevel.getAccepted() && newLevel <= curentLevel.getMaxPossible()) {
-        auto points = distribution.total(curLevel, newLevel);
-        auto sum = static_cast<long long int>(storage.get()) + points;
-        if (sum >= storage.getMinPossible() && sum <= storage.getMaxPossible()) {
+    auto newLevel = curLevel + common::toUnderlying(shift);
+    if (newLevel >= common::toUnderlying(curentLevel.getAccepted()) &&
+        newLevel <= common::toUnderlying(curentLevel.getMaxPossible()))
+    {
+        auto points = distribution.total(
+            Level{ static_cast<std::underlying_type_t<Level>>(curLevel) },
+            Level{ static_cast<std::underlying_type_t<Level>>(newLevel) }
+        );
+        auto sum = static_cast<long long int>(storage.get()) + common::toUnderlying(points);
+        if (sum >= common::toUnderlying(storage.getMinPossible()) &&
+            sum <= common::toUnderlying(storage.getMaxPossible()))
+        {
             curentLevel.add(shift);
             storage.add(points);
             return true;

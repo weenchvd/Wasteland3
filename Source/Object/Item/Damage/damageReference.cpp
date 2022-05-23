@@ -83,11 +83,11 @@ DamageReference DamageReferenceContainer::initDamageReference(
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.dmgRobots_      = { fb->damage_vs_robots() };
-    ref.dmgVehicles_    = { fb->damage_vs_vehicles() };
-    ref.dmgHumans_      = { fb->damage_vs_humans() };
-    ref.dmgAnimals_     = { fb->damage_vs_animals() };
-    ref.dmgMutants_     = { fb->damage_vs_mutants() };
+    ref.dmgRobots_      = common::Bonus{ fb->damage_vs_robots() };
+    ref.dmgVehicles_    = common::Bonus{ fb->damage_vs_vehicles() };
+    ref.dmgHumans_      = common::Bonus{ fb->damage_vs_humans() };
+    ref.dmgAnimals_     = common::Bonus{ fb->damage_vs_animals() };
+    ref.dmgMutants_     = common::Bonus{ fb->damage_vs_mutants() };
 
     ref.initialized_    = true;
     return ref;

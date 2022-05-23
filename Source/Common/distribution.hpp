@@ -31,18 +31,28 @@ public:
         constexpr int minSize = 2;              // minimum size of the initialized vector
         assert(dist_.size() >= minSize);
         T total{};
-        if (currentLevel < 0 || newLevel < 0 ||
+        if (currentLevel < LevelStat{ 0 } || newLevel < LevelStat{ 0 } ||
             currentLevel == newLevel || dist_.size() < minSize)
         {
             return total;
         }
-        for (LevelStat level = currentLevel + 1; level <= newLevel; ++level) {
-            LevelStat i = (level < dist_.size()) ? level : dist_.size() - 1;
-            total += dist_[i];
+        for (LevelStat level = currentLevel + LevelStat{ 1 };
+            level <= newLevel;
+            level += LevelStat{ 1 })
+        {
+            LevelStat i = (toUnderlying(level) < dist_.size()) ? level : LevelStat{
+                static_cast<std::underlying_type_t<LevelStat>>(dist_.size() - 1)
+            };
+            total += dist_[toUnderlying(i)];
         }
-        for (LevelStat level = currentLevel; level > newLevel; --level) {
-            LevelStat i = (level < dist_.size()) ? level : dist_.size() - 1;
-            total -= dist_[i];
+        for (LevelStat level = currentLevel;
+            level > newLevel;
+            level -= LevelStat{ 1 })
+        {
+            LevelStat i = (toUnderlying(level) < dist_.size()) ? level : LevelStat{
+                static_cast<std::underlying_type_t<LevelStat>>(dist_.size() - 1)
+            };
+            total -= dist_[toUnderlying(i)];
         }
         return total;
     }

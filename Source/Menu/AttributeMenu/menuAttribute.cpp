@@ -108,9 +108,11 @@ void menuModifyAttribute(
         case actionModifyAttribute::INCREASE_LEVEL: {
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
-                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                if (pair.first >= 0 &&
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
                     // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, pair.first);
+                    character.attribute().addLevel(type, common::LevelStat{
+                        static_cast<std::underlying_type_t<common::LevelStat>>(pair.first) });
                 }
                 else {
                     // TODO os << message
@@ -121,9 +123,11 @@ void menuModifyAttribute(
         case actionModifyAttribute::DECREASE_LEVEL: {
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
-                if (pair.first >= 0 && pair.first <= numeric_limits<common::LevelStat>::max()) {
+                if (pair.first >= 0 &&
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
                     // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, -pair.first);
+                    character.attribute().addLevel(type, common::LevelStat{
+                        static_cast<std::underlying_type_t<common::LevelStat>>(-pair.first) });
                 }
                 else {
                     // TODO os << message

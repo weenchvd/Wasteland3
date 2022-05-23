@@ -19,7 +19,7 @@ void initializeSquad(game::object::Squad& squad)
 {
     initializeInventory(squad.inventory());
     initializeMembers(squad.members());
-    squad.moneyAdd(initialMoney);
+    squad.moneyAdd(game::common::Money{ initialMoney });
 }
 
 void initializeInventory(game::object::Inventory& inventory)

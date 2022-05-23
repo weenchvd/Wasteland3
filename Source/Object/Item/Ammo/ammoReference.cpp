@@ -75,7 +75,7 @@ AmmoReference AmmoReferenceContainer::initAmmoReference(const fbAmmo::FB_AmmoRef
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.price_          = { fb->price() };
+    ref.price_          = common::Price{ fb->price() };
 
     ref.initialized_    = true;
 

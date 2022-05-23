@@ -36,7 +36,7 @@ public:
 
     static point_t initialSkillPoints() noexcept { return initSkillPoints_; }
 
-    static point_t initialSkillLevel() noexcept { return initSkillLevel_; }
+    static level_t initialSkillLevel() noexcept { return initSkillLevel_; }
 
 private:
     static void initPointDist(const fbSkill::FB_Skill* fb);

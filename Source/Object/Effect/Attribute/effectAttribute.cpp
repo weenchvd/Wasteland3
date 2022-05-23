@@ -191,8 +191,12 @@ EffectAttStr::EffectAttStr(
 
 void EffectAttStr::apply(Character& character) noexcept
 {
-    auto ratio = static_cast<double>(character.constitutionCurrent()) / character.constitutionMaximum();
-    auto conCurrent = static_cast<common::Constitution>(round(ratio * conMax_));
+    auto ratio{ static_cast<double>(character.constitutionCurrent()) /
+        common::toUnderlying(character.constitutionMaximum())
+    };
+    auto conCurrent{
+        static_cast<common::Constitution>(round(ratio * common::toUnderlying(conMax_)))
+    };
     character.constitutionCurrentAdd(conCurrent);
     character.constitutionMaximumAdd(conMax_);
     character.constitutionPerLevelAdd(conPerLvl_);

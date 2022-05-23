@@ -28,46 +28,36 @@ void printDamageEffect(
     assert(reference.isInitialized() == true);
     if (isPositiveEffect == true) {
         if (reference.dmgRobots_ > def.dmgRobots_) {
-            os << indent << text.damageVsRobots() << sp
-                << common::getBonus(reference.dmgRobots_) << p << endl;
+            os << indent << text.damageVsRobots() << sp << reference.dmgRobots_ << p << endl;
         }
         if (reference.dmgVehicles_ > def.dmgVehicles_) {
-            os << indent << text.damageVsVehicles() << sp
-                << common::getBonus(reference.dmgVehicles_) << p << endl;
+            os << indent << text.damageVsVehicles() << sp << reference.dmgVehicles_ << p << endl;
         }
         if (reference.dmgHumans_ > def.dmgHumans_) {
-            os << indent << text.damageVsHumans() << sp
-                << common::getBonus(reference.dmgHumans_) << p << endl;
+            os << indent << text.damageVsHumans() << sp << reference.dmgHumans_ << p << endl;
         }
         if (reference.dmgAnimals_ > def.dmgAnimals_) {
-            os << indent << text.damageVsAnimals() << sp
-                << common::getBonus(reference.dmgAnimals_) << p << endl;
+            os << indent << text.damageVsAnimals() << sp << reference.dmgAnimals_ << p << endl;
         }
         if (reference.dmgMutants_ > def.dmgMutants_) {
-            os << indent << text.damageVsMutants() << sp
-                << common::getBonus(reference.dmgMutants_) << p << endl;
+            os << indent << text.damageVsMutants() << sp << reference.dmgMutants_ << p << endl;
         }
     }
     else {
         if (reference.dmgRobots_ < def.dmgRobots_) {
-            os << indent << text.damageVsRobots() << sp
-                << common::getBonus(reference.dmgRobots_) << p << endl;
+            os << indent << text.damageVsRobots() << sp << reference.dmgRobots_ << p << endl;
         }
         if (reference.dmgVehicles_ < def.dmgVehicles_) {
-            os << indent << text.damageVsVehicles() << sp
-                << common::getBonus(reference.dmgVehicles_) << p << endl;
+            os << indent << text.damageVsVehicles() << sp << reference.dmgVehicles_ << p << endl;
         }
         if (reference.dmgHumans_ < def.dmgHumans_) {
-            os << indent << text.damageVsHumans() << sp
-                << common::getBonus(reference.dmgHumans_) << p << endl;
+            os << indent << text.damageVsHumans() << sp << reference.dmgHumans_ << p << endl;
         }
         if (reference.dmgAnimals_ < def.dmgAnimals_) {
-            os << indent << text.damageVsAnimals() << sp
-                << common::getBonus(reference.dmgAnimals_) << p << endl;
+            os << indent << text.damageVsAnimals() << sp << reference.dmgAnimals_ << p << endl;
         }
         if (reference.dmgMutants_ < def.dmgMutants_) {
-            os << indent << text.damageVsMutants() << sp
-                << common::getBonus(reference.dmgMutants_) << p << endl;
+            os << indent << text.damageVsMutants() << sp << reference.dmgMutants_ << p << endl;
         }
     }
 }

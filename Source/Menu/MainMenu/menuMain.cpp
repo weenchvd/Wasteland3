@@ -280,7 +280,7 @@ void showSquad(istream& is, ostream& os, const object::Squad& squad, const Inden
         os << ind1 << "Member " << i + 1 << ": ";
         if (squad.members()[i] != nullptr) {
             auto& c{ *static_cast<object::Character*>(squad.members()[i].get()) };
-            os << c.name() << ", Level " << integer(c.level()) << " RANGER" << endl;
+            os << c.name() << ", Level " << c.level() << " RANGER" << endl;
         }
         else {
             os << "(empty)" << endl;
@@ -294,22 +294,22 @@ void showStats(istream& is, ostream& os, const object::Character& character, con
     Indent ind1{ ind0 + Indent{} };
 
     os << ind0                         << character.name() << endl;
-    os << ind0 << "Level "             << integer(character.level()) << " RANGER" << endl;
+    os << ind0 << "Level "             << character.level() << " RANGER" << endl;
     os << ind0 << "Stats:" << endl;
     os << ind1 << "CON "               << character.constitutionCurrent() << '\\'
                                         << character.constitutionMaximum() << endl;
     os << ind1 << "XP "                << character.experience() << endl;
     os << ind1 << "CON per level: "    << character.constitutionPerLevel() << endl;
     os << ind1 << "Healing bonus: "    << percentBonus(character.bonusHealing()) << '%' << endl;
-    os << ind1 << "Action points: "    << integer(character.actionPointMaximum()) << endl;
+    os << ind1 << "Action points: "    << character.actionPointMaximum() << endl;
     os << ind1 << "Hit chance: "       << percentChance(character.chanceHit()) << '%' << endl;
     os << ind1 << "Critical chance: "  << percentChance(character.chanceCritDamage()) << '%' << endl;
     os << ind1 << "Critical damage: "  << multiplier(character.multiplierCritDamage()) << 'X' << endl;
-    os << ind1 << "Penetration: "      << integer(character.armorPenetration()) << endl;
+    os << ind1 << "Penetration: "      << character.armorPenetration() << endl;
     os << ind1 << "Sneak attack damage: "
                                         << percentBonus(character.bonusSneakAttackDamage()) << '%' << endl;
     os << ind1 << "Strike rate: "      << percentStrike(character.strikeRate()) << '%' << endl;
-    os << ind1 << "Armor: "            << integer(character.armor()) << endl;
+    os << ind1 << "Armor: "            << character.armor() << endl;
     os << ind1 << "Evasion: "          << percentEvasion(character.evasion()) << '%' << endl;
     os << ind1 << "Crit resistance: "  << percentResistance(character.resistanceCritDamage()) << '%' << endl;
     os << ind1 << "Fire resistance: "  << percentResistance(character.resistanceFireDamage()) << '%' << endl;
@@ -321,8 +321,8 @@ void showStats(istream& is, ostream& os, const object::Character& character, con
     os << ind1 << "Status effect resistance: "
                                         << percentResistance(character.resistanceStatusEffect()) << '%' << endl;
     os << ind1 << "Radiation resistance: Level "
-                                        << integer(character.radiationResistance()) << endl;
-    os << ind1 << "Downed time: "      << integer(character.downedTime()) << endl;
+                                        << character.radiationResistance() << endl;
+    os << ind1 << "Downed time: "      << character.downedTime() << endl;
     os << ind1 << "Melee damage bonus: "
                                         << percentBonus(character.bonusMeleeDamage()) << '%' << endl;
     os << ind1 << "Ranged damage bonus: "
@@ -337,7 +337,7 @@ void showStats(istream& is, ostream& os, const object::Character& character, con
                                         << percentBonus(character.bonusEnergyDamage()) << '%' << endl;
     os << ind1 << "Explosive damage bonus: "
                                         << percentBonus(character.bonusExplosiveDamage()) << '%' << endl;
-    os << ind1 << "Perception: "       << integer(character.perception()) << endl;
+    os << ind1 << "Perception: "       << character.perception() << endl;
     os << ind1 << "Throwing range: "   << multiplier(character.multiplierThrowingRange()) << 'X' << endl;
     os << ind1 << "Initiative: "       << percentInitiative(character.initiative()) << '%' << endl;
     os << ind1 << "Detection time: "   << secondTime(character.timeDetection()) << " seconds" << endl;

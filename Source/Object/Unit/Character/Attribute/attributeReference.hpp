@@ -36,7 +36,7 @@ public:
 
     static point_t initialAttributePoints() noexcept { return initAttrPoints_; }
 
-    static point_t initialAttributeLevel() noexcept { return initAttrLevel_; }
+    static level_t initialAttributeLevel() noexcept { return initAttrLevel_; }
 
 private:
     static void initPointDist(const fbAttribute::FB_Attribute* fb);

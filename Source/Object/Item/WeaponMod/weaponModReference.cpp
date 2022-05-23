@@ -29,8 +29,8 @@ WeaponModRequirements::WeaponModRequirements()
     skillReq_       {},
     attrReq_        {}
 {
-    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, 0 });
-    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, 0 });
+    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, common::LevelSkill{ 0 } });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, common::LevelStat{ 0 } });
 }
 
 ///************************************************************************************************
@@ -118,21 +118,21 @@ WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);
 
-    ref.dmgMin_         = { fb->dmg_min() };
-    ref.dmgMax_         = { fb->dmg_max() };
-    ref.price_          = { fb->price() };
-    ref.capAmmo_        = { fb->capacity_ammo() };
-    ref.mulCritDmg_     = { fb->multiplier_crit_dmg() };
-    ref.chaHit_         = { fb->chance_hit() };
-    ref.chaCritDmg_     = { fb->chance_crit_dmg() };
-    ref.bonSneakDmg_    = { fb->bonus_sneak_dmg() };
-    ref.bonNormDmg_     = { fb->bonus_normal_dmg() };
-    ref.bonMeleeDmg_    = { fb->bonus_melee_dmg() };
-    ref.bonRangeDmg_    = { fb->bonus_range_dmg() };
-    ref.armorPen_       = { fb->armor_penetration() };
-    ref.apAttack_       = { fb->ap_per_attack() };
-    ref.apReload_       = { fb->ap_per_reload() };
-    ref.shoPerAttack_   = { fb->shots_per_attack() };
+    ref.dmgMin_         = common::Damage        { fb->dmg_min() };
+    ref.dmgMax_         = common::Damage        { fb->dmg_max() };
+    ref.price_          = common::Price         { fb->price() };
+    ref.capAmmo_        = common::Capacity      { fb->capacity_ammo() };
+    ref.mulCritDmg_     = common::Multiplier    { fb->multiplier_crit_dmg() };
+    ref.chaHit_         = common::Chance        { fb->chance_hit() };
+    ref.chaCritDmg_     = common::Chance        { fb->chance_crit_dmg() };
+    ref.bonSneakDmg_    = common::Bonus         { fb->bonus_sneak_dmg() };
+    ref.bonNormDmg_     = common::Bonus         { fb->bonus_normal_dmg() };
+    ref.bonMeleeDmg_    = common::Bonus         { fb->bonus_melee_dmg() };
+    ref.bonRangeDmg_    = common::Bonus         { fb->bonus_range_dmg() };
+    ref.armorPen_       = common::Armor         { fb->armor_penetration() };
+    ref.apAttack_       = common::ActionPoint   { fb->ap_per_attack() };
+    ref.apReload_       = common::ActionPoint   { fb->ap_per_reload() };
+    ref.shoPerAttack_   = common::NumberShots   { fb->shots_per_attack() };
     ref.tyAmmo_         = toAmmoType(fb->ammo_type());
     ref.tyDmg_          = toDamageType(fb->dmg_type());
 
@@ -151,7 +151,7 @@ void WeaponModReferenceContainer::initWeaponModRequirements(
         assert(ptr->size() <= requirements.skillReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
             requirements.skillReq_[i].first     = toSkillType(ptr->Get(i)->type());
-            requirements.skillReq_[i].second    = { ptr->Get(i)->level() };
+            requirements.skillReq_[i].second    = common::LevelSkill{ ptr->Get(i)->level() };
             assert((verify ? common::isValidEnum(requirements.skillReq_[i].first) : true));
         }
     }
@@ -160,7 +160,7 @@ void WeaponModReferenceContainer::initWeaponModRequirements(
         assert(ptr->size() <= requirements.attrReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
             requirements.attrReq_[i].first  = toAttributeType(ptr->Get(i)->type());
-            requirements.attrReq_[i].second = { ptr->Get(i)->level() };
+            requirements.attrReq_[i].second = common::LevelStat{ ptr->Get(i)->level() };
             assert((verify ? common::isValidEnum(requirements.attrReq_[i].first) : true));
         }
     }

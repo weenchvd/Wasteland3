@@ -8,6 +8,7 @@
 #define COMMON_HPP
 
 #include<assert.h>
+#include<iostream>
 #include<string>
 #include<sys/stat.h>
 #include<type_traits>
@@ -16,132 +17,49 @@ namespace game {
 namespace common {
 
 using Text                  = std::string;
-using Time                  = int;          // 0.001s (1s == 1000 Time)
-using Experience            = int;
-using Damage                = short int;
-using Price                 = short int;
-using Range                 = short int;
-using Capacity              = short int;
-using Constitution          = short int;
-using Angle                 = short int;
-using Quantity              = short int;
 
-using Multiplier            = short int;    // 0.01X (1X == 100 Multiplier)
-using Chance                = short int;    // 0.1% (1% == 10 Chance)
-using Bonus                 = short int;    // 0.1% (1% == 10 Bonus)
-using Evasion               = short int;    // 0.1% (1% == 10 Evasion)
-using Resistance            = short int;    // 0.1% (1% == 10 Resistance)
-using Initiative            = short int;    // 0.1% (1% == 10 Initiative)
-using Strike                = short int;    // 0.1% (1% == 10 Strike)
+enum class Time             : int {};       // 0.001s (1s == 1000 Time)
+enum class Experience       : int {};
+enum class Damage           : short int {};
+enum class Price            : short int {};
+enum class Range            : short int {};
+enum class Capacity         : short int {};
+enum class Constitution     : short int {};
+enum class Angle            : short int {};
+enum class Quantity         : short int {};
 
-using Level                 = char;
-using Armor                 = char;
-using ActionPoint           = char;
-using NumberMoves           = char;
-using NumberShots           = char;
-using Perception            = char;
-using Radiation             = char;
+enum class Multiplier       : short int {}; // 0.01X (1X == 100 Multiplier)
+enum class Chance           : short int {}; // 0.1% (1% == 10 Chance)
+enum class Bonus            : short int {}; // 0.1% (1% == 10 Bonus)
+enum class Evasion          : short int {}; // 0.1% (1% == 10 Evasion)
+enum class Resistance       : short int {}; // 0.1% (1% == 10 Resistance)
+enum class Initiative       : short int {}; // 0.1% (1% == 10 Initiative)
+enum class Strike           : short int {}; // 0.1% (1% == 10 Strike)
+
+enum class Level            : char {};
+enum class Armor            : char {};
+enum class ActionPoint      : char {};
+enum class NumberMoves      : char {};
+enum class NumberShots      : char {};
+enum class Perception       : char {};
+enum class Radiation        : char {};
+
+enum class PointSkill       : short int {};
+enum class LevelSkill       : char {};      // skill level
+enum class PointAttribute   : char {};
+enum class LevelStat        : char {};      // statistic level
+
+enum class Money            : long long int {};
 
 
-using PointSkill            = short int;
-using LevelSkill            = char;         // skill level
-using PointAttribute        = char;
-using LevelStat             = char;         // statistic level
-
-
-using Money                 = long long int;
-
-///************************************************************************************************
-
-constexpr inline double getTime(Time time)
-{
-    return static_cast<double>(time) / 1000;
-}
-
-constexpr inline double getMult(Multiplier mult)
-{
-    return static_cast<double>(mult) / 100;
-}
-
-constexpr inline double getChance(Chance chance)
-{
-    return static_cast<double>(chance) / 10;
-}
-
-constexpr inline double getBonus(Bonus bonus)
-{
-    return static_cast<double>(bonus) / 10;
-}
-
-constexpr inline double getEvasion(Evasion evasion)
-{
-    return static_cast<double>(evasion) / 10;
-}
-
-constexpr inline double getResist(Resistance res)
-{
-    return static_cast<double>(res) / 10;
-}
-
-constexpr inline double getInit(Initiative init)
-{
-    return static_cast<double>(init) / 10;
-}
-
-constexpr inline double getStrike(Strike strike)
-{
-    return static_cast<double>(strike) / 10;
-}
-
-constexpr inline int getLv(Level value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getArmor(Armor value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getAP(ActionPoint value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getMoves(NumberMoves value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getShots(NumberShots value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getPercep(Perception value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getRad(Radiation value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getLvSkill(LevelSkill value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getPAttr(PointAttribute value)
-{
-    return static_cast<int>(value);
-}
-
-constexpr inline int getLvStat(LevelStat value)
-{
-    return static_cast<int>(value);
-}
+constexpr int timeX         { 1000 };       // multiplier for Time
+constexpr int multiplierX   { 100 };        // multiplier for Multiplier
+constexpr int chanceX       { 10 };         // multiplier for Chance
+constexpr int bonusX        { 10 };         // multiplier for Bonus
+constexpr int evasionX      { 10 };         // multiplier for Evasion
+constexpr int resistanceX   { 10 };         // multiplier for Resistance
+constexpr int initiativeX   { 10 };         // multiplier for Initiative
+constexpr int strikeX       { 10 };         // multiplier for Strike
 
 ///************************************************************************************************
 
@@ -182,6 +100,11 @@ constexpr auto lastEnum() noexcept
     return e;
 }
 
+constexpr auto toInt(char c) noexcept
+{
+    return static_cast<int>(c);
+}
+
 ///************************************************************************************************
 
 inline bool fileExists(const std::string& fileName)
@@ -193,6 +116,198 @@ inline bool fileExists(const char* fileName)
 {
     struct stat buffer;
     return (stat(fileName, &buffer) == 0);
+}
+
+///************************************************************************************************
+
+template<class Enum>
+inline Enum& operator+=(Enum& lhs, const Enum& rhs)
+{
+    lhs = Enum{ toUnderlying(lhs) + toUnderlying(rhs) };
+    return lhs;
+}
+
+template<class Enum>
+inline Enum& operator-=(Enum& lhs, const Enum& rhs)
+{
+    lhs = Enum{ toUnderlying(lhs) - toUnderlying(rhs) };
+    return lhs;
+}
+
+template<class Enum>
+inline Enum operator+(const Enum& lhs, const Enum& rhs)
+{
+    return Enum{ toUnderlying(lhs) + toUnderlying(rhs) };
+}
+
+template<class Enum>
+inline Enum operator-(const Enum& lhs, const Enum& rhs)
+{
+    return Enum{ toUnderlying(lhs) - toUnderlying(rhs) };
+}
+
+
+
+inline std::ostream& operator<<(std::ostream& os, const Time& value)
+{
+    os << static_cast<double>(value) / timeX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Experience& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Damage& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Price& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Range& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Capacity& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Constitution& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Angle& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Quantity& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Multiplier& value)
+{
+    os << static_cast<double>(value) / multiplierX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Chance& value)
+{
+    os << static_cast<double>(value) / chanceX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Bonus& value)
+{
+    os << static_cast<double>(value) / bonusX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Evasion& value)
+{
+    os << static_cast<double>(value) / evasionX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Resistance& value)
+{
+    os << static_cast<double>(value) / resistanceX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Initiative& value)
+{
+    os << static_cast<double>(value) / initiativeX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Strike& value)
+{
+    os << static_cast<double>(value) / strikeX;
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Level& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Armor& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const ActionPoint& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const NumberMoves& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const NumberShots& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Perception& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Radiation& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const LevelSkill& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const PointAttribute& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const LevelStat& value)
+{
+    os << toInt(toUnderlying(value));
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Money& value)
+{
+    os << toUnderlying(value);
+    return os;
 }
 
 } // namespace common

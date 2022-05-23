@@ -103,7 +103,10 @@ common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool
 {
     common::Text s;
     if (accepted) {
-        for (common::LevelStat i{ level.getMinPossible() + 1 }; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i{ level.getMinPossible() + common::LevelStat{ 1 } };
+            i <= level.getMaxPossible();
+            i = i + common::LevelStat{ 1 })
+        {
             if (i <= level.getAccepted()) {
                 s += '+';
             }
@@ -113,7 +116,10 @@ common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool
         }
     }
     else {
-        for (common::LevelStat i{ level.getMinPossible() + 1 }; i <= level.getMaxPossible(); ++i) {
+        for (common::LevelStat i{ level.getMinPossible() + common::LevelStat{ 1 } };
+            i <= level.getMaxPossible();
+            i = i + common::LevelStat{ 1 })
+        {
             if (i <= level.get()) {
                 s += '+';
             }
