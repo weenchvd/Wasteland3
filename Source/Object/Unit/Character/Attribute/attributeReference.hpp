@@ -18,7 +18,7 @@ namespace object {
 class AttributeReference {
 public:
     using point_t = common::PointAttribute;
-    using level_t = common::LevelStat;
+    using level_t = common::LevelAttribute;
 
 private:
     friend class Attribute;
@@ -49,14 +49,14 @@ private:
     static void initCharismaDist(const fbAttribute::FB_Attribute* fb);
 
 private:
-    static common::Distribution<point_t>            pDist_;     // distribution of attribute points
-    static common::Distribution<EffectAttCoord>     cooDist_;
-    static common::Distribution<EffectAttLuck>      lucDist_;
-    static common::Distribution<EffectAttAware>     awaDist_;
-    static common::Distribution<EffectAttStr>       strDist_;
-    static common::Distribution<EffectAttSpeed>     spdDist_;
-    static common::Distribution<EffectAttInt>       intDist_;
-    static common::Distribution<EffectAttCha>       chaDist_;
+    static common::Distribution<point_t, level_t>           pDist_;     // distribution of attribute points
+    static common::Distribution<EffectAttCoord, level_t>    cooDist_;
+    static common::Distribution<EffectAttLuck, level_t>     lucDist_;
+    static common::Distribution<EffectAttAware, level_t>    awaDist_;
+    static common::Distribution<EffectAttStr, level_t>      strDist_;
+    static common::Distribution<EffectAttSpeed, level_t>    spdDist_;
+    static common::Distribution<EffectAttInt, level_t>      intDist_;
+    static common::Distribution<EffectAttCha, level_t>      chaDist_;
 
     static point_t                          minAttrPoints_;     // min attribute points
     static point_t                          maxAttrPoints_;     // max attribute points

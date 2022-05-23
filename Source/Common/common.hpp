@@ -45,9 +45,9 @@ enum class Perception       : char {};
 enum class Radiation        : char {};
 
 enum class PointSkill       : short int {};
-enum class LevelSkill       : char {};      // skill level
+enum class LevelSkill       : char {};
 enum class PointAttribute   : char {};
-enum class LevelStat        : char {};      // statistic level
+enum class LevelAttribute   : char {};
 
 enum class Money            : long long int {};
 
@@ -298,7 +298,7 @@ inline std::ostream& operator<<(std::ostream& os, const PointAttribute& value)
     return os;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const LevelStat& value)
+inline std::ostream& operator<<(std::ostream& os, const LevelAttribute& value)
 {
     os << toInt(toUnderlying(value));
     return os;

@@ -19,57 +19,56 @@ namespace object {
 
 using namespace std;
 
-common::Distribution<SkillReference::point_t>       SkillReference::pDist_{
-    vector<SkillReference::point_t>{}
-};
-common::Distribution<EffectSkillAutomatic>          SkillReference::automDist_{
-    vector<EffectSkillAutomatic>{}
-};
-common::Distribution<EffectSkillBigGuns>            SkillReference::bigGunsDist_{
-    vector<EffectSkillBigGuns>{}
-};
-common::Distribution<EffectSkillBrawling>           SkillReference::brawlDist_{
-    vector<EffectSkillBrawling>{}
-};
-common::Distribution<EffectSkillMelee>              SkillReference::meleeDist_{
-    vector<EffectSkillMelee>{}
-};
-common::Distribution<EffectSkillSmallArms>          SkillReference::smallDist_{
-    vector<EffectSkillSmallArms>{}
-};
-common::Distribution<EffectSkillSniper>             SkillReference::sniperDist_{
-    vector<EffectSkillSniper>{}
-};
-common::Distribution<EffectSkillAnimal>             SkillReference::animalDist_{
-    vector<EffectSkillAnimal>{}
-};
-common::Distribution<EffectSkillExplosive>          SkillReference::explosDist_{
-    vector<EffectSkillExplosive>{}
-};
-common::Distribution<EffectSkillFirstAid>           SkillReference::aidDist_{
-    vector<EffectSkillFirstAid>{}
-};
-common::Distribution<EffectSkillSneakyShit>         SkillReference::sneakyDist_{
-    vector<EffectSkillSneakyShit>{}
-};
-common::Distribution<EffectSkillWeirdScience>       SkillReference::weirdDist_{
-    vector<EffectSkillWeirdScience>{}
-};
-common::Distribution<EffectSkillMechanics>          SkillReference::mechDist_{
-    vector<EffectSkillMechanics>{}
-};
-common::Distribution<EffectSkillSurvival>           SkillReference::survDist_{
-    vector<EffectSkillSurvival>{}
-};
-common::Distribution<EffectSkillWeaponMod>          SkillReference::weaponModDist_{
-    vector<EffectSkillWeaponMod>{}
-};
-common::Distribution<EffectSkillBarter>             SkillReference::barterDist_{
-    vector<EffectSkillBarter>{}
-};
-common::Distribution<EffectSkillLeadership>         SkillReference::leaderDist_{
-    vector<EffectSkillLeadership>{}
-};
+common::Distribution<SkillReference::point_t, SkillReference::level_t>
+SkillReference::pDist_{ vector<SkillReference::point_t>{} };
+
+common::Distribution<EffectSkillAutomatic, SkillReference::level_t>
+SkillReference::automDist_{ vector<EffectSkillAutomatic>{} };
+
+common::Distribution<EffectSkillBigGuns, SkillReference::level_t>
+SkillReference::bigGunsDist_{ vector<EffectSkillBigGuns>{} };
+
+common::Distribution<EffectSkillBrawling, SkillReference::level_t>
+SkillReference::brawlDist_{ vector<EffectSkillBrawling>{} };
+
+common::Distribution<EffectSkillMelee, SkillReference::level_t>
+SkillReference::meleeDist_{ vector<EffectSkillMelee>{} };
+
+common::Distribution<EffectSkillSmallArms, SkillReference::level_t>
+SkillReference::smallDist_{ vector<EffectSkillSmallArms>{} };
+
+common::Distribution<EffectSkillSniper, SkillReference::level_t>
+SkillReference::sniperDist_{ vector<EffectSkillSniper>{} };
+
+common::Distribution<EffectSkillAnimal, SkillReference::level_t>
+SkillReference::animalDist_{ vector<EffectSkillAnimal>{} };
+
+common::Distribution<EffectSkillExplosive, SkillReference::level_t>
+SkillReference::explosDist_{ vector<EffectSkillExplosive>{} };
+
+common::Distribution<EffectSkillFirstAid, SkillReference::level_t>
+SkillReference::aidDist_{ vector<EffectSkillFirstAid>{} };
+
+common::Distribution<EffectSkillSneakyShit, SkillReference::level_t>
+SkillReference::sneakyDist_{ vector<EffectSkillSneakyShit>{} };
+
+common::Distribution<EffectSkillWeirdScience, SkillReference::level_t>
+SkillReference::weirdDist_{ vector<EffectSkillWeirdScience>{} };
+
+common::Distribution<EffectSkillMechanics, SkillReference::level_t>
+SkillReference::mechDist_{ vector<EffectSkillMechanics>{} };
+
+common::Distribution<EffectSkillSurvival, SkillReference::level_t>
+SkillReference::survDist_{ vector<EffectSkillSurvival>{} };
+
+common::Distribution<EffectSkillWeaponMod, SkillReference::level_t>
+SkillReference::weaponModDist_{ vector<EffectSkillWeaponMod>{} };
+
+common::Distribution<EffectSkillBarter, SkillReference::level_t>
+SkillReference::barterDist_{ vector<EffectSkillBarter>{} };
+
+common::Distribution<EffectSkillLeadership, SkillReference::level_t>
+SkillReference::leaderDist_{ vector<EffectSkillLeadership>{} };
 
 SkillReference::point_t                 SkillReference::minSkillPoints_ { 0 };
 SkillReference::point_t                 SkillReference::maxSkillPoints_ { 0 };
@@ -114,9 +113,9 @@ void SkillReference::initialize()
     minSkillPoints_     = common::PointSkill{ fb->min_skill_points() };
     maxSkillPoints_     = common::PointSkill{ fb->max_skill_points() };
     initSkillPoints_    = common::PointSkill{ fb->init_skill_points() };
-    minSkillLevel_      = common::LevelStat { fb->min_skill_level() };
-    maxSkillLevel_      = common::LevelStat { fb->max_skill_level() };
-    initSkillLevel_     = common::LevelStat { fb->init_skill_level() };
+    minSkillLevel_      = common::LevelSkill{ fb->min_skill_level() };
+    maxSkillLevel_      = common::LevelSkill{ fb->max_skill_level() };
+    initSkillLevel_     = common::LevelSkill{ fb->init_skill_level() };
 
     initialized_        = true;
 }
@@ -124,7 +123,7 @@ void SkillReference::initialize()
 void SkillReference::initPointDist(const fbSkill::FB_Skill* fb)
 {
     assert(fb != nullptr);
-    pDist_ = move(common::Distribution<SkillReference::point_t>{
+    pDist_ = move(common::Distribution<SkillReference::point_t, level_t>{
         common::convertToVector<common::PointSkill>(fb->point_skill_distr()->p())
     });
 }
@@ -134,7 +133,7 @@ void SkillReference::initAutomaticDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->automatic_distr();
 
-    automDist_ = move(common::Distribution<EffectSkillAutomatic>{
+    automDist_ = move(common::Distribution<EffectSkillAutomatic, level_t>{
         common::initializeDistribution<EffectSkillAutomatic,
             common::Chance,
             common::Chance
@@ -150,7 +149,7 @@ void SkillReference::initBigGunsDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->big_guns_distr();
 
-    bigGunsDist_ = move(common::Distribution<EffectSkillBigGuns>{
+    bigGunsDist_ = move(common::Distribution<EffectSkillBigGuns, level_t>{
         common::initializeDistribution<EffectSkillBigGuns,
             common::Chance,
             common::Chance
@@ -166,7 +165,7 @@ void SkillReference::initBrawlingDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->brawling_distr();
 
-    brawlDist_ = move(common::Distribution<EffectSkillBrawling>{
+    brawlDist_ = move(common::Distribution<EffectSkillBrawling, level_t>{
         common::initializeDistribution<EffectSkillBrawling,
             common::Multiplier,
             common::Chance
@@ -182,7 +181,7 @@ void SkillReference::initMeleeDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->melee_distr();
 
-    meleeDist_ = move(common::Distribution<EffectSkillMelee>{
+    meleeDist_ = move(common::Distribution<EffectSkillMelee, level_t>{
         common::initializeDistribution<EffectSkillMelee,
             common::Chance,
             common::Chance
@@ -198,7 +197,7 @@ void SkillReference::initSmallArmsDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->small_arms_distr();
 
-    smallDist_ = move(common::Distribution<EffectSkillSmallArms>{
+    smallDist_ = move(common::Distribution<EffectSkillSmallArms, level_t>{
         common::initializeDistribution<EffectSkillSmallArms,
             common::Chance,
             common::Chance,
@@ -218,7 +217,7 @@ void SkillReference::initSniperDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->sniper_distr();
 
-    sniperDist_ = move(common::Distribution<EffectSkillSniper>{
+    sniperDist_ = move(common::Distribution<EffectSkillSniper, level_t>{
         common::initializeDistribution<EffectSkillSniper,
             common::Chance
         >(
@@ -232,7 +231,7 @@ void SkillReference::initAnimalDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->animal_whisperer_disrt();
 
-    animalDist_ = move(common::Distribution<EffectSkillAnimal>{
+    animalDist_ = move(common::Distribution<EffectSkillAnimal, level_t>{
         common::initializeDistribution<EffectSkillAnimal,
             common::Bonus
         >(
@@ -246,7 +245,7 @@ void SkillReference::initExplosiveDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->explosives_distr();
 
-    explosDist_ = move(common::Distribution<EffectSkillExplosive>{
+    explosDist_ = move(common::Distribution<EffectSkillExplosive, level_t>{
         common::initializeDistribution<EffectSkillExplosive,
             common::Resistance,
             common::Bonus
@@ -262,7 +261,7 @@ void SkillReference::initFirstAidDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->first_aid_distr();
 
-    aidDist_ = move(common::Distribution<EffectSkillFirstAid>{
+    aidDist_ = move(common::Distribution<EffectSkillFirstAid, level_t>{
         common::initializeDistribution<EffectSkillFirstAid,
             common::Bonus,
             common::Bonus
@@ -278,7 +277,7 @@ void SkillReference::initSneakyShitDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->sneaky_shit_distr();
 
-    sneakyDist_ = move(common::Distribution<EffectSkillSneakyShit>{
+    sneakyDist_ = move(common::Distribution<EffectSkillSneakyShit, level_t>{
         common::initializeDistribution<EffectSkillSneakyShit,
             common::Time,
             common::Initiative,
@@ -298,7 +297,7 @@ void SkillReference::initWeirdScienceDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->weird_science_distr();
 
-    weirdDist_ = move(common::Distribution<EffectSkillWeirdScience>{
+    weirdDist_ = move(common::Distribution<EffectSkillWeirdScience, level_t>{
         common::initializeDistribution<EffectSkillWeirdScience,
             common::Bonus,
             common::Bonus,
@@ -316,7 +315,7 @@ void SkillReference::initMechanicsDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->mechanics_distr();
 
-    mechDist_ = move(common::Distribution<EffectSkillMechanics>{
+    mechDist_ = move(common::Distribution<EffectSkillMechanics, level_t>{
         common::initializeDistribution<EffectSkillMechanics,
             common::Bonus,
             common::Bonus,
@@ -336,7 +335,7 @@ void SkillReference::initSurvivalDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->survival_distr();
 
-    survDist_ = move(common::Distribution<EffectSkillSurvival>{
+    survDist_ = move(common::Distribution<EffectSkillSurvival, level_t>{
         common::initializeDistribution<EffectSkillSurvival,
             common::Bonus,
             common::Bonus
@@ -352,7 +351,7 @@ void SkillReference::initWeaponModDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->weapon_modding_distr();
 
-    weaponModDist_ = move(common::Distribution<EffectSkillWeaponMod>{
+    weaponModDist_ = move(common::Distribution<EffectSkillWeaponMod, level_t>{
         common::initializeDistribution<EffectSkillWeaponMod,
             common::Bonus
         >(
@@ -366,7 +365,7 @@ void SkillReference::initBarterDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->barter_distr();
 
-    barterDist_ = move(common::Distribution<EffectSkillBarter>{
+    barterDist_ = move(common::Distribution<EffectSkillBarter, level_t>{
         common::initializeDistribution<EffectSkillBarter,
             common::Bonus,
             common::Bonus
@@ -382,7 +381,7 @@ void SkillReference::initLeadershipDist(const fbSkill::FB_Skill* fb)
     assert(fb != nullptr);
     const auto* dist = fb->leadership_distr();
 
-    leaderDist_ = move(common::Distribution<EffectSkillLeadership>{
+    leaderDist_ = move(common::Distribution<EffectSkillLeadership, level_t>{
         common::initializeDistribution<EffectSkillLeadership,
             common::Chance,
             common::Bonus,

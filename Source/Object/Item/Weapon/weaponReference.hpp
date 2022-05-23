@@ -28,7 +28,7 @@ namespace object {
 class WeaponRequirements {
 public:
     using skill_requirement_t       = std::pair<Skill::Type, common::LevelSkill>;
-    using attribute_requirement_t   = std::pair<Attribute::Type, common::LevelStat>;
+    using attribute_requirement_t   = std::pair<Attribute::Type, common::LevelAttribute>;
 
     static constexpr auto nSkill_   { 2 };
     static constexpr auto nAttr_    { 2 };

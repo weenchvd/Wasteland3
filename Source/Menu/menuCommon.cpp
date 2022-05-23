@@ -99,38 +99,6 @@ YesNo getYesNo(istream& is, ostream& os, const Indent indent)
     return YesNo::INVALID;
 }
 
-common::Text statLevel(const common::SpecStorage<common::LevelStat>& level, bool accepted)
-{
-    common::Text s;
-    if (accepted) {
-        for (common::LevelStat i{ level.getMinPossible() + common::LevelStat{ 1 } };
-            i <= level.getMaxPossible();
-            i = i + common::LevelStat{ 1 })
-        {
-            if (i <= level.getAccepted()) {
-                s += '+';
-            }
-            else {
-                s += '-';
-            }
-        }
-    }
-    else {
-        for (common::LevelStat i{ level.getMinPossible() + common::LevelStat{ 1 } };
-            i <= level.getMaxPossible();
-            i = i + common::LevelStat{ 1 })
-        {
-            if (i <= level.get()) {
-                s += '+';
-            }
-            else {
-                s += '-';
-            }
-        }
-    }
-    return s;
-}
-
 unsigned int utf8Size(const std::string& s)
 {
     unsigned int size{ 0 };

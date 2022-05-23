@@ -30,7 +30,7 @@ WeaponModRequirements::WeaponModRequirements()
     attrReq_        {}
 {
     skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, common::LevelSkill{ 0 } });
-    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, common::LevelStat{ 0 } });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, common::LevelAttribute{ 0 } });
 }
 
 ///************************************************************************************************
@@ -160,7 +160,7 @@ void WeaponModReferenceContainer::initWeaponModRequirements(
         assert(ptr->size() <= requirements.attrReq_.size());
         for (size_t i = 0; i < ptr->size(); ++i) {
             requirements.attrReq_[i].first  = toAttributeType(ptr->Get(i)->type());
-            requirements.attrReq_[i].second = common::LevelStat{ ptr->Get(i)->level() };
+            requirements.attrReq_[i].second = common::LevelAttribute{ ptr->Get(i)->level() };
             assert((verify ? common::isValidEnum(requirements.attrReq_[i].first) : true));
         }
     }

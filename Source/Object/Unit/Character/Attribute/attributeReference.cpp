@@ -19,30 +19,29 @@ namespace object {
 
 using namespace std;
 
-common::Distribution<AttributeReference::point_t>           AttributeReference::pDist_{
-    vector<AttributeReference::point_t>{}
-};
-common::Distribution<EffectAttCoord>                        AttributeReference::cooDist_{
-    vector<EffectAttCoord>{}
-};
-common::Distribution<EffectAttLuck>                         AttributeReference::lucDist_{
-    vector<EffectAttLuck>{}
-};
-common::Distribution<EffectAttAware>                        AttributeReference::awaDist_{
-    vector<EffectAttAware>{}
-};
-common::Distribution<EffectAttStr>                          AttributeReference::strDist_{
-    vector<EffectAttStr>{}
-};
-common::Distribution<EffectAttSpeed>                        AttributeReference::spdDist_{
-    vector<EffectAttSpeed>{}
-};
-common::Distribution<EffectAttInt>                          AttributeReference::intDist_{
-    vector<EffectAttInt>{}
-};
-common::Distribution<EffectAttCha>                          AttributeReference::chaDist_{
-    vector<EffectAttCha>{}
-};
+common::Distribution<AttributeReference::point_t, AttributeReference::level_t>
+AttributeReference::pDist_{ vector<AttributeReference::point_t>{} };
+
+common::Distribution<EffectAttCoord, AttributeReference::level_t>
+AttributeReference::cooDist_{ vector<EffectAttCoord>{} };
+
+common::Distribution<EffectAttLuck, AttributeReference::level_t>
+AttributeReference::lucDist_{ vector<EffectAttLuck>{} };
+
+common::Distribution<EffectAttAware, AttributeReference::level_t>
+AttributeReference::awaDist_{ vector<EffectAttAware>{} };
+
+common::Distribution<EffectAttStr, AttributeReference::level_t>
+AttributeReference::strDist_{ vector<EffectAttStr>{} };
+
+common::Distribution<EffectAttSpeed, AttributeReference::level_t>
+AttributeReference::spdDist_{ vector<EffectAttSpeed>{} };
+
+common::Distribution<EffectAttInt, AttributeReference::level_t>
+AttributeReference::intDist_{ vector<EffectAttInt>{} };
+
+common::Distribution<EffectAttCha, AttributeReference::level_t>
+AttributeReference::chaDist_{ vector<EffectAttCha>{} };
 
 AttributeReference::point_t             AttributeReference::minAttrPoints_  { 0 };
 AttributeReference::point_t             AttributeReference::maxAttrPoints_  { 0 };
@@ -78,9 +77,9 @@ void AttributeReference::initialize()
     minAttrPoints_      = common::PointAttribute{ fb->min_attr_points() };
     maxAttrPoints_      = common::PointAttribute{ fb->max_attr_points() };
     initAttrPoints_     = common::PointAttribute{ fb->init_attr_points() };
-    minAttrLevel_       = common::LevelStat     { fb->min_attr_level() };
-    maxAttrLevel_       = common::LevelStat     { fb->max_attr_level() };
-    initAttrLevel_      = common::LevelStat     { fb->init_attr_level() };
+    minAttrLevel_       = common::LevelAttribute{ fb->min_attr_level() };
+    maxAttrLevel_       = common::LevelAttribute{ fb->max_attr_level() };
+    initAttrLevel_      = common::LevelAttribute{ fb->init_attr_level() };
 
     initialized_        = true;
 }
@@ -88,7 +87,7 @@ void AttributeReference::initialize()
 void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* fb)
 {
     assert(fb != nullptr);
-    pDist_ = move(common::Distribution<AttributeReference::point_t>{
+    pDist_ = move(common::Distribution<AttributeReference::point_t, AttributeReference::level_t>{
         common::convertToVector<common::PointAttribute>(fb->point_attr_distr()->p())
     });
 }
@@ -98,7 +97,7 @@ void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->coord_distr();
 
-    cooDist_ = move(common::Distribution<EffectAttCoord>{
+    cooDist_ = move(common::Distribution<EffectAttCoord, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttCoord,
             common::Resistance,
             common::ActionPoint,
@@ -116,7 +115,7 @@ void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->luck_distr();
 
-    lucDist_ = move(common::Distribution<EffectAttLuck>{
+    lucDist_ = move(common::Distribution<EffectAttLuck, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttLuck,
             common::Armor,
             common::Chance,
@@ -146,7 +145,7 @@ void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->aware_distr();
 
-    awaDist_ = move(common::Distribution<EffectAttAware>{
+    awaDist_ = move(common::Distribution<EffectAttAware, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttAware,
             common::Chance,
             common::Perception,
@@ -164,7 +163,7 @@ void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->str_distr();
 
-    strDist_ = move(common::Distribution<EffectAttStr>{
+    strDist_ = move(common::Distribution<EffectAttStr, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttStr,
             common::Constitution,
             common::Constitution,
@@ -184,7 +183,7 @@ void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->speed_distr();
 
-    spdDist_ = move(common::Distribution<EffectAttSpeed>{
+    spdDist_ = move(common::Distribution<EffectAttSpeed, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttSpeed,
             common::Multiplier,
             common::Evasion,
@@ -202,7 +201,7 @@ void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->int_distr();
 
-    intDist_ = move(common::Distribution<EffectAttInt>{
+    intDist_ = move(common::Distribution<EffectAttInt, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttInt,
             common::Chance,
             common::Multiplier,
@@ -224,7 +223,7 @@ void AttributeReference::initCharismaDist(const fbAttribute::FB_Attribute* fb)
     assert(fb != nullptr);
     const auto* dist = fb->cha_distr();
 
-    chaDist_ = move(common::Distribution<EffectAttCha>{
+    chaDist_ = move(common::Distribution<EffectAttCha, AttributeReference::level_t>{
         common::initializeDistribution<EffectAttCha,
             common::Strike,
             common::Range,

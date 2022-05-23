@@ -109,10 +109,10 @@ void menuModifyAttribute(
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelAttribute>>::max()) {
                     // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, common::LevelStat{
-                        static_cast<std::underlying_type_t<common::LevelStat>>(pair.first) });
+                    character.attribute().addLevel(type, common::LevelAttribute{
+                        static_cast<std::underlying_type_t<common::LevelAttribute>>(pair.first) });
                 }
                 else {
                     // TODO os << message
@@ -124,10 +124,10 @@ void menuModifyAttribute(
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelAttribute>>::max()) {
                     // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, common::LevelStat{
-                        static_cast<std::underlying_type_t<common::LevelStat>>(-pair.first) });
+                    character.attribute().addLevel(type, common::LevelAttribute{
+                        static_cast<std::underlying_type_t<common::LevelAttribute>>(-pair.first) });
                 }
                 else {
                     // TODO os << message
@@ -192,7 +192,7 @@ common::Text stringAttribute(
         fillWithPlaseholders(
             character.attribute().attributeText().name(type), width, placeholder)
     };
-    t += statLevel(character.attribute().level(type), accepted);
+    t += stringLevel(character.attribute().level(type), accepted);
     return t;
 }
 

@@ -293,57 +293,56 @@ void showStats(istream& is, ostream& os, const object::Character& character, con
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
 
-    os << ind0                         << character.name() << endl;
-    os << ind0 << "Level "             << character.level() << " RANGER" << endl;
+    os << ind0                          << character.name() << endl;
+    os << ind0 << "Level "              << character.level() << " RANGER" << endl;
     os << ind0 << "Stats:" << endl;
-    os << ind1 << "CON "               << character.constitutionCurrent() << '\\'
+    os << ind1 << "CON "                << character.constitutionCurrent() << '\\'
                                         << character.constitutionMaximum() << endl;
-    os << ind1 << "XP "                << character.experience() << endl;
-    os << ind1 << "CON per level: "    << character.constitutionPerLevel() << endl;
-    os << ind1 << "Healing bonus: "    << percentBonus(character.bonusHealing()) << '%' << endl;
-    os << ind1 << "Action points: "    << character.actionPointMaximum() << endl;
-    os << ind1 << "Hit chance: "       << percentChance(character.chanceHit()) << '%' << endl;
-    os << ind1 << "Critical chance: "  << percentChance(character.chanceCritDamage()) << '%' << endl;
-    os << ind1 << "Critical damage: "  << multiplier(character.multiplierCritDamage()) << 'X' << endl;
-    os << ind1 << "Penetration: "      << character.armorPenetration() << endl;
+    os << ind1 << "XP "                 << character.experience() << endl;
+    os << ind1 << "CON per level: "     << character.constitutionPerLevel() << endl;
+    os << ind1 << "Healing bonus: "     << character.bonusHealing() << '%' << endl;
+    os << ind1 << "Action points: "     << character.actionPointMaximum() << endl;
+    os << ind1 << "Hit chance: "        << character.chanceHit() << '%' << endl;
+    os << ind1 << "Critical chance: "   << character.chanceCritDamage() << '%' << endl;
+    os << ind1 << "Critical damage: "   << character.multiplierCritDamage() << 'X' << endl;
+    os << ind1 << "Penetration: "       << character.armorPenetration() << endl;
     os << ind1 << "Sneak attack damage: "
-                                        << percentBonus(character.bonusSneakAttackDamage()) << '%' << endl;
-    os << ind1 << "Strike rate: "      << percentStrike(character.strikeRate()) << '%' << endl;
-    os << ind1 << "Armor: "            << character.armor() << endl;
-    os << ind1 << "Evasion: "          << percentEvasion(character.evasion()) << '%' << endl;
-    os << ind1 << "Crit resistance: "  << percentResistance(character.resistanceCritDamage()) << '%' << endl;
-    os << ind1 << "Fire resistance: "  << percentResistance(character.resistanceFireDamage()) << '%' << endl;
-    os << ind1 << "Cold resistance: "  << percentResistance(character.resistanceColdDamage()) << '%' << endl;
-    os << ind1 << "Energy resistance: "
-                                        << percentResistance(character.resistanceEnergyDamage()) << '%' << endl;
+                                        << character.bonusSneakAttackDamage() << '%' << endl;
+    os << ind1 << "Strike rate: "       << character.strikeRate() << '%' << endl;
+    os << ind1 << "Armor: "             << character.armor() << endl;
+    os << ind1 << "Evasion: "           << character.evasion() << '%' << endl;
+    os << ind1 << "Crit resistance: "   << character.resistanceCritDamage() << '%' << endl;
+    os << ind1 << "Fire resistance: "   << character.resistanceFireDamage() << '%' << endl;
+    os << ind1 << "Cold resistance: "   << character.resistanceColdDamage() << '%' << endl;
+    os << ind1 << "Energy resistance: " << character.resistanceEnergyDamage() << '%' << endl;
     os << ind1 << "Explosive resistance: "
-                                        << percentResistance(character.resistanceExplosiveDamage()) << '%' << endl;
+                                        << character.resistanceExplosiveDamage() << '%' << endl;
     os << ind1 << "Status effect resistance: "
-                                        << percentResistance(character.resistanceStatusEffect()) << '%' << endl;
+                                        << character.resistanceStatusEffect() << '%' << endl;
     os << ind1 << "Radiation resistance: Level "
                                         << character.radiationResistance() << endl;
-    os << ind1 << "Downed time: "      << character.downedTime() << endl;
+    os << ind1 << "Downed time: "       << character.downedTime() << endl;
     os << ind1 << "Melee damage bonus: "
-                                        << percentBonus(character.bonusMeleeDamage()) << '%' << endl;
+                                        << character.bonusMeleeDamage() << '%' << endl;
     os << ind1 << "Ranged damage bonus: "
-                                        << percentBonus(character.bonusRangedDamage()) << '%' << endl;
+                                        << character.bonusRangedDamage() << '%' << endl;
     os << ind1 << "Normal damage bonus: "
-                                        << percentBonus(character.bonusNormalDamage()) << '%' << endl;
+                                        << character.bonusNormalDamage() << '%' << endl;
     os << ind1 << "Fire damage bonus: "
-                                        << percentBonus(character.bonusFireDamage()) << '%' << endl;
+                                        << character.bonusFireDamage() << '%' << endl;
     os << ind1 << "Cold damage bonus: "
-                                        << percentBonus(character.bonusColdDamage()) << '%' << endl;
+                                        << character.bonusColdDamage() << '%' << endl;
     os << ind1 << "Energy damage bonus: "
-                                        << percentBonus(character.bonusEnergyDamage()) << '%' << endl;
+                                        << character.bonusEnergyDamage() << '%' << endl;
     os << ind1 << "Explosive damage bonus: "
-                                        << percentBonus(character.bonusExplosiveDamage()) << '%' << endl;
-    os << ind1 << "Perception: "       << character.perception() << endl;
-    os << ind1 << "Throwing range: "   << multiplier(character.multiplierThrowingRange()) << 'X' << endl;
-    os << ind1 << "Initiative: "       << percentInitiative(character.initiative()) << '%' << endl;
-    os << ind1 << "Detection time: "   << secondTime(character.timeDetection()) << " seconds" << endl;
-    os << ind1 << "Combat speed: "     << multiplier(character.multiplierCombatSpeed()) << 'X' << endl;
-    //TODO os << ind1 << "Quick slots: " << character.
-    os << ind1 << "Leadership range: " << character.rangeLeadership() << 'M' << endl;
+                                        << character.bonusExplosiveDamage() << '%' << endl;
+    os << ind1 << "Perception: "        << character.perception() << endl;
+    os << ind1 << "Throwing range: "    << character.multiplierThrowingRange() << 'X' << endl;
+    os << ind1 << "Initiative: "        << character.initiative() << '%' << endl;
+    os << ind1 << "Detection time: "    << character.timeDetection() << " seconds" << endl;
+    os << ind1 << "Combat speed: "      << character.multiplierCombatSpeed() << 'X' << endl;
+    //TODO os << ind1 << "Quick slots: "  << character.
+    os << ind1 << "Leadership range: "  << character.rangeLeadership() << 'M' << endl;
 }
 
 void showGear(istream& is, ostream& os, const object::Character& character, const Indent indent)

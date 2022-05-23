@@ -42,44 +42,6 @@ std::ostream& operator<<(std::ostream& os, const Indent& indent);
 
 ///************************************************************************************************
 
-inline double secondTime(common::Time time) {
-    return static_cast<double>(time) / 1000;
-}
-
-inline double multiplier(common::Multiplier mult) {
-    return static_cast<double>(mult) / 100;
-}
-
-inline double percentChance(common::Chance chance) {
-    return static_cast<double>(chance) / 10;
-}
-
-inline double percentBonus(common::Bonus bonus) {
-    return static_cast<double>(bonus) / 10;
-}
-
-inline double percentEvasion(common::Evasion evasion) {
-    return static_cast<double>(evasion) / 10;
-}
-
-inline double percentResistance(common::Resistance res) {
-    return static_cast<double>(res) / 10;
-}
-
-inline double percentInitiative(common::Initiative init) {
-    return static_cast<double>(init) / 10;
-}
-
-inline double percentStrike(common::Strike strike) {
-    return static_cast<double>(strike) / 10;
-}
-
-inline int integer(char ch) {
-    return static_cast<int>(ch);
-}
-
-///************************************************************************************************
-
 std::ostream& printNumBar(std::ostream& os, const Indent indent, int number, const common::Text& text);
 
 std::ostream& verticalIndent(std::ostream& os);
@@ -107,10 +69,19 @@ enum ActionCommon {
 
 } // namespace actionCommon
 
-common::Text statLevel(
-    const common::SpecStorage<common::LevelStat>& level,
-    bool accepted = false
-);
+template<class LevelType>
+common::Text stringLevel(const common::SpecStorage<LevelType>& level, bool accepted)
+{
+    common::Text s;
+    LevelType lvl{ accepted ? level.getAccepted() : level.get() };
+    for (LevelType i{ level.getMinPossible() + LevelType{ 1 } };
+        i <= level.getMaxPossible();
+        i += LevelType{ 1 })
+    {
+        s += (i <= lvl) ? '+' : '-';
+    }
+    return s;
+}
 
 unsigned int utf8Size(const std::string& s);
 

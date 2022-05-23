@@ -110,10 +110,10 @@ void menuModifySkill(
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelSkill>>::max()) {
                     // TODO ^^^ check or set range
-                    character.skill().addLevel(type, common::LevelStat{
-                        static_cast<std::underlying_type_t<common::LevelStat>>(pair.first) });
+                    character.skill().addLevel(type, common::LevelSkill{
+                        static_cast<std::underlying_type_t<common::LevelSkill>>(pair.first) });
                 }
                 else {
                     // TODO os << message
@@ -125,10 +125,10 @@ void menuModifySkill(
             auto pair{ getNumber(is, os) };
             if (pair.second == true) {
                 if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelStat>>::max()) {
+                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelSkill>>::max()) {
                     // TODO ^^^ check or set range
-                    character.skill().addLevel(type, common::LevelStat{
-                        static_cast<std::underlying_type_t<common::LevelStat>>(-pair.first) });
+                    character.skill().addLevel(type, common::LevelSkill{
+                        static_cast<std::underlying_type_t<common::LevelSkill>>(-pair.first) });
                 }
                 else {
                     // TODO os << message
@@ -231,7 +231,7 @@ common::Text stringSkill(
         fillWithPlaseholders(
             character.skill().skillText().name(type), width, placeholder)
     };
-    t += statLevel(character.skill().level(type), accepted);
+    t += stringLevel(character.skill().level(type), accepted);
     return t;
 }
 

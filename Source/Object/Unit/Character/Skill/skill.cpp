@@ -44,7 +44,7 @@ Skill::Skill(Character& character)
     assert(text_.isInitialized());
 }
 
-void Skill::addLevel(Skill::Type type, common::LevelStat shift) noexcept
+void Skill::addLevel(Skill::Type type, level_t shift) noexcept
 {
     auto index = common::toUnderlying(type);
     common::changeLevel(levels_[index], pStor_, pDist_, shift);
@@ -55,7 +55,7 @@ bool Skill::isModified() const noexcept
     if (pStor_.get() != pStor_.getAccepted()) {
         return true;
     }
-    for (const common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (const common::SpecStorage<level_t>& level : levels_) {
         if (level.get() != level.getAccepted()) {
             return true;
         }
@@ -66,7 +66,7 @@ bool Skill::isModified() const noexcept
 void Skill::accept() noexcept
 {
     apply();
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.accept();
     }
     pStor_.accept();
@@ -74,7 +74,7 @@ void Skill::accept() noexcept
 
 void Skill::reject() noexcept
 {
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.reject();
     }
     pStor_.reject();
@@ -82,7 +82,7 @@ void Skill::reject() noexcept
 
 void Skill::reset() noexcept
 {
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.reset();
     }
     pStor_.reset();
@@ -219,14 +219,14 @@ bool Skill::isInitialized()
         && text_.isInitialized();
 }
 
-vector<common::SpecStorage<common::LevelStat>> Skill::initLevels()
+vector<common::SpecStorage<Skill::level_t>> Skill::initLevels()
 {
     constexpr auto nSkills = common::numberOf<Skill::Type>();
-    const common::SpecStorage<common::LevelStat> tempLevel{
+    const common::SpecStorage<level_t> tempLevel{
         ref_.minSkillLevel_,
         ref_.maxSkillLevel_
     };
-    return vector<common::SpecStorage<common::LevelStat>>(nSkills, tempLevel);
+    return vector<common::SpecStorage<level_t>>(nSkills, tempLevel);
 }
 
 } //namespace object

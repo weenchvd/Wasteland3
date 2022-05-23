@@ -36,13 +36,13 @@ Attribute::Attribute(Character& character)
     assert(text_.isInitialized());
 }
 
-void Attribute::addLevel(Attribute::Type type, common::LevelStat shift) noexcept
+void Attribute::addLevel(Attribute::Type type, level_t shift) noexcept
 {
     auto index = common::toUnderlying(type);
     common::changeLevel(levels_[index], pStor_, pDist_, shift);
 }
         
-void Attribute::addLevelToAll(common::LevelStat shift) noexcept
+void Attribute::addLevelToAll(level_t shift) noexcept
 {
     addLevel(Attribute::Type::COORDINATION, shift);
     addLevel(Attribute::Type::LUCK,         shift);
@@ -58,7 +58,7 @@ bool Attribute::isModified() const noexcept
     if (pStor_.get() != pStor_.getAccepted()) {
         return true;
     }
-    for (const common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (const common::SpecStorage<level_t>& level : levels_) {
         if (level.get() != level.getAccepted()) {
             return true;
         }
@@ -69,7 +69,7 @@ bool Attribute::isModified() const noexcept
 void Attribute::accept() noexcept
 {
     apply();
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.accept();
     }
     pStor_.accept();
@@ -77,7 +77,7 @@ void Attribute::accept() noexcept
 
 void Attribute::reject() noexcept
 {
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.reject();
     }
     pStor_.reject();
@@ -85,7 +85,7 @@ void Attribute::reject() noexcept
 
 void Attribute::reset() noexcept
 {
-    for (common::SpecStorage<common::LevelStat>& level : levels_) {
+    for (common::SpecStorage<level_t>& level : levels_) {
         level.reset();
     }
     pStor_.reset();
@@ -162,14 +162,14 @@ bool Attribute::isInitialized()
         && text_.isInitialized();
 }
 
-vector<common::SpecStorage<common::LevelStat>> Attribute::initLevels()
+vector<common::SpecStorage<Attribute::level_t>> Attribute::initLevels()
 {
     constexpr auto nAttributes = common::numberOf<Attribute::Type>();
-    const common::SpecStorage<common::LevelStat> tempLevel{
+    const common::SpecStorage<level_t> tempLevel{
         ref_.minAttrLevel_,
         ref_.maxAttrLevel_
     };
-    return vector<common::SpecStorage<common::LevelStat>>(nAttributes, tempLevel);
+    return vector<common::SpecStorage<level_t>>(nAttributes, tempLevel);
 }
 
 } // namespace object

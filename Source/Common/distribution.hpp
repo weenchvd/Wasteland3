@@ -16,41 +16,42 @@
 namespace game {
 namespace common {
 
-template<class T> class Distribution {
+template<class T, class LevelType>
+class Distribution {
 public:
     // vector[0] is always not used
     // vector[1] is T when moving from level 0 to level 1
     // vector[2] is T when moving from level 1 to level 2 and so on
-    // if newLevel >= dist_.size(), then T is the last T in the dist_
-    explicit Distribution(std::vector<T> distribution) noexcept
+    // if newLevel >= vector.size(), then T is the last T in the vector
+    explicit Distribution(std::vector<T> distribution)
         : dist_{ std::move(distribution) } {}
 
     // return the total T when moving from currentLevel to newLevel
-    T total(LevelStat currentLevel, LevelStat newLevel) const noexcept
+    T total(LevelType currentLevel, LevelType newLevel) const
     {
-        constexpr int minSize = 2;              // minimum size of the initialized vector
+        constexpr int minSize{ 2 };             // minimum size of the initialized vector
         assert(dist_.size() >= minSize);
         T total{};
-        if (currentLevel < LevelStat{ 0 } || newLevel < LevelStat{ 0 } ||
+        if (currentLevel < LevelType{ 0 } || newLevel < LevelType{ 0 } ||
             currentLevel == newLevel || dist_.size() < minSize)
         {
             return total;
         }
-        for (LevelStat level = currentLevel + LevelStat{ 1 };
+        for (LevelType level{ currentLevel + LevelType{ 1 } };
             level <= newLevel;
-            level += LevelStat{ 1 })
+            level += LevelType{ 1 })
         {
-            LevelStat i = (toUnderlying(level) < dist_.size()) ? level : LevelStat{
-                static_cast<std::underlying_type_t<LevelStat>>(dist_.size() - 1)
+            LevelType i{ (toUnderlying(level) < dist_.size()) ? level :
+                LevelType{ static_cast<std::underlying_type_t<LevelType>>(dist_.size() - 1) }
             };
             total += dist_[toUnderlying(i)];
         }
-        for (LevelStat level = currentLevel;
+        for (LevelType level{ currentLevel };
             level > newLevel;
-            level -= LevelStat{ 1 })
+            level -= LevelType{ 1 })
         {
-            LevelStat i = (toUnderlying(level) < dist_.size()) ? level : LevelStat{
-                static_cast<std::underlying_type_t<LevelStat>>(dist_.size() - 1)
+            LevelType i{ (toUnderlying(level) < dist_.size()) ? level :
+                LevelType{ static_cast<std::underlying_type_t<LevelType>>(dist_.size() - 1) }
             };
             total -= dist_[toUnderlying(i)];
         }

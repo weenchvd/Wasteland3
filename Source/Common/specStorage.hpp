@@ -63,12 +63,13 @@ private:
     const T     max_;                           // maximum value of T
 };
 
+///************************************************************************************************
 
 template<class Level, class Point>
 bool changeLevel(
     SpecStorage<Level>& curentLevel,
     SpecStorage<Point>& storage,
-    const Distribution<Point>& distribution,
+    const Distribution<Point, Level>& distribution,
     const Level shift
 ) noexcept
 {

@@ -24,6 +24,8 @@ class Skill {
 public:
     using Type          = Skill__Type;
     using Group         = Skill__Group;
+    using point_t       = common::PointSkill;
+    using level_t       = common::LevelSkill;
 
 public:
     Skill(Character& character);
@@ -36,9 +38,9 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Skill::Type type, common::LevelStat shift) noexcept;
+    void addLevel(Skill::Type type, level_t shift) noexcept;
 
-    void addPoint(common::PointSkill shift) noexcept {
+    void addPoint(point_t shift) noexcept {
         pStor_.add(shift);
     }
 
@@ -51,12 +53,12 @@ public:
     void reset() noexcept;
 
 public:
-    const common::SpecStorage<common::LevelStat>& level(Skill::Type type) const noexcept {
+    const common::SpecStorage<level_t>& level(Skill::Type type) const noexcept {
         assert(common::isValidEnum(type));
         return levels_[common::toUnderlying(type)];
     }
 
-    const common::SpecStorage<common::PointSkill>& storage() const noexcept {
+    const common::SpecStorage<point_t>& storage() const noexcept {
         return pStor_;
     }
 
@@ -73,29 +75,29 @@ private:
 
     void apply(Skill::Type type) noexcept;
 
-    static std::vector<common::SpecStorage<common::LevelStat>>  initLevels();
+    static std::vector<common::SpecStorage<level_t>>  initLevels();
 
 private:
     Character&                                              char_;
-    std::vector<common::SpecStorage<common::LevelStat>>     levels_;
-    common::SpecStorage<common::PointSkill>                 pStor_;
-    common::Distribution<common::PointSkill>                pDist_;
-    common::Distribution<EffectSkillAutomatic>              automDist_;
-    common::Distribution<EffectSkillBigGuns>                bigGunsDist_;
-    common::Distribution<EffectSkillBrawling>               brawlDist_;
-    common::Distribution<EffectSkillMelee>                  meleeDist_;
-    common::Distribution<EffectSkillSmallArms>              smallDist_;
-    common::Distribution<EffectSkillSniper>                 sniperDist_;
-    common::Distribution<EffectSkillAnimal>                 animalDist_;
-    common::Distribution<EffectSkillExplosive>              explosDist_;
-    common::Distribution<EffectSkillFirstAid>               aidDist_;
-    common::Distribution<EffectSkillSneakyShit>             sneakyDist_;
-    common::Distribution<EffectSkillWeirdScience>           weirdDist_;
-    common::Distribution<EffectSkillMechanics>              mechDist_;
-    common::Distribution<EffectSkillSurvival>               survDist_;
-    common::Distribution<EffectSkillWeaponMod>              weaponModDist_;
-    common::Distribution<EffectSkillBarter>                 barterDist_;
-    common::Distribution<EffectSkillLeadership>             leaderDist_;
+    std::vector<common::SpecStorage<level_t>>               levels_;
+    common::SpecStorage<point_t>                            pStor_;
+    common::Distribution<point_t, level_t>                  pDist_;
+    common::Distribution<EffectSkillAutomatic, level_t>     automDist_;
+    common::Distribution<EffectSkillBigGuns, level_t>       bigGunsDist_;
+    common::Distribution<EffectSkillBrawling, level_t>      brawlDist_;
+    common::Distribution<EffectSkillMelee, level_t>         meleeDist_;
+    common::Distribution<EffectSkillSmallArms, level_t>     smallDist_;
+    common::Distribution<EffectSkillSniper, level_t>        sniperDist_;
+    common::Distribution<EffectSkillAnimal, level_t>        animalDist_;
+    common::Distribution<EffectSkillExplosive, level_t>     explosDist_;
+    common::Distribution<EffectSkillFirstAid, level_t>      aidDist_;
+    common::Distribution<EffectSkillSneakyShit, level_t>    sneakyDist_;
+    common::Distribution<EffectSkillWeirdScience, level_t>  weirdDist_;
+    common::Distribution<EffectSkillMechanics, level_t>     mechDist_;
+    common::Distribution<EffectSkillSurvival, level_t>      survDist_;
+    common::Distribution<EffectSkillWeaponMod, level_t>     weaponModDist_;
+    common::Distribution<EffectSkillBarter, level_t>        barterDist_;
+    common::Distribution<EffectSkillLeadership, level_t>    leaderDist_;
 
     static const SkillReference                             ref_;
     static const SkillText                                  text_;

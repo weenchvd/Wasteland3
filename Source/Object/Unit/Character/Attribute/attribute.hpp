@@ -24,6 +24,8 @@ class Character;
 class Attribute {
 public:
     using Type          = Attribute__Type;
+    using point_t       = common::PointAttribute;
+    using level_t       = common::LevelAttribute;
 
 public:
     Attribute(Character& character);
@@ -36,11 +38,11 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Attribute::Type type, common::LevelStat shift) noexcept;
+    void addLevel(Attribute::Type type, level_t shift) noexcept;
 
-    void addLevelToAll(common::LevelStat shift) noexcept;
+    void addLevelToAll(level_t shift) noexcept;
 
-    void addPoint(common::PointAttribute shift) noexcept {
+    void addPoint(point_t shift) noexcept {
         pStor_.add(shift);
     }
 
@@ -53,12 +55,12 @@ public:
     void reset() noexcept;
 
 public:
-    const common::SpecStorage<common::LevelStat>& level(Attribute::Type type) const noexcept {
+    const common::SpecStorage<level_t>& level(Attribute::Type type) const noexcept {
         assert(common::isValidEnum(type));
         return levels_[common::toUnderlying(type)];
     }
 
-    const common::SpecStorage<common::PointAttribute>& storage() const noexcept {
+    const common::SpecStorage<point_t>& storage() const noexcept {
         return pStor_;
     }
 
@@ -75,20 +77,20 @@ private:
 
     void apply(Attribute::Type type) noexcept;
 
-    static std::vector<common::SpecStorage<common::LevelStat>> initLevels();
+    static std::vector<common::SpecStorage<level_t>> initLevels();
 
 private:
     Character&                                          char_;
-    std::vector<common::SpecStorage<common::LevelStat>> levels_;
-    common::SpecStorage<common::PointAttribute>         pStor_;
-    common::Distribution<common::PointAttribute>        pDist_;
-    common::Distribution<EffectAttCoord>                cooDist_;
-    common::Distribution<EffectAttLuck>                 lucDist_;
-    common::Distribution<EffectAttAware>                awaDist_;
-    common::Distribution<EffectAttStr>                  strDist_;
-    common::Distribution<EffectAttSpeed>                spdDist_;
-    common::Distribution<EffectAttInt>                  intDist_;
-    common::Distribution<EffectAttCha>                  chaDist_;
+    std::vector<common::SpecStorage<level_t>>           levels_;
+    common::SpecStorage<point_t>                        pStor_;
+    common::Distribution<point_t, level_t>              pDist_;
+    common::Distribution<EffectAttCoord, level_t>       cooDist_;
+    common::Distribution<EffectAttLuck, level_t>        lucDist_;
+    common::Distribution<EffectAttAware, level_t>       awaDist_;
+    common::Distribution<EffectAttStr, level_t>         strDist_;
+    common::Distribution<EffectAttSpeed, level_t>       spdDist_;
+    common::Distribution<EffectAttInt, level_t>         intDist_;
+    common::Distribution<EffectAttCha, level_t>         chaDist_;
 
     static const AttributeReference                     ref_;
     static const AttributeText                          text_;
