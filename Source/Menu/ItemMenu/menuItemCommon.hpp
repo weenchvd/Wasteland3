@@ -10,6 +10,7 @@
 #include"attack.hpp"
 #include"common.hpp"
 #include"damage.hpp"
+#include"inventory.hpp"
 #include"menuCommon.hpp"
 #include<iostream>
 
@@ -26,6 +27,20 @@ void printAttackDescription(
     const Indent indent,
     const object::Attack& attack,
     const bool printAttackType = true
+);
+
+void printFullDescription(
+    std::istream& is,
+    std::ostream& os,
+    const object::InventoryIterator& iterItem,
+    const Indent indent
+);
+
+void printFullDescription(
+    std::istream& is,
+    std::ostream& os,
+    const object::Item& item,
+    const Indent indent
 );
 
 } // namespace menu

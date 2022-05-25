@@ -86,6 +86,10 @@ void MenuItemText::initModify()
     temp.en("Unsuitable modification");
     temp.ru("Неподходящая модификация");
     initLanguageBundleMenu(temp, modify_.unsuitableMod_);
+
+    temp.en("Show full description of modification #");
+    temp.ru("Показать полное описание модификации #");
+    initLanguageBundleMenu(temp, modify_.showFullDescrOfMod_);
 }
 
 } // namespace menu

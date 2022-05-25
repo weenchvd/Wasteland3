@@ -80,6 +80,8 @@ public:
 
     const text_t& unsuitableMod() const noexcept { return unsuitableMod_[li()]; }
 
+    const text_t& showFullDescrOfMod() const noexcept { return showFullDescrOfMod_[li()]; }
+
 private:
     language_bundle_t menuName_;
     language_bundle_t item_;
@@ -88,6 +90,7 @@ private:
     language_bundle_t removeMod_;
     language_bundle_t enterSlotNumber_;
     language_bundle_t unsuitableMod_;
+    language_bundle_t showFullDescrOfMod_;
 };
 
 ///************************************************************************************************

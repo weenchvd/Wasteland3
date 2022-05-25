@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"itemVisitorFullDescr.hpp"
 #include"menuItemCommon.hpp"
 #include<assert.h>
 #include<sstream>
@@ -115,6 +116,38 @@ void printAttackDescription(
     if (attack.angleOfConicalAreaIsPresented()) {
         os << indent << text.common().angleOfConicalArea() << sp
             << attack.angleOfConicalArea() << endl;
+    }
+}
+
+void printFullDescription(
+    istream& is,
+    ostream& os,
+    const object::InventoryIterator& iterItem,
+    const Indent indent)
+{
+    assert(iterItem.isValid() == true);
+    assert(iterItem.getConst()->get() != nullptr);
+    printFullDescription(is, os, *iterItem.getConst()->get(), indent);
+}
+
+void printFullDescription(
+    istream& is,
+    ostream& os,
+    const object::Item& item,
+    const Indent indent)
+{
+    ItemVisitorFullDescription vis;
+    item.accept(vis);
+    auto text{ vis.getFullDescription() };
+    for (int i = 0; i < text.size(); ++i) {
+        os << indent;
+        while (i < text.size() && text[i] != '\n') {
+            os << text[i++];
+        }
+        os << endl;
+    }
+    if (text.size() > 0) {
+        os << endl;
     }
 }
 

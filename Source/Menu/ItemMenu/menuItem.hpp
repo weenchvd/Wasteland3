@@ -38,7 +38,9 @@ namespace actionItemWeapon {
 
 enum ActionItemWeapon {
     EQUIP = actionItem::__NEXT_ACTION_NUMBER,
-    MODIFY
+    MODIFY,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionItemWeapon
@@ -52,13 +54,6 @@ int contextSensitiveMenuItem_Inventory(
 );
 
 ///************************************************************************************************
-
-void printFullDescription(
-    std::istream& is,
-    std::ostream& os,
-    const object::InventoryIterator& iterItem,
-    const Indent indent
-);
 
 bool removeItem(
     std::istream& is,

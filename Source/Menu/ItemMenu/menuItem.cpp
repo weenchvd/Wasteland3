@@ -8,6 +8,7 @@
 #include"itemVisitorFullDescr.hpp"
 #include"menuCommonText.hpp"
 #include"menuItem.hpp"
+#include"menuItemCommon.hpp"
 #include"menuItemModify.hpp"
 #include"menuItemText.hpp"
 #include<assert.h>
@@ -106,28 +107,6 @@ int contextSensitiveMenuItem_Inventory(
 }
 
 ///************************************************************************************************
-
-void printFullDescription(
-    istream& is,
-    ostream& os,
-    const object::InventoryIterator& iterItem,
-    const Indent indent)
-{
-    assert(iterItem.isValid() == true);
-    ItemVisitorFullDescription vis;
-    (*iterItem.getConst())->accept(vis);
-    auto text{ vis.getFullDescription() };
-    for (int i = 0; i < text.size(); ++i) {
-        os << indent;
-        while (i < text.size() && text[i] != '\n') {
-            os << text[i++];
-        }
-        os << endl;
-    }
-    if (text.size() > 0) {
-        os << endl;
-    }
-}
 
 bool removeItem(
     istream& is,

@@ -10,6 +10,7 @@
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
 #include"menuItem.hpp"
+#include"menuItemCommon.hpp"
 #include"menuItemText.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"

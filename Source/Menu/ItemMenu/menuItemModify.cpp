@@ -9,12 +9,13 @@
 #include"menuCommonText.hpp"
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
-#include"menuItem.hpp"
+#include"menuItemCommon.hpp"
 #include"menuItemModify.hpp"
 #include"menuItemText.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
 #include<assert.h>
+#include<sstream>
 
 namespace game {
 namespace menu {
@@ -46,9 +47,10 @@ void menuItemModify(
         printNumBar(os, ind1, actionItemModify::SHOW_FULL_DESCR, tCom.showFullDescription()) << endl;
         printNumBar(os, ind1, actionItemModify::INSTALL_MOD, text.installMod()) << endl;
         printNumBar(os, ind1, actionItemModify::REMOVE_MOD, text.removeMod()) << endl;
-        os << ind0 << comT.enterAction() << endl;
 
-        switch (getAction(is, os)) {
+        auto& item{ *iterItem.get()->get() };
+        int number{ actionItemModify::__NEXT_ACTION_NUMBER };
+        switch (contextSensitiveMenuItemModify(is, os, squad, item, number, indent)) {
         case actionItemModify::SHOW_FULL_DESCR:
             printFullDescription(is, os, iterItem, ind1);
             break;
@@ -67,6 +69,67 @@ void menuItemModify(
             break;
         }
     }
+}
+
+int contextSensitiveMenuItemModify(
+    istream& is,
+    ostream& os,
+    object::Squad& squad,
+    object::Item& item,
+    int nextActionNumber,
+    const Indent indent
+)
+{
+    using slot_number_t     = int;
+    using action_number_t   = int;
+
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuItemText::modify() };
+    object::ItemVisitorType vis;
+    item.accept(vis);
+
+    switch (vis.type()) {
+    case object::Item::Type::WEAPON: {
+        const auto& weapon{ static_cast<object::Weapon&>(item) };
+        assert(weapon.itemType() == object::Item::Type::WEAPON);
+
+        vector<pair<slot_number_t, action_number_t>> mapping;
+        const auto& slots{ weapon.slotMod() };
+        for (int i = 0; i < slots.sizeRaw(); ++i) {
+            if (slots.type(i) != object::WeaponMod::Type::INVALID && slots[i] != nullptr) {
+                mapping.push_back(pair{ i, nextActionNumber++ });
+            }
+        }
+
+        for (int i = 0; i < mapping.size(); ++i) {
+            ostringstream oss;
+            oss << text.showFullDescrOfMod() << mapping[i].first + itemModNumber::countFrom;
+            printNumBar(os, ind1, mapping[i].second, oss.str()) << endl;
+        }
+        os << ind0 << comT.enterAction() << endl;
+
+        auto action{ getAction(is, os) };
+        bool actionFound{ false };
+        for (int i = 0; i < mapping.size(); ++i) {
+            if (action == mapping[i].second) {
+                assert(slots[mapping[i].first].get() != nullptr);
+                printFullDescription(is, os, *slots[mapping[i].first].get(), ind1);
+                actionFound = true;
+                break;
+            }
+        }
+        if (!actionFound) return action;
+        break;
+    }
+    case object::Item::Type::WEAPON_MOD:
+    case object::Item::Type::AMMO:
+    default:
+        os << ind0 << comT.enterAction() << endl;
+        return getAction(is, os);
+    }
+    return actionCommon::INVALID;
 }
 
 void contextSensitiveMenuItemModify_Install(

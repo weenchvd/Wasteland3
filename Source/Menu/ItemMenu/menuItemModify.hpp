@@ -35,6 +35,15 @@ void menuItemModify(
     const Indent indent
 );
 
+int contextSensitiveMenuItemModify(
+    std::istream& is,
+    std::ostream& os,
+    object::Squad& squad,
+    object::Item& item,
+    int nextActionNumber,
+    const Indent indent
+);
+
 void contextSensitiveMenuItemModify_Install(
     std::istream& is,
     std::ostream& os,
