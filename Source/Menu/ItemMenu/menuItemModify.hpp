@@ -60,37 +60,6 @@ void contextSensitiveMenuItemModify_Remove(
     const Indent indent
 );
 
-///************************************************************************************************
-
-namespace itemModNumber {
-
-constexpr auto countFrom{ 1 };
-
-} // namespace itemModNumber
-
-void showSlotsAndMods(
-    std::istream& is,
-    std::ostream& os,
-    const object::InventoryIterator& iterItem,
-    const Indent indent
-);
-
-std::pair<int, bool> pickSlotNumber(
-    std::istream& is,
-    std::ostream& os,
-    object::Squad& squad,
-    const object::InventoryIterator& iterItem,
-    const Indent indent
-);
-
-void showModsWithTypes(
-    std::istream& is,
-    std::ostream& os,
-    const object::Roster& roster,
-    const common::Text& title,
-    const Indent indent
-);
-
 } // namespace menu
 } // namespace game
 

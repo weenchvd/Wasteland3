@@ -5,7 +5,6 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"itemVisitorType.hpp"
-#include"itemVisitorFullDescr.hpp"
 #include"menuCommonText.hpp"
 #include"menuItem.hpp"
 #include"menuItemCommon.hpp"
@@ -104,29 +103,6 @@ int contextSensitiveMenuItem_Inventory(
         return getAction(is, os);
     }
     return actionCommon::INVALID;
-}
-
-///************************************************************************************************
-
-bool removeItem(
-    istream& is,
-    ostream& os,
-    object::Inventory& inventory,
-    object::InventoryIterator& iterItem,
-    const Indent indent)
-{
-    assert(iterItem.isValid() == true);
-    const auto& text{ MenuItemText::common() };
-    os << indent << text.questionDeleteItem() << endl;
-    switch (getYesNo(is, os, indent)) {
-    case YesNo::YES:
-        inventory.extract(iterItem);
-        return true;
-    case YesNo::NO:
-    case YesNo::CANCEL:
-    default:
-        return false;
-    }
 }
 
 } // namespace menu

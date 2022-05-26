@@ -53,16 +53,6 @@ int contextSensitiveMenuItem_Inventory(
     const Indent indent
 );
 
-///************************************************************************************************
-
-bool removeItem(
-    std::istream& is,
-    std::ostream& os,
-    object::Inventory& inventory,
-    object::InventoryIterator& iterItem,
-    const Indent indent
-);
-
 } // namespace menu
 } // namespace game
 
