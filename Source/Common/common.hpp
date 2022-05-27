@@ -286,6 +286,12 @@ inline std::ostream& operator<<(std::ostream& os, const Radiation& value)
     return os;
 }
 
+inline std::ostream& operator<<(std::ostream& os, const PointSkill& value)
+{
+    os << toUnderlying(value);
+    return os;
+}
+
 inline std::ostream& operator<<(std::ostream& os, const LevelSkill& value)
 {
     os << toInt(toUnderlying(value));

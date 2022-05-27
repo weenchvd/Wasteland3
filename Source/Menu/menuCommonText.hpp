@@ -62,6 +62,10 @@ public:
 
     const text_t& notImplemented() const noexcept { return notImplemented_[li()]; }
 
+    const text_t& saveChanges() const noexcept { return saveChanges_[li()]; }
+
+    const text_t& cancelChanges() const noexcept { return cancelChanges_[li()]; }
+
 private:
     language_bundle_t actions_;
     language_bundle_t exitMenu_;
@@ -79,6 +83,8 @@ private:
     language_bundle_t promptSymbol_;
     language_bundle_t errorSymbol_;
     language_bundle_t notImplemented_;
+    language_bundle_t saveChanges_;
+    language_bundle_t cancelChanges_;
 };
 
 ///************************************************************************************************

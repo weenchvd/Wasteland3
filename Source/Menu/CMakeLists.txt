@@ -31,6 +31,7 @@ set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "OptionMenu/menuOptions.cpp"
                     "OptionMenu/menuOptionsText.cpp"
                     "SkillMenu/menuSkill.cpp"
+                    "SkillMenu/menuSkillText.cpp"
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})

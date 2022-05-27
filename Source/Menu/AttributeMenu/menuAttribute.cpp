@@ -16,7 +16,6 @@ namespace menu {
 
 using namespace std;
 
-
 void menuAttribute(istream& is, ostream& os, object::Character& character, const Indent indent)
 {
     Indent ind0{ indent };
@@ -33,8 +32,8 @@ void menuAttribute(istream& is, ostream& os, object::Character& character, const
         printNumBar(os, ind1, actionAttribute::SHOW_ALL, text.showAttributes()) << endl;
         printNumBar(os, ind1, actionAttribute::SHOW_ALL_ACCEPTED, text.showAttributesAccepted()) << endl;
         printNumBar(os, ind1, actionAttribute::MODIFY, text.modify()) << endl;
-        printNumBar(os, ind1, actionAttribute::SAVE_CHANGES, text.saveChanges()) << endl;
-        printNumBar(os, ind1, actionAttribute::CANCEL_CHANGES, text.cancelChanges()) << endl;
+        printNumBar(os, ind1, actionAttribute::SAVE_CHANGES, comT.saveChanges()) << endl;
+        printNumBar(os, ind1, actionAttribute::CANCEL_CHANGES, comT.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {

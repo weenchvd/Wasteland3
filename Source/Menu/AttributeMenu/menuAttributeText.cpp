@@ -88,14 +88,6 @@ void MenuAttributeText::initMain()
     temp.en("Attributes have been changed. Do you want to save the changes?");
     temp.ru("Атрибуты были изменены. Вы хотите сохранить изменения?");
     initLanguageBundleMenu(temp, main_.questionSaveChanges_);
-
-    temp.en("Save changes");
-    temp.ru("Сохранить изменения");
-    initLanguageBundleMenu(temp, main_.saveChanges_);
-
-    temp.en("Cancel changes");
-    temp.ru("Отменить изменения");
-    initLanguageBundleMenu(temp, main_.cancelChanges_);
 }
 
 void MenuAttributeText::initModify()

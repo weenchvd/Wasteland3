@@ -14,26 +14,35 @@
 namespace game {
 namespace menu {
 
-constexpr int skillWidth{ 30 };
-
 namespace actionSkill {
 
 enum ActionSkill {
     SHOW_ALL = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ALL_ACCEPTED,
-    MODIFY
+    MODIFY,
+    SAVE_CHANGES,
+    CANCEL_CHANGES,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionSkill
 
-void menuSkill(std::istream& is, std::ostream& os, object::Character& character, const Indent indent);
+void menuSkill(
+    std::istream& is,
+    std::ostream& os,
+    object::Character& character,
+    const Indent indent
+);
 
 namespace actionModifySkill {
 
 enum ActionModifySkill {
-    SHOW_ACCEPTED = actionCommon::__NEXT_ACTION_NUMBER,
+    SHOW_DESCRIPTION = actionCommon::__NEXT_ACTION_NUMBER,
     INCREASE_LEVEL,
-    DECREASE_LEVEL
+    DECREASE_LEVEL,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionModifySkill
@@ -47,6 +56,8 @@ void menuModifySkill(
 );
 
 ///************************************************************************************************
+
+constexpr int skillSpaces{ 2 };
 
 void showAllSkills(
     std::istream& is,
@@ -77,6 +88,15 @@ object::Skill::Type pickSkill(
     std::ostream& os,
     const object::Character& character,
     const Indent indent
+);
+
+void changeLevel(
+    std::istream& is,
+    std::ostream& os,
+    object::Character& character,
+    object::Skill::Type type,
+    const Indent indent,
+    bool increase
 );
 
 } // namespace menu

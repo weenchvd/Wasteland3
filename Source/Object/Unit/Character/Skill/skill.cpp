@@ -44,10 +44,10 @@ Skill::Skill(Character& character)
     assert(text_.isInitialized());
 }
 
-void Skill::addLevel(Skill::Type type, level_t shift) noexcept
+bool Skill::addLevel(Skill::Type type, level_t shift) noexcept
 {
     auto index = common::toUnderlying(type);
-    common::changeLevel(levels_[index], pStor_, pDist_, shift);
+    return common::changeLevel(levels_[index], pStor_, pDist_, shift);
 }
 
 bool Skill::isModified() const noexcept

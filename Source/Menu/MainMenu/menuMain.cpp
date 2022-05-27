@@ -16,6 +16,7 @@
 #include"menuOptions.hpp"
 #include"menuOptionsText.hpp"
 #include"menuSkill.hpp"
+#include"menuSkillText.hpp"
 #include<limits>
 #include<sstream>
 #include<string>
@@ -33,6 +34,7 @@ void initializeMenu()
     MenuInventoryText::initialize();
     MenuItemText::initialize();
     MenuAttributeText::initialize();
+    MenuSkillText::initialize();
 }
 
 ///************************************************************************************************

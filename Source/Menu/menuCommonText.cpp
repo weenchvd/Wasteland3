@@ -95,6 +95,14 @@ void MenuCommonText::initCommon()
     temp.en("Feature not implemented yet");
     temp.ru("Функция еще не реализована");
     initLanguageBundleMenu(temp, common_.notImplemented_);
+
+    temp.en("Save changes");
+    temp.ru("Сохранить изменения");
+    initLanguageBundleMenu(temp, common_.saveChanges_);
+
+    temp.en("Cancel changes");
+    temp.ru("Отменить изменения");
+    initLanguageBundleMenu(temp, common_.cancelChanges_);
 }
 
 } // namespace menu

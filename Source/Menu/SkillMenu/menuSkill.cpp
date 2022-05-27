@@ -6,7 +6,7 @@
 
 #include"menuCommonText.hpp"
 #include"menuSkill.hpp"
-#include"locator.hpp"
+#include"menuSkillText.hpp"
 #include<limits>
 #include<sstream>
 #include<string>
@@ -16,22 +16,24 @@ namespace menu {
 
 using namespace std;
 
-
 void menuSkill(istream& is, ostream& os, object::Character& character, const Indent indent)
 {
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuSkillText::main() };
 
     while (true)
     {
         verticalIndent(os);
-        os << ind0 << "Skill menu (" << character.name() << ")" << endl;
+        os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionSkill::SHOW_ALL, "Show skills") << endl;
-        printNumBar(os, ind1, actionSkill::SHOW_ALL_ACCEPTED, "Show skills (accepted)") << endl;
-        printNumBar(os, ind1, actionSkill::MODIFY, "Modify skill") << endl;
+        printNumBar(os, ind1, actionSkill::SHOW_ALL, text.showSkills()) << endl;
+        printNumBar(os, ind1, actionSkill::SHOW_ALL_ACCEPTED, text.showSkillsAccepted()) << endl;
+        printNumBar(os, ind1, actionSkill::MODIFY, text.modify()) << endl;
+        printNumBar(os, ind1, actionSkill::SAVE_CHANGES, comT.saveChanges()) << endl;
+        printNumBar(os, ind1, actionSkill::CANCEL_CHANGES, comT.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
@@ -48,9 +50,15 @@ void menuSkill(istream& is, ostream& os, object::Character& character, const Ind
             }
             break;
         }
+        case actionSkill::SAVE_CHANGES:
+            character.skill().accept();
+            break;
+        case actionSkill::CANCEL_CHANGES:
+            character.skill().reject();
+            break;
         case actionCommon::EXIT:
             if (character.skill().isModified()) {
-                os << ind0 << "Skills have been changed. Do you want to save the changes?" << endl;
+                os << ind0 << text.questionSaveChanges() << endl;
                 switch (getYesNo(is, os, ind0)) {
                 case YesNo::YES:
                     character.skill().accept();
@@ -86,54 +94,36 @@ void menuModifySkill(
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
-    auto width{ utf8Size(character.skill().skillText().name(type)) + 2 };
+    const auto& text{ MenuSkillText::modify() };
+    auto nameWidth{ utf8Size(character.skill().skillText().name(type)) + skillSpaces };
+    auto width{ utf8Size(text.skillAccepted()) };
 
     while (true)
     {
         verticalIndent(os);
+        os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showSkillPoints(is, os, character, ind0);
-        os << ind0 << "Skill: " << stringSkill(character, type, width, space) << endl;
-        os << ind1 << character.skill().skillText().descr(type) << endl;
+        os << ind0 << fillWithPlaseholders(text.skill(), width, space) << space
+            << stringSkill(character, type, nameWidth, space, false) << endl;
+        os << ind0 << fillWithPlaseholders(text.skillAccepted(), width, space) << space
+            << stringSkill(character, type, nameWidth, space, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionModifySkill::SHOW_ACCEPTED, "Show the accepted level") << endl;
-        printNumBar(os, ind1, actionModifySkill::INCREASE_LEVEL, "Increase level") << endl;
-        printNumBar(os, ind1, actionModifySkill::DECREASE_LEVEL, "Decrease level") << endl;
+        printNumBar(os, ind1, actionModifySkill::SHOW_DESCRIPTION, text.showDescription()) << endl;
+        printNumBar(os, ind1, actionModifySkill::INCREASE_LEVEL, text.increaseLevel()) << endl;
+        printNumBar(os, ind1, actionModifySkill::DECREASE_LEVEL, text.decreaseLevel()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
-        case actionModifySkill::SHOW_ACCEPTED:
-            os << ind1 << "Skill (accepted): "
-                << stringSkill(character, type, width, space, true) << endl;
+        case actionModifySkill::SHOW_DESCRIPTION:
+            os << ind1 << character.skill().skillText().descr(type) << endl;
             break;
         case actionModifySkill::INCREASE_LEVEL: {
-            auto pair{ getNumber(is, os) };
-            if (pair.second == true) {
-                if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelSkill>>::max()) {
-                    // TODO ^^^ check or set range
-                    character.skill().addLevel(type, common::LevelSkill{
-                        static_cast<std::underlying_type_t<common::LevelSkill>>(pair.first) });
-                }
-                else {
-                    // TODO os << message
-                }
-            }
+            changeLevel(is, os, character, type, indent, true);
             break;
         }
         case actionModifySkill::DECREASE_LEVEL: {
-            auto pair{ getNumber(is, os) };
-            if (pair.second == true) {
-                if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelSkill>>::max()) {
-                    // TODO ^^^ check or set range
-                    character.skill().addLevel(type, common::LevelSkill{
-                        static_cast<std::underlying_type_t<common::LevelSkill>>(-pair.first) });
-                }
-                else {
-                    // TODO os << message
-                }
-            }
+            changeLevel(is, os, character, type, indent, false);
             break;
         }
         case actionCommon::EXIT:
@@ -159,65 +149,75 @@ void showAllSkills(
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     Indent ind2{ ind1 + Indent{} };
+    const auto& text{ MenuSkillText::common() };
 
-    showSkillPoints(is, os, character, ind1, accepted);
-    os << ind0 << "Skills";
-    if (accepted) {
-        os << " (accepted)";
+    showSkillPoints(is, os, character, ind0, accepted);
+    os << ind0 << (accepted ? text.skillsAccepted() : text.skills()) << endl;
+
+    unsigned int width{ 0 };
+    for (int i{ common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
+        i <= common::toUnderlying(common::lastEnum<object::Skill::Type>()); ++i)
+    {
+        auto size{ utf8Size(character.skill().skillText().name(
+            static_cast<object::Skill::Type>(i)))
+        };
+        if (width < size) {
+            width = size;
+        }
     }
-    os << ":" << endl;
+    width += skillSpaces;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::COMBAT) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::AUTOMATIC_WEAPONS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BIG_GUNS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BRAWLING,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::MELEE_COMBAT,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SMALL_ARMS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SNIPER_RIFLES,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::GENERAL) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::ANIMAL_WHISPERER,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::EXPLOSIVES,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::FIRST_AID,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SNEAKY_SHIT,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::WEIRD_SCIENCE,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::EXPLORATION) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::ARMOR_MODDING,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::LOCKPICKING,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::NERD_STUFF,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::MECHANICS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SURVIVAL,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::TOASTER_REPAIR,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::WEAPON_MODDING,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::SOCIAL) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BARTER,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::HARD_ASS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::KISS_ASS,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::LEADERSHIP,
-        skillWidth, space, accepted) << endl;
+        width, space, accepted) << endl;
 }
 
 common::Text stringSkill(
@@ -242,15 +242,11 @@ void showSkillPoints(
     const Indent indent,
     bool accepted)
 {
-    os << indent << "Skill points";
-    if (accepted) {
-        os << " (accepted): " << static_cast<int>(
-            character.skill().storage().getAccepted()) << endl;
-    }
-    else {
-        os << ": " << static_cast<int>(
+    const auto& text{ MenuSkillText::common() };
+
+    os << indent << (accepted ? text.skillPointsAccepted() : text.skillPoints())
+        << space << (accepted ? character.skill().storage().getAccepted() :
             character.skill().storage().get()) << endl;
-    }
 }
 
 object::Skill::Type pickSkill(
@@ -262,17 +258,17 @@ object::Skill::Type pickSkill(
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuSkillText::common() };
 
-    os << ind0 << "Skills:" << endl;
+    os << ind0 << text.skills() << endl;
     for (int i{ common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Skill::Type>()); ++i)
     {
-        os << ind1 << '\'' << i << "\' "
-            << character.skill().skillText().name(
-                static_cast<object::Skill::Type>(i)) << endl;
+        printNumBar(os, ind1, i, character.skill().skillText().name(
+            static_cast<object::Skill::Type>(i))) << endl;
     }
 
-    os << ind0 << "Select a skill:" << endl;
+    os << ind0 << text.selectSkill() << endl;
     object::Skill::Type t{ object::Skill::Type::INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
@@ -286,6 +282,36 @@ object::Skill::Type pickSkill(
         }
     }
     return t;
+}
+
+void changeLevel(
+    istream& is,
+    ostream& os,
+    object::Character& character,
+    object::Skill::Type type,
+    const Indent indent,
+    bool increase)
+{
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuSkillText::common() };
+
+    os << ind1 << text.enterNumOfLevels() << endl;
+
+    auto pair{ getNumber(is, os) };
+    if (pair.second == true) {
+        if (pair.first >= 0 &&
+            pair.first <= numeric_limits<std::underlying_type_t<common::LevelSkill>>::max())
+        {
+            auto success{ character.skill().addLevel(type, common::LevelSkill{
+                static_cast<std::underlying_type_t<common::LevelSkill>>(
+                    (increase ? pair.first : -pair.first)) })
+            };
+            if (success) return;
+        }
+        os << comT.errorSymbol() << text.invalidNumOfLevels() << endl;
+    }
 }
 
 } // namespace menu

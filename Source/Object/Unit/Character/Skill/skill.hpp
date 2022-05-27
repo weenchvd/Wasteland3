@@ -38,7 +38,7 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Skill::Type type, level_t shift) noexcept;
+    bool addLevel(Skill::Type type, level_t shift) noexcept;
 
     void addPoint(point_t shift) noexcept {
         pStor_.add(shift);
