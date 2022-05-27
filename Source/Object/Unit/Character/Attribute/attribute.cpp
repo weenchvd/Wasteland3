@@ -36,10 +36,10 @@ Attribute::Attribute(Character& character)
     assert(text_.isInitialized());
 }
 
-void Attribute::addLevel(Attribute::Type type, level_t shift) noexcept
+bool Attribute::addLevel(Attribute::Type type, level_t shift) noexcept
 {
     auto index = common::toUnderlying(type);
-    common::changeLevel(levels_[index], pStor_, pDist_, shift);
+    return common::changeLevel(levels_[index], pStor_, pDist_, shift);
 }
         
 void Attribute::addLevelToAll(level_t shift) noexcept

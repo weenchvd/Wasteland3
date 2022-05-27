@@ -16,6 +16,7 @@ set(LIBRARY_NAME "menu")
 set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "menuCommonText.cpp"
                     "AttributeMenu/menuAttribute.cpp"
+                    "AttributeMenu/menuAttributeText.cpp"
                     "InventoryMenu/menuInventory.cpp"
                     "InventoryMenu/menuInventoryText.cpp"
                     "ItemMenu/itemVisitorExtendedName.cpp"

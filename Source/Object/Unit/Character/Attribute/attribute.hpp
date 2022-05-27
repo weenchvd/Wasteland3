@@ -38,7 +38,7 @@ public:
     static bool isInitialized();
 
 public:
-    void addLevel(Attribute::Type type, level_t shift) noexcept;
+    bool addLevel(Attribute::Type type, level_t shift) noexcept;
 
     void addLevelToAll(level_t shift) noexcept;
 

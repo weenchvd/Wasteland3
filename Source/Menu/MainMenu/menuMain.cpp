@@ -6,6 +6,7 @@
 
 #include"itemVisitorFullDescr.hpp"
 #include"menuAttribute.hpp"
+#include"menuAttributeText.hpp"
 #include"menuCommonText.hpp"
 #include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
@@ -31,6 +32,7 @@ void initializeMenu()
     MenuOptionsText::initialize();
     MenuInventoryText::initialize();
     MenuItemText::initialize();
+    MenuAttributeText::initialize();
 }
 
 ///************************************************************************************************

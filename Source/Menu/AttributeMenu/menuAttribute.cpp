@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"menuAttribute.hpp"
+#include"menuAttributeText.hpp"
 #include"menuCommonText.hpp"
 #include<limits>
 #include<sstream>
@@ -21,16 +22,19 @@ void menuAttribute(istream& is, ostream& os, object::Character& character, const
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuAttributeText::main() };
 
     while (true)
     {
         verticalIndent(os);
-        os << ind0 << "Attribute menu (" << character.name() << ")" << endl;
+        os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionAttribute::SHOW_ALL, "Show attributes") << endl;
-        printNumBar(os, ind1, actionAttribute::SHOW_ALL_ACCEPTED, "Show attributes (accepted)") << endl;
-        printNumBar(os, ind1, actionAttribute::MODIFY, "Modify attribute") << endl;
+        printNumBar(os, ind1, actionAttribute::SHOW_ALL, text.showAttributes()) << endl;
+        printNumBar(os, ind1, actionAttribute::SHOW_ALL_ACCEPTED, text.showAttributesAccepted()) << endl;
+        printNumBar(os, ind1, actionAttribute::MODIFY, text.modify()) << endl;
+        printNumBar(os, ind1, actionAttribute::SAVE_CHANGES, text.saveChanges()) << endl;
+        printNumBar(os, ind1, actionAttribute::CANCEL_CHANGES, text.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
@@ -47,10 +51,16 @@ void menuAttribute(istream& is, ostream& os, object::Character& character, const
             }
             break;
         }
+        case actionAttribute::SAVE_CHANGES:
+            character.attribute().accept();
+            break;
+        case actionAttribute::CANCEL_CHANGES:
+            character.attribute().reject();
+            break;
         case actionCommon::EXIT:
             if (character.attribute().isModified()) {
-                os << ind0 << "Attributes have been changed. Do you want to save the changes?" << endl;
-                switch (getYesNo(is, os, ind0)) {
+                os << ind0 << text.questionSaveChanges() << endl;
+                switch (getYesNo(is, os, ind1)) {
                 case YesNo::YES:
                     character.attribute().accept();
                     return;
@@ -85,54 +95,36 @@ void menuModifyAttribute(
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
-    auto width{ utf8Size(character.attribute().attributeText().name(type)) + 2 };
+    const auto& text{ MenuAttributeText::modify() };
+    auto nameWidth{ utf8Size(character.attribute().attributeText().name(type)) + attributeSpaces };
+    auto width{ utf8Size(text.attributeAccepted()) };
 
     while (true)
     {
         verticalIndent(os);
+        os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showAttPoints(is, os, character, ind0);
-        os << ind0 << "Attribute: " << stringAttribute(character, type, width, space) << endl;
-        os << ind1 << character.attribute().attributeText().descr(type) << endl;
+        os << ind0 << fillWithPlaseholders(text.attribute(), width, space) << space
+            << stringAttribute(character, type, nameWidth, space, false) << endl;
+        os << ind0 << fillWithPlaseholders(text.attributeAccepted(), width, space) << space
+            << stringAttribute(character, type, nameWidth, space, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
-        printNumBar(os, ind1, actionModifyAttribute::SHOW_ACCEPTED, "Show the accepted level") << endl;
-        printNumBar(os, ind1, actionModifyAttribute::INCREASE_LEVEL, "Increase level") << endl;
-        printNumBar(os, ind1, actionModifyAttribute::DECREASE_LEVEL, "Decrease level") << endl;
+        printNumBar(os, ind1, actionModifyAttribute::SHOW_DESCRIPTION, text.showDescription()) << endl;
+        printNumBar(os, ind1, actionModifyAttribute::INCREASE_LEVEL, text.increaseLevel()) << endl;
+        printNumBar(os, ind1, actionModifyAttribute::DECREASE_LEVEL, text.decreaseLevel()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
-        case actionModifyAttribute::SHOW_ACCEPTED:
-            os << ind1 << "Attribute (accepted): "
-                << stringAttribute(character, type, width, space, true) << endl;
+        case actionModifyAttribute::SHOW_DESCRIPTION:
+            os << ind1 << character.attribute().attributeText().descr(type) << endl;
             break;
         case actionModifyAttribute::INCREASE_LEVEL: {
-            auto pair{ getNumber(is, os) };
-            if (pair.second == true) {
-                if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelAttribute>>::max()) {
-                    // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, common::LevelAttribute{
-                        static_cast<std::underlying_type_t<common::LevelAttribute>>(pair.first) });
-                }
-                else {
-                    // TODO os << message
-                }
-            }
+            changeLevel(is, os, character, type, indent, true);
             break;
         }
         case actionModifyAttribute::DECREASE_LEVEL: {
-            auto pair{ getNumber(is, os) };
-            if (pair.second == true) {
-                if (pair.first >= 0 &&
-                    pair.first <= numeric_limits<std::underlying_type_t<common::LevelAttribute>>::max()) {
-                    // TODO ^^^ check or set range
-                    character.attribute().addLevel(type, common::LevelAttribute{
-                        static_cast<std::underlying_type_t<common::LevelAttribute>>(-pair.first) });
-                }
-                else {
-                    // TODO os << message
-                }
-            }
+            changeLevel(is, os, character, type, indent, false);
             break;
         }
         case actionCommon::EXIT:
@@ -157,28 +149,30 @@ void showAllAttributes(
 {
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
+    const auto& text{ MenuAttributeText::common() };
 
     showAttPoints(is, os, character, ind0, accepted);
-    os << ind0 << "Attributes";
-    if (accepted) {
-        os << " (accepted)";
-    }
-    os << ":" << endl;
+    os << ind0 << (accepted ? text.attributesAccepted() : text.attributes()) << endl;
 
-    os << ind1 << stringAttribute(character, object::Attribute::Type::COORDINATION,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::LUCK,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::AWARENESS,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::STRENGTH,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::SPEED,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::INTELLIGENCE,
-        attrWidth, space, accepted) << endl;
-    os << ind1 << stringAttribute(character, object::Attribute::Type::CHARISMA,
-        attrWidth, space, accepted) << endl;
+    unsigned int width{ 0 };
+    for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
+        i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
+    {
+        auto size{ utf8Size(character.attribute().attributeText().name(
+            static_cast<object::Attribute::Type>(i)))
+        };
+        if (width < size) {
+            width = size;
+        }
+    }
+    width += attributeSpaces;
+
+    for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
+        i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
+    {
+        os << ind1 << stringAttribute(character, static_cast<object::Attribute::Type>(i),
+            width, space, accepted) << endl;
+    }
 }
 
 common::Text stringAttribute(
@@ -203,15 +197,11 @@ void showAttPoints(
     const Indent indent,
     bool accepted)
 {
-    os << indent << "Attribute points";
-    if (accepted) {
-        os << " (accepted): " << static_cast<int>(
-            character.attribute().storage().getAccepted()) << endl;
-    }
-    else {
-        os << ": " << static_cast<int>(
+    const auto& text{ MenuAttributeText::common() };
+
+    os << indent << (accepted ? text.attrPointsAccepted() : text.attrPoints())
+        << space << (accepted ? character.attribute().storage().getAccepted() :
             character.attribute().storage().get()) << endl;
-    }
 }
 
 object::Attribute::Type pickAttribute(
@@ -223,16 +213,16 @@ object::Attribute::Type pickAttribute(
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuAttributeText::common() };
 
-    os << ind0 << "Attributes:" << endl;
+    os << ind0 << text.attributes() << endl;
     for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {
-        os << ind1 << '\'' << i << "\' "
-            << character.attribute().attributeText().name(
-                static_cast<object::Attribute::Type>(i)) << endl;
+        printNumBar(os, ind1, i, character.attribute().attributeText().name(
+            static_cast<object::Attribute::Type>(i))) << endl;
     }
-    os << ind0 << "Select an attribute:" << endl;
+    os << ind0 << text.selectAttribute() << endl;
     object::Attribute::Type t{ object::Attribute::Type::INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
@@ -246,6 +236,36 @@ object::Attribute::Type pickAttribute(
         }
     }
     return t;
+}
+
+void changeLevel(
+    istream& is,
+    ostream& os,
+    object::Character& character,
+    object::Attribute::Type type,
+    const Indent indent,
+    bool increase)
+{
+    Indent ind0{ indent };
+    Indent ind1{ ind0 + Indent{} };
+    const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuAttributeText::common() };
+
+    os << ind1 << text.enterNumOfLevels() << endl;
+
+    auto pair{ getNumber(is, os) };
+    if (pair.second == true) {
+        if (pair.first >= 0 &&
+            pair.first <= numeric_limits<std::underlying_type_t<common::LevelAttribute>>::max())
+        {
+            auto success{ character.attribute().addLevel(type, common::LevelAttribute{
+                static_cast<std::underlying_type_t<common::LevelAttribute>>(
+                    (increase ? pair.first : -pair.first)) })
+            };
+            if (success) return;
+        }
+        os << comT.errorSymbol() << text.invalidNumOfLevels() << endl;
+    }
 }
 
 } // namespace menu

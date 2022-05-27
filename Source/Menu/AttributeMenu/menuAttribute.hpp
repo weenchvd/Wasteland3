@@ -14,14 +14,16 @@
 namespace game {
 namespace menu {
 
-constexpr int attrWidth{ 20 };
-
 namespace actionAttribute {
 
 enum ActionAttribute {
     SHOW_ALL = actionCommon::__NEXT_ACTION_NUMBER,
     SHOW_ALL_ACCEPTED,
-    MODIFY
+    MODIFY,
+    SAVE_CHANGES,
+    CANCEL_CHANGES,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionAttribute
@@ -36,9 +38,11 @@ void menuAttribute(
 namespace actionModifyAttribute {
 
 enum ActionModifyAttribute {
-    SHOW_ACCEPTED = actionCommon::__NEXT_ACTION_NUMBER,
+    SHOW_DESCRIPTION = actionCommon::__NEXT_ACTION_NUMBER,
     INCREASE_LEVEL,
-    DECREASE_LEVEL
+    DECREASE_LEVEL,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionModifyAttribute
@@ -52,6 +56,8 @@ void menuModifyAttribute(
 );
 
 ///************************************************************************************************
+
+constexpr int attributeSpaces{ 2 };
 
 void showAllAttributes(
     std::istream& is,
@@ -82,6 +88,15 @@ object::Attribute::Type pickAttribute(
     std::ostream& os,
     const object::Character& character,
     const Indent indent
+);
+
+void changeLevel(
+    std::istream& is,
+    std::ostream& os,
+    object::Character& character,
+    object::Attribute::Type type,
+    const Indent indent,
+    bool increase
 );
 
 } // namespace menu
