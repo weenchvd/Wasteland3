@@ -15,6 +15,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(LIBRARY_NAME "unit")
 set(SOURCE_CXX_LIST "${LIBRARY_NAME}.cpp"
                     "Character/character.cpp"
+                    "Character/characterCommon.cpp"
+                    "Character/characterReference.cpp"
                     "Character/Attribute/attribute.cpp"
                     "Character/Attribute/attributeCommon.cpp"
                     "Character/Attribute/attributeReference.cpp"
@@ -44,5 +46,6 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC observer
 )
 
+add_subdirectory("Character")
 add_subdirectory("Character/Attribute")
 add_subdirectory("Character/Skill")

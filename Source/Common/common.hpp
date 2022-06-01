@@ -77,6 +77,13 @@ constexpr bool isValidEnum(Enum e) noexcept
 }
 
 template <class Enum>
+constexpr bool isValidEnumAux(Enum e) noexcept
+{
+    assert(toUnderlying(Enum::INVALID) == -1);
+    return (e > Enum::NUMBER_OF && e < Enum::END);
+}
+
+template <class Enum>
 constexpr auto numberOf() noexcept
 {
     assert(toUnderlying(Enum::INVALID) == -1);

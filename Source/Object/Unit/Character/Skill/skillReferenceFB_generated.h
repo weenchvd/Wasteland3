@@ -42,8 +42,8 @@ struct FB_BarterDistribution;
 
 struct FB_LeadershipDistribution;
 
-struct FB_Skill;
-struct FB_SkillBuilder;
+struct FB_SkillReference;
+struct FB_SkillReferenceBuilder;
 
 FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(2) FB_PointSkillDistribution FLATBUFFERS_FINAL_CLASS {
  private:
@@ -517,8 +517,8 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(2) FB_LeadershipDistribution FLATBUFFERS_FIN
 };
 FLATBUFFERS_STRUCT_END(FB_LeadershipDistribution, 88);
 
-struct FB_Skill FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_SkillBuilder Builder;
+struct FB_SkillReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef FB_SkillReferenceBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_MIN_SKILL_POINTS = 4,
     VT_MAX_SKILL_POINTS = 6,
@@ -642,91 +642,91 @@ struct FB_Skill FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct FB_SkillBuilder {
-  typedef FB_Skill Table;
+struct FB_SkillReferenceBuilder {
+  typedef FB_SkillReference Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_min_skill_points(int16_t min_skill_points) {
-    fbb_.AddElement<int16_t>(FB_Skill::VT_MIN_SKILL_POINTS, min_skill_points, 0);
+    fbb_.AddElement<int16_t>(FB_SkillReference::VT_MIN_SKILL_POINTS, min_skill_points, 0);
   }
   void add_max_skill_points(int16_t max_skill_points) {
-    fbb_.AddElement<int16_t>(FB_Skill::VT_MAX_SKILL_POINTS, max_skill_points, 0);
+    fbb_.AddElement<int16_t>(FB_SkillReference::VT_MAX_SKILL_POINTS, max_skill_points, 0);
   }
   void add_init_skill_points(int16_t init_skill_points) {
-    fbb_.AddElement<int16_t>(FB_Skill::VT_INIT_SKILL_POINTS, init_skill_points, 0);
+    fbb_.AddElement<int16_t>(FB_SkillReference::VT_INIT_SKILL_POINTS, init_skill_points, 0);
   }
   void add_min_skill_level(int8_t min_skill_level) {
-    fbb_.AddElement<int8_t>(FB_Skill::VT_MIN_SKILL_LEVEL, min_skill_level, 0);
+    fbb_.AddElement<int8_t>(FB_SkillReference::VT_MIN_SKILL_LEVEL, min_skill_level, 0);
   }
   void add_max_skill_level(int8_t max_skill_level) {
-    fbb_.AddElement<int8_t>(FB_Skill::VT_MAX_SKILL_LEVEL, max_skill_level, 0);
+    fbb_.AddElement<int8_t>(FB_SkillReference::VT_MAX_SKILL_LEVEL, max_skill_level, 0);
   }
   void add_init_skill_level(int8_t init_skill_level) {
-    fbb_.AddElement<int8_t>(FB_Skill::VT_INIT_SKILL_LEVEL, init_skill_level, 0);
+    fbb_.AddElement<int8_t>(FB_SkillReference::VT_INIT_SKILL_LEVEL, init_skill_level, 0);
   }
   void add_point_skill_distr(const fbSkill::FB_PointSkillDistribution *point_skill_distr) {
-    fbb_.AddStruct(FB_Skill::VT_POINT_SKILL_DISTR, point_skill_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_POINT_SKILL_DISTR, point_skill_distr);
   }
   void add_automatic_distr(const fbSkill::FB_AutomaticWeaponsDistribution *automatic_distr) {
-    fbb_.AddStruct(FB_Skill::VT_AUTOMATIC_DISTR, automatic_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_AUTOMATIC_DISTR, automatic_distr);
   }
   void add_big_guns_distr(const fbSkill::FB_BigGunsDistribution *big_guns_distr) {
-    fbb_.AddStruct(FB_Skill::VT_BIG_GUNS_DISTR, big_guns_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_BIG_GUNS_DISTR, big_guns_distr);
   }
   void add_brawling_distr(const fbSkill::FB_BrawlingDistribution *brawling_distr) {
-    fbb_.AddStruct(FB_Skill::VT_BRAWLING_DISTR, brawling_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_BRAWLING_DISTR, brawling_distr);
   }
   void add_melee_distr(const fbSkill::FB_MeleeCombatDistribution *melee_distr) {
-    fbb_.AddStruct(FB_Skill::VT_MELEE_DISTR, melee_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_MELEE_DISTR, melee_distr);
   }
   void add_small_arms_distr(const fbSkill::FB_SmallArmsDistribution *small_arms_distr) {
-    fbb_.AddStruct(FB_Skill::VT_SMALL_ARMS_DISTR, small_arms_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_SMALL_ARMS_DISTR, small_arms_distr);
   }
   void add_sniper_distr(const fbSkill::FB_SniperDistribution *sniper_distr) {
-    fbb_.AddStruct(FB_Skill::VT_SNIPER_DISTR, sniper_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_SNIPER_DISTR, sniper_distr);
   }
   void add_animal_whisperer_disrt(const fbSkill::FB_AnimalWhispererDistribution *animal_whisperer_disrt) {
-    fbb_.AddStruct(FB_Skill::VT_ANIMAL_WHISPERER_DISRT, animal_whisperer_disrt);
+    fbb_.AddStruct(FB_SkillReference::VT_ANIMAL_WHISPERER_DISRT, animal_whisperer_disrt);
   }
   void add_explosives_distr(const fbSkill::FB_ExplosivesDistribution *explosives_distr) {
-    fbb_.AddStruct(FB_Skill::VT_EXPLOSIVES_DISTR, explosives_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_EXPLOSIVES_DISTR, explosives_distr);
   }
   void add_first_aid_distr(const fbSkill::FB_FirstAidDistribution *first_aid_distr) {
-    fbb_.AddStruct(FB_Skill::VT_FIRST_AID_DISTR, first_aid_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_FIRST_AID_DISTR, first_aid_distr);
   }
   void add_sneaky_shit_distr(const fbSkill::FB_SneakyShitDistribution *sneaky_shit_distr) {
-    fbb_.AddStruct(FB_Skill::VT_SNEAKY_SHIT_DISTR, sneaky_shit_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_SNEAKY_SHIT_DISTR, sneaky_shit_distr);
   }
   void add_weird_science_distr(const fbSkill::FB_WeirdScienceDistribution *weird_science_distr) {
-    fbb_.AddStruct(FB_Skill::VT_WEIRD_SCIENCE_DISTR, weird_science_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_WEIRD_SCIENCE_DISTR, weird_science_distr);
   }
   void add_mechanics_distr(const fbSkill::FB_MechanicsDistribution *mechanics_distr) {
-    fbb_.AddStruct(FB_Skill::VT_MECHANICS_DISTR, mechanics_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_MECHANICS_DISTR, mechanics_distr);
   }
   void add_survival_distr(const fbSkill::FB_SurvivalDistribution *survival_distr) {
-    fbb_.AddStruct(FB_Skill::VT_SURVIVAL_DISTR, survival_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_SURVIVAL_DISTR, survival_distr);
   }
   void add_weapon_modding_distr(const fbSkill::FB_WeaponModdingDistribution *weapon_modding_distr) {
-    fbb_.AddStruct(FB_Skill::VT_WEAPON_MODDING_DISTR, weapon_modding_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_WEAPON_MODDING_DISTR, weapon_modding_distr);
   }
   void add_barter_distr(const fbSkill::FB_BarterDistribution *barter_distr) {
-    fbb_.AddStruct(FB_Skill::VT_BARTER_DISTR, barter_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_BARTER_DISTR, barter_distr);
   }
   void add_leadership_distr(const fbSkill::FB_LeadershipDistribution *leadership_distr) {
-    fbb_.AddStruct(FB_Skill::VT_LEADERSHIP_DISTR, leadership_distr);
+    fbb_.AddStruct(FB_SkillReference::VT_LEADERSHIP_DISTR, leadership_distr);
   }
-  explicit FB_SkillBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit FB_SkillReferenceBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  flatbuffers::Offset<FB_Skill> Finish() {
+  flatbuffers::Offset<FB_SkillReference> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<FB_Skill>(end);
+    auto o = flatbuffers::Offset<FB_SkillReference>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<FB_Skill> CreateFB_Skill(
+inline flatbuffers::Offset<FB_SkillReference> CreateFB_SkillReference(
     flatbuffers::FlatBufferBuilder &_fbb,
     int16_t min_skill_points = 0,
     int16_t max_skill_points = 0,
@@ -751,7 +751,7 @@ inline flatbuffers::Offset<FB_Skill> CreateFB_Skill(
     const fbSkill::FB_WeaponModdingDistribution *weapon_modding_distr = 0,
     const fbSkill::FB_BarterDistribution *barter_distr = 0,
     const fbSkill::FB_LeadershipDistribution *leadership_distr = 0) {
-  FB_SkillBuilder builder_(_fbb);
+  FB_SkillReferenceBuilder builder_(_fbb);
   builder_.add_leadership_distr(leadership_distr);
   builder_.add_barter_distr(barter_distr);
   builder_.add_weapon_modding_distr(weapon_modding_distr);
@@ -778,47 +778,47 @@ inline flatbuffers::Offset<FB_Skill> CreateFB_Skill(
   return builder_.Finish();
 }
 
-inline const fbSkill::FB_Skill *GetFB_Skill(const void *buf) {
-  return flatbuffers::GetRoot<fbSkill::FB_Skill>(buf);
+inline const fbSkill::FB_SkillReference *GetFB_SkillReference(const void *buf) {
+  return flatbuffers::GetRoot<fbSkill::FB_SkillReference>(buf);
 }
 
-inline const fbSkill::FB_Skill *GetSizePrefixedFB_Skill(const void *buf) {
-  return flatbuffers::GetSizePrefixedRoot<fbSkill::FB_Skill>(buf);
+inline const fbSkill::FB_SkillReference *GetSizePrefixedFB_SkillReference(const void *buf) {
+  return flatbuffers::GetSizePrefixedRoot<fbSkill::FB_SkillReference>(buf);
 }
 
-inline const char *FB_SkillIdentifier() {
+inline const char *FB_SkillReferenceIdentifier() {
   return "SKLR";
 }
 
-inline bool FB_SkillBufferHasIdentifier(const void *buf) {
+inline bool FB_SkillReferenceBufferHasIdentifier(const void *buf) {
   return flatbuffers::BufferHasIdentifier(
-      buf, FB_SkillIdentifier());
+      buf, FB_SkillReferenceIdentifier());
 }
 
-inline bool VerifyFB_SkillBuffer(
+inline bool VerifyFB_SkillReferenceBuffer(
     flatbuffers::Verifier &verifier) {
-  return verifier.VerifyBuffer<fbSkill::FB_Skill>(FB_SkillIdentifier());
+  return verifier.VerifyBuffer<fbSkill::FB_SkillReference>(FB_SkillReferenceIdentifier());
 }
 
-inline bool VerifySizePrefixedFB_SkillBuffer(
+inline bool VerifySizePrefixedFB_SkillReferenceBuffer(
     flatbuffers::Verifier &verifier) {
-  return verifier.VerifySizePrefixedBuffer<fbSkill::FB_Skill>(FB_SkillIdentifier());
+  return verifier.VerifySizePrefixedBuffer<fbSkill::FB_SkillReference>(FB_SkillReferenceIdentifier());
 }
 
-inline const char *FB_SkillExtension() {
+inline const char *FB_SkillReferenceExtension() {
   return "bundle";
 }
 
-inline void FinishFB_SkillBuffer(
+inline void FinishFB_SkillReferenceBuffer(
     flatbuffers::FlatBufferBuilder &fbb,
-    flatbuffers::Offset<fbSkill::FB_Skill> root) {
-  fbb.Finish(root, FB_SkillIdentifier());
+    flatbuffers::Offset<fbSkill::FB_SkillReference> root) {
+  fbb.Finish(root, FB_SkillReferenceIdentifier());
 }
 
-inline void FinishSizePrefixedFB_SkillBuffer(
+inline void FinishSizePrefixedFB_SkillReferenceBuffer(
     flatbuffers::FlatBufferBuilder &fbb,
-    flatbuffers::Offset<fbSkill::FB_Skill> root) {
-  fbb.FinishSizePrefixed(root, FB_SkillIdentifier());
+    flatbuffers::Offset<fbSkill::FB_SkillReference> root) {
+  fbb.FinishSizePrefixed(root, FB_SkillReferenceIdentifier());
 }
 
 }  // namespace fbSkill

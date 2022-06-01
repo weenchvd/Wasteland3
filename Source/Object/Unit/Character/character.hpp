@@ -7,23 +7,21 @@
 #ifndef CHARACTER_HPP
 #define CHARACTER_HPP
 
-#include"common.hpp"
-#include"slot.hpp"
-#include"weapon.hpp"
-#include"unit.hpp"
 #include"attribute.hpp"
-#include"skill.hpp"
 #include"characterCommon.hpp"
 #include"characterReference.hpp"
+#include"common.hpp"
+#include"skill.hpp"
+#include"slot.hpp"
+#include"unit.hpp"
+#include"weapon.hpp"
 #include<memory>
-#include<type_traits>
-#include<vector>
 
 namespace game {
 
 namespace global {
 
-class Factory; // TODO delete?
+class Factory;
 
 } // namespace global
 
@@ -31,13 +29,18 @@ namespace object {
 
 class Character : public Unit {
 public:
-    using Model         = Character__Model;
-    using Type          = Character__Type;
+    using Model = Character__Model;
+    using Type  = Character__Type;
 
+private:
     friend global::Factory;
+
+    static constexpr auto nWSlots_{ CharacterReference::nWSlots_ }; // number of weapon slots
 
 protected:
     explicit Character(Character::Model model);
+
+    explicit Character(const CharacterReference& ref);
 
 public:
     Character(const Character&) = delete;
@@ -49,11 +52,6 @@ public:
 
     static bool isInitialized();
 
-    static void initializeReference() {
-        if (ref_.size() == 0) initRef();
-    }
-
-public:
     virtual void accept(UnitVisitor& visitor) noexcept override {
         visitor.visitCharacter(*this);
     }
@@ -61,6 +59,8 @@ public:
     void apply() noexcept;
 
 private:
+    void initCtor();
+
     void check() noexcept;
 
 /// character parameters
@@ -81,8 +81,8 @@ public:
         return base_.type_;
     }
 
-    common::Text name() const noexcept { return name_; }
-    void name(common::Text name) noexcept { name_ = name; }
+    common::Text name() const noexcept;
+    void name(common::Text name) noexcept { enteredName_ = name; }
 
     common::Time timeDetection() const noexcept { return timeDetect_; }
     void timeDetectionAdd(common::Time shift) noexcept { timeDetect_ += shift; }
@@ -315,32 +315,23 @@ public:
     common::Radiation radiationResistance() const noexcept { return radRes_; }
     void radiationResistanceAdd(common::Radiation shift) noexcept { radRes_ += shift; }
 
-/// slots
 public:
-    const common::Slot<Weapon, nWSlots>& slotWeapon() const noexcept { return slotWeapon_; }
-    common::Slot<Weapon, nWSlots>& slotWeapon() noexcept { return slotWeapon_; }
+/// slots
+    const common::Slot<Weapon, nWSlots_>& slotWeapon() const noexcept { return slotWeapon_; }
+    common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
 
 /// attributes
-public:
     const Attribute& attribute() const noexcept { return *attrib_; }
     Attribute& attribute() noexcept { return *attrib_; }
 
 /// skills
-public:
     const Skill& skill() const noexcept { return *skill_; }
     Skill& skill() noexcept { return *skill_; }
 
 private:
-    static void initRef();
-
-    static void add(CharacterReference common) {
-        ref_[static_cast<std::underlying_type_t<Character::Model>>(common.model_)] = std::move(common);
-    }
-
-private:
     const CharacterReference&   base_;          // reference, sample, template
 
-    common::Text                name_;          // name
+    common::Text                enteredName_;   // name entered by the player
             
     common::Time                timeDetect_;    // detection time
     common::Experience          xp_;            // experience
@@ -422,17 +413,15 @@ private:
     common::Perception          percept_;       // perception
     common::Radiation           radRes_;        // radiation resistance
 
-    //common::Slot<Armor, nASlots>            slotArmor_;
-    common::Slot<Weapon, nWSlots>           slotWeapon_;
-    //common::Slot<Consumable, nQSlots>       slotConsum_;
+    //common::Slot<Armor, nASlots>                slotArmor_;
+    common::Slot<Weapon, nWSlots_>              slotWeapon_;
+    //common::Slot<Consumable, nQSlots>           slotConsum_;
 
-    std::unique_ptr<Attribute>              attrib_;
-    std::unique_ptr<Skill>                  skill_;
+    std::unique_ptr<Attribute>                  attrib_;
+    std::unique_ptr<Skill>                      skill_;
 
-    static std::vector<CharacterReference>  ref_;       // references
+    static const CharacterReferenceContainer    ref_;       // references
 };
-
-///------------------------------------------------------------------------------------------------
 
 } // namespace object
 } // namespace game

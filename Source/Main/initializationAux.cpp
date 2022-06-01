@@ -137,19 +137,19 @@ void initializeMembers(array<unique_ptr<game::object::Unit>, game::object::nMemb
     int i = 0;
     /// member 1
     if (i < members.size()) {
-        members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+        members[i] = f.createUnit<Character>(Character::Model::RANGER_TEMPLATE);
         auto& c = *static_cast<Character*>(members[i++].get());
         c.name("YURI");
     }
     /// member 2
     if (i < members.size()) {
-        members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+        members[i] = f.createUnit<Character>(Character::Model::RANGER_TEMPLATE);
         auto& c = *static_cast<Character*>(members[i++].get());
         c.name("ECHO");
     }
     /// member 3
     if (i < members.size()) {
-        members[i] = f.createUnit<Character>(Character::Model::RANGER_COMMON);
+        members[i] = f.createUnit<Character>(Character::Model::RANGER_TEMPLATE);
         auto& c = *static_cast<Character*>(members[i++].get());
         c.name("RUST");
     }

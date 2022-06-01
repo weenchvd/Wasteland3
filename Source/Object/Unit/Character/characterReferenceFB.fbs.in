@@ -1,0 +1,114 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "attributeSerializationFB.fbs";
+include "characterModelFB.fbs";
+include "characterTypeFB.fbs";
+include "languageBundleFB.fbs";
+include "skillSerializationFB.fbs";
+include "weaponTypeFB.fbs";
+
+namespace fbCharacter;
+
+file_identifier "@VAR_FB_BIN_FILE_IDENTIFIER@";
+file_extension "@VAR_FB_BIN_FILE_EXTENSION@";
+
+table FB_CharacterReference {
+  attributes:fbAttribute.FB_Attribute;
+  skills:fbSkill.FB_Skill;
+  character_model:fbCharacter.FB_CharacterModel = INVALID;
+  character_type:fbCharacter.FB_CharacterType = INVALID;
+  weapon_types:[fbWeapon.FB_WeaponType];
+  name:fbCommon.FB_LanguageBundle;
+  descrip:fbCommon.FB_LanguageBundle;
+  entered_name:string;
+  time_detect:int32 = 1700;
+  xp:int32 = 0;
+  xp_reward:int32 = 0;
+  range_leader:int16 = 0;
+  con_max:int16 = 50;
+  con_current:int16 = 50;
+  con_per_level:int16 = 0;
+  mul_crit_dmg:int16 = 100;
+  mul_combat_speed:int16 = 140;
+  mul_throwing_range:int16 = 100;
+  chance_hit:int16 = 0;
+  chance_hit_ar:int16 = 0;
+  chance_hit_smg:int16 = 0;
+  chance_hit_hmg:int16 = 0;
+  chance_hit_ft:int16 = 0;
+  chance_hit_brawl:int16 = 0;
+  chance_hit_blunt:int16 = 0;
+  chance_hit_bladed:int16 = 0;
+  chance_hit_sapistol:int16 = 0;
+  chance_hit_revolver:int16 = 0;
+  chance_hit_pumpsg:int16 = 0;
+  chance_hit_autosg:int16 = 0;
+  chance_hit_sr:int16 = 0;
+  chance_hit_nearby_allies:int16 = 0;
+  chance_crit_dmg_multi_kill:int16 = 0;
+  chance_crit_dmg:int16 = 0;
+  chance_crit_heal:int16 = 0;
+  chance_luck_action:int16 = 0;
+  chance_luck_crit_dmg:int16 = 0;
+  chance_luck_mega_crit_dmg:int16 = 0;
+  chance_luck_evade:int16 = 0;
+  chance_luck_crit_res:int16 = 0;
+  chance_luck_double_heal:int16 = 0;
+  chance_luck_double_money:int16 = 0;
+  chance_luck_double_scrap:int16 = 0;
+  bonus_heal:int16 = 1000;
+  bonus_crit_heal:int16 = 1000;
+  bonus_heal_revive:int16 = 1000;
+  bonus_repair:int16 = 1000;
+  bonus_xp:int16 = 1000;
+  bonus_mission_reward:int16 = 1000;
+  bonus_scrap:int16 = 1000;
+  bonus_sell_value:int16 = 1000;
+  bonus_buy_cost:int16 = 1000;
+  bonus_sneak_dmg:int16 = 1000;
+  bonus_norm_dmg:int16 = 1000;
+  bonus_melee_dmg:int16 = 1000;
+  bonus_range_dmg:int16 = 1000;
+  bonus_fire_dmg:int16 = 1000;
+  bonus_cold_dmg:int16 = 1000;
+  bonus_energy_dmg:int16 = 1000;
+  bonus_explosive_dmg:int16 = 1000;
+  bonus_animal_companion_dmg:int16 = 1000;
+  bonus_dmg_vs_robot:int16 = 1000;
+  bonus_dmg_vs_vehicle:int16 = 1000;
+  bonus_dmg_vs_synth:int16 = 1000;
+  bonus_dmg_vs_animal:int16 = 1000;
+  bonus_dmg_vs_mutant:int16 = 1000;
+  bonus_norm_dmg_on_boss_kill:int16 = 1000;
+  bonus_con_healed_on_revive:int16 = 1000;
+  res_status_effect:int16 = 0;
+  res_crit_dmg:int16 = 0;
+  res_fire_dmg:int16 = 0;
+  res_cold_dmg:int16 = 0;
+  res_energy_dmg:int16 = 0;
+  res_explosive_dmg:int16 = 0;
+  evasion:int16 = 0;
+  initiative:int16 = 0;
+  strike:int16 = 60;
+  level:int8 = 1;
+  armor:int8 = 0;
+  armor_penetration:int8 = 0;
+  ap_max:int8 = 6;
+  ap_current:int8 = 6;
+  mov_downed_time:int8 = 3;
+  perception:int8 = 0;
+  radiation_resistance:int8 = 0;
+}
+
+table FB_CharacterReferenceContainer {
+  sample_of_all_fields:FB_CharacterReference;
+  ref_minimal_values:FB_CharacterReference;
+  ref_default_values:FB_CharacterReference;
+  ref_values:[FB_CharacterReference];
+}
+
+root_type FB_CharacterReferenceContainer;

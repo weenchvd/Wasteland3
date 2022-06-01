@@ -45,8 +45,9 @@ enum class Weapon__Type : char {
     // ^^^ TYPES ^^^
     NUMBER_OF,                      /// must be the last
     // vvv GROUPS vvv
-    GROUP_ANY                       // any type
-
+    GROUP_ANY,                      // any type
+    // ^^^ GROUPS ^^^
+    END
 };
 
 ///************************************************************************************************

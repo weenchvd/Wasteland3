@@ -40,8 +40,7 @@ Skill::Skill(Character& character)
     barterDist_     { ref_.barterDist_ },
     leaderDist_     { ref_.leaderDist_ }
 {
-    assert(ref_.isInitialized());
-    assert(text_.isInitialized());
+    assert(isInitialized());
 }
 
 bool Skill::addLevel(Skill::Type type, level_t shift) noexcept

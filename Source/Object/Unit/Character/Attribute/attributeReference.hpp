@@ -39,14 +39,14 @@ public:
     static level_t initialAttributeLevel() noexcept { return initAttrLevel_; }
 
 private:
-    static void initPointDist(const fbAttribute::FB_Attribute* fb);
-    static void initCoordDist(const fbAttribute::FB_Attribute* fb);
-    static void initLuckDist(const fbAttribute::FB_Attribute* fb);
-    static void initAwareDist(const fbAttribute::FB_Attribute* fb);
-    static void initStrDist(const fbAttribute::FB_Attribute* fb);
-    static void initSpeedDist(const fbAttribute::FB_Attribute* fb);
-    static void initIntDist(const fbAttribute::FB_Attribute* fb);
-    static void initCharismaDist(const fbAttribute::FB_Attribute* fb);
+    static void initPointDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initCoordDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initLuckDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initAwareDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initStrDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initSpeedDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initIntDist(const fbAttribute::FB_AttributeReference* fb);
+    static void initCharismaDist(const fbAttribute::FB_AttributeReference* fb);
 
 private:
     static common::Distribution<point_t, level_t>           pDist_;     // distribution of attribute points

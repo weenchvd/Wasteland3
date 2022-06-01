@@ -1,0 +1,16 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+#ifndef CHARACTER_PATH_HPP
+#define CHARACTER_PATH_HPP
+
+#cmakedefine CHARACTER_REF_FB_BIN_FILE__NATIVE_REL_PATH u8R"(@CHARACTER_REF_FB_BIN_FILE__NATIVE_REL_PATH@)"
+#cmakedefine CHARACTER_TEXT_FB_BIN_FILE__NATIVE_REL_PATH u8R"(@CHARACTER_TEXT_FB_BIN_FILE__NATIVE_REL_PATH@)"
+
+#cmakedefine CHARACTER_REF_FB_BIN_FILE__HASH u8R"(@CHARACTER_REF_FB_BIN_FILE__HASH@)"
+#cmakedefine CHARACTER_TEXT_FB_BIN_FILE__HASH u8R"(@CHARACTER_TEXT_FB_BIN_FILE__HASH@)"
+
+#endif // !CHARACTER_PATH_HPP

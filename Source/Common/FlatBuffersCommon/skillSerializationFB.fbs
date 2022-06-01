@@ -1,0 +1,27 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+namespace fbSkill;
+
+table FB_Skill {
+  skill_points:int16 = 0;
+  automatic_level:int8 = 0;
+  big_guns_level:int8 = 0;
+  brawling_level:int8 = 0;
+  melee_level:int8 = 0;
+  small_arms_level:int8 = 0;
+  sniper_level:int8 = 0;
+  animal_whisperer_level:int8 = 0;
+  explosives_level:int8 = 0;
+  first_aid_level:int8 = 0;
+  sneaky_shit_level:int8 = 0;
+  weird_science_level:int8 = 0;
+  mechanics_level:int8 = 0;
+  survival_level:int8 = 0;
+  weapon_modding_level:int8 = 0;
+  barter_level:int8 = 0;
+  leadership_level:int8 = 0;
+}

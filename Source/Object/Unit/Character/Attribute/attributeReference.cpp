@@ -60,8 +60,8 @@ void AttributeReference::initialize()
     unique_ptr<char[]> buffer{};
     common::readBinFlatBuffer(ATTRIBUTE_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
                               ATTRIBUTE_REF_FB_BIN_FILE__HASH);
-    const fbAttribute::FB_Attribute* fb{
-        fbAttribute::GetFB_Attribute(buffer.get())
+    const fbAttribute::FB_AttributeReference* fb{
+        fbAttribute::GetFB_AttributeReference(buffer.get())
     };
 
     initPointDist(fb);
@@ -84,7 +84,7 @@ void AttributeReference::initialize()
     initialized_        = true;
 }
 
-void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initPointDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     pDist_ = move(common::Distribution<AttributeReference::point_t, AttributeReference::level_t>{
@@ -92,7 +92,7 @@ void AttributeReference::initPointDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initCoordDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->coord_distr();
@@ -110,7 +110,7 @@ void AttributeReference::initCoordDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initLuckDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->luck_distr();
@@ -140,7 +140,7 @@ void AttributeReference::initLuckDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initAwareDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->aware_distr();
@@ -158,7 +158,7 @@ void AttributeReference::initAwareDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initStrDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->str_distr();
@@ -178,7 +178,7 @@ void AttributeReference::initStrDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initSpeedDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->speed_distr();
@@ -196,7 +196,7 @@ void AttributeReference::initSpeedDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initIntDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->int_distr();
@@ -218,7 +218,7 @@ void AttributeReference::initIntDist(const fbAttribute::FB_Attribute* fb)
     });
 }
 
-void AttributeReference::initCharismaDist(const fbAttribute::FB_Attribute* fb)
+void AttributeReference::initCharismaDist(const fbAttribute::FB_AttributeReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->cha_distr();

@@ -39,23 +39,23 @@ public:
     static level_t initialSkillLevel() noexcept { return initSkillLevel_; }
 
 private:
-    static void initPointDist(const fbSkill::FB_Skill* fb);
-    static void initAutomaticDist(const fbSkill::FB_Skill* fb);
-    static void initBigGunsDist(const fbSkill::FB_Skill* fb);
-    static void initBrawlingDist(const fbSkill::FB_Skill* fb);
-    static void initMeleeDist(const fbSkill::FB_Skill* fb);
-    static void initSmallArmsDist(const fbSkill::FB_Skill* fb);
-    static void initSniperDist(const fbSkill::FB_Skill* fb);
-    static void initAnimalDist(const fbSkill::FB_Skill* fb);
-    static void initExplosiveDist(const fbSkill::FB_Skill* fb);
-    static void initFirstAidDist(const fbSkill::FB_Skill* fb);
-    static void initSneakyShitDist(const fbSkill::FB_Skill* fb);
-    static void initWeirdScienceDist(const fbSkill::FB_Skill* fb);
-    static void initMechanicsDist(const fbSkill::FB_Skill* fb);
-    static void initSurvivalDist(const fbSkill::FB_Skill* fb);
-    static void initWeaponModDist(const fbSkill::FB_Skill* fb);
-    static void initBarterDist(const fbSkill::FB_Skill* fb);
-    static void initLeadershipDist(const fbSkill::FB_Skill* fb);
+    static void initPointDist(const fbSkill::FB_SkillReference* fb);
+    static void initAutomaticDist(const fbSkill::FB_SkillReference* fb);
+    static void initBigGunsDist(const fbSkill::FB_SkillReference* fb);
+    static void initBrawlingDist(const fbSkill::FB_SkillReference* fb);
+    static void initMeleeDist(const fbSkill::FB_SkillReference* fb);
+    static void initSmallArmsDist(const fbSkill::FB_SkillReference* fb);
+    static void initSniperDist(const fbSkill::FB_SkillReference* fb);
+    static void initAnimalDist(const fbSkill::FB_SkillReference* fb);
+    static void initExplosiveDist(const fbSkill::FB_SkillReference* fb);
+    static void initFirstAidDist(const fbSkill::FB_SkillReference* fb);
+    static void initSneakyShitDist(const fbSkill::FB_SkillReference* fb);
+    static void initWeirdScienceDist(const fbSkill::FB_SkillReference* fb);
+    static void initMechanicsDist(const fbSkill::FB_SkillReference* fb);
+    static void initSurvivalDist(const fbSkill::FB_SkillReference* fb);
+    static void initWeaponModDist(const fbSkill::FB_SkillReference* fb);
+    static void initBarterDist(const fbSkill::FB_SkillReference* fb);
+    static void initLeadershipDist(const fbSkill::FB_SkillReference* fb);
 
 private:
     static common::Distribution<point_t, level_t>                   pDist_;         // distribution of skill points

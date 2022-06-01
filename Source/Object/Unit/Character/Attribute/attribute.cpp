@@ -32,8 +32,7 @@ Attribute::Attribute(Character& character)
     intDist_    { ref_.intDist_ },
     chaDist_    { ref_.chaDist_ }
 {
-    assert(ref_.isInitialized());
-    assert(text_.isInitialized());
+    assert(isInitialized());
 }
 
 bool Attribute::addLevel(Attribute::Type type, level_t shift) noexcept

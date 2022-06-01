@@ -24,8 +24,8 @@ struct FB_IntelligenceDistribution;
 
 struct FB_CharismaDistribution;
 
-struct FB_Attribute;
-struct FB_AttributeBuilder;
+struct FB_AttributeReference;
+struct FB_AttributeReferenceBuilder;
 
 FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(1) FB_PointAttributeDistribution FLATBUFFERS_FINAL_CLASS {
  private:
@@ -331,8 +331,8 @@ FLATBUFFERS_MANUALLY_ALIGNED_STRUCT(2) FB_CharismaDistribution FLATBUFFERS_FINAL
 };
 FLATBUFFERS_STRUCT_END(FB_CharismaDistribution, 88);
 
-struct FB_Attribute FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
-  typedef FB_AttributeBuilder Builder;
+struct FB_AttributeReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  typedef FB_AttributeReferenceBuilder Builder;
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_MIN_ATTR_POINTS = 4,
     VT_MAX_ATTR_POINTS = 6,
@@ -411,64 +411,64 @@ struct FB_Attribute FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   }
 };
 
-struct FB_AttributeBuilder {
-  typedef FB_Attribute Table;
+struct FB_AttributeReferenceBuilder {
+  typedef FB_AttributeReference Table;
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_min_attr_points(int8_t min_attr_points) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_MIN_ATTR_POINTS, min_attr_points, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MIN_ATTR_POINTS, min_attr_points, 0);
   }
   void add_max_attr_points(int8_t max_attr_points) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_MAX_ATTR_POINTS, max_attr_points, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MAX_ATTR_POINTS, max_attr_points, 0);
   }
   void add_init_attr_points(int8_t init_attr_points) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_INIT_ATTR_POINTS, init_attr_points, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_INIT_ATTR_POINTS, init_attr_points, 0);
   }
   void add_min_attr_level(int8_t min_attr_level) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_MIN_ATTR_LEVEL, min_attr_level, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MIN_ATTR_LEVEL, min_attr_level, 0);
   }
   void add_max_attr_level(int8_t max_attr_level) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_MAX_ATTR_LEVEL, max_attr_level, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MAX_ATTR_LEVEL, max_attr_level, 0);
   }
   void add_init_attr_level(int8_t init_attr_level) {
-    fbb_.AddElement<int8_t>(FB_Attribute::VT_INIT_ATTR_LEVEL, init_attr_level, 0);
+    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_INIT_ATTR_LEVEL, init_attr_level, 0);
   }
   void add_point_attr_distr(const fbAttribute::FB_PointAttributeDistribution *point_attr_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_POINT_ATTR_DISTR, point_attr_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_POINT_ATTR_DISTR, point_attr_distr);
   }
   void add_coord_distr(const fbAttribute::FB_CoordinationDistribution *coord_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_COORD_DISTR, coord_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_COORD_DISTR, coord_distr);
   }
   void add_luck_distr(const fbAttribute::FB_LuckDistribution *luck_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_LUCK_DISTR, luck_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_LUCK_DISTR, luck_distr);
   }
   void add_aware_distr(const fbAttribute::FB_AwarenessDistribution *aware_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_AWARE_DISTR, aware_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_AWARE_DISTR, aware_distr);
   }
   void add_str_distr(const fbAttribute::FB_StrengthDistribution *str_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_STR_DISTR, str_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_STR_DISTR, str_distr);
   }
   void add_speed_distr(const fbAttribute::FB_SpeedDistribution *speed_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_SPEED_DISTR, speed_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_SPEED_DISTR, speed_distr);
   }
   void add_int_distr(const fbAttribute::FB_IntelligenceDistribution *int_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_INT_DISTR, int_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_INT_DISTR, int_distr);
   }
   void add_cha_distr(const fbAttribute::FB_CharismaDistribution *cha_distr) {
-    fbb_.AddStruct(FB_Attribute::VT_CHA_DISTR, cha_distr);
+    fbb_.AddStruct(FB_AttributeReference::VT_CHA_DISTR, cha_distr);
   }
-  explicit FB_AttributeBuilder(flatbuffers::FlatBufferBuilder &_fbb)
+  explicit FB_AttributeReferenceBuilder(flatbuffers::FlatBufferBuilder &_fbb)
         : fbb_(_fbb) {
     start_ = fbb_.StartTable();
   }
-  flatbuffers::Offset<FB_Attribute> Finish() {
+  flatbuffers::Offset<FB_AttributeReference> Finish() {
     const auto end = fbb_.EndTable(start_);
-    auto o = flatbuffers::Offset<FB_Attribute>(end);
+    auto o = flatbuffers::Offset<FB_AttributeReference>(end);
     return o;
   }
 };
 
-inline flatbuffers::Offset<FB_Attribute> CreateFB_Attribute(
+inline flatbuffers::Offset<FB_AttributeReference> CreateFB_AttributeReference(
     flatbuffers::FlatBufferBuilder &_fbb,
     int8_t min_attr_points = 0,
     int8_t max_attr_points = 0,
@@ -484,7 +484,7 @@ inline flatbuffers::Offset<FB_Attribute> CreateFB_Attribute(
     const fbAttribute::FB_SpeedDistribution *speed_distr = 0,
     const fbAttribute::FB_IntelligenceDistribution *int_distr = 0,
     const fbAttribute::FB_CharismaDistribution *cha_distr = 0) {
-  FB_AttributeBuilder builder_(_fbb);
+  FB_AttributeReferenceBuilder builder_(_fbb);
   builder_.add_cha_distr(cha_distr);
   builder_.add_int_distr(int_distr);
   builder_.add_speed_distr(speed_distr);
@@ -502,47 +502,47 @@ inline flatbuffers::Offset<FB_Attribute> CreateFB_Attribute(
   return builder_.Finish();
 }
 
-inline const fbAttribute::FB_Attribute *GetFB_Attribute(const void *buf) {
-  return flatbuffers::GetRoot<fbAttribute::FB_Attribute>(buf);
+inline const fbAttribute::FB_AttributeReference *GetFB_AttributeReference(const void *buf) {
+  return flatbuffers::GetRoot<fbAttribute::FB_AttributeReference>(buf);
 }
 
-inline const fbAttribute::FB_Attribute *GetSizePrefixedFB_Attribute(const void *buf) {
-  return flatbuffers::GetSizePrefixedRoot<fbAttribute::FB_Attribute>(buf);
+inline const fbAttribute::FB_AttributeReference *GetSizePrefixedFB_AttributeReference(const void *buf) {
+  return flatbuffers::GetSizePrefixedRoot<fbAttribute::FB_AttributeReference>(buf);
 }
 
-inline const char *FB_AttributeIdentifier() {
+inline const char *FB_AttributeReferenceIdentifier() {
   return "ATTR";
 }
 
-inline bool FB_AttributeBufferHasIdentifier(const void *buf) {
+inline bool FB_AttributeReferenceBufferHasIdentifier(const void *buf) {
   return flatbuffers::BufferHasIdentifier(
-      buf, FB_AttributeIdentifier());
+      buf, FB_AttributeReferenceIdentifier());
 }
 
-inline bool VerifyFB_AttributeBuffer(
+inline bool VerifyFB_AttributeReferenceBuffer(
     flatbuffers::Verifier &verifier) {
-  return verifier.VerifyBuffer<fbAttribute::FB_Attribute>(FB_AttributeIdentifier());
+  return verifier.VerifyBuffer<fbAttribute::FB_AttributeReference>(FB_AttributeReferenceIdentifier());
 }
 
-inline bool VerifySizePrefixedFB_AttributeBuffer(
+inline bool VerifySizePrefixedFB_AttributeReferenceBuffer(
     flatbuffers::Verifier &verifier) {
-  return verifier.VerifySizePrefixedBuffer<fbAttribute::FB_Attribute>(FB_AttributeIdentifier());
+  return verifier.VerifySizePrefixedBuffer<fbAttribute::FB_AttributeReference>(FB_AttributeReferenceIdentifier());
 }
 
-inline const char *FB_AttributeExtension() {
+inline const char *FB_AttributeReferenceExtension() {
   return "bundle";
 }
 
-inline void FinishFB_AttributeBuffer(
+inline void FinishFB_AttributeReferenceBuffer(
     flatbuffers::FlatBufferBuilder &fbb,
-    flatbuffers::Offset<fbAttribute::FB_Attribute> root) {
-  fbb.Finish(root, FB_AttributeIdentifier());
+    flatbuffers::Offset<fbAttribute::FB_AttributeReference> root) {
+  fbb.Finish(root, FB_AttributeReferenceIdentifier());
 }
 
-inline void FinishSizePrefixedFB_AttributeBuffer(
+inline void FinishSizePrefixedFB_AttributeReferenceBuffer(
     flatbuffers::FlatBufferBuilder &fbb,
-    flatbuffers::Offset<fbAttribute::FB_Attribute> root) {
-  fbb.FinishSizePrefixed(root, FB_AttributeIdentifier());
+    flatbuffers::Offset<fbAttribute::FB_AttributeReference> root) {
+  fbb.FinishSizePrefixed(root, FB_AttributeReferenceIdentifier());
 }
 
 }  // namespace fbAttribute

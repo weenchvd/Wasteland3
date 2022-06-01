@@ -87,8 +87,8 @@ void SkillReference::initialize()
     unique_ptr<char[]> buffer{};
     common::readBinFlatBuffer(SKILL_REF_FB_BIN_FILE__NATIVE_REL_PATH, buffer,
                               SKILL_REF_FB_BIN_FILE__HASH);
-    const fbSkill::FB_Skill* fb{
-        fbSkill::GetFB_Skill(buffer.get())
+    const fbSkill::FB_SkillReference* fb{
+        fbSkill::GetFB_SkillReference(buffer.get())
     };
 
     initPointDist(fb);
@@ -120,7 +120,7 @@ void SkillReference::initialize()
     initialized_        = true;
 }
 
-void SkillReference::initPointDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initPointDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     pDist_ = move(common::Distribution<SkillReference::point_t, level_t>{
@@ -128,7 +128,7 @@ void SkillReference::initPointDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initAutomaticDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initAutomaticDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->automatic_distr();
@@ -144,7 +144,7 @@ void SkillReference::initAutomaticDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initBigGunsDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initBigGunsDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->big_guns_distr();
@@ -160,7 +160,7 @@ void SkillReference::initBigGunsDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initBrawlingDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initBrawlingDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->brawling_distr();
@@ -176,7 +176,7 @@ void SkillReference::initBrawlingDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initMeleeDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initMeleeDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->melee_distr();
@@ -192,7 +192,7 @@ void SkillReference::initMeleeDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initSmallArmsDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initSmallArmsDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->small_arms_distr();
@@ -212,7 +212,7 @@ void SkillReference::initSmallArmsDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initSniperDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initSniperDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->sniper_distr();
@@ -226,7 +226,7 @@ void SkillReference::initSniperDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initAnimalDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initAnimalDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->animal_whisperer_disrt();
@@ -240,7 +240,7 @@ void SkillReference::initAnimalDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initExplosiveDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initExplosiveDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->explosives_distr();
@@ -256,7 +256,7 @@ void SkillReference::initExplosiveDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initFirstAidDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initFirstAidDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->first_aid_distr();
@@ -272,7 +272,7 @@ void SkillReference::initFirstAidDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initSneakyShitDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initSneakyShitDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->sneaky_shit_distr();
@@ -292,7 +292,7 @@ void SkillReference::initSneakyShitDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initWeirdScienceDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initWeirdScienceDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->weird_science_distr();
@@ -310,7 +310,7 @@ void SkillReference::initWeirdScienceDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initMechanicsDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initMechanicsDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->mechanics_distr();
@@ -330,7 +330,7 @@ void SkillReference::initMechanicsDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initSurvivalDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initSurvivalDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->survival_distr();
@@ -346,7 +346,7 @@ void SkillReference::initSurvivalDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initWeaponModDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initWeaponModDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->weapon_modding_distr();
@@ -360,7 +360,7 @@ void SkillReference::initWeaponModDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initBarterDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initBarterDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->barter_distr();
@@ -376,7 +376,7 @@ void SkillReference::initBarterDist(const fbSkill::FB_Skill* fb)
     });
 }
 
-void SkillReference::initLeadershipDist(const fbSkill::FB_Skill* fb)
+void SkillReference::initLeadershipDist(const fbSkill::FB_SkillReference* fb)
 {
     assert(fb != nullptr);
     const auto* dist = fb->leadership_distr();

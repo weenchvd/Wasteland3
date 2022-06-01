@@ -151,7 +151,7 @@ struct FB_LeadershipDistribution {
   revive_con_healed:[int16:11];
 }
 
-table FB_Skill {
+table FB_SkillReference {
   min_skill_points:int16 = 0;
   max_skill_points:int16 = 0;
   init_skill_points:int16 = 0;
@@ -177,4 +177,4 @@ table FB_Skill {
   leadership_distr:FB_LeadershipDistribution;
 }
 
-root_type FB_Skill;
+root_type FB_SkillReference;
