@@ -42,6 +42,13 @@ ostream& verticalIndent(ostream& os)
     return os;
 }
 
+ostringstream& clearStream(ostringstream& oss)
+{
+    oss.str("");
+    oss.clear();
+    return oss;
+}
+
 int getAction(istream& is, ostream& os)
 {
     const auto& text{ MenuCommonText::common() };
@@ -110,7 +117,7 @@ unsigned int utf8Size(const std::string& s)
     return size;
 }
 
-common::Text fillWithPlaseholders(
+common::Text fillWithPlaceholder(
     const common::Text& source,
     unsigned char width,
     char placeholder)
@@ -119,6 +126,19 @@ common::Text fillWithPlaseholders(
     for (unsigned int i{ utf8Size(source) }; i < width; ++i) {
         t += placeholder;
     }
+    return t;
+}
+
+common::Text fitInWidth(
+    const common::Text& left,
+    const common::Text& right,
+    unsigned char width,
+    char placeholder)
+{
+    common::Text t{ left };
+    t += placeholder;
+    t = fillWithPlaceholder(t, width - utf8Size(right), placeholder);
+    t += right;
     return t;
 }
 

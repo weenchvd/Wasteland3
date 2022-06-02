@@ -91,6 +91,7 @@ void menuModifySkill(
     object::Skill::Type type,
     const Indent indent)
 {
+    constexpr auto sp{ sign::space };
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
@@ -103,10 +104,10 @@ void menuModifySkill(
         verticalIndent(os);
         os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showSkillPoints(is, os, character, ind0);
-        os << ind0 << fillWithPlaseholders(text.skill(), width, space) << space
-            << stringSkill(character, type, nameWidth, space, false) << endl;
-        os << ind0 << fillWithPlaseholders(text.skillAccepted(), width, space) << space
-            << stringSkill(character, type, nameWidth, space, true) << endl;
+        os << ind0 << fillWithPlaceholder(text.skill(), width, sp) << sp
+            << stringSkill(character, type, nameWidth, sp, false) << endl;
+        os << ind0 << fillWithPlaceholder(text.skillAccepted(), width, sp) << sp
+            << stringSkill(character, type, nameWidth, sp, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionModifySkill::SHOW_DESCRIPTION, text.showDescription()) << endl;
@@ -146,6 +147,7 @@ void showAllSkills(
     const Indent indent,
     bool accepted)
 {
+    constexpr auto sp{ sign::space };
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     Indent ind2{ ind1 + Indent{} };
@@ -169,55 +171,55 @@ void showAllSkills(
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::COMBAT) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::AUTOMATIC_WEAPONS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BIG_GUNS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BRAWLING,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::MELEE_COMBAT,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SMALL_ARMS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SNIPER_RIFLES,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::GENERAL) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::ANIMAL_WHISPERER,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::EXPLOSIVES,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::FIRST_AID,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SNEAKY_SHIT,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::WEIRD_SCIENCE,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::EXPLORATION) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::ARMOR_MODDING,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::LOCKPICKING,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::NERD_STUFF,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::MECHANICS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::SURVIVAL,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::TOASTER_REPAIR,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::WEAPON_MODDING,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
 
     os << ind1 << character.skill().skillText().group(object::Skill::Group::SOCIAL) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::BARTER,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::HARD_ASS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::KISS_ASS,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
     os << ind2 << stringSkill(character, object::Skill::Type::LEADERSHIP,
-        width, space, accepted) << endl;
+        width, sp, accepted) << endl;
 }
 
 common::Text stringSkill(
@@ -228,7 +230,7 @@ common::Text stringSkill(
     bool accepted)
 {
     common::Text t{
-        fillWithPlaseholders(
+        fillWithPlaceholder(
             character.skill().skillText().name(type), width, placeholder)
     };
     t += stringLevel(character.skill().level(type), accepted);
@@ -245,7 +247,7 @@ void showSkillPoints(
     const auto& text{ MenuSkillText::common() };
 
     os << indent << (accepted ? text.skillPointsAccepted() : text.skillPoints())
-        << space << (accepted ? character.skill().storage().getAccepted() :
+        << sign::space << (accepted ? character.skill().storage().getAccepted() :
             character.skill().storage().get()) << endl;
 }
 

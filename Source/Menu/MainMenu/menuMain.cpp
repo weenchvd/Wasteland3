@@ -294,59 +294,91 @@ void showSquad(istream& is, ostream& os, const object::Squad& squad, const Inden
 
 void showStats(istream& is, ostream& os, const object::Character& character, const Indent indent)
 {
+    constexpr unsigned char statWidth{ 40 };
+    constexpr auto sp{ sign::space };
+    constexpr auto ph{ sign::dot };
+    constexpr auto pc{ sign::percent };
+    constexpr auto x { sign::x };
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
+    const auto& tCom{ character.characterText().common() };
+    const auto& tSta{ character.characterText().stats() };
+    ostringstream oss;
 
-    os << ind0                          << character.name() << endl;
-    os << ind0 << "Level "              << character.level() << " RANGER" << endl;
-    os << ind0 << "Stats:" << endl;
-    os << ind1 << "CON "                << character.constitutionCurrent() << '\\'
-                                        << character.constitutionMaximum() << endl;
-    os << ind1 << "XP "                 << character.experience() << endl;
-    os << ind1 << "CON per level: "     << character.constitutionPerLevel() << endl;
-    os << ind1 << "Healing bonus: "     << character.bonusHealing() << '%' << endl;
-    os << ind1 << "Action points: "     << character.actionPointMaximum() << endl;
-    os << ind1 << "Hit chance: "        << character.chanceHit() << '%' << endl;
-    os << ind1 << "Critical chance: "   << character.chanceCritDamage() << '%' << endl;
-    os << ind1 << "Critical damage: "   << character.multiplierCritDamage() << 'X' << endl;
-    os << ind1 << "Penetration: "       << character.armorPenetration() << endl;
-    os << ind1 << "Sneak attack damage: "
-                                        << character.bonusSneakAttackDamage() << '%' << endl;
-    os << ind1 << "Strike rate: "       << character.strikeRate() << '%' << endl;
-    os << ind1 << "Armor: "             << character.armor() << endl;
-    os << ind1 << "Evasion: "           << character.evasion() << '%' << endl;
-    os << ind1 << "Crit resistance: "   << character.resistanceCritDamage() << '%' << endl;
-    os << ind1 << "Fire resistance: "   << character.resistanceFireDamage() << '%' << endl;
-    os << ind1 << "Cold resistance: "   << character.resistanceColdDamage() << '%' << endl;
-    os << ind1 << "Energy resistance: " << character.resistanceEnergyDamage() << '%' << endl;
-    os << ind1 << "Explosive resistance: "
-                                        << character.resistanceExplosiveDamage() << '%' << endl;
-    os << ind1 << "Status effect resistance: "
-                                        << character.resistanceStatusEffect() << '%' << endl;
-    os << ind1 << "Radiation resistance: Level "
-                                        << character.radiationResistance() << endl;
-    os << ind1 << "Downed time: "       << character.downedTime() << endl;
-    os << ind1 << "Melee damage bonus: "
-                                        << character.bonusMeleeDamage() << '%' << endl;
-    os << ind1 << "Ranged damage bonus: "
-                                        << character.bonusRangedDamage() << '%' << endl;
-    os << ind1 << "Normal damage bonus: "
-                                        << character.bonusNormalDamage() << '%' << endl;
-    os << ind1 << "Fire damage bonus: "
-                                        << character.bonusFireDamage() << '%' << endl;
-    os << ind1 << "Cold damage bonus: "
-                                        << character.bonusColdDamage() << '%' << endl;
-    os << ind1 << "Energy damage bonus: "
-                                        << character.bonusEnergyDamage() << '%' << endl;
-    os << ind1 << "Explosive damage bonus: "
-                                        << character.bonusExplosiveDamage() << '%' << endl;
-    os << ind1 << "Perception: "        << character.perception() << endl;
-    os << ind1 << "Throwing range: "    << character.multiplierThrowingRange() << 'X' << endl;
-    os << ind1 << "Initiative: "        << character.initiative() << '%' << endl;
-    os << ind1 << "Detection time: "    << character.timeDetection() << " seconds" << endl;
-    os << ind1 << "Combat speed: "      << character.multiplierCombatSpeed() << 'X' << endl;
-    //TODO os << ind1 << "Quick slots: "  << character.
-    os << ind1 << "Leadership range: "  << character.rangeLeadership() << 'M' << endl;
+    os << ind0 << character.name() << endl;
+    os << ind0 << tCom.level() << sp << character.level() << sp
+        << character.characterText().type(character.type()) << endl;
+    os << ind0 << tCom.stats() << endl;
+    clearStream(oss) << character.constitutionCurrent() << '/' << character.constitutionMaximum();
+    os << ind1 << fitInWidth(tSta.con(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.experience();
+    os << ind1 << fitInWidth(tCom.xp(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.constitutionPerLevel();
+    os << ind1 << fitInWidth(tSta.conPerLevel(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusHealing() << pc;
+    os << ind1 << fitInWidth(tSta.healingBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.actionPointMaximum();
+    os << ind1 << fitInWidth(tSta.actionPoints(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.chanceHit() << pc;
+    os << ind1 << fitInWidth(tSta.hitChance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.chanceCritDamage() << pc;
+    os << ind1 << fitInWidth(tSta.critChance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.multiplierCritDamage() << x;
+    os << ind1 << fitInWidth(tSta.critDmg(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.armorPenetration();
+    os << ind1 << fitInWidth(tSta.penetration(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusSneakAttackDamage() << pc;
+    os << ind1 << fitInWidth(tSta.sneakAttackDmg(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.strikeRate() << pc;
+    os << ind1 << fitInWidth(tSta.strikeRate(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.armor();
+    os << ind1 << fitInWidth(tSta.armor(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.evasion() << pc;
+    os << ind1 << fitInWidth(tSta.evasion(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceCritDamage() << pc;
+    os << ind1 << fitInWidth(tSta.critResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceFireDamage() << pc;
+    os << ind1 << fitInWidth(tSta.fireResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceColdDamage() << pc;
+    os << ind1 << fitInWidth(tSta.coldResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceEnergyDamage() << pc;
+    os << ind1 << fitInWidth(tSta.energyResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceExplosiveDamage() << pc;
+    os << ind1 << fitInWidth(tSta.explosiveResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.resistanceStatusEffect() << pc;
+    os << ind1 << fitInWidth(tSta.statusEffectResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << tCom.level() << sp << character.radiationResistance();
+    os << ind1 << fitInWidth(tSta.radiationResistance(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.downedTime();
+    os << ind1 << fitInWidth(tSta.downedTime(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusMeleeDamage() << pc;
+    os << ind1 << fitInWidth(tSta.meleeDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusRangedDamage() << pc;
+    os << ind1 << fitInWidth(tSta.rangedDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusNormalDamage() << pc;
+    os << ind1 << fitInWidth(tSta.normalDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusFireDamage() << pc;
+    os << ind1 << fitInWidth(tSta.fireDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusColdDamage() << pc;
+    os << ind1 << fitInWidth(tSta.coldDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusEnergyDamage() << pc;
+    os << ind1 << fitInWidth(tSta.energyDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.bonusExplosiveDamage() << pc;
+    os << ind1 << fitInWidth(tSta.explosiveDmgBonus(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.perception();
+    os << ind1 << fitInWidth(tSta.perception(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.multiplierThrowingRange() << x;
+    os << ind1 << fitInWidth(tSta.throwingRange(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.initiative() << pc;
+    os << ind1 << fitInWidth(tSta.initiative(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.timeDetection() << sp << tCom.sec();
+    os << ind1 << fitInWidth(tSta.detectionTime(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.multiplierCombatSpeed() << x;
+    os << ind1 << fitInWidth(tSta.combatSpeed(), oss.str(), statWidth, ph) << endl;
+    //clearStream(oss) << character.();
+    //os << ind1 << fitInWidth(tSta.quickSlots(), oss.str(), statWidth, ph) << endl;
+    clearStream(oss) << character.rangeLeadership() << sp << tCom.m_meter();
+    os << ind1 << fitInWidth(tSta.leadershipRange(), oss.str(), statWidth, ph) << endl;
 }
 
 void showGear(istream& is, ostream& os, const object::Character& character, const Indent indent)

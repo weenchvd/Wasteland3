@@ -10,6 +10,7 @@
 #include"attribute.hpp"
 #include"characterCommon.hpp"
 #include"characterReference.hpp"
+#include"characterText.hpp"
 #include"common.hpp"
 #include"skill.hpp"
 #include"slot.hpp"
@@ -328,6 +329,14 @@ public:
     const Skill& skill() const noexcept { return *skill_; }
     Skill& skill() noexcept { return *skill_; }
 
+    static const CharacterReferenceContainer& characterReferenceContainer() noexcept {
+        return ref_;
+    }
+
+    static const CharacterText& characterText() noexcept {
+        return text_;
+    }
+
 private:
     const CharacterReference&   base_;          // reference, sample, template
 
@@ -421,7 +430,26 @@ private:
     std::unique_ptr<Skill>                      skill_;
 
     static const CharacterReferenceContainer    ref_;       // references
+    static const CharacterText                  text_;      // text
 };
+
+///************************************************************************************************
+
+inline void Character::initialize()
+{
+    Attribute::initialize();
+    Skill::initialize();
+    ref_.initialize();
+    text_.initialize();
+}
+
+inline bool Character::isInitialized()
+{
+    return Attribute::isInitialized() &&
+           Skill::isInitialized() &&
+           ref_.isInitialized() &&
+           text_.isInitialized();
+}
 
 } // namespace object
 } // namespace game

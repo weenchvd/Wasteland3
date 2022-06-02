@@ -1,0 +1,71 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "languageBundleFB.fbs";
+
+namespace fbCharacter;
+
+file_identifier "CHRT";
+file_extension "bundle";
+
+table FB_CharacterTextType {
+  ranger:fbCommon.FB_LanguageBundle;
+  companion:fbCommon.FB_LanguageBundle;
+}
+
+table FB_CharacterTextStats {
+  con:fbCommon.FB_LanguageBundle;
+  con_per_level:fbCommon.FB_LanguageBundle;
+  healing_bonus:fbCommon.FB_LanguageBundle;
+  action_points:fbCommon.FB_LanguageBundle;
+  hit_chance:fbCommon.FB_LanguageBundle;
+  crit_chance:fbCommon.FB_LanguageBundle;
+  crit_dmg:fbCommon.FB_LanguageBundle;
+  penetration:fbCommon.FB_LanguageBundle;
+  sneak_attack_dmg:fbCommon.FB_LanguageBundle;
+  strike_rate:fbCommon.FB_LanguageBundle;
+  armor:fbCommon.FB_LanguageBundle;
+  evasion:fbCommon.FB_LanguageBundle;
+  crit_resistance:fbCommon.FB_LanguageBundle;
+  fire_resistance:fbCommon.FB_LanguageBundle;
+  cold_resistance:fbCommon.FB_LanguageBundle;
+  energy_resistance:fbCommon.FB_LanguageBundle;
+  explosive_resistance:fbCommon.FB_LanguageBundle;
+  status_effect_resistance:fbCommon.FB_LanguageBundle;
+  radiation_resistance:fbCommon.FB_LanguageBundle;
+  downed_time:fbCommon.FB_LanguageBundle;
+  melee_dmg_bonus:fbCommon.FB_LanguageBundle;
+  ranged_dmg_bonus:fbCommon.FB_LanguageBundle;
+  normal_dmg_bonus:fbCommon.FB_LanguageBundle;
+  fire_dmg_bonus:fbCommon.FB_LanguageBundle;
+  cold_dmg_bonus:fbCommon.FB_LanguageBundle;
+  energy_dmg_bonus:fbCommon.FB_LanguageBundle;
+  explosive_dmg_bonus:fbCommon.FB_LanguageBundle;
+  perception:fbCommon.FB_LanguageBundle;
+  throwing_range:fbCommon.FB_LanguageBundle;
+  initiative:fbCommon.FB_LanguageBundle;
+  detection_time:fbCommon.FB_LanguageBundle;
+  combat_speed:fbCommon.FB_LanguageBundle;
+  quick_slots:fbCommon.FB_LanguageBundle;
+  leadership_range:fbCommon.FB_LanguageBundle;
+  experience_bonus:fbCommon.FB_LanguageBundle;
+}
+
+table FB_CharacterTextCommon {
+  level:fbCommon.FB_LanguageBundle;
+  stats:fbCommon.FB_LanguageBundle;
+  xp:fbCommon.FB_LanguageBundle;
+  m_meter:fbCommon.FB_LanguageBundle;
+  sec:fbCommon.FB_LanguageBundle;
+}
+
+table FB_CharacterText {
+  type:FB_CharacterTextType;
+  stats:FB_CharacterTextStats;
+  common:FB_CharacterTextCommon;
+}
+
+root_type FB_CharacterText;

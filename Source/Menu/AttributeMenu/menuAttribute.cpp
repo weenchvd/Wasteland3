@@ -91,6 +91,7 @@ void menuModifyAttribute(
     object::Attribute::Type type,
     const Indent indent)
 {
+    constexpr auto sp{ sign::space };
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
@@ -103,10 +104,10 @@ void menuModifyAttribute(
         verticalIndent(os);
         os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showAttPoints(is, os, character, ind0);
-        os << ind0 << fillWithPlaseholders(text.attribute(), width, space) << space
-            << stringAttribute(character, type, nameWidth, space, false) << endl;
-        os << ind0 << fillWithPlaseholders(text.attributeAccepted(), width, space) << space
-            << stringAttribute(character, type, nameWidth, space, true) << endl;
+        os << ind0 << fillWithPlaceholder(text.attribute(), width, sp) << sp
+            << stringAttribute(character, type, nameWidth, sp, false) << endl;
+        os << ind0 << fillWithPlaceholder(text.attributeAccepted(), width, sp) << sp
+            << stringAttribute(character, type, nameWidth, sp, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionModifyAttribute::SHOW_DESCRIPTION, text.showDescription()) << endl;
@@ -170,7 +171,7 @@ void showAllAttributes(
         i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {
         os << ind1 << stringAttribute(character, static_cast<object::Attribute::Type>(i),
-            width, space, accepted) << endl;
+            width, sign::space, accepted) << endl;
     }
 }
 
@@ -182,7 +183,7 @@ common::Text stringAttribute(
     bool accepted)
 {
     common::Text t{
-        fillWithPlaseholders(
+        fillWithPlaceholder(
             character.attribute().attributeText().name(type), width, placeholder)
     };
     t += stringLevel(character.attribute().level(type), accepted);
@@ -199,7 +200,7 @@ void showAttPoints(
     const auto& text{ MenuAttributeText::common() };
 
     os << indent << (accepted ? text.attrPointsAccepted() : text.attrPoints())
-        << space << (accepted ? character.attribute().storage().getAccepted() :
+        << sign::space << (accepted ? character.attribute().storage().getAccepted() :
             character.attribute().storage().get()) << endl;
 }
 

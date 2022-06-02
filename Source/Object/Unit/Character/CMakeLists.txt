@@ -47,9 +47,9 @@ cmake_language(CALL distribute_file
 
 
 #**********************************************************************
-# create Flatbuffers files for SkillText
-#[[set(CHARACTER_TEXT_FB_FILE_STEM "skillTextFB")
-set(CHARACTER_TEXT_FB_BIN_FILE_IDENTIFIER "SKLT")
+# create Flatbuffers files for CharacterText
+set(CHARACTER_TEXT_FB_FILE_STEM "characterTextFB")
+set(CHARACTER_TEXT_FB_BIN_FILE_IDENTIFIER "CHRT")
 set(CHARACTER_TEXT_FB_BIN_FILE_EXTENSION "${FB_BIN_FILE_EXTENSION}")
 set(CHARACTER_TEXT_FB_BIN_FILE_NAME "${CHARACTER_TEXT_FB_FILE_STEM}.${CHARACTER_TEXT_FB_BIN_FILE_EXTENSION}")
 file(REAL_PATH "${FB_DATA_DIR_NAME}/${CHARACTER_TEXT_FB_BIN_FILE_NAME}" CHARACTER_TEXT_FB_BIN_FILE)
@@ -80,7 +80,6 @@ cmake_language(CALL distribute_file
   "${ASSETS__DIR__REL_PATH_FROM_W3EXEC}"
   "${CHARACTER_TEXT_FB_BIN_FILE_NAME__OUT}"
 )
-#]]
 
 
 #**********************************************************************

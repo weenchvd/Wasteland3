@@ -12,6 +12,7 @@ namespace object {
 using namespace std;
 
 const CharacterReferenceContainer       Character::ref_;
+const CharacterText                     Character::text_;
 
 ///************************************************************************************************
 
@@ -212,22 +213,6 @@ void Character::initCtor()
 void Character::check() noexcept
 {
 
-}
-
-void Character::initialize()
-{
-    Attribute::initialize();
-    Skill::initialize();
-    ref_.initialize();
-    //text_.initialize();
-}
-
-bool Character::isInitialized()
-{
-    return Attribute::isInitialized() &&
-           Skill::isInitialized() && 
-           ref_.isInitialized();
-           //text_.isInitialized();
 }
 
 common::Text Character::name() const noexcept

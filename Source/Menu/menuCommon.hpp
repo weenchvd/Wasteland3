@@ -13,12 +13,25 @@
 #include<array>
 #include<iostream>
 #include<limits>
+#include<sstream>
 #include<utility>
 
 namespace game {
 namespace menu {
 
-constexpr char space{ ' ' };
+namespace sign {
+
+constexpr auto space    { ' ' };
+constexpr auto dot      { '.' };
+constexpr auto percent  { '%' };
+constexpr auto dollar   { '$' };
+constexpr auto x        { 'X' };
+
+constexpr auto separator10  { "----------" };
+constexpr auto separator20  { "--------------------" };
+constexpr auto separator30  { "------------------------------" };
+
+} // namespace sign
 
 class Indent {
 public:
@@ -45,6 +58,8 @@ std::ostream& operator<<(std::ostream& os, const Indent& indent);
 std::ostream& printNumBar(std::ostream& os, const Indent indent, int number, const common::Text& text);
 
 std::ostream& verticalIndent(std::ostream& os);
+
+std::ostringstream& clearStream(std::ostringstream& oss);
 
 int getAction(std::istream& is, std::ostream& os);
 
@@ -85,8 +100,15 @@ common::Text stringLevel(const common::SpecStorage<LevelType>& level, bool accep
 
 unsigned int utf8Size(const std::string& s);
 
-common::Text fillWithPlaseholders(
+common::Text fillWithPlaceholder(
     const common::Text& source,
+    unsigned char width,
+    char placeholder
+);
+
+common::Text fitInWidth(
+    const common::Text& left,
+    const common::Text& rigth,
     unsigned char width,
     char placeholder
 );

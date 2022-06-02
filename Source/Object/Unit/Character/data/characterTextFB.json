@@ -1,0 +1,176 @@
+{
+  "type": {
+    "ranger": {
+      "en": "RANGER",
+      "ru": "РЕЙНДЖЕР"
+    },
+    "companion": {
+      "en": "COMPANION",
+      "ru": "СПУТНИК"
+    }
+  },
+  "stats": {
+    "con": {
+      "en": "CON",
+      "ru": "ТЕЛ"
+    },
+    "con_per_level": {
+      "en": "CON per level",
+      "ru": "ТЕЛ за уровень"
+    },
+    "healing_bonus": {
+      "en": "Healing bonus",
+      "ru": "Доп. лечение"
+    },
+    "action_points": {
+      "en": "Action points",
+      "ru": "Очков действий"
+    },
+    "hit_chance": {
+      "en": "Hit chance",
+      "ru": "Шанс попадания"
+    },
+    "crit_chance": {
+      "en": "Critical chance",
+      "ru": "Шанс крита"
+    },
+    "crit_dmg": {
+      "en": "Critical damage",
+      "ru": "Крит. урон"
+    },
+    "penetration": {
+      "en": "Penetration",
+      "ru": "Пробивание"
+    },
+    "sneak_attack_dmg": {
+      "en": "Sneak attack damage",
+      "ru": "Урон от скрытой атаки"
+    },
+    "strike_rate": {
+      "en": "Strike rate",
+      "ru": "Скорость разгрома"
+    },
+    "armor": {
+      "en": "Armor",
+      "ru": "Броня"
+    },
+    "evasion": {
+      "en": "Evasion",
+      "ru": "Уклонение"
+    },
+    "crit_resistance": {
+      "en": "Crit resistance",
+      "ru": "Сопротивление криту"
+    },
+    "fire_resistance": {
+      "en": "Fire resistance",
+      "ru": "Сопротивление огню"
+    },
+    "cold_resistance": {
+      "en": "Cold resistance",
+      "ru": "Сопротивление холоду"
+    },
+    "energy_resistance": {
+      "en": "Energy resistance",
+      "ru": "Сопротивление энергии"
+    },
+    "explosive_resistance": {
+      "en": "Explosive resistance",
+      "ru": "Сопротивление взрыву"
+    },
+    "status_effect_resistance": {
+      "en": "Status effect resistance",
+      "ru": "Сопротивление эффектам"
+    },
+    "radiation_resistance": {
+      "en": "Radiation resistance",
+      "ru": "Сопротивление радиации"
+    },
+    "downed_time": {
+      "en": "Downed time",
+      "ru": "Время в сознании"
+    },
+    "melee_dmg_bonus": {
+      "en": "Melee damage bonus",
+      "ru": "Доп. урон в ближнем бою"
+    },
+    "ranged_dmg_bonus": {
+      "en": "Ranged damage bonus",
+      "ru": "Доп. урон в дальнем бою"
+    },
+    "normal_dmg_bonus": {
+      "en": "Normal damage bonus",
+      "ru": "Доп. обычный урон"
+    },
+    "fire_dmg_bonus": {
+      "en": "Fire damage bonus",
+      "ru": "Доп. огненный урон"
+    },
+    "cold_dmg_bonus": {
+      "en": "Cold damage bonus",
+      "ru": "Доп. ледяной урон"
+    },
+    "energy_dmg_bonus": {
+      "en": "Energy damage bonus",
+      "ru": "Доп. энергетический урон"
+    },
+    "explosive_dmg_bonus": {
+      "en": "Explosive damage bonus",
+      "ru": "Доп. взрывной урон"
+    },
+    "perception": {
+      "en": "Perception",
+      "ru": "Восприятие"
+    },
+    "throwing_range": {
+      "en": "Throwing range",
+      "ru": "Дальность броска"
+    },
+    "initiative": {
+      "en": "Initiative",
+      "ru": "Инициатива"
+    },
+    "detection_time": {
+      "en": "Detection time",
+      "ru": "Время обнаружения"
+    },
+    "combat_speed": {
+      "en": "Combat speed",
+      "ru": "Скорость в бою"
+    },
+    "quick_slots": {
+      "en": "Quick slots",
+      "ru": "Быстрые ячейки"
+    },
+    "leadership_range": {
+      "en": "Leadership range",
+      "ru": "Радиус лидерства"
+    },
+    "experience_bonus": {
+      "en": "Experience bonus",
+      "ru": "Доп. опыт"
+    }
+  },
+  "common": {
+    "level": {
+      "en": "Level",
+      "ru": "Уровень"
+    },
+    "stats": {
+      "en": "Stats",
+      "ru": "Статистика"
+    },
+    "xp": {
+      "en": "XP",
+      "ru": "Опыт"
+    },
+    "m_meter": {
+      "en": "m.",
+      "ru": "м."
+    },
+    "sec": {
+      "en": "sec.",
+      "ru": "сек."
+    }
+  }
+}
