@@ -104,9 +104,9 @@ void menuModifySkill(
         verticalIndent(os);
         os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showSkillPoints(is, os, character, ind0);
-        os << ind0 << fillWithPlaceholder(text.skill(), width, sp) << sp
+        os << ind0 << fitInWidth(text.skill(), width, sp) << sp
             << stringSkill(character, type, nameWidth, sp, false) << endl;
-        os << ind0 << fillWithPlaceholder(text.skillAccepted(), width, sp) << sp
+        os << ind0 << fitInWidth(text.skillAccepted(), width, sp) << sp
             << stringSkill(character, type, nameWidth, sp, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
@@ -230,7 +230,7 @@ common::Text stringSkill(
     bool accepted)
 {
     common::Text t{
-        fillWithPlaceholder(
+        fitInWidth(
             character.skill().skillText().name(type), width, placeholder)
     };
     t += stringLevel(character.skill().level(type), accepted);

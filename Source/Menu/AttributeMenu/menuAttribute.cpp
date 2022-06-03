@@ -104,9 +104,9 @@ void menuModifyAttribute(
         verticalIndent(os);
         os << ind0 << text.menuName() << " (" << character.name() << ")" << endl;
         showAttPoints(is, os, character, ind0);
-        os << ind0 << fillWithPlaceholder(text.attribute(), width, sp) << sp
+        os << ind0 << fitInWidth(text.attribute(), width, sp) << sp
             << stringAttribute(character, type, nameWidth, sp, false) << endl;
-        os << ind0 << fillWithPlaceholder(text.attributeAccepted(), width, sp) << sp
+        os << ind0 << fitInWidth(text.attributeAccepted(), width, sp) << sp
             << stringAttribute(character, type, nameWidth, sp, true) << endl;
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
@@ -183,7 +183,7 @@ common::Text stringAttribute(
     bool accepted)
 {
     common::Text t{
-        fillWithPlaceholder(
+        fitInWidth(
             character.attribute().attributeText().name(type), width, placeholder)
     };
     t += stringLevel(character.attribute().level(type), accepted);

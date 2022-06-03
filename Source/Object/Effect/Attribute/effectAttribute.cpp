@@ -300,6 +300,7 @@ void EffectAttInt::apply(Character& character) noexcept
     character.chanceCritHealingAdd(chaCritHeal_);
     character.bonusCritHealingAdd(bonCritHeal_);
     character.skill().addPoint(poSkill_);
+    character.skill().accept();
 }
 
 EffectAttInt& EffectAttInt::operator+=(const EffectAttInt& other) noexcept

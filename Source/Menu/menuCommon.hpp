@@ -100,8 +100,8 @@ common::Text stringLevel(const common::SpecStorage<LevelType>& level, bool accep
 
 unsigned int utf8Size(const std::string& s);
 
-common::Text fillWithPlaceholder(
-    const common::Text& source,
+common::Text fitInWidth(
+    const common::Text& left,
     unsigned char width,
     char placeholder
 );

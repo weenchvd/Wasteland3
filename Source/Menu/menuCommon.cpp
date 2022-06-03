@@ -117,13 +117,13 @@ unsigned int utf8Size(const std::string& s)
     return size;
 }
 
-common::Text fillWithPlaceholder(
-    const common::Text& source,
+common::Text fitInWidth(
+    const common::Text& left,
     unsigned char width,
     char placeholder)
 {
-    common::Text t{ source };
-    for (unsigned int i{ utf8Size(source) }; i < width; ++i) {
+    common::Text t{ left };
+    for (unsigned int i{ utf8Size(left) }; i < width; ++i) {
         t += placeholder;
     }
     return t;
@@ -135,9 +135,20 @@ common::Text fitInWidth(
     unsigned char width,
     char placeholder)
 {
-    common::Text t{ left };
-    t += placeholder;
-    t = fillWithPlaceholder(t, width - utf8Size(right), placeholder);
+    common::Text t;
+    auto minSize{ left.size() + right.size() + 1 };
+    t.reserve(width > minSize ? width : minSize);
+    t = left;
+    t += sign::space;
+    auto nPlaceholders{
+        static_cast<int>(width) - static_cast<int>(utf8Size(t)) - static_cast<int>(utf8Size(right))
+    };
+    for (int i = 0; i < nPlaceholders - 1; ++i) {
+        t += placeholder;
+    }
+    if (nPlaceholders > 0) {
+        t += sign::space;
+    }
     t += right;
     return t;
 }

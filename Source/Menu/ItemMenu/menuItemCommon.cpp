@@ -26,8 +26,8 @@ void printDamageEffect(
     const object::DamageReference& reference,
     const bool isPositiveEffect)
 {
-    const auto sp  { ' ' };
-    const auto p   { '%' };
+    constexpr auto sp{ sign::space };
+    constexpr auto p { sign::percent };
     const auto& def{ object::Damage::damageReferenceContainer().damageReferenceDefault() };
     const auto& text{ object::Damage::damageText().common() };
 
@@ -88,7 +88,7 @@ void printAttackDescription(
     const object::Attack& attack,
     const bool printAttackType)
 {
-    const auto sp{ ' ' };
+    constexpr auto sp{ sign::space };
     const auto& text{ attack.attackText() };
     if (printAttackType && common::isValidEnum(attack.type())) {
         os << indent << text.common().attackType() << sp << text.type(attack.type()) << endl;
