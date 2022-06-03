@@ -17,10 +17,6 @@
 namespace game {
 namespace menu {
 
-void initializeMenu();
-
-///************************************************************************************************
-
 namespace actionMain {
 
 enum ActionMain {

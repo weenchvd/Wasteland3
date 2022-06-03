@@ -4,47 +4,22 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
-#include"itemVisitorFullDescr.hpp"
-#include"menuAttribute.hpp"
-#include"menuAttributeText.hpp"
 #include"menuCharacter.hpp"
-#include"menuCharacterText.hpp"
 #include"menuCommonText.hpp"
 #include"menuInventory.hpp"
-#include"menuInventoryText.hpp"
-#include"menuItemText.hpp"
 #include"menuMain.hpp"
+#include"menuMainInit.hpp"
 #include"menuMainText.hpp"
 #include"menuOptions.hpp"
-#include"menuOptionsText.hpp"
-#include"menuSkill.hpp"
-#include"menuSkillText.hpp"
-#include<limits>
-#include<sstream>
-#include<string>
 
 namespace game {
 namespace menu {
 
 using namespace std;
 
-void initializeMenu()
-{
-    MenuCommonText::initialize();
-    MenuMainText::initialize();
-    MenuOptionsText::initialize();
-    MenuInventoryText::initialize();
-    MenuItemText::initialize();
-    MenuAttributeText::initialize();
-    MenuSkillText::initialize();
-    MenuCharacterText::initialize();
-}
-
-///************************************************************************************************
-
 void menuMain(istream& is, ostream& os, object::Squad& squad, object::Inventory& shop)
 {
-    initializeMenu();
+    initializeMenuText();
 
     Indent ind0{ Indent{} };
     Indent ind1{ ind0 + Indent{} };
