@@ -23,8 +23,13 @@ namespace sign {
 
 constexpr auto space    { ' ' };
 constexpr auto dot      { '.' };
+constexpr auto colon    { ':' };
+constexpr auto slash    { '/' };
+constexpr auto lp       { '(' };
+constexpr auto rp       { ')' };
 constexpr auto percent  { '%' };
 constexpr auto dollar   { '$' };
+constexpr auto sharp    { '#' };
 constexpr auto x        { 'X' };
 
 constexpr auto separator10  { "----------" };

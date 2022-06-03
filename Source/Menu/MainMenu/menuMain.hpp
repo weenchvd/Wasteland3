@@ -28,7 +28,9 @@ enum ActionMain {
     MENU_SQUAD,
     MENU_INVENTORY,
     MENU_SHOP,
-    MENU_TRADE
+    MENU_TRADE,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionMain
@@ -39,7 +41,9 @@ namespace actionTrade {
 
 enum ActionTrade {
     BUY_ITEM = actionCommon::__NEXT_ACTION_NUMBER,
-    SELL_ITEM
+    SELL_ITEM,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionTrade
@@ -55,7 +59,9 @@ void menuTrade(
 namespace actionShop {
 
 enum ActionShop {
-    ALL_ITEMS = actionCommon::__NEXT_ACTION_NUMBER
+    ALL_ITEMS = actionCommon::__NEXT_ACTION_NUMBER,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionShop
@@ -66,32 +72,14 @@ namespace actionSquad {
 
 enum ActionSquad {
     SHOW_SQUAD = actionCommon::__NEXT_ACTION_NUMBER,
-    MENU_CHARACTER
+    MENU_CHARACTER,
+
+    __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionSquad
 
 void menuSquad(std::istream& is, std::ostream& os, object::Squad& squad, const Indent indent);
-
-namespace actionCharacter {
-
-enum ActionCharacter {
-    SHOW_STATS = actionCommon::__NEXT_ACTION_NUMBER,
-    SHOW_GEAR,
-    SHOW_ATTRIBUTES,
-    MENU_ATTRIBUTE,
-    SHOW_SKILLS,
-    MENU_SKILL
-};
-
-} // namespace actionCharacter
-
-void menuCharacter(
-    std::istream& is,
-    std::ostream& os,
-    object::Character& character,
-    const Indent indent
-);
 
 ///************************************************************************************************
 
@@ -106,20 +94,6 @@ void showSquad(
     std::istream& is,
     std::ostream& os,
     const object::Squad& squad,
-    const Indent indent
-);
-
-void showStats(
-    std::istream& is,
-    std::ostream& os,
-    const object::Character& character,
-    const Indent indent
-);
-
-void showGear(
-    std::istream& is,
-    std::ostream& os,
-    const object::Character& character,
     const Indent indent
 );
 
