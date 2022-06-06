@@ -35,6 +35,8 @@ set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "OptionMenu/menuOptionsText.cpp"
                     "SkillMenu/menuSkill.cpp"
                     "SkillMenu/menuSkillText.cpp"
+                    "SquadMenu/menuSquad.cpp"
+                    "SquadMenu/menuSquadText.cpp"
 )
 
 add_library(${LIBRARY_NAME} STATIC ${SOURCE_CXX_LIST})
@@ -48,6 +50,7 @@ target_include_directories(${LIBRARY_NAME}
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/MainMenu"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/OptionMenu"
                            PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/SkillMenu"
+                           PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/SquadMenu"
 )
 
 target_link_libraries(${LIBRARY_NAME}

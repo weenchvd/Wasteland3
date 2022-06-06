@@ -13,6 +13,7 @@
 #include"menuMainText.hpp"
 #include"menuOptionsText.hpp"
 #include"menuSkillText.hpp"
+#include"menuSquadText.hpp"
 
 namespace game {
 namespace menu {
@@ -29,6 +30,7 @@ void initializeMenuText()
     MenuAttributeText::initialize();
     MenuSkillText::initialize();
     MenuCharacterText::initialize();
+    MenuSquadText::initialize();
 }
 
 } // namespace menu

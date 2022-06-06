@@ -23,6 +23,7 @@ namespace sign {
 
 constexpr auto space    { ' ' };
 constexpr auto dot      { '.' };
+constexpr auto comma    { ',' };
 constexpr auto colon    { ':' };
 constexpr auto slash    { '/' };
 constexpr auto lp       { '(' };
