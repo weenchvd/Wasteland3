@@ -24,10 +24,9 @@ void menuItemModify(
     istream& is,
     ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent)
 {
-    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
@@ -38,25 +37,24 @@ void menuItemModify(
     {
         verticalIndent(os);
         os << ind0 << text.menuName() << endl;
-        os << ind0 << text.item() << (*iterItem.getConst())->name() << endl;
-        showSlotsAndMods(is, os, iterItem, indent);
+        os << ind0 << text.item() << item.name() << endl;
+        showSlotsAndMods(is, os, item, indent);
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionItemModify::SHOW_FULL_DESCR, tCom.showFullDescription()) << endl;
         printNumBar(os, ind1, actionItemModify::INSTALL_MOD, text.installMod()) << endl;
         printNumBar(os, ind1, actionItemModify::REMOVE_MOD, text.removeMod()) << endl;
 
-        auto& item{ *iterItem.get()->get() };
         int number{ actionItemModify::__NEXT_ACTION_NUMBER };
         switch (contextSensitiveMenuItemModify(is, os, squad, item, number, indent)) {
         case actionItemModify::SHOW_FULL_DESCR:
-            printFullDescription(is, os, iterItem, ind1);
+            printFullDescription(is, os, item, ind1);
             break;
         case actionItemModify::INSTALL_MOD:
-            contextSensitiveMenuItemModify_Install(is, os, squad, iterItem, ind1);
+            contextSensitiveMenuItemModify_Install(is, os, squad, item, ind1);
             break;
         case actionItemModify::REMOVE_MOD:
-            contextSensitiveMenuItemModify_Remove(is, os, squad, iterItem, ind1);
+            contextSensitiveMenuItemModify_Remove(is, os, squad, item, ind1);
             break;
         case actionCommon::EXIT:
             return;
@@ -134,21 +132,20 @@ void contextSensitiveMenuItemModify_Install(
     istream& is,
     ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent
 )
 {
-    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::modify() };
     const auto& invTCom{ MenuInventoryText::common() };
     object::ItemVisitorType vis;
-    (*iterItem.getConst())->accept(vis);
+    item.accept(vis);
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        auto pairSlotNumber{ pickSlotNumber(is, os, squad, iterItem, ind0) };
+        auto pairSlotNumber{ pickSlotNumber(is, os, squad, item, ind0) };
         if (pairSlotNumber.second == false) break;
         object::Item::Type type{ object::Item::Type::WEAPON_MOD };
         auto roster{ squad.inventory().roster(type) };
@@ -156,13 +153,13 @@ void contextSensitiveMenuItemModify_Install(
         showModsWithTypes(is, os, roster, title, ind0);
         auto iterWeaponMod{ pickItem(is, os, roster, ind0) };
         if (iterWeaponMod.isValid() == false) break;
-        auto* pWeapon{ static_cast<object::Weapon*>(iterItem.get()->get())};
+        auto& weapon{ static_cast<object::Weapon&>(item)};
         const auto* pWeaponMod{ static_cast<object::WeaponMod*>(iterWeaponMod.getConst()->get())};
-        if (object::isCompatible(pWeapon->slotMod().type(pairSlotNumber.first), pWeaponMod->type())) {
+        if (object::isCompatible(weapon.slotMod().type(pairSlotNumber.first), pWeaponMod->type())) {
             auto newMod{ squad.inventory().extract(iterWeaponMod) };
             unique_ptr<object::Item> oldMod{};
-            pWeapon->unsetMod(pairSlotNumber.first, oldMod);
-            pWeapon->setMod(pairSlotNumber.first, newMod, object::isCompatible);
+            weapon.unsetMod(pairSlotNumber.first, oldMod);
+            weapon.setMod(pairSlotNumber.first, newMod, object::isCompatible);
             if (oldMod != nullptr) {
                 squad.inventory().insert(oldMod);
             }
@@ -183,21 +180,20 @@ void contextSensitiveMenuItemModify_Remove(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent)
 {
-    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     object::ItemVisitorType vis;
-    (*iterItem.getConst())->accept(vis);
+    item.accept(vis);
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        auto pairSlotNumber{ pickSlotNumber(is, os, squad, iterItem, ind0) };
+        auto pairSlotNumber{ pickSlotNumber(is, os, squad, item, ind0) };
         if (pairSlotNumber.second == false) break;
-        auto* weapon{ static_cast<object::Weapon*>(iterItem.get()->get())};
+        auto& weapon{ static_cast<object::Weapon&>(item) };
         unique_ptr<object::Item> oldMod{};
-        weapon->unsetMod(pairSlotNumber.first, oldMod);
+        weapon.unsetMod(pairSlotNumber.first, oldMod);
         if (oldMod != nullptr) {
             squad.inventory().insert(oldMod);
         }

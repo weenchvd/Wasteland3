@@ -102,7 +102,7 @@ int contextSensitiveMenuItem_Inventory(
             return actionCommon::EXIT;
         }
         case actionItemWeapon::MODIFY: {
-            menuItemModify(is, os, squad, iterItem, ind1);
+            menuItemModify(is, os, squad, **iterItem.get(), ind1);
             break;
         }
         default:

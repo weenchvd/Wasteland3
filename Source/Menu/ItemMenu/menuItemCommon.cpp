@@ -133,7 +133,7 @@ void printFullDescription(
 {
     assert(iterItem.isValid() == true);
     assert(iterItem.getConst()->get() != nullptr);
-    printFullDescription(is, os, *iterItem.getConst()->get(), indent);
+    printFullDescription(is, os, **iterItem.getConst(), indent);
 }
 
 void printFullDescription(
@@ -181,10 +181,9 @@ bool removeItem(
 void showSlotsAndMods(
     istream& is,
     ostream& os,
-    const object::InventoryIterator& iterItem,
+    const object::Item& item,
     const Indent indent)
 {
-    assert(iterItem.isValid() == true);
     Indent ind0{ indent };
     Indent ind1{ ind0 + Indent{} };
     const auto& comT{ MenuCommonText::common() };
@@ -194,19 +193,19 @@ void showSlotsAndMods(
 
     int i{ itemCounter::countFrom };
     object::ItemVisitorType vis;
-    (*iterItem.getConst())->accept(vis);
+    item.accept(vis);
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        const auto* weapon{ static_cast<object::Weapon*>(iterItem.getConst()->get()) };
-        for (int j = 0; j < weapon->slotMod().sizeRaw(); ++j) {
-            if (weapon->slotMod().type(j) != object::WeaponMod::Type::INVALID) {
+        const auto& weapon{ static_cast<const object::Weapon&>(item) };
+        for (int j = 0; j < weapon.slotMod().sizeRaw(); ++j) {
+            if (weapon.slotMod().type(j) != object::WeaponMod::Type::INVALID) {
                 printNumBar(os, ind1, i++,
-                    object::WeaponMod::weaponModText().type(weapon->slotMod().type(j))
+                    object::WeaponMod::weaponModText().type(weapon.slotMod().type(j))
                 );
                 os << ": ";
-                if (weapon->slotMod()[j] != nullptr) {
-                    os << weapon->slotMod()[j]->name();
+                if (weapon.slotMod()[j] != nullptr) {
+                    os << weapon.slotMod()[j]->name();
                 }
                 os << endl;
             }
@@ -224,10 +223,9 @@ pair<int, bool> pickSlotNumber(
     istream& is,
     ostream& os,
     object::Squad& squad,
-    const object::InventoryIterator& iterItem,
+    const object::Item& item,
     const Indent indent)
 {
-    assert(iterItem.isValid() == true);
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuItemText::modify() };
 
@@ -235,15 +233,15 @@ pair<int, bool> pickSlotNumber(
 
     int i{ itemCounter::countFrom };
     object::ItemVisitorType vis;
-    (*iterItem.getConst())->accept(vis);
+    item.accept(vis);
 
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
-        const auto* weapon{ static_cast<object::Weapon*>(iterItem.getConst()->get()) };
+        const auto& weapon{ static_cast<const object::Weapon&>(item) };
         auto pair{ getNumber(is, os) };
         if (pair.second == true) {
-            for (int j = 0; j < weapon->slotMod().sizeRaw(); ++j) {
-                if (weapon->slotMod().type(j) != object::WeaponMod::Type::INVALID) {
+            for (int j = 0; j < weapon.slotMod().sizeRaw(); ++j) {
+                if (weapon.slotMod().type(j) != object::WeaponMod::Type::INVALID) {
                     if (pair.first == i) {
                         return { j, true };
                     }

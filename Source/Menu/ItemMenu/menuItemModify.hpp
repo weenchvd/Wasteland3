@@ -31,7 +31,7 @@ void menuItemModify(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent
 );
 
@@ -48,7 +48,7 @@ void contextSensitiveMenuItemModify_Install(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent
 );
 
@@ -56,7 +56,7 @@ void contextSensitiveMenuItemModify_Remove(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    object::InventoryIterator& iterItem,
+    object::Item& item,
     const Indent indent
 );
 

@@ -61,7 +61,7 @@ bool removeItem(
 void showSlotsAndMods(
     std::istream& is,
     std::ostream& os,
-    const object::InventoryIterator& iterItem,
+    const object::Item& item,
     const Indent indent
 );
 
@@ -69,7 +69,7 @@ std::pair<int, bool> pickSlotNumber(
     std::istream& is,
     std::ostream& os,
     object::Squad& squad,
-    const object::InventoryIterator& iterItem,
+    const object::Item& item,
     const Indent indent
 );
 
