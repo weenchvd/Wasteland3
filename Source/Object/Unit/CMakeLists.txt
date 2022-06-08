@@ -42,6 +42,7 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC effect
                       PUBLIC flatbuffersAux
                       PUBLIC flatbuffersCommon
+                      PUBLIC inventory
                       PUBLIC item
                       PUBLIC locator
                       PUBLIC observer

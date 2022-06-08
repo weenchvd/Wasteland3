@@ -210,9 +210,10 @@ void Character::initCtor()
     skill_->accept();
 }
 
-void Character::check() noexcept
+bool Character::hasValidValues() const noexcept
 {
-
+    // TODO
+    return true;
 }
 
 common::Text Character::name() const noexcept
@@ -221,6 +222,74 @@ common::Text Character::name() const noexcept
     case Character::Type::RANGER:   return enteredName_;
     default:                        return base_.name();
     }
+}
+
+bool Character::setWeapon(
+    unsigned int slotNumber,
+    unique_ptr<Item>& source,
+    bool (*typeChecker)(Weapon::Type, Weapon::Type))
+{
+    assert(hasValidValues());
+    if (slotWeapon_.set(slotNumber, source, typeChecker)) {
+        apply();
+        if (hasValidValues()) return true;
+        slotWeapon_.unset(slotNumber, source);
+        apply();
+        assert(hasValidValues());
+    }
+    return false;
+}
+
+bool Character::unsetWeapon(unsigned int slotNumber, unique_ptr<Item>& receiver)
+{
+    if (slotWeapon_.unset(slotNumber, receiver)) {
+        apply();
+        return true;
+    }
+    return false;
+}
+
+///************************************************************************************************
+
+bool equipWeapon(Character& character,
+                 Inventory& inventory,
+                 InventoryIterator iterItem,
+                 unsigned int weaponSlotNumber)
+{
+    assert(iterItem.isValid());
+    if (!iterItem.isValid()) {
+        return false;
+    }
+    if (!unequipWeapon(character, inventory, weaponSlotNumber)) {
+        return false;
+    }
+    unique_ptr<object::Item> newWeapon{ inventory.extract(iterItem) };
+    if (!newWeapon) {
+        return false;
+    }
+    if (character.setWeapon(weaponSlotNumber, newWeapon, isCompatible)) {
+        return true;
+    }
+    InventoryIterator iter{ inventory.insert(newWeapon) };
+    assert(iter.isValid());
+    return false;
+}
+
+bool unequipWeapon(Character& character,
+                   Inventory& inventory,
+                   unsigned int weaponSlotNumber)
+{
+    if (!character.slotWeapon()[weaponSlotNumber]) {
+        return true;
+    }
+    unique_ptr<object::Item> oldWeapon{};
+    if (!character.unsetWeapon(weaponSlotNumber, oldWeapon)) {
+        return false;
+    }
+    assert(!character.slotWeapon()[weaponSlotNumber]);
+    InventoryIterator iterItem{ inventory.insert(oldWeapon) };
+    assert(iterItem.isValid());
+    return true;
 }
 
 } // namespace object

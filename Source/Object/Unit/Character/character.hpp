@@ -12,6 +12,7 @@
 #include"characterReference.hpp"
 #include"characterText.hpp"
 #include"common.hpp"
+#include"inventory.hpp"
 #include"skill.hpp"
 #include"slot.hpp"
 #include"unit.hpp"
@@ -62,7 +63,7 @@ public:
 private:
     void initCtor();
 
-    void check() noexcept;
+    bool hasValidValues() const noexcept;
 
 /// character parameters
 public:
@@ -319,7 +320,15 @@ public:
 public:
 /// slots
     const common::Slot<Weapon, nWSlots_>& slotWeapon() const noexcept { return slotWeapon_; }
-    common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
+    //common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
+
+    bool setWeapon(
+        unsigned int slotNumber,
+        std::unique_ptr<Item>& source,
+        bool (*typeChecker)(Weapon::Type, Weapon::Type)
+    );
+
+    bool unsetWeapon(unsigned int slotNumber, std::unique_ptr<Item>& receiver);
 
 /// attributes
     const Attribute& attribute() const noexcept { return *attrib_; }
@@ -432,6 +441,17 @@ private:
     static const CharacterReferenceContainer    ref_;       // references
     static const CharacterText                  text_;      // text
 };
+
+///************************************************************************************************
+
+bool equipWeapon(Character& character,
+                 Inventory& inventory,
+                 InventoryIterator iterItem,
+                 unsigned int weaponSlotNumber);
+
+bool unequipWeapon(Character& character,
+                   Inventory& inventory,
+                   unsigned int weaponSlotNumber);
 
 ///************************************************************************************************
 

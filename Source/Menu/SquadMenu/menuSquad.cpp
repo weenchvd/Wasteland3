@@ -66,11 +66,10 @@ pair<int, bool> pickCharacter(istream& is, ostream& os, object::Squad& squad, co
     const auto& text{ MenuSquadText::common() };
 
     os << ind0 << text.selectCharacter() << sign::colon << endl;
-    object::Character* c{ nullptr };
 
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
-        pair.first -= memberCounter::countFrom;
+        pair.first -= squadCounter::countFrom;
         if (pair.first >= 0 && pair.first < squad.members().size()) {
             if (squad.members()[pair.first]) {
                 return { pair.first, true };
@@ -91,7 +90,7 @@ void showSquad(istream& is, ostream& os, const object::Squad& squad, const Inden
     os << ind0 << text.squad() << endl;
     for (int i = 0; i < squad.members().size(); ++i) {
         os << ind1 << text.member() << sign::space << sign::sharp
-            << i + memberCounter::countFrom << sign::colon << sign::space;
+            << i + squadCounter::countFrom << sign::colon << sign::space;
         if (squad.members()[i] != nullptr) {
             auto& c{ *static_cast<object::Character*>(squad.members()[i].get()) };
             os << c.name() << sign::comma << sign::space << tCharCom.level() << sign::space

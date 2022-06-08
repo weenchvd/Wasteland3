@@ -45,6 +45,10 @@ void MenuCharacterText::initCommon()
     temp.en("Weapon");
     temp.ru("Оружие");
     initLanguageBundleMenu(temp, common_.weapon_);
+
+    temp.en("Select a weapon slot");
+    temp.ru("Выберите слот для оружия");
+    initLanguageBundleMenu(temp, common_.selectWeaponSlot_);
 }
 
 void MenuCharacterText::initMain()

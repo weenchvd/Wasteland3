@@ -5,11 +5,13 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"itemVisitorType.hpp"
+#include"menuCharacter.hpp"
 #include"menuCommonText.hpp"
 #include"menuItem.hpp"
 #include"menuItemCommon.hpp"
 #include"menuItemModify.hpp"
 #include"menuItemText.hpp"
+#include"menuSquad.hpp"
 #include<assert.h>
 
 namespace game {
@@ -83,10 +85,22 @@ int contextSensitiveMenuItem_Inventory(
 
         auto action{ getAction(is, os) };
         switch (action) {
-        case actionItemWeapon::EQUIP:
-            os << ind0 << comT.notImplemented() << endl;
-            // TODO
-            break;
+        case actionItemWeapon::EQUIP: {
+            showSquad(is, os, squad, ind1);
+            auto pairCharacter{ pickCharacter(is, os, squad, ind1) };
+            if (!pairCharacter.second) break;
+            object::Character& character{
+                *static_cast<object::Character*>(squad.members()[pairCharacter.first].get())
+            };
+            showWeaponSlots(is, os, character, ind1);
+            auto pairWeaponSlot{ pickWeaponSlot(is, os, character, ind1) };
+            if (!pairWeaponSlot.second) break;
+
+            if (!object::equipWeapon(character, squad.inventory(), iterItem, pairWeaponSlot.first)) {
+                os << comT.errorSymbol() << comT.actionFailed() << endl;
+            }
+            return actionCommon::EXIT;
+        }
         case actionItemWeapon::MODIFY: {
             menuItemModify(is, os, squad, iterItem, ind1);
             break;

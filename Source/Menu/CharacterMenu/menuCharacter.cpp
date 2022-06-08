@@ -4,11 +4,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"itemVisitorExtendedName.hpp"
 #include"menuAttribute.hpp"
 #include"menuCommonText.hpp"
 #include"menuCharacter.hpp"
 #include"menuCharacterText.hpp"
 #include"menuSkill.hpp"
+#include<limits>
 #include<sstream>
 
 namespace game {
@@ -167,20 +169,62 @@ void showGear(istream& is, ostream& os, const object::Character& character, cons
     const auto& text{ MenuCharacterText::common() };
 
     os << ind0 << text.gear() << endl;
+    showWeaponSlots(is, os, character, ind1);
+    // TODO armor
+    // TODO quick slots
+}
+
+void showWeaponSlots(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent)
+{
+    Indent ind0{ indent };
+    const auto& text{ MenuCharacterText::common() };
+
+    ItemVisitorExtendedName vis;
     const auto& weapons{ character.slotWeapon() };
     for (int i = 0; i < weapons.size(); ++i) {
-        os << ind1 << text.weapon() << sign::space << sign::sharp << i + 1
-            << sign::colon << sign::space;
+        os << ind0 << text.weapon() << sign::space << sign::sharp
+            << i + characterCounter::countFrom << sign::colon << sign::space;
         if (weapons[i] != nullptr) {
-            os << weapons[i]->name();
+            weapons[i]->accept(vis);
+            os << vis.getExtendedName();
         }
         else {
             os << sign::lp << text.emptySlot() << sign::rp;
         }
         os << endl;
     }
-    // TODO armor
-    // TODO quick slots
+}
+
+pair<int, bool> pickWeaponSlot(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent)
+{
+    Indent ind0{ indent };
+    const auto& comT{ MenuCommonText::common() };
+    const auto& text{ MenuCharacterText::common() };
+
+    os << ind0 << text.selectWeaponSlot() << sign::colon << endl;
+
+    int i{ characterCounter::countFrom };
+    auto pair{ getNumber(is, os) };
+    if (pair.second) {
+        for (int j = 0; j < character.slotWeapon().sizeRaw(); ++j) {
+            if (character.slotWeapon().type(j) != object::Weapon::Type::INVALID) {
+                if (pair.first == i) {
+                    return { j, true };
+                }
+                ++i;
+            }
+        }
+        os << comT.errorSymbol() << comT.invalidNumber() << endl;
+    }
+    return { numeric_limits<int>::min(), false };
 }
 
 } // namespace menu

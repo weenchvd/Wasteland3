@@ -103,6 +103,10 @@ void MenuCommonText::initCommon()
     temp.en("Cancel changes");
     temp.ru("Отменить изменения");
     initLanguageBundleMenu(temp, common_.cancelChanges_);
+
+    temp.en("Action failed");
+    temp.ru("Действие не выполнено");
+    initLanguageBundleMenu(temp, common_.actionFailed_);
 }
 
 } // namespace menu

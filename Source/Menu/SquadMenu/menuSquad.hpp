@@ -16,11 +16,11 @@
 namespace game {
 namespace menu {
 
-namespace memberCounter {
+namespace squadCounter {
 
 constexpr auto countFrom{ 1 };
 
-} // namespace memberCounter
+} // namespace squadCounter
 
 namespace actionSquad {
 

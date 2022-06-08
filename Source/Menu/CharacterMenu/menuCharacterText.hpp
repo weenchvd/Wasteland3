@@ -36,10 +36,13 @@ public:
 
     const text_t& weapon() const noexcept { return weapon_[li()]; }
 
+    const text_t& selectWeaponSlot() const noexcept { return selectWeaponSlot_[li()]; }
+
 private:
     language_bundle_t gear_;
     language_bundle_t emptySlot_;
     language_bundle_t weapon_;
+    language_bundle_t selectWeaponSlot_;
 };
 
 ///************************************************************************************************

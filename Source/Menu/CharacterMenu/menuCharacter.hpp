@@ -11,9 +11,16 @@
 #include"common.hpp"
 #include"menuCommon.hpp"
 #include<iostream>
+#include<utility>
 
 namespace game {
 namespace menu {
+
+namespace characterCounter {
+
+constexpr auto countFrom{ 1 };
+
+} // namespace characterCounter
 
 namespace actionCharacter {
 
@@ -47,6 +54,20 @@ void showStats(
 );
 
 void showGear(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent
+);
+
+void showWeaponSlots(
+    std::istream& is,
+    std::ostream& os,
+    const object::Character& character,
+    const Indent indent
+);
+
+std::pair<int, bool> pickWeaponSlot(
     std::istream& is,
     std::ostream& os,
     const object::Character& character,
