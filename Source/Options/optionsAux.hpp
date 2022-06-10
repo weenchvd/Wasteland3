@@ -7,9 +7,9 @@
 #ifndef OPTIONS_AUX_HPP
 #define OPTIONS_AUX_HPP
 
+#include"boost/bimap.hpp"
 #include"optionsFB_generated.h"
 #include"plainTextBase.hpp"
-#include<vector>
 
 namespace game {
 namespace global {
@@ -18,6 +18,7 @@ class OptionLanguageMap {
 public:
     using language_pt_t = global::PlainTextBase::Language;
     using language_fb_t = fbOptions::FB_Options_Language;
+    using lang_map_t    = boost::bimap<language_pt_t, language_fb_t>;
 
 public:
     OptionLanguageMap() noexcept {}
@@ -37,8 +38,7 @@ private:
     static void add(language_pt_t langPT, language_fb_t langFB);
 
 private:
-    static std::vector<language_pt_t>               langPT_;
-    static std::vector<language_fb_t>               langFB_;
+    static lang_map_t                               langMap_;
     static bool                                     initialized_;
 };
 

@@ -13,8 +13,7 @@ namespace global {
 
 using namespace std;
 
-vector<OptionLanguageMap::language_pt_t>    OptionLanguageMap::langPT_;
-vector<OptionLanguageMap::language_fb_t>    OptionLanguageMap::langFB_;
+OptionLanguageMap::lang_map_t               OptionLanguageMap::langMap_;
 bool                                        OptionLanguageMap::initialized_{ false };
 
 ///************************************************************************************************
@@ -24,11 +23,8 @@ void OptionLanguageMap::initialize()
     if (isInitialized()) return;
 
     constexpr auto size{ common::numberOf<language_pt_t>() };
-    langPT_.reserve(size);
-    langFB_.reserve(size);
 
-    assert(langPT_.empty());
-    assert(langFB_.empty());
+    assert(langMap_.empty());
 
     add(language_pt_t::EN, language_fb_t::FB_Options_Language_EN);
     add(language_pt_t::RU, language_fb_t::FB_Options_Language_RU);
@@ -37,8 +33,7 @@ void OptionLanguageMap::initialize()
     // to get an compilation error when the number of languages is changed
     // but this function is not changed
     static_assert(size == added, "");
-    assert(langPT_.size() == size);
-    assert(langPT_.size() == langFB_.size());
+    assert(langMap_.size() == size);
 
     initialized_ = true;
 }
@@ -47,8 +42,9 @@ OptionLanguageMap::language_pt_t OptionLanguageMap::toPTLanguage(
     language_fb_t lang) noexcept
 {
     assert(isInitialized());
-    for (size_t i = 0; i < langFB_.size(); ++i) {
-        if (langFB_[i] == lang) return langPT_[i];
+    lang_map_t::right_map::const_iterator iter{ langMap_.right.find(lang) };
+    if (iter != langMap_.right.end()) {
+        return iter->second;
     }
     return language_pt_t::INVALID;
 }
@@ -57,16 +53,16 @@ OptionLanguageMap::language_fb_t OptionLanguageMap::toFBLanguage(
     language_pt_t lang) noexcept
 {
     assert(isInitialized());
-    for (size_t i = 0; i < langPT_.size(); ++i) {
-        if (langPT_[i] == lang) return langFB_[i];
+    lang_map_t::left_map::const_iterator iter{ langMap_.left.find(lang) };
+    if (iter != langMap_.left.end()) {
+        return iter->second;
     }
     return language_fb_t::FB_Options_Language_INVALID;
 }
 
 void OptionLanguageMap::add(language_pt_t langPT, language_fb_t langFB)
 {
-    langPT_.push_back(langPT);
-    langFB_.push_back(langFB);
+    langMap_.insert(lang_map_t::value_type(langPT, langFB));
 }
 
 } // namespace global

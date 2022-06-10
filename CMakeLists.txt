@@ -297,5 +297,71 @@ if(WIN32)
   endif()
 endif()
 
+if(WIN32)
+  cmake_path(GET CMAKE_BINARY_DIR FILENAME CONFIG_NAME)
+
+  # set paths
+  set(BOOST_LIB_ROOT_DIR    "${EXTERNAL_PROJECTS_DIR}/boost")
+  set(BOOST_LIB_REPOS_DIR   "${BOOST_LIB_ROOT_DIR}/repos")
+  set(BOOST_LIB_BUILD_DIR   "${BOOST_LIB_ROOT_DIR}/build")
+  set(BOOST_LIB_FCSTUFF_DIR "${BOOST_LIB_ROOT_DIR}/cmake-fetchcontent-stuff")
+  if (CONFIG_NAME)
+    set(BOOST_LIB_INSTALL_DIR "${BOOST_LIB_ROOT_DIR}-install/${CONFIG_NAME}")
+  else()
+    set(BOOST_LIB_INSTALL_DIR "${BOOST_LIB_ROOT_DIR}-install")
+  endif()
+
+  set(BOOST_LIB_INCLUDE_DIR "${BOOST_LIB_INSTALL_DIR}/include")
+  set(BOOST_LIB_LIB_DIR     "${BOOST_LIB_INSTALL_DIR}/lib")
+
+  # set script options and commands for the build
+  set(BOOST_LIB_BUILD_OPTIONS         "--includedir=${BOOST_LIB_INCLUDE_DIR}")
+  list(APPEND BOOST_LIB_BUILD_OPTIONS "--libdir=${BOOST_LIB_LIB_DIR}")
+  list(APPEND BOOST_LIB_BUILD_OPTIONS "--build-dir=${BOOST_LIB_BUILD_DIR}")
+  list(APPEND BOOST_LIB_BUILD_OPTIONS "--build-type=minimal")
+  list(APPEND BOOST_LIB_BUILD_OPTIONS "--no-cmake-config")
+
+  set(BOOST_LIB_BUILD_PROPERTIES            "address-model=64")
+  list(APPEND BOOST_LIB_BUILD_PROPERTIES    "link=static")
+  if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    list(APPEND BOOST_LIB_BUILD_PROPERTIES  "variant=debug")
+  else()
+    list(APPEND BOOST_LIB_BUILD_PROPERTIES  "variant=release")
+  endif()
+  
+  file(GLOB BOOST_LIB_LIST "${BOOST_LIB_LIB_DIR}/*boost*.lib")
+  list(LENGTH BOOST_LIB_LIST BOOST_LIB_LIST_LENGTH)
+
+  # download and unpack BOOST library
+  include(FetchContent)
+  FetchContent_Declare(
+    boost
+    GIT_REPOSITORY  https://github.com/boostorg/boost.git
+    GIT_TAG         "boost-1.79.0"
+    PREFIX          ${BOOST_LIB_FCSTUFF_DIR}
+    SOURCE_DIR      ${BOOST_LIB_REPOS_DIR}
+  )
+  set(FETCHCONTENT_QUIET OFF CACHE BOOL "" FORCE)
+
+  FetchContent_GetProperties(boost)
+  if(NOT boost_POPULATED)
+    FetchContent_Populate(boost)
+  endif()
+
+  # run build and installation
+  if(${boost_POPULATED} AND NOT ${BOOST_LIB_LIST_LENGTH})
+    execute_process(
+      COMMAND           "bootstrap.bat"
+      WORKING_DIRECTORY ${BOOST_LIB_REPOS_DIR}
+      COMMAND_ECHO      STDOUT
+    )
+    execute_process(
+      COMMAND           "./b2" ${BOOST_LIB_BUILD_OPTIONS} ${BOOST_LIB_BUILD_PROPERTIES} "install"
+      WORKING_DIRECTORY ${BOOST_LIB_REPOS_DIR}
+      COMMAND_ECHO      STDOUT
+    )
+  endif()
+endif()
+
 #**********************************************************************
 add_subdirectory("Source")

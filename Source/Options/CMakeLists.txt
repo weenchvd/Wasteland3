@@ -57,3 +57,8 @@ target_link_libraries(${LIBRARY_NAME}
                       PUBLIC locator
                       PUBLIC observer
 )
+
+if(WIN32)
+  target_include_directories(${LIBRARY_NAME} PUBLIC "${BOOST_LIB_INCLUDE_DIR}/boost-1_79")
+  target_link_libraries(${LIBRARY_NAME} PUBLIC "${BOOST_LIB_LIST}")
+endif()
