@@ -8,6 +8,7 @@
 #define AMMO_COMMON_HPP
 
 #include"ammoTypeFB_generated.h"
+#include"bidirectionalMap.hpp"
 
 namespace game {
 namespace object {
@@ -35,9 +36,10 @@ enum class Ammo__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
-///************************************************************************************************
-
-Ammo__Type toAmmoType(fbAmmo::FB_AmmoType id);
+using AmmoTypeBiMap = common::BidirectionalMap<
+    Ammo__Type, Ammo__Type::INVALID,
+    fbAmmo::FB_AmmoType, fbAmmo::FB_AmmoType::FB_AmmoType_INVALID
+>;
 
 } // namespace object
 } // namespace game

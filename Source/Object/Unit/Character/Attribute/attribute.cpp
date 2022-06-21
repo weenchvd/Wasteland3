@@ -18,6 +18,8 @@ using namespace std;
 const AttributeReference    Attribute::ref_;
 const AttributeText         Attribute::text_;
 
+///************************************************************************************************
+
 Attribute::Attribute(Character& character)
     :
     char_       { character },
@@ -37,8 +39,7 @@ Attribute::Attribute(Character& character)
 
 bool Attribute::addLevel(Attribute::Type type, level_t shift) noexcept
 {
-    auto index = common::toUnderlying(type);
-    return common::changeLevel(levels_[index], pStor_, pDist_, shift);
+    return common::changeLevel(level(type), pStor_, pDist_, shift);
 }
         
 void Attribute::addLevelToAll(level_t shift) noexcept
@@ -103,43 +104,43 @@ void Attribute::apply() noexcept
 
 void Attribute::apply(Attribute::Type type) noexcept
 {
-    auto index = common::toUnderlying(type);
-    auto accLevel = levels_[index].getAccepted();
-    auto curLevel = levels_[index].get();
+    auto& lvl{ level(type) };
+    auto accLevel{ lvl.getAccepted() };
+    auto curLevel{ lvl.get() };
     if (accLevel != curLevel) {
         switch (type) {
         case Attribute::Type::COORDINATION: {
-            EffectAttCoord sum = cooDist_.total(accLevel, curLevel);
+            EffectAttCoord sum{ cooDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::LUCK: {
-            EffectAttLuck sum = lucDist_.total(accLevel, curLevel);
+            EffectAttLuck sum{ lucDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::AWARENESS: {
-            EffectAttAware sum = awaDist_.total(accLevel, curLevel);
+            EffectAttAware sum{ awaDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::STRENGTH: {
-            EffectAttStr sum = strDist_.total(accLevel, curLevel);
+            EffectAttStr sum{ strDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::SPEED: {
-            EffectAttSpeed sum = spdDist_.total(accLevel, curLevel);
+            EffectAttSpeed sum{ spdDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::INTELLIGENCE: {
-            EffectAttInt sum = intDist_.total(accLevel, curLevel);
+            EffectAttInt sum{ intDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
         case Attribute::Type::CHARISMA: {
-            EffectAttCha sum = chaDist_.total(accLevel, curLevel);
+            EffectAttCha sum{ chaDist_.total(accLevel, curLevel) };
             sum.apply(char_);
             break;
         }
@@ -149,26 +150,57 @@ void Attribute::apply(Attribute::Type type) noexcept
     }
 }
 
-void Attribute::initialize()
-{
-    AttributeReference::initialize();
-    AttributeText::initialize();
-}
-
-bool Attribute::isInitialized()
-{
-    return ref_.isInitialized()
-        && text_.isInitialized();
-}
-
 vector<common::SpecStorage<Attribute::level_t>> Attribute::initLevels()
 {
-    constexpr auto nAttributes = common::numberOf<Attribute::Type>();
+    constexpr auto nAttributes{ common::numberOf<Attribute::Type>() };
     const common::SpecStorage<level_t> tempLevel{
         ref_.minAttrLevel_,
         ref_.maxAttrLevel_
     };
     return vector<common::SpecStorage<level_t>>(nAttributes, tempLevel);
+}
+
+flatbuffers::Offset<fbAttribute::FB_Attribute> Attribute::serialize(
+    flatbuffers::FlatBufferBuilder& fbb) const
+{
+    using at_t = fbAttribute::FB_Attribute;
+    using common::checkedEnum;
+
+    fbAttribute::FB_AttributeBuilder b{ fbb };
+    b.add_attr_points(checkedEnum<decltype(&at_t::attr_points), at_t>(storage().getAccepted()));
+    b.add_coord_level(checkedEnum<decltype(&at_t::coord_level), at_t>(level(Type::COORDINATION).getAccepted()));
+    b.add_luck_level(checkedEnum<decltype(&at_t::luck_level), at_t>(level(Type::LUCK).getAccepted()));
+    b.add_aware_level(checkedEnum<decltype(&at_t::aware_level), at_t>(level(Type::AWARENESS).getAccepted()));
+    b.add_str_level(checkedEnum<decltype(&at_t::str_level), at_t>(level(Type::STRENGTH).getAccepted()));
+    b.add_speed_level(checkedEnum<decltype(&at_t::speed_level), at_t>(level(Type::SPEED).getAccepted()));
+    b.add_int_level(checkedEnum<decltype(&at_t::int_level), at_t>(level(Type::INTELLIGENCE).getAccepted()));
+    b.add_cha_level(checkedEnum<decltype(&at_t::cha_level), at_t>(level(Type::CHARISMA).getAccepted()));
+    return b.Finish();
+}
+
+unique_ptr<Attribute> Attribute::deserialize(
+    const fbAttribute::FB_Attribute* fb,
+    Character& character)
+{
+    assert(fb != nullptr);
+    auto a{ make_unique<Attribute>(character) };
+    a->pStor_.add(point_t{ fb->attr_points() });
+    a->pStor_.accept();
+    a->level(Type::COORDINATION).add(level_t{ fb->coord_level() });
+    a->level(Type::COORDINATION).accept();
+    a->level(Type::LUCK).add(level_t{ fb->luck_level() });
+    a->level(Type::LUCK).accept();
+    a->level(Type::AWARENESS).add(level_t{ fb->aware_level() });
+    a->level(Type::AWARENESS).accept();
+    a->level(Type::STRENGTH).add(level_t{ fb->str_level() });
+    a->level(Type::STRENGTH).accept();
+    a->level(Type::SPEED).add(level_t{ fb->speed_level() });
+    a->level(Type::SPEED).accept();
+    a->level(Type::INTELLIGENCE).add(level_t{ fb->int_level() });
+    a->level(Type::INTELLIGENCE).accept();
+    a->level(Type::CHARISMA).add(level_t{ fb->cha_level() });
+    a->level(Type::CHARISMA).accept();
+    return a;
 }
 
 } // namespace object

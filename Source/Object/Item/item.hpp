@@ -9,6 +9,7 @@
 
 #include"common.hpp"
 #include"itemCommon.hpp"
+#include"itemFB_generated.h"
 #include"itemVisitor.hpp"
 #include<memory>
 
@@ -35,9 +36,16 @@ public:
     virtual const common::Text& name() const noexcept = 0;
 
     virtual void accept(ItemVisitor& visitor) const noexcept {};
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbItem::FB_Item> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbItem::FB_Item* fb);
 };
 
-///------------------------------------------------------------------------------------------------
+///************************************************************************************************
 
 //bool operator==(const Item& lhs, const Item& rhs) noexcept;
 

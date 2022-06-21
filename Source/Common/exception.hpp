@@ -19,6 +19,7 @@ enum class ErrorType : char {
     UNKNOWN,
     IO_ERROR,
     CORRUPTED_FILE,
+    SERIALIZATION,
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
@@ -58,6 +59,15 @@ public:
     CorruptedFile(const char* fileName);
 
     virtual ErrorType errorType() const noexcept override { return ErrorType::CORRUPTED_FILE; }
+};
+
+///************************************************************************************************
+
+class SerializationError : public Exception {
+public:
+    SerializationError(const char* message);
+
+    virtual ErrorType errorType() const noexcept override { return ErrorType::SERIALIZATION; }
 };
 
 } // namespace common

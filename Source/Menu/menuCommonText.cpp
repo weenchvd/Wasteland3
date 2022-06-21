@@ -64,6 +64,14 @@ void MenuCommonText::initCommon()
     temp.ru("Введите номер");
     initLanguageBundleMenu(temp, common_.enterNum_);
 
+    temp.en("Enter the filename (without extension)");
+    temp.ru("Введите имя файла (без расширения)");
+    initLanguageBundleMenu(temp, common_.enterFilenameNoExt_);
+
+    temp.en("File");
+    temp.ru("Файл");
+    initLanguageBundleMenu(temp, common_.file_);
+
     temp.en("Select a type");
     temp.ru("Выберите тип");
     initLanguageBundleMenu(temp, common_.selectType_);

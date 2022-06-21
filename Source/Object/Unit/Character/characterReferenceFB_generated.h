@@ -6,10 +6,10 @@
 
 #include "flatbuffers/flatbuffers.h"
 
-#include "skillSerializationFB_generated.h"
 #include "weaponTypeFB_generated.h"
 #include "characterModelFB_generated.h"
-#include "attributeSerializationFB_generated.h"
+#include "skillFB_generated.h"
+#include "attributeFB_generated.h"
 #include "languageBundleFB_generated.h"
 #include "characterTypeFB_generated.h"
 

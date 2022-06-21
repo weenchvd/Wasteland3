@@ -1,0 +1,21 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "ammoFB.fbs";
+include "weaponFB.fbs";
+include "weaponModFB.fbs";
+
+namespace fbItem;
+
+union FB_ItemUnion {
+  fbWeapon.FB_Weapon,
+  fbWeaponMod.FB_WeaponMod,
+  fbAmmo.FB_Ammo
+}
+
+table FB_Item {
+  item:FB_ItemUnion;
+}

@@ -7,6 +7,7 @@
 #ifndef WEAPON_COMMON_HPP
 #define WEAPON_COMMON_HPP
 
+#include"bidirectionalMap.hpp"
 #include"itemCommon.hpp"
 #include"weaponModelFB_generated.h"
 #include"weaponTypeFB_generated.h"
@@ -50,6 +51,11 @@ enum class Weapon__Type : char {
     END
 };
 
+using WeaponModelBiMap = common::BidirectionalMap<
+    Weapon__Model, Weapon__Model::INVALID,
+    fbWeapon::FB_WeaponModel, fbWeapon::FB_WeaponModel::FB_WeaponModel_INVALID
+>;
+
 ///************************************************************************************************
 
 // @brief Check if the type are valid.
@@ -62,8 +68,6 @@ inline bool isAny(Weapon__Type id)
 // @param "id1" - must be a type or a group;
 // @param "id2" - must be a type;
 bool isCompatible(Weapon__Type id1, Weapon__Type id2);
-
-Weapon__Model toWeaponModel(fbWeapon::FB_WeaponModel id);
 
 Weapon__Type toWeaponType(fbWeapon::FB_WeaponType id);
 

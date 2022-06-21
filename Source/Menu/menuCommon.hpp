@@ -14,6 +14,7 @@
 #include<iostream>
 #include<limits>
 #include<sstream>
+#include<string>
 #include<utility>
 
 namespace game {
@@ -70,6 +71,8 @@ std::ostringstream& clearStream(std::ostringstream& oss);
 int getAction(std::istream& is, std::ostream& os);
 
 std::pair<int, bool> getNumber(std::istream& is, std::ostream& os);
+
+std::pair<std::string, bool> getFilename(std::istream& is, std::ostream& os, const Indent indent);
 
 enum class YesNo {
     INVALID = -1,

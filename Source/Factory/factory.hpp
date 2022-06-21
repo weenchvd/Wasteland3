@@ -8,6 +8,7 @@
 #define FACTORY_HPP
 
 #include"ammo.hpp"
+#include"inventory.hpp"
 #include"item.hpp"
 #include"options.hpp"
 #include"unit.hpp"
@@ -37,6 +38,8 @@ public:
         object::Ammo::ammo_quantity qty
     ) const;
 
+    std::unique_ptr<object::Inventory> createInventory() const;
+
     template<class T>
     std::unique_ptr<object::Unit> createUnit(typename T::Model model) const;
 
@@ -62,6 +65,11 @@ inline std::unique_ptr<object::Item> Factory::createAmmo(
 {
     assert(object::Ammo::isInitialized());
     return std::unique_ptr<object::Item>(new object::Ammo(std::move(type), std::move(qty)));
+}
+
+inline std::unique_ptr<object::Inventory> Factory::createInventory() const
+{
+    return std::unique_ptr<object::Inventory>(new object::Inventory);
 }
 
 template<class T>

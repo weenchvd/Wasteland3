@@ -8,20 +8,30 @@ namespace fbSkill;
 
 table FB_Skill {
   skill_points:int16 = 0;
+
   automatic_level:int8 = 0;
   big_guns_level:int8 = 0;
   brawling_level:int8 = 0;
   melee_level:int8 = 0;
   small_arms_level:int8 = 0;
   sniper_level:int8 = 0;
+            
   animal_whisperer_level:int8 = 0;
   explosives_level:int8 = 0;
   first_aid_level:int8 = 0;
   sneaky_shit_level:int8 = 0;
   weird_science_level:int8 = 0;
+
+  armor_modding_level:int8 = 0;
+  lockpicking_level:int8 = 0;
+  nerd_stuff_level:int8 = 0;
   mechanics_level:int8 = 0;
   survival_level:int8 = 0;
+  toaster_repair_level:int8 = 0;
   weapon_modding_level:int8 = 0;
+
   barter_level:int8 = 0;
+  hard_ass_level:int8 = 0;
+  kiss_ass_level:int8 = 0;
   leadership_level:int8 = 0;
 }

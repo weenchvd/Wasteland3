@@ -20,7 +20,7 @@ class Slot {
 public:
     using Type = typename T::Type;
 
-    static constexpr int SLOTNOTFOUND = -1;
+    static constexpr int slotNotFound_ = -1;
 
 public:
     Slot(std::array<Type, N> list) noexcept
@@ -67,7 +67,7 @@ public:
                 return i;
             }
         }
-        return SLOTNOTFOUND;
+        return slotNotFound_;
     }
 
     template<class Base>

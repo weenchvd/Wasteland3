@@ -13,7 +13,7 @@ namespace object {
 using ItemBaseType                  = short int;
 using Item__Model                   = ItemBaseType;
 
-enum class Item__Type : ItemBaseType {
+enum class Item__Type : char {
     INVALID = -1,                   /// invalid, must be the first
     // vvv TYPES vvv
     WEAPON,

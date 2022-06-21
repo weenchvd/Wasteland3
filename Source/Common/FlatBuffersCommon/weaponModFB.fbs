@@ -1,0 +1,13 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "weaponModModelFB.fbs";
+
+namespace fbWeaponMod;
+
+table FB_WeaponMod {
+  model:fbWeaponMod.FB_WeaponModModel = INVALID;
+}

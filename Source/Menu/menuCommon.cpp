@@ -9,6 +9,7 @@
 #include<assert.h>
 #include<iostream>
 #include<limits>
+#include<regex>
 #include<string>
 #include<type_traits>
 
@@ -77,6 +78,22 @@ pair<int, bool> getNumber(istream& is, ostream& os)
         os << text.errorSymbol() << text.invalidInput() << endl;
         return { numeric_limits<int>::min(), false };
     }
+}
+
+pair<string, bool> getFilename(istream& is, ostream& os, const Indent indent)
+{
+    const auto& text{ MenuCommonText::common() };
+    os << indent << text.enterFilenameNoExt() << endl;
+    os << text.promptSymbol();
+    string input;
+    getline(is, input);
+    regex r{ "[^A-Za-z0-9-_]" };
+    smatch mr;
+    if (!regex_search(input, mr, r) && input.size() > 0) {
+        return { input, true };
+    }
+    os << text.errorSymbol() << text.invalidInput() << endl;
+    return { string{}, false };
 }
 
 YesNo getYesNo(istream& is, ostream& os, const Indent indent)

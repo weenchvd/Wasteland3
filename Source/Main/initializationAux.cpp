@@ -125,10 +125,10 @@ void initializeShop(game::object::Inventory& inventory)
     inventory.insert(f.createAmmo(Ammo::Type::A_D38, 1000));
     inventory.insert(f.createAmmo(Ammo::Type::ENERGY_CELLS, 1000));
     inventory.insert(f.createAmmo(Ammo::Type::ROCKET, 50));
-
 }
 
-void initializeMembers(array<unique_ptr<game::object::Unit>, game::object::nMembers>& members)
+void initializeMembers(array<unique_ptr<game::object::Unit>,
+                       game::object::Squad::nMembers_>& members)
 {
     using game::object::Character;
 

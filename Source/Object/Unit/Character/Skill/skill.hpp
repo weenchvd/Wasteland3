@@ -11,6 +11,7 @@
 #include"specStorage.hpp"
 #include"effectSkill.hpp"
 #include"skillCommon.hpp"
+#include"skillFB_generated.h"
 #include"skillReference.hpp"
 #include"skillText.hpp"
 #include<vector>
@@ -53,11 +54,12 @@ public:
     void reset() noexcept;
 
 public:
-    const common::SpecStorage<level_t>& level(Skill::Type type) const noexcept {
-        assert(common::isValidEnum(type));
-        return levels_[common::toUnderlying(type)];
-    }
+    const common::SpecStorage<level_t>& level(Skill::Type type) const noexcept;
 
+private:
+    common::SpecStorage<level_t>& level(Skill::Type type) noexcept;
+
+public:
     const common::SpecStorage<point_t>& storage() const noexcept {
         return pStor_;
     }
@@ -76,6 +78,15 @@ private:
     void apply(Skill::Type type) noexcept;
 
     static std::vector<common::SpecStorage<level_t>>  initLevels();
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbSkill::FB_Skill> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Skill> deserialize(
+        const fbSkill::FB_Skill* fb,
+        Character& character);
 
 private:
     Character&                                              char_;
@@ -102,6 +113,34 @@ private:
     static const SkillReference                             ref_;
     static const SkillText                                  text_;
 };
+
+///************************************************************************************************
+
+inline void Skill::initialize()
+{
+    SkillReference::initialize();
+    SkillText::initialize();
+}
+
+inline bool Skill::isInitialized()
+{
+    return ref_.isInitialized() &&
+           text_.isInitialized();
+}
+
+inline const common::SpecStorage<Skill::level_t>& Skill::level(
+    Skill::Type type) const noexcept
+{
+    assert(common::isValidEnum(type));
+    return levels_[common::toUnderlying(type)];
+}
+
+inline common::SpecStorage<Skill::level_t>& Skill::level(
+    Skill::Type type) noexcept
+{
+    assert(common::isValidEnum(type));
+    return levels_[common::toUnderlying(type)];
+}
 
 } // namespace object
 } // namespace game

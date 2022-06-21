@@ -19,6 +19,14 @@ cmake_language(CALL create_flatbuffers_schema_file
 )
 
 #**********************************************************************
+# create Flatbuffers schema file for FB_Ammo
+set(AMMO_FB_FILE_STEM "ammoFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${AMMO_FB_FILE_STEM}"
+)
+
+#**********************************************************************
 # create Flatbuffers schema file for FB_Attack
 set(ATTACK_FB_FILE_STEM "attackFB")
 
@@ -28,7 +36,7 @@ cmake_language(CALL create_flatbuffers_schema_file
 
 #**********************************************************************
 # create Flatbuffers schema file for FB_Attribute
-set(ATTRIBUTE_FB_FILE_STEM "attributeSerializationFB")
+set(ATTRIBUTE_FB_FILE_STEM "attributeFB")
 
 cmake_language(CALL create_flatbuffers_schema_file
   "${ATTRIBUTE_FB_FILE_STEM}"
@@ -40,6 +48,14 @@ set(ATTRIBUTE_TYPE_FB_FILE_STEM "attributeTypeFB")
 
 cmake_language(CALL create_flatbuffers_schema_file
   "${ATTRIBUTE_TYPE_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_Character
+set(CHARACTER_FB_FILE_STEM "characterFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${CHARACTER_FB_FILE_STEM}"
 )
 
 #**********************************************************************
@@ -67,6 +83,30 @@ cmake_language(CALL create_flatbuffers_schema_file
 )
 
 #**********************************************************************
+# create Flatbuffers schema file for FB_Game
+set(GAME_FB_FILE_STEM "gameFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${GAME_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_Inventory
+set(INVENTORY_FB_FILE_STEM "inventoryFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${INVENTORY_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_Item
+set(ITEM_FB_FILE_STEM "itemFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${ITEM_FB_FILE_STEM}"
+)
+
+#**********************************************************************
 # create Flatbuffers schema file for FB_LanguageBundle
 set(LANGUAGE_BUNDLE_FB_FILE_STEM "languageBundleFB")
 
@@ -76,7 +116,7 @@ cmake_language(CALL create_flatbuffers_schema_file
 
 #**********************************************************************
 # create Flatbuffers schema file for FB_Skill
-set(SKILL_FB_FILE_STEM "skillSerializationFB")
+set(SKILL_FB_FILE_STEM "skillFB")
 
 cmake_language(CALL create_flatbuffers_schema_file
   "${SKILL_FB_FILE_STEM}"
@@ -91,11 +131,43 @@ cmake_language(CALL create_flatbuffers_schema_file
 )
 
 #**********************************************************************
+# create Flatbuffers schema file for FB_Squad
+set(SQUAD_FB_FILE_STEM "squadFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${SQUAD_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_Unit
+set(UNIT_FB_FILE_STEM "unitFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${UNIT_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_Weapon
+set(WEAPON_FB_FILE_STEM "weaponFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${WEAPON_FB_FILE_STEM}"
+)
+
+#**********************************************************************
 # create Flatbuffers schema file for FB_WeaponModel
 set(WEAPON_MODEL_FB_FILE_STEM "weaponModelFB")
 
 cmake_language(CALL create_flatbuffers_schema_file
   "${WEAPON_MODEL_FB_FILE_STEM}"
+)
+
+#**********************************************************************
+# create Flatbuffers schema file for FB_WeaponMod
+set(WEAPON_MOD_FB_FILE_STEM "weaponModFB")
+
+cmake_language(CALL create_flatbuffers_schema_file
+  "${WEAPON_MOD_FB_FILE_STEM}"
 )
 
 #**********************************************************************
@@ -124,17 +196,26 @@ cmake_language(CALL create_flatbuffers_schema_file
 
 #**********************************************************************
 set(LIBRARY_NAME "flatbuffersCommon")
-set(HEADER_CXX_LIST "${AMMO_TYPE_FB_FILE_STEM}_generated.h"
+set(HEADER_CXX_LIST "${AMMO_FB_FILE_STEM}_generated.h"
+                    "${AMMO_TYPE_FB_FILE_STEM}_generated.h"
                     "${ATTACK_FB_FILE_STEM}_generated.h"
                     "${ATTRIBUTE_FB_FILE_STEM}_generated.h"
                     "${ATTRIBUTE_TYPE_FB_FILE_STEM}_generated.h"
+                    "${CHARACTER_FB_FILE_STEM}_generated.h"
                     "${CHARACTER_MODEL_FB_FILE_STEM}_generated.h"
                     "${CHARACTER_TYPE_FB_FILE_STEM}_generated.h"
                     "${DAMAGE_TYPE_FB_FILE_STEM}_generated.h"
+                    "${GAME_FB_FILE_STEM}_generated.h"
+                    "${INVENTORY_FB_FILE_STEM}_generated.h"
+                    "${ITEM_FB_FILE_STEM}_generated.h"
                     "${LANGUAGE_BUNDLE_FB_FILE_STEM}_generated.h"
                     "${SKILL_FB_FILE_STEM}_generated.h"
                     "${SKILL_TYPE_FB_FILE_STEM}_generated.h"
+                    "${SQUAD_FB_FILE_STEM}_generated.h"
+                    "${UNIT_FB_FILE_STEM}_generated.h"
+                    "${WEAPON_FB_FILE_STEM}_generated.h"
                     "${WEAPON_MODEL_FB_FILE_STEM}_generated.h"
+                    "${WEAPON_MOD_FB_FILE_STEM}_generated.h"
                     "${WEAPON_MOD_MODEL_FB_FILE_STEM}_generated.h"
                     "${WEAPON_MOD_TYPE_FB_FILE_STEM}_generated.h"
                     "${WEAPON_TYPE_FB_FILE_STEM}_generated.h"

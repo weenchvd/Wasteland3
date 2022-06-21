@@ -13,6 +13,7 @@
 #include"item.hpp"
 #include"slot.hpp"
 #include"weaponCommon.hpp"
+#include"weaponFB_generated.h"
 #include"weaponMod.hpp"
 #include"weaponReference.hpp"
 #include"weaponText.hpp"
@@ -55,6 +56,11 @@ public:
     virtual void accept(ItemVisitor& visitor) const noexcept override {
         visitor.visitWeapon(*this);
     }
+
+    flatbuffers::Offset<fbWeapon::FB_Weapon> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbWeapon::FB_Weapon* fb);
 
     void apply() noexcept;
 
@@ -277,6 +283,7 @@ private:
 
 inline void Weapon::initialize()
 {
+    WeaponModelBiMap::initialize();
     ref_.initialize();
     text_.initialize();
 }
@@ -284,7 +291,8 @@ inline void Weapon::initialize()
 inline bool Weapon::isInitialized()
 {
     return ref_.isInitialized() &&
-           text_.isInitialized();
+           text_.isInitialized() &&
+           WeaponModelBiMap::isInitialized();
 }
 
 } // namespace object

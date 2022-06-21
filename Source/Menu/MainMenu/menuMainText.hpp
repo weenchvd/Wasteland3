@@ -44,6 +44,20 @@ public:
 
     const text_t& enterTrade() const noexcept { return enterTrade_[li()]; }
 
+    const text_t& saveGame() const noexcept { return saveGame_[li()]; }
+
+    const text_t& loadGame() const noexcept { return loadGame_[li()]; }
+
+    const text_t& gameSaved() const noexcept { return gameSaved_[li()]; }
+
+    const text_t& gameNotSaved() const noexcept { return gameNotSaved_[li()]; }
+
+    const text_t& gameLoaded() const noexcept { return gameLoaded_[li()]; }
+
+    const text_t& gameNotLoaded() const noexcept { return gameNotLoaded_[li()]; }
+
+    const text_t& fileList() const noexcept { return fileList_[li()]; }
+
 private:
     language_bundle_t menuName_;
     language_bundle_t exit_;
@@ -52,6 +66,13 @@ private:
     language_bundle_t enterInvent_;
     language_bundle_t enterShop_;
     language_bundle_t enterTrade_;
+    language_bundle_t saveGame_;
+    language_bundle_t loadGame_;
+    language_bundle_t gameSaved_;
+    language_bundle_t gameNotSaved_;
+    language_bundle_t gameLoaded_;
+    language_bundle_t gameNotLoaded_;
+    language_bundle_t fileList_;
 };
 
 ///************************************************************************************************

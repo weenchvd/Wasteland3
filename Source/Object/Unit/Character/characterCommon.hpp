@@ -7,6 +7,7 @@
 #ifndef CHARACTER_COMMON_HPP
 #define CHARACTER_COMMON_HPP
 
+#include"bidirectionalMap.hpp"
 #include"characterModelFB_generated.h"
 #include"characterTypeFB_generated.h"
 #include"unitCommon.hpp"
@@ -32,6 +33,11 @@ enum class Character__Type : char {
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
+
+using CharacterModelBiMap = common::BidirectionalMap<
+    Character__Model, Character__Model::INVALID,
+    fbCharacter::FB_CharacterModel, fbCharacter::FB_CharacterModel::FB_CharacterModel_INVALID
+>;
 
 ///************************************************************************************************
 

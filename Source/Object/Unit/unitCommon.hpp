@@ -13,17 +13,17 @@ namespace object {
 using UnitBaseType                  = short int;
 using Unit__Model                   = UnitBaseType;
 
-enum class Unit__Type : UnitBaseType {
+enum class Unit__Type : char {
     INVALID = -1,                   /// invalid, must be the first
-
+    // vvv TYPES vvv
     CHARACTER,
-    HUMAN,
-    MUTANT,
-    ANIMAL,
-    VEHICLE,
-    ROBOT,
-    SYNTH,
-
+    ///HUMAN,
+    ///MUTANT,
+    ///ANIMAL,
+    ///VEHICLE,
+    ///ROBOT,
+    ///SYNTH,
+    // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
 

@@ -8,6 +8,7 @@
 #define ATTRIBUTE_HPP
 
 #include"attributeCommon.hpp"
+#include"attributeFB_generated.h"
 #include"attributeReference.hpp"
 #include"attributeText.hpp"
 #include"distribution.hpp"
@@ -55,11 +56,12 @@ public:
     void reset() noexcept;
 
 public:
-    const common::SpecStorage<level_t>& level(Attribute::Type type) const noexcept {
-        assert(common::isValidEnum(type));
-        return levels_[common::toUnderlying(type)];
-    }
+    const common::SpecStorage<level_t>& level(Attribute::Type type) const noexcept;
 
+private:
+    common::SpecStorage<level_t>& level(Attribute::Type type) noexcept;
+
+public:
     const common::SpecStorage<point_t>& storage() const noexcept {
         return pStor_;
     }
@@ -79,6 +81,15 @@ private:
 
     static std::vector<common::SpecStorage<level_t>> initLevels();
 
+///********** serialization
+public:
+    flatbuffers::Offset<fbAttribute::FB_Attribute> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Attribute> deserialize(
+        const fbAttribute::FB_Attribute* fb,
+        Character& character);
+
 private:
     Character&                                          char_;
     std::vector<common::SpecStorage<level_t>>           levels_;
@@ -95,6 +106,34 @@ private:
     static const AttributeReference                     ref_;
     static const AttributeText                          text_;
 };
+
+///************************************************************************************************
+
+inline void Attribute::initialize()
+{
+    AttributeReference::initialize();
+    AttributeText::initialize();
+}
+
+inline bool Attribute::isInitialized()
+{
+    return ref_.isInitialized() &&
+           text_.isInitialized();
+}
+
+inline const common::SpecStorage<Attribute::level_t>& Attribute::level(
+    Attribute::Type type) const noexcept
+{
+    assert(common::isValidEnum(type));
+    return levels_[common::toUnderlying(type)];
+}
+
+inline common::SpecStorage<Attribute::level_t>& Attribute::level(
+    Attribute::Type type) noexcept
+{
+    assert(common::isValidEnum(type));
+    return levels_[common::toUnderlying(type)];
+}
 
 } // namespace object
 } // namespace game

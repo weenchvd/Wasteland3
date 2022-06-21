@@ -12,7 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 #**********************************************************************
 set(INTERFACE_LIBRARY_NAME "commonI")
-set(HEADER_CXX_LIST "common.hpp"
+set(HEADER_CXX_LIST "bidirectionalMap.hpp"
+                    "common.hpp"
                     "distribution.hpp"
                     "slot.hpp"
                     "specStorage.hpp"
@@ -23,6 +24,11 @@ add_library(${INTERFACE_LIBRARY_NAME} INTERFACE ${HEADER_CXX_LIST})
 target_include_directories(${INTERFACE_LIBRARY_NAME}
                            INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
 )
+
+if(WIN32)
+  target_include_directories(${INTERFACE_LIBRARY_NAME} INTERFACE "${BOOST_LIB_INCLUDE_DIR}/boost-1_79")
+  target_link_libraries(${INTERFACE_LIBRARY_NAME} INTERFACE "${BOOST_LIB_LIST}")
+endif()
 
 #**********************************************************************
 set(LIBRARY_NAME "common")

@@ -46,6 +46,10 @@ public:
 
     const text_t& enterNumber() const noexcept { return enterNum_[li()]; }
 
+    const text_t& enterFilenameNoExt() const noexcept { return enterFilenameNoExt_[li()]; }
+
+    const text_t& file() const noexcept { return file_[li()]; }
+
     const text_t& selectType() const noexcept { return selectType_[li()]; }
 
     const text_t& remove() const noexcept { return remove_[li()]; }
@@ -77,6 +81,8 @@ private:
     language_bundle_t unknownAct_;
     language_bundle_t enterAct_;
     language_bundle_t enterNum_;
+    language_bundle_t enterFilenameNoExt_;
+    language_bundle_t file_;
     language_bundle_t selectType_;
     language_bundle_t remove_;
     language_bundle_t yes_;

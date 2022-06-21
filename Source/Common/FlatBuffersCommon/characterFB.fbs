@@ -1,0 +1,100 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "attributeFB.fbs";
+include "characterModelFB.fbs";
+include "skillFB.fbs";
+include "weaponFB.fbs";
+
+namespace fbCharacter;
+
+table FB_Character {
+  attributes:fbAttribute.FB_Attribute;
+  skills:fbSkill.FB_Skill;
+  weapons:[fbWeapon.FB_Weapon];
+  model:fbCharacter.FB_CharacterModel = INVALID;
+  entered_name:string;
+            
+  time_detect:int32 = 0;
+  xp:int32 = 0;
+  xp_reward:int32 = 0;
+            
+  range_leader:int16 = 0;
+  con_max:int16 = 0;
+  con_cur:int16 = 0;
+  con_per_lvl:int16 = 0;
+  mul_crit_dmg:int16 = 0;
+  mul_speed:int16 = 0;
+  mul_throw:int16 = 0;
+  cha_hit:int16 = 0;
+  cha_hit_ar:int16 = 0;
+  cha_hit_smg:int16 = 0;
+  cha_hit_hmg:int16 = 0;
+  cha_hit_ft:int16 = 0;
+  cha_hit_brawl:int16 = 0;
+  cha_hit_blunt:int16 = 0;
+  cha_hit_bladed:int16 = 0;
+  cha_hit_sa_pistol:int16 = 0;
+  cha_hit_revolver:int16 = 0;
+  cha_hit_pump_sg:int16 = 0;
+  cha_hit_auto_sg:int16 = 0;
+  cha_hit_sr:int16 = 0;
+  cha_hit_nearby_allies:int16 = 0;
+  cha_crit_dmg_multi_kill:int16 = 0;
+  cha_crit_dmg:int16 = 0;
+  cha_crit_heal:int16 = 0;
+  cha_luck_action:int16 = 0;
+  cha_luck_crit_dmg:int16 = 0;
+  cha_luck_mega_crit_dmg:int16 = 0;
+  cha_luck_evade:int16 = 0;
+  cha_luck_crit_res:int16 = 0;
+  cha_luck_dbl_heal:int16 = 0;
+  cha_luck_dbl_money:int16 = 0;
+  cha_luck_dbl_scrap:int16 = 0;
+  bon_heal:int16 = 0;
+  bon_crit_heal:int16 = 0;
+  bon_heal_revive:int16 = 0;
+  bon_repair:int16 = 0;
+  bon_xp:int16 = 0;
+  bon_mission_rew:int16 = 0;
+  bon_scrap:int16 = 0;
+  bon_sell_value:int16 = 0;
+  bon_buy_cost:int16 = 0;
+  bon_sneak_dmg:int16 = 0;
+  bon_norm_dmg:int16 = 0;
+  bon_melee_dmg:int16 = 0;
+  bon_range_dmg:int16 = 0;
+  bon_fire_dmg:int16 = 0;
+  bon_cold_dmg:int16 = 0;
+  bon_ener_dmg:int16 = 0;
+  bon_expl_dmg:int16 = 0;
+  bon_animal_dmg:int16 = 0;
+  bon_dmg_vs_robot:int16 = 0;
+  bon_dmg_vs_vehic:int16 = 0;
+  bon_dmg_vs_synth:int16 = 0;
+  bon_dmg_vs_animal:int16 = 0;
+  bon_dmg_vs_mutant:int16 = 0;
+  bon_norm_dmg_boss_kill:int16 = 0;
+  bon_con_healed_revive:int16 = 0;
+  res_stat_eff:int16 = 0;
+  res_crit_dmg:int16 = 0;
+  res_fire_dmg:int16 = 0;
+  res_cold_dmg:int16 = 0;
+  res_ener_dmg:int16 = 0;
+  res_expl_dmg:int16 = 0;
+  evasion:int16 = 0;
+  initiat:int16 = 0;
+  strike:int16 = 0;
+            
+  level:int8 = 0;
+  armor:int8 = 0;
+  armor_pen:int8 = 0;
+  ap_max:int8 = 0;
+  ap_cur:int8 = 0;
+  mov_downed:int8 = 0;
+  percept:int8 = 0;
+  rad_res:int8 = 0;
+}

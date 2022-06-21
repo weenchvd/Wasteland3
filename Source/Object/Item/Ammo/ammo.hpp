@@ -8,6 +8,7 @@
 #define AMMO_HPP
 
 #include"ammoCommon.hpp"
+#include"ammoFB_generated.h"
 #include"ammoReference.hpp"
 #include"ammoText.hpp"
 #include"common.hpp"
@@ -48,6 +49,11 @@ public:
     virtual void accept(ItemVisitor& visitor) const noexcept override {
         visitor.visitAmmo(*this);
     }
+
+    flatbuffers::Offset<fbAmmo::FB_Ammo> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbAmmo::FB_Ammo* fb);
 
 public:
     virtual Item::Type itemType() const noexcept override {
@@ -105,14 +111,16 @@ private:
 
 inline void Ammo::initialize()
 {
+    AmmoTypeBiMap::initialize();
     ref_.initialize();
     text_.initialize();
 }
 
 inline bool Ammo::isInitialized()
 {
-    return ref_.isInitialized()
-        && text_.isInitialized();
+    return ref_.isInitialized() &&
+           text_.isInitialized() &&
+           AmmoTypeBiMap::isInitialized();
 }
 
 } // namespace object

@@ -9,6 +9,7 @@
 
 #include"attribute.hpp"
 #include"characterCommon.hpp"
+#include"characterFB_generated.h"
 #include"characterReference.hpp"
 #include"characterText.hpp"
 #include"common.hpp"
@@ -65,7 +66,7 @@ private:
 
     bool hasValidValues() const noexcept;
 
-/// character parameters
+///********** character parameters
 public:
     virtual Unit::Type unitType() const noexcept override {
         return Unit::Type::CHARACTER;
@@ -317,8 +318,8 @@ public:
     common::Radiation radiationResistance() const noexcept { return radRes_; }
     void radiationResistanceAdd(common::Radiation shift) noexcept { radRes_ += shift; }
 
+///********** slots
 public:
-/// slots
     const common::Slot<Weapon, nWSlots_>& slotWeapon() const noexcept { return slotWeapon_; }
     //common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
 
@@ -330,14 +331,17 @@ public:
 
     bool unsetWeapon(unsigned int slotNumber, std::unique_ptr<Item>& receiver);
 
-/// attributes
+///********** attributes
+public:
     const Attribute& attribute() const noexcept { return *attrib_; }
     Attribute& attribute() noexcept { return *attrib_; }
 
-/// skills
+///********** skills
+public:
     const Skill& skill() const noexcept { return *skill_; }
     Skill& skill() noexcept { return *skill_; }
 
+public:
     static const CharacterReferenceContainer& characterReferenceContainer() noexcept {
         return ref_;
     }
@@ -345,6 +349,13 @@ public:
     static const CharacterText& characterText() noexcept {
         return text_;
     }
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbCharacter::FB_Character> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Unit> deserialize(const fbCharacter::FB_Character* fb);
 
 private:
     const CharacterReference&   base_;          // reference, sample, template
@@ -457,6 +468,7 @@ bool unequipWeapon(Character& character,
 
 inline void Character::initialize()
 {
+    CharacterModelBiMap::initialize();
     Attribute::initialize();
     Skill::initialize();
     ref_.initialize();
@@ -468,7 +480,8 @@ inline bool Character::isInitialized()
     return Attribute::isInitialized() &&
            Skill::isInitialized() &&
            ref_.isInitialized() &&
-           text_.isInitialized();
+           text_.isInitialized() &&
+           CharacterModelBiMap::isInitialized();
 }
 
 } // namespace object

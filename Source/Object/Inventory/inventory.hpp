@@ -7,6 +7,7 @@
 #ifndef INVENTORY_HPP
 #define INVENTORY_HPP
 
+#include"inventoryFB_generated.h"
 #include"item.hpp"
 #include<list>
 #include<memory>
@@ -111,6 +112,11 @@ public:
     void viewed(InventoryIterator& iterItem);
 
     void viewedAll() { mergeLists(); }
+
+    flatbuffers::Offset<fbInventory::FB_Inventory> serialize(
+        flatbuffers::FlatBufferBuilder& fbb);
+
+    static std::unique_ptr<Inventory> deserialize(const fbInventory::FB_Inventory* fb);
 
 private:
     InventoryIterator insert(

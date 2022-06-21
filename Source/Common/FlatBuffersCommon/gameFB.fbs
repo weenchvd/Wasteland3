@@ -1,0 +1,17 @@
+
+// Copyright (c) 2022 Vitaly Dikov
+// 
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
+
+include "inventoryFB.fbs";
+include "squadFB.fbs";
+
+namespace fbGame;
+
+table FB_Game {
+  squad:fbSquad.FB_Squad;
+  shop:fbInventory.FB_Inventory;
+}
+
+root_type FB_Game;

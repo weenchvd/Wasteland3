@@ -8,33 +8,37 @@
 #include<unordered_map>
 
 namespace game {
-namespace object {
+namespace common {
 
-using namespace std;
+object::AmmoTypeBiMap::map_t        object::AmmoTypeBiMap::map_;
+bool                                object::AmmoTypeBiMap::initialized_{ false };
 
-Ammo__Type toAmmoType(fbAmmo::FB_AmmoType id)
+///************************************************************************************************
+
+void object::AmmoTypeBiMap::init()
 {
-    static unordered_map<fbAmmo::FB_AmmoType, Ammo__Type> map{
-        { fbAmmo::FB_AmmoType_INVALID, Ammo__Type::INVALID },
-        { fbAmmo::FB_AmmoType_NONE, Ammo__Type::NONE },
-        { fbAmmo::FB_AmmoType_A_5_56, Ammo__Type::A_5_56 },
-        { fbAmmo::FB_AmmoType_A_7_62, Ammo__Type::A_7_62 },
-        { fbAmmo::FB_AmmoType_SPIKES, Ammo__Type::SPIKES },
-        { fbAmmo::FB_AmmoType_BOLTS, Ammo__Type::BOLTS },
-        { fbAmmo::FB_AmmoType_A_9_MM, Ammo__Type::A_9_MM },
-        { fbAmmo::FB_AmmoType_A_D45, Ammo__Type::A_D45 },
-        { fbAmmo::FB_AmmoType_A_D38, Ammo__Type::A_D38 },
-        { fbAmmo::FB_AmmoType_A_D30_06, Ammo__Type::A_D30_06 },
-        { fbAmmo::FB_AmmoType_A_D50, Ammo__Type::A_D50 },
-        { fbAmmo::FB_AmmoType_SHOTGUN_SHELLS, Ammo__Type::SHOTGUN_SHELLS },
-        { fbAmmo::FB_AmmoType_FLAMETHROWER_FUEL, Ammo__Type::FLAMETHROWER_FUEL },
-        { fbAmmo::FB_AmmoType_ENERGY_CELLS, Ammo__Type::ENERGY_CELLS },
-        { fbAmmo::FB_AmmoType_FROZEN_FERRET, Ammo__Type::FROZEN_FERRET },
-        { fbAmmo::FB_AmmoType_ROCKET, Ammo__Type::ROCKET },
-        { fbAmmo::FB_AmmoType_TACTICAL_NUKE, Ammo__Type::TACTICAL_NUKE }
-    };
-    return map.at(id);
+    using object::Ammo__Type;
+    using fbAmmo::FB_AmmoType;
+
+    add(Ammo__Type::INVALID, FB_AmmoType::FB_AmmoType_INVALID);
+
+    add(Ammo__Type::NONE, FB_AmmoType::FB_AmmoType_NONE);
+    add(Ammo__Type::A_5_56, FB_AmmoType::FB_AmmoType_A_5_56);
+    add(Ammo__Type::A_7_62, FB_AmmoType::FB_AmmoType_A_7_62);
+    add(Ammo__Type::SPIKES, FB_AmmoType::FB_AmmoType_SPIKES);
+    add(Ammo__Type::BOLTS, FB_AmmoType::FB_AmmoType_BOLTS);
+    add(Ammo__Type::A_9_MM, FB_AmmoType::FB_AmmoType_A_9_MM);
+    add(Ammo__Type::A_D45, FB_AmmoType::FB_AmmoType_A_D45);
+    add(Ammo__Type::A_D38, FB_AmmoType::FB_AmmoType_A_D38);
+    add(Ammo__Type::A_D30_06, FB_AmmoType::FB_AmmoType_A_D30_06);
+    add(Ammo__Type::A_D50, FB_AmmoType::FB_AmmoType_A_D50);
+    add(Ammo__Type::SHOTGUN_SHELLS, FB_AmmoType::FB_AmmoType_SHOTGUN_SHELLS);
+    add(Ammo__Type::FLAMETHROWER_FUEL, FB_AmmoType::FB_AmmoType_FLAMETHROWER_FUEL);
+    add(Ammo__Type::ENERGY_CELLS, FB_AmmoType::FB_AmmoType_ENERGY_CELLS);
+    add(Ammo__Type::FROZEN_FERRET, FB_AmmoType::FB_AmmoType_FROZEN_FERRET);
+    add(Ammo__Type::ROCKET, FB_AmmoType::FB_AmmoType_ROCKET);
+    add(Ammo__Type::TACTICAL_NUKE, FB_AmmoType::FB_AmmoType_TACTICAL_NUKE);
 }
 
-} // namespace object
+} // namespace common
 } // namespace game

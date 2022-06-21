@@ -8,6 +8,28 @@
 #include<unordered_map>
 
 namespace game {
+namespace common {
+
+object::CharacterModelBiMap::map_t  object::CharacterModelBiMap::map_;
+bool                                object::CharacterModelBiMap::initialized_{ false };
+
+///************************************************************************************************
+
+void object::CharacterModelBiMap::init()
+{
+    using object::Character__Model;
+    using fbCharacter::FB_CharacterModel;
+
+    add(Character__Model::INVALID, FB_CharacterModel::FB_CharacterModel_INVALID);
+
+    add(Character__Model::RANGER_TEMPLATE, FB_CharacterModel::FB_CharacterModel_RANGER_TEMPLATE);
+    add(Character__Model::COMPANION_SPIKE, FB_CharacterModel::FB_CharacterModel_COMPANION_SPIKE);
+}
+
+} // namespace common
+
+///************************************************************************************************
+
 namespace object {
 
 using namespace std;

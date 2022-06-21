@@ -13,6 +13,7 @@
 #include"menuCommon.hpp"
 #include"squad.hpp"
 #include<iostream>
+#include<memory>
 
 namespace game {
 namespace menu {
@@ -24,13 +25,20 @@ enum ActionMain {
     MENU_SQUAD,
     MENU_INVENTORY,
     MENU_TRADE,
+    SAVE_GAME,
+    LOAD_GAME,
 
     __NEXT_ACTION_NUMBER
 };
 
 } // namespace actionMain
 
-void menuMain(std::istream& is, std::ostream& os, object::Squad& squad, object::Inventory& shop);
+void menuMain(
+    std::istream& is,
+    std::ostream& os,
+    std::unique_ptr<object::Squad>& _squad,
+    std::unique_ptr<object::Inventory>& _shop
+);
 
 namespace actionTrade {
 
@@ -49,6 +57,24 @@ void menuTrade(
     std::ostream& os,
     object::Squad& squad,
     object::Inventory& shop,
+    const Indent indent
+);
+
+///************************************************************************************************
+
+void saveGame(
+    std::istream& is,
+    std::ostream& os,
+    std::unique_ptr<object::Squad>& squad,
+    std::unique_ptr<object::Inventory>& shop,
+    const Indent indent
+);
+
+void loadGame(
+    std::istream& is,
+    std::ostream& os,
+    std::unique_ptr<object::Squad>& squad,
+    std::unique_ptr<object::Inventory>& shop,
     const Indent indent
 );
 

@@ -4,6 +4,7 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"locator.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
 
@@ -31,6 +32,23 @@ WeaponMod::WeaponMod(const WeaponModReference& ref) noexcept
 {
     assert(isInitialized());
     assert(base_.isInitialized());
+}
+
+flatbuffers::Offset<fbWeaponMod::FB_WeaponMod> WeaponMod::serialize(
+    flatbuffers::FlatBufferBuilder& fbb) const
+{
+    fbWeaponMod::FB_WeaponModBuilder builder{ fbb };
+    builder.add_model(WeaponModModelBiMap::toRightType(model()));
+    return builder.Finish();
+}
+
+unique_ptr<Item> WeaponMod::deserialize(const fbWeaponMod::FB_WeaponMod* fb)
+{
+    assert(fb != nullptr);
+    const auto& f{ global::Locator::getFactory() };
+    auto modModel{ WeaponModModelBiMap::toLeftType(fb->model()) };
+    auto item{ f.createItem<WeaponMod>(modModel) };
+    return item;
 }
 
 void WeaponMod::apply(Weapon& weapon) noexcept

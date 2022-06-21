@@ -30,6 +30,8 @@ string toString(ErrorType type)
         return u8"IO_ERROR";
     case ErrorType::CORRUPTED_FILE:
         return u8"CORRUPTED_FILE";
+    case ErrorType::SERIALIZATION:
+        return u8"SERIALIZATION";
     default:
         return u8"Unrecognized error";
     }
@@ -59,6 +61,14 @@ CorruptedFile::CorruptedFile(const char* fileName)
 {
     storage_ += fileName;
     storage_ += u8"' is corrupted";
+}
+
+///************************************************************************************************
+
+SerializationError::SerializationError(const char* message)
+    : Exception{ u8"[EXCEPTION] Serialization error: " }
+{
+    storage_ += message;
 }
 
 } // namespace common

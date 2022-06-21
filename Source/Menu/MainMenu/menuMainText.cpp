@@ -59,6 +59,34 @@ void MenuMainText::initCommon()
     temp.en("Enter the trade menu");
     temp.ru("Войти в меню торговли");
     initLanguageBundleMenu(temp, common_.enterTrade_);
+
+    temp.en("Save the game");
+    temp.ru("Сохранить игру");
+    initLanguageBundleMenu(temp, common_.saveGame_);
+
+    temp.en("Load the game");
+    temp.ru("Загрузить игру");
+    initLanguageBundleMenu(temp, common_.loadGame_);
+
+    temp.en("Game saved");
+    temp.ru("Игра сохранена");
+    initLanguageBundleMenu(temp, common_.gameSaved_);
+
+    temp.en("Game not saved");
+    temp.ru("Игра не сохранена");
+    initLanguageBundleMenu(temp, common_.gameNotSaved_);
+
+    temp.en("Game loaded");
+    temp.ru("Игра загружена");
+    initLanguageBundleMenu(temp, common_.gameLoaded_);
+
+    temp.en("Game not loaded");
+    temp.ru("Игра не загружена");
+    initLanguageBundleMenu(temp, common_.gameNotLoaded_);
+
+    temp.en("List of files");
+    temp.ru("Список файлов");
+    initLanguageBundleMenu(temp, common_.fileList_);
 }
 
 } // namespace menu

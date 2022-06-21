@@ -8,6 +8,7 @@
 #define UNIT_HPP
 
 #include"unitCommon.hpp"
+#include"unitFB_generated.h"
 #include"unitVisitor.hpp"
 
 namespace game {
@@ -31,6 +32,13 @@ public:
     virtual Unit::Model unitModel() const noexcept = 0;
 
     virtual void accept(UnitVisitor& visitor) noexcept {};
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbUnit::FB_Unit> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Unit> deserialize(const fbUnit::FB_Unit* fb);
 };
 
 } // namespace object

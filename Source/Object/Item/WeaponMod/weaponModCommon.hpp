@@ -7,6 +7,7 @@
 #ifndef WEAPON_MOD_COMMON_HPP
 #define WEAPON_MOD_COMMON_HPP
 
+#include"bidirectionalMap.hpp"
 #include"itemCommon.hpp"
 #include"weaponModModelFB_generated.h"
 #include"weaponModTypeFB_generated.h"
@@ -75,14 +76,17 @@ enum class WeaponMod__Type : char {
     NUMBER_OF                       /// must be the last
 };
 
+using WeaponModModelBiMap = common::BidirectionalMap<
+    WeaponMod__Model, WeaponMod__Model::INVALID,
+    fbWeaponMod::FB_WeaponModModel, fbWeaponMod::FB_WeaponModModel::FB_WeaponModModel_INVALID
+>;
+
 ///************************************************************************************************
 
 // @brief Check if the types are compatible.
 // @param "id1" - must be a type;
 // @param "id2" - must be a type;
 bool isCompatible(WeaponMod__Type id1, WeaponMod__Type id2);
-
-WeaponMod__Model toWeaponModModel(fbWeaponMod::FB_WeaponModModel id);
 
 WeaponMod__Type toWeaponModType(fbWeaponMod::FB_WeaponModType id);
 

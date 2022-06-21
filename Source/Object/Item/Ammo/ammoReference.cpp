@@ -69,7 +69,7 @@ AmmoReference AmmoReferenceContainer::initAmmoReference(const fbAmmo::FB_AmmoRef
     assert(fb != nullptr);
     AmmoReference ref;
 
-    ref.type_           = toAmmoType(fb->ammo_type());
+    ref.type_           = AmmoTypeBiMap::toLeftType(fb->ammo_type());
     assert(common::isValidEnum(ref.type_));
 
     common::initLanguageBundle(fb->name(), ref.name_);

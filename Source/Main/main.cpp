@@ -11,6 +11,7 @@
 #include"menuMain.hpp"
 #include"squad.hpp"
 #include<iostream>
+#include<memory>
 
 #include<cstdio>
 #include<string>
@@ -32,11 +33,11 @@ int main()
     try {
         game::global::initializeGame();
 
-        game::object::Squad squad;
-        init::initializeSquad(squad);
+        auto squad{ make_unique<game::object::Squad>() };
+        init::initializeSquad(*squad);
 
-        game::object::Inventory shop;
-        init::initializeShop(shop);
+        auto shop{ make_unique<game::object::Inventory>() };
+        init::initializeShop(*shop);
 
         game::menu::menuMain(cin, cout, squad, shop);
     }

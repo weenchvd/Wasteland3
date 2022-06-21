@@ -10,6 +10,29 @@
 #include<utility>
 
 namespace game {
+namespace common {
+
+object::WeaponModelBiMap::map_t     object::WeaponModelBiMap::map_;
+bool                                object::WeaponModelBiMap::initialized_{ false };
+
+///************************************************************************************************
+
+void object::WeaponModelBiMap::init()
+{
+    using object::Weapon__Model;
+    using fbWeapon::FB_WeaponModel;
+
+    add(Weapon__Model::INVALID, FB_WeaponModel::FB_WeaponModel_INVALID);
+
+    add(Weapon__Model::AR_KALASH97, FB_WeaponModel::FB_WeaponModel_AR_KALASH97);
+    add(Weapon__Model::AR_SOCOM, FB_WeaponModel::FB_WeaponModel_AR_SOCOM);
+    add(Weapon__Model::SMG_RIPPER, FB_WeaponModel::FB_WeaponModel_SMG_RIPPER);
+}
+
+} // namespace common
+
+///************************************************************************************************
+
 namespace object {
 
 using namespace std;
@@ -32,17 +55,6 @@ bool isCompatible(Weapon__Type id1, Weapon__Type id2)
     default:
         return false;
     }
-}
-
-Weapon__Model toWeaponModel(fbWeapon::FB_WeaponModel id)
-{
-    static unordered_map<fbWeapon::FB_WeaponModel, Weapon__Model> map{
-        { fbWeapon::FB_WeaponModel_INVALID, Weapon__Model::INVALID },
-        { fbWeapon::FB_WeaponModel_AR_KALASH97, Weapon__Model::AR_KALASH97 },
-        { fbWeapon::FB_WeaponModel_AR_SOCOM, Weapon__Model::AR_SOCOM },
-        { fbWeapon::FB_WeaponModel_SMG_RIPPER, Weapon__Model::SMG_RIPPER }
-    };
-    return map.at(id);
 }
 
 Weapon__Type toWeaponType(fbWeapon::FB_WeaponType id)

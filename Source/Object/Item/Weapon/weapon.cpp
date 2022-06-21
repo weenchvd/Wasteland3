@@ -4,10 +4,13 @@
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
+#include"exception.hpp"
+#include"locator.hpp"
 #include"weapon.hpp"
 #include<assert.h>
 #include<string>
 #include<type_traits>
+#include<vector>
 
 namespace game {
 namespace object {
@@ -71,6 +74,46 @@ Weapon::Weapon(const WeaponReference& ref) noexcept
 {
     assert(isInitialized());
     assert(base_.isInitialized());
+}
+
+flatbuffers::Offset<fbWeapon::FB_Weapon> Weapon::serialize(
+    flatbuffers::FlatBufferBuilder& fbb) const
+{
+    vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponMod>> mods;
+    for (int i = 0; i < slotWeaponMod_.sizeRaw(); ++i) {
+        if (slotWeaponMod_.type(i) != WeaponMod::Type::INVALID && slotWeaponMod_[i]) {
+            mods.push_back(slotWeaponMod_[i]->serialize(fbb));
+        }
+    }
+    auto modOffset{ fbb.CreateVector(mods) };
+
+    fbWeapon::FB_WeaponBuilder builder{ fbb };
+    builder.add_model(WeaponModelBiMap::toRightType(model()));
+    builder.add_mods(modOffset);
+    return builder.Finish();
+}
+
+unique_ptr<Item> Weapon::deserialize(const fbWeapon::FB_Weapon* fb)
+{
+    assert(fb != nullptr);
+    const auto& f{ global::Locator::getFactory() };
+    auto weaponModel{ WeaponModelBiMap::toLeftType(fb->model()) };
+    auto item{ f.createItem<Weapon>(weaponModel) };
+    auto& weapon{ static_cast<Weapon&>(*item.get()) };
+    const auto* mods{ fb->mods() };
+    if (mods != nullptr) {
+        for (int i = 0; i < mods->size(); ++i) {
+            assert(mods->Get(i) != nullptr);
+            auto mod{ WeaponMod::deserialize(mods->Get(i)) };
+            auto modType{ static_cast<WeaponMod*>(mod.get())->type() };
+            auto slotNumber{ weapon.slotMod().slotNumber(modType) };
+            if (!weapon.setMod(slotNumber, mod, isCompatible)) {
+                throw common::SerializationError{ u8"[Weapon::deserialize] The mod is not set" };
+            }
+        }
+
+    }
+    return item;
 }
 
 void Weapon::apply() noexcept

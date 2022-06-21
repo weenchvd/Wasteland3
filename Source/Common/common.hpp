@@ -7,6 +7,7 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#include"boost/config.hpp"
 #include<assert.h>
 #include<iostream>
 #include<string>
@@ -111,6 +112,24 @@ constexpr auto toInt(char c) noexcept
 {
     return static_cast<int>(c);
 }
+
+///************************************************************************************************
+
+#if(BOOST_CXX_VERSION >= 201703L)
+
+template <class PtrToMemberFunc, class Class, class T>
+constexpr auto checked(T v)
+{
+    return std::invoke_result_t<PtrToMemberFunc, Class>{ v };
+}
+
+template <class PtrToMemberFunc, class Class, class T>
+constexpr auto checkedEnum(T v)
+{
+    return std::invoke_result_t<PtrToMemberFunc, Class>{ toUnderlying(v) };
+}
+
+#endif
 
 ///************************************************************************************************
 

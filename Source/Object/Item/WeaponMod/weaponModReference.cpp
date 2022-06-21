@@ -106,7 +106,7 @@ WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
     assert(fb != nullptr);
     WeaponModReference ref;
 
-    ref.model_  = toWeaponModModel(fb->weapon_mod_model());
+    ref.model_  = WeaponModModelBiMap::toLeftType(fb->weapon_mod_model());
     ref.type_   = toWeaponModType(fb->weapon_mod_type());
     assert((verify ? common::isValidEnum(ref.model_) : true));
     assert((verify ? common::isValidEnum(ref.type_) : true));
@@ -133,7 +133,7 @@ WeaponModReference WeaponModReferenceContainer::initWeaponModReference(
     ref.apAttack_       = common::ActionPoint   { fb->ap_per_attack() };
     ref.apReload_       = common::ActionPoint   { fb->ap_per_reload() };
     ref.shoPerAttack_   = common::NumberShots   { fb->shots_per_attack() };
-    ref.tyAmmo_         = toAmmoType(fb->ammo_type());
+    ref.tyAmmo_         = AmmoTypeBiMap::toLeftType(fb->ammo_type());
     ref.tyDmg_          = toDamageType(fb->dmg_type());
 
     ref.initialized_    = true;

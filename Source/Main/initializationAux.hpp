@@ -21,7 +21,8 @@ void initializeInventory(game::object::Inventory& inventory);
 
 void initializeShop(game::object::Inventory& inventory);
 
-void initializeMembers(std::array<std::unique_ptr<game::object::Unit>, game::object::nMembers>& members);
+void initializeMembers(std::array<std::unique_ptr<game::object::Unit>,
+                       game::object::Squad::nMembers_>& members);
 
 } // namespace init
 

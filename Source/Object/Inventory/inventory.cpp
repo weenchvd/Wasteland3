@@ -5,7 +5,9 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"common.hpp"
+#include"exception.hpp"
 #include"inventory.hpp"
+#include"locator.hpp"
 #include"weapon.hpp"
 #include<algorithm>
 #include<assert.h>
@@ -272,6 +274,64 @@ bool Inventory::check(const list<unique_ptr<Item>>& source) const
 bool Inventory::checkAll() const
 {
     return check(newItems_) && check(oldItems_);
+}
+
+flatbuffers::Offset<fbInventory::FB_Inventory> Inventory::serialize(
+    flatbuffers::FlatBufferBuilder& fbb)
+{
+    /// https://google.github.io/flatbuffers/flatbuffers_guide_tutorial.html
+    /// Important: Unlike structs, you should not nest tables or other objects,
+    /// which is why we created all the strings/vectors/tables that this monster refers to
+    /// before start. If you try to create any of them between start and end, you will get
+    /// an assert/exception/panic depending on your language.
+
+    Roster rost{ roster() };
+    vector<flatbuffers::Offset<fbItem::FB_Item>> newItems;
+    vector<flatbuffers::Offset<fbItem::FB_Item>> oldItems;
+
+    for (auto iter{ rost.newItems().beg_ }; iter != rost.newItems().end_; ++iter) {
+        assert(iter.isValid());
+        newItems.push_back((*iter.get())->serialize(fbb));
+    }
+    for (auto iter{ rost.oldItems().beg_ }; iter != rost.oldItems().end_; ++iter) {
+        assert(iter.isValid());
+        oldItems.push_back((*iter.get())->serialize(fbb));
+    }
+
+    auto newOffset{ fbb.CreateVector(newItems) };
+    auto oldOffset{ fbb.CreateVector(oldItems) };
+
+    fbInventory::FB_InventoryBuilder builder{ fbb };
+    builder.add_new_items(newOffset);
+    builder.add_old_items(oldOffset);
+    return builder.Finish();
+}
+
+std::unique_ptr<Inventory> Inventory::deserialize(
+    const fbInventory::FB_Inventory* fb)
+{
+    assert(fb != nullptr);
+    const auto& f{ global::Locator::getFactory() };
+    auto inventory{ f.createInventory() };
+
+    const auto* newItems{ fb->new_items() };
+    if (newItems != nullptr) {
+        long long int size{ newItems->size() };
+        for (long long int i{ size - 1 }; i >= 0; --i) {
+            auto item{ Item::deserialize(newItems->Get(i)) };
+            inventory->insert(item, true);
+        }
+    }
+
+    const auto* oldItems{ fb->old_items() };
+    if (oldItems != nullptr) {
+        for (long long int i = 0; i < oldItems->size(); ++i) {
+            auto item{ Item::deserialize(oldItems->Get(i)) };
+            inventory->insert(item, false);
+        }
+    }
+
+    return inventory;
 }
 
 } // namespace object
