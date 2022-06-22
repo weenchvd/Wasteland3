@@ -62,6 +62,8 @@ void menuTrade(
 
 ///************************************************************************************************
 
+constexpr auto fileStemRule{ "[A-Za-z0-9-_]+" };
+
 void saveGame(
     std::istream& is,
     std::ostream& os,

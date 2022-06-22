@@ -147,12 +147,13 @@ void saveGame(
     assert(shop.get() != nullptr);
 
     try {
-        auto filenamePair{ getFilename(is, os, ind0) };
-        if (!filenamePair.second) {
+        regex regexFileStem{ fileStemRule };
+        auto fileStemPair{ getFileStem(is, os, regexFileStem, ind0) };
+        if (!fileStemPair.second) {
             os << ind0 << text.gameNotSaved() << endl;
             return;
         }
-        auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
+        auto filename{ fileStemPair.first + sign::dot + SAVE_FILE_EXTENSION };
         auto filePath{ current_path() };
         filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC).make_preferred();
         create_directories(filePath);
@@ -214,12 +215,13 @@ void loadGame(
             }
         }
 
-        auto filenamePair{ getFilename(is, os, ind0) };
-        if (!filenamePair.second) {
+        regex regexFileStem{ fileStemRule };
+        auto fileStemPair{ getFileStem(is, os, regexFileStem, ind0) };
+        if (!fileStemPair.second) {
             os << ind0 << text.gameNotLoaded() << endl;
             return;
         }
-        auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
+        auto filename{ fileStemPair.first + sign::dot + SAVE_FILE_EXTENSION };
         filePath.append(filename).make_preferred();
         auto filePathStr{ filePath.u8string() };
 

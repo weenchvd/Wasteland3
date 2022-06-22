@@ -13,6 +13,7 @@
 #include<array>
 #include<iostream>
 #include<limits>
+#include<regex>
 #include<sstream>
 #include<string>
 #include<utility>
@@ -72,7 +73,18 @@ int getAction(std::istream& is, std::ostream& os);
 
 std::pair<int, bool> getNumber(std::istream& is, std::ostream& os);
 
-std::pair<std::string, bool> getFilename(std::istream& is, std::ostream& os, const Indent indent);
+std::pair<std::string, bool> getFileStem(
+    std::istream& is,
+    std::ostream& os,
+    const Indent indent
+);
+
+std::pair<std::string, bool> getFileStem(
+    std::istream& is,
+    std::ostream& os,
+    const std::regex& r,
+    const Indent indent
+);
 
 enum class YesNo {
     INVALID = -1,
