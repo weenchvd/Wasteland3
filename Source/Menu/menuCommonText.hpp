@@ -72,6 +72,8 @@ public:
 
     const text_t& actionFailed() const noexcept { return actionFailed_[li()]; }
 
+    const text_t& errorOccurred() const noexcept { return errorOccurred_[li()]; }
+
 private:
     language_bundle_t actions_;
     language_bundle_t exitMenu_;
@@ -94,6 +96,7 @@ private:
     language_bundle_t saveChanges_;
     language_bundle_t cancelChanges_;
     language_bundle_t actionFailed_;
+    language_bundle_t errorOccurred_;
 };
 
 ///************************************************************************************************

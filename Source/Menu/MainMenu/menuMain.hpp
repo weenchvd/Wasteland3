@@ -68,7 +68,7 @@ void saveGame(
     std::unique_ptr<object::Squad>& squad,
     std::unique_ptr<object::Inventory>& shop,
     const Indent indent
-);
+) noexcept;
 
 void loadGame(
     std::istream& is,
@@ -76,7 +76,7 @@ void loadGame(
     std::unique_ptr<object::Squad>& squad,
     std::unique_ptr<object::Inventory>& shop,
     const Indent indent
-);
+) noexcept;
 
 } // namespace menu
 } // namespace game

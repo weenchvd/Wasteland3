@@ -135,43 +135,55 @@ void saveGame(
     ostream& os,
     unique_ptr<object::Squad>& squad,
     unique_ptr<object::Inventory>& shop,
-    const Indent indent)
+    const Indent indent) noexcept
 {
     using namespace std::filesystem;
 
+    Indent ind0{ indent };
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuMainText::common() };
 
     assert(squad.get() != nullptr);
     assert(shop.get() != nullptr);
-    auto filenamePair{ getFilename(is, os, indent) };
-    if (!filenamePair.second) {
-        os << indent << text.gameNotSaved() << endl;
+
+    try {
+        auto filenamePair{ getFilename(is, os, ind0) };
+        if (!filenamePair.second) {
+            os << ind0 << text.gameNotSaved() << endl;
+            return;
+        }
+        auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
+        auto filePath{ current_path() };
+        filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC).make_preferred();
+        create_directories(filePath);
+        filePath.append(filename).make_preferred();
+        auto filePathStr{ filePath.u8string() };
+
+        flatbuffers::FlatBufferBuilder fbb;
+
+        auto squadOffset{ squad->serialize(fbb) };
+        auto shopOffset{ shop->serialize(fbb) };
+
+        fbGame::FB_GameBuilder b{ fbb };
+        b.add_squad(squadOffset);
+        b.add_shop(shopOffset);
+        auto root{ b.Finish() };
+
+        fbb.Finish(root);
+
+        common::writeBinFlatBuffer(filePathStr.c_str(), fbb.GetBufferPointer(), fbb.GetSize());
+
+        os << ind0 << text.gameSaved() << sign::dot << sign::space
+            << comT.file() << sign::colon << sign::space << filePathStr << endl;
         return;
     }
-    auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
-    auto filePath{ current_path() };
-    filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC);
-    create_directory(filePath);
-    filePath.append(filename);
-    auto filePathStr{ filePath.u8string() };
+    catch (exception& e) {
+        os << comT.errorSymbol() << e.what() << endl;
+    }
+    catch (...) {}
 
-    flatbuffers::FlatBufferBuilder fbb;
-
-    auto squadOffset{ squad->serialize(fbb) };
-    auto shopOffset{ shop->serialize(fbb) };
-
-    fbGame::FB_GameBuilder b{ fbb };
-    b.add_squad(squadOffset);
-    b.add_shop(shopOffset);
-    auto root{ b.Finish() };
-
-    fbb.Finish(root);
-
-    common::writeBinFlatBuffer(filePathStr.c_str(), fbb.GetBufferPointer(), fbb.GetSize());
-
-    os << indent << text.gameSaved() << sign::dot << sign::space
-        << comT.file() << sign::colon << sign::space << filePathStr << endl;
+    os << ind0 << comT.errorOccurred() << sign::dot << sign::space
+        << text.gameNotSaved() << endl;
 }
 
 void loadGame(
@@ -179,7 +191,7 @@ void loadGame(
     ostream& os,
     unique_ptr<object::Squad>& squad,
     unique_ptr<object::Inventory>& shop,
-    const Indent indent)
+    const Indent indent) noexcept
 {
     using namespace std::filesystem;
 
@@ -190,38 +202,49 @@ void loadGame(
 
     assert(squad.get() != nullptr);
     assert(shop.get() != nullptr);
-    auto filePath{ current_path() };
-    filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC);
-    auto fileExtension{ string{ sign::dot } + SAVE_FILE_EXTENSION };
-    os << ind0 << text.fileList() << sign::colon << endl;
-    for (const auto& dir : directory_iterator{ filePath }) {
-        if (dir.path().extension().u8string() == fileExtension) {
-            os << ind1 << dir.path().filename().u8string() << endl;
-        }
-    }
 
-    auto filenamePair{ getFilename(is, os, ind0) };
-    if (!filenamePair.second) {
-        os << ind0 << text.gameNotLoaded() << endl;
+    try {
+        auto filePath{ current_path() };
+        filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC).make_preferred();
+        auto fileExtension{ string{ sign::dot } + SAVE_FILE_EXTENSION };
+        os << ind0 << text.fileList() << sign::colon << endl;
+        for (const auto& dir : directory_iterator{ filePath }) {
+            if (dir.path().extension().u8string() == fileExtension) {
+                os << ind1 << dir.path().filename().u8string() << endl;
+            }
+        }
+
+        auto filenamePair{ getFilename(is, os, ind0) };
+        if (!filenamePair.second) {
+            os << ind0 << text.gameNotLoaded() << endl;
+            return;
+        }
+        auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
+        filePath.append(filename).make_preferred();
+        auto filePathStr{ filePath.u8string() };
+
+        unique_ptr<char[]> buffer;
+        common::readBinFlatBuffer(filePathStr.c_str(), buffer);
+        const fbGame::FB_Game* fb{ fbGame::GetFB_Game(buffer.get()) };
+        assert(fb != nullptr);
+
+        auto loadedSquad{ object::Squad::deserialize(fb->squad()) };
+        auto loadedShop{ object::Inventory::deserialize(fb->shop()) };
+
+        squad.reset(loadedSquad.release());
+        shop.reset(loadedShop.release());
+
+        os << ind0 << text.gameLoaded() << sign::dot << sign::space
+            << comT.file() << sign::colon << sign::space << filePathStr << endl;
         return;
     }
-    auto filename{ filenamePair.first + sign::dot + SAVE_FILE_EXTENSION };
-    filePath.append(filename);
-    auto filePathStr{ filePath.u8string() };
+    catch (exception& e) {
+        os << comT.errorSymbol() << e.what() << endl;
+    }
+    catch (...) {}
 
-    unique_ptr<char[]> buffer;
-    common::readBinFlatBuffer(filePathStr.c_str(), buffer);
-    const fbGame::FB_Game* fb{ fbGame::GetFB_Game(buffer.get()) };
-    assert(fb != nullptr);
-
-    auto loadedSquad{ object::Squad::deserialize(fb->squad()) };
-    auto loadedShop{ object::Inventory::deserialize(fb->shop()) };
-
-    squad.reset(loadedSquad.release());
-    shop.reset(loadedShop.release());
-
-    os << ind0 << text.gameLoaded() << sign::dot << sign::space
-        << comT.file() << sign::colon << sign::space << filePathStr << endl;
+    os << ind0 << comT.errorOccurred() << sign::dot << sign::space
+        << text.gameNotLoaded() << endl;
 }
 
 } // namespace menu

@@ -115,6 +115,10 @@ void MenuCommonText::initCommon()
     temp.en("Action failed");
     temp.ru("Действие не выполнено");
     initLanguageBundleMenu(temp, common_.actionFailed_);
+
+    temp.en("An error has occurred");
+    temp.ru("Произошла ошибка");
+    initLanguageBundleMenu(temp, common_.errorOccurred_);
 }
 
 } // namespace menu
