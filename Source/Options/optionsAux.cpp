@@ -9,61 +9,32 @@
 #include<assert.h>
 
 namespace game {
-namespace global {
+namespace common {
 
-using namespace std;
-
-OptionLanguageMap::lang_map_t               OptionLanguageMap::langMap_;
-bool                                        OptionLanguageMap::initialized_{ false };
+global::OptionLanguageBiMap::map_t  global::OptionLanguageBiMap::map_;
+bool                                global::OptionLanguageBiMap::initialized_{ false };
 
 ///************************************************************************************************
 
-void OptionLanguageMap::initialize()
+void global::OptionLanguageBiMap::init()
 {
-    if (isInitialized()) return;
+    using left_t    = global::PlainTextBase::Language;
+    using right_t   = fbOptions::FB_Options_Language;
 
-    constexpr auto size{ common::numberOf<language_pt_t>() };
+    assert(map_.empty());
 
-    assert(langMap_.empty());
+    add(left_t::INVALID, right_t::FB_Options_Language_INVALID);
 
-    add(language_pt_t::EN, language_fb_t::FB_Options_Language_EN);
-    add(language_pt_t::RU, language_fb_t::FB_Options_Language_RU);
-    constexpr auto added{ 2 };
+    add(left_t::EN, right_t::FB_Options_Language_EN);
+    add(left_t::RU, right_t::FB_Options_Language_RU);
+    constexpr auto added{ 3 };
 
+    constexpr auto size{ common::numberOf<left_t>() + 1 }; // '+ 1' is INVALID type
     // to get an compilation error when the number of languages is changed
     // but this function is not changed
     static_assert(size == added, "");
-    assert(langMap_.size() == size);
-
-    initialized_ = true;
+    assert(map_.size() == size);
 }
 
-OptionLanguageMap::language_pt_t OptionLanguageMap::toPTLanguage(
-    language_fb_t lang) noexcept
-{
-    assert(isInitialized());
-    lang_map_t::right_map::const_iterator iter{ langMap_.right.find(lang) };
-    if (iter != langMap_.right.end()) {
-        return iter->second;
-    }
-    return language_pt_t::INVALID;
-}
-
-OptionLanguageMap::language_fb_t OptionLanguageMap::toFBLanguage(
-    language_pt_t lang) noexcept
-{
-    assert(isInitialized());
-    lang_map_t::left_map::const_iterator iter{ langMap_.left.find(lang) };
-    if (iter != langMap_.left.end()) {
-        return iter->second;
-    }
-    return language_fb_t::FB_Options_Language_INVALID;
-}
-
-void OptionLanguageMap::add(language_pt_t langPT, language_fb_t langFB)
-{
-    langMap_.insert(lang_map_t::value_type(langPT, langFB));
-}
-
-} // namespace global
+} // namespace common
 } // namespace game

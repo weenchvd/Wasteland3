@@ -68,7 +68,7 @@ Options::Options()
 
 void Options::initialize()
 {
-    OptionLanguageMap::initialize();
+    OptionLanguageBiMap::initialize();
 }
 
 bool Options::isModified() const noexcept
@@ -127,7 +127,7 @@ flatbuffers::FlatBufferBuilder Options::saveOptions()
     flatbuffers::FlatBufferBuilder builder{ 1024 };
     FB_OptionsBuilder optBuilder{ builder };
 
-    FB_Options_Language lang{ OptionLanguageMap::toFBLanguage(optLang_.getLanguage()) };
+    FB_Options_Language lang{ OptionLanguageBiMap::toRightType(optLang_.getLanguage()) };
     assert(lang != FB_Options_Language::FB_Options_Language_INVALID);
     optBuilder.add_language(lang);
 
@@ -166,7 +166,7 @@ bool Options::loadOptions(const fbOptions::FB_Options* fb)
     assert(fb != nullptr);
 
     OptionsSet set;
-    set.lang_ = OptionLanguageMap::toPTLanguage(fb->language());
+    set.lang_ = OptionLanguageBiMap::toLeftType(fb->language());
     if (set.lang_ == PlainTextBase::Language::INVALID) {
         return false;
     }
