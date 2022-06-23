@@ -71,31 +71,38 @@ constexpr auto toUnderlying(Enum e) noexcept
 }
 
 template <class Enum>
+constexpr void verifyEnum() noexcept
+{
+    assert(toUnderlying(Enum::__INVALID) == -1);
+    assert(Enum::__INVALID      < Enum::__NUMBER_OF);
+    assert(Enum::__NUMBER_OF    < Enum::__END);
+}
+
+template <class Enum>
 constexpr bool isValidEnum(Enum e) noexcept
 {
-    assert(toUnderlying(Enum::INVALID) == -1);
-    return (e > Enum::INVALID && e < Enum::NUMBER_OF);
+    verifyEnum<Enum>();
+    return (e > Enum::__INVALID && e < Enum::__NUMBER_OF);
 }
 
 template <class Enum>
 constexpr bool isValidEnumAux(Enum e) noexcept
 {
-    assert(toUnderlying(Enum::INVALID) == -1);
-    return (e > Enum::NUMBER_OF && e < Enum::END);
+    verifyEnum<Enum>();
+    return (e > Enum::__NUMBER_OF && e < Enum::__END);
 }
 
 template <class Enum>
 constexpr auto numberOf() noexcept
 {
-    assert(toUnderlying(Enum::INVALID) == -1);
-    assert(Enum::INVALID < Enum::NUMBER_OF);
-    return toUnderlying(Enum::NUMBER_OF);
+    verifyEnum<Enum>();
+    return toUnderlying(Enum::__NUMBER_OF);
 }
 
 template <class Enum>
 constexpr auto firstEnum() noexcept
 {
-    auto e{ static_cast<Enum>(toUnderlying(Enum::INVALID) + 1) };
+    auto e{ static_cast<Enum>(toUnderlying(Enum::__INVALID) + 1) };
     assert(isValidEnum(e));
     return e;
 }
@@ -103,7 +110,7 @@ constexpr auto firstEnum() noexcept
 template <class Enum>
 constexpr auto lastEnum() noexcept
 {
-    auto e{ static_cast<Enum>(toUnderlying(Enum::NUMBER_OF) - 1) };
+    auto e{ static_cast<Enum>(toUnderlying(Enum::__NUMBER_OF) - 1) };
     assert(isValidEnum(e));
     return e;
 }

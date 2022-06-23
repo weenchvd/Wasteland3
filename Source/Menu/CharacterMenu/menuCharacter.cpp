@@ -214,13 +214,11 @@ pair<int, bool> pickWeaponSlot(
     int i{ characterCounter::countFrom };
     auto pair{ getNumber(is, os) };
     if (pair.second) {
-        for (int j = 0; j < character.slotWeapon().sizeRaw(); ++j) {
-            if (character.slotWeapon().type(j) != object::Weapon::Type::INVALID) {
-                if (pair.first == i) {
-                    return { j, true };
-                }
-                ++i;
+        for (int j = 0; j < character.slotWeapon().size(); ++j) {
+            if (pair.first == i) {
+                return { j, true };
             }
+            ++i;
         }
         os << comT.errorSymbol() << comT.invalidNumber() << endl;
     }

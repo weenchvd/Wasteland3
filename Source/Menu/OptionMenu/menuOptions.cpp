@@ -103,7 +103,7 @@ void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
         switch (getAction(is, os)) {
         case actionGeneralOptions::CHANGE_LANGUAGE: {
             PlainTextBase::Language lang{ pickLanguage(is, os, ind1) };
-            if (lang != PlainTextBase::Language::INVALID) {
+            if (lang != PlainTextBase::Language::__INVALID) {
                 Locator::getOptions().optLanguage().setLanguage(lang);
             }
             break;
@@ -164,7 +164,7 @@ global::PlainTextBase::Language pickLanguage(istream& is, ostream& os, const Ind
     }
 
     os << ind0 << text.selectLanguage() << endl;
-    PlainTextBase::Language t{ PlainTextBase::Language::INVALID };
+    PlainTextBase::Language t{ PlainTextBase::Language::__INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<PlainTextBase::Language>()) &&

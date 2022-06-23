@@ -20,6 +20,7 @@ enum class ErrorType : char {
     IO_ERROR,
     CORRUPTED_FILE,
     SERIALIZATION,
+    INITIALIZATION,
     // ^^^ TYPES ^^^
     NUMBER_OF                       /// must be the last
 };
@@ -31,7 +32,7 @@ std::string toString(ErrorType type);
 
 class Exception : public std::exception {
 public:
-    Exception(const char* message) { storage_ = message; }
+    Exception(const char* message);
 
     const char* what() const noexcept override { return storage_.c_str(); }
 
@@ -68,6 +69,15 @@ public:
     SerializationError(const char* message);
 
     virtual ErrorType errorType() const noexcept override { return ErrorType::SERIALIZATION; }
+};
+
+///************************************************************************************************
+
+class InitializationError : public Exception {
+public:
+    InitializationError(const char* message);
+
+    virtual ErrorType errorType() const noexcept override { return ErrorType::INITIALIZATION; }
 };
 
 } // namespace common

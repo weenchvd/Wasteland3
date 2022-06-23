@@ -93,8 +93,8 @@ int contextSensitiveMenuItemModify(
 
         vector<pair<slot_number_t, action_number_t>> mapping;
         const auto& slots{ weapon.slotMod() };
-        for (int i = 0; i < slots.sizeRaw(); ++i) {
-            if (slots.type(i) != object::WeaponMod::Type::INVALID && slots[i] != nullptr) {
+        for (int i = 0; i < slots.size(); ++i) {
+            if (slots[i] != nullptr) {
                 mapping.push_back(pair{ i, nextActionNumber++ });
             }
         }

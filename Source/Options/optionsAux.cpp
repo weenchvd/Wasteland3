@@ -23,7 +23,7 @@ void global::OptionLanguageBiMap::init()
 
     assert(map_.empty());
 
-    add(left_t::INVALID, right_t::FB_Options_Language_INVALID);
+    add(left_t::__INVALID, right_t::FB_Options_Language_INVALID);
 
     add(left_t::EN, right_t::FB_Options_Language_EN);
     add(left_t::RU, right_t::FB_Options_Language_RU);

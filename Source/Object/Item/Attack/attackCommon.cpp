@@ -15,7 +15,7 @@ using namespace std;
 Attack__Type toAttackType(fbAttack::FB_AttackType id)
 {
     static unordered_map<fbAttack::FB_AttackType, Attack__Type> map{
-        { fbAttack::FB_AttackType_INVALID, Attack__Type::INVALID },
+        { fbAttack::FB_AttackType_INVALID, Attack__Type::__INVALID },
         { fbAttack::FB_AttackType_SINGLE_TARGET, Attack__Type::SINGLE_TARGET },
         { fbAttack::FB_AttackType_CHAIN_OF_SINGLE_TARGETS, Attack__Type::CHAIN_OF_SINGLE_TARGETS },
         { fbAttack::FB_AttackType_STRAIGHT_LINE, Attack__Type::STRAIGHT_LINE },

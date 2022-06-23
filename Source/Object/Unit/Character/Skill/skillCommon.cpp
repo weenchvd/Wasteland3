@@ -15,7 +15,7 @@ using namespace std;
 Skill__Type toSkillType(fbSkill::FB_SkillType id)
 {
     static unordered_map<fbSkill::FB_SkillType, Skill__Type> map{
-        { fbSkill::FB_SkillType_INVALID, Skill__Type::INVALID },
+        { fbSkill::FB_SkillType_INVALID, Skill__Type::__INVALID },
         { fbSkill::FB_SkillType_AUTOMATIC_WEAPONS, Skill__Type::AUTOMATIC_WEAPONS },
         { fbSkill::FB_SkillType_BIG_GUNS, Skill__Type::BIG_GUNS },
         { fbSkill::FB_SkillType_BRAWLING, Skill__Type::BRAWLING },

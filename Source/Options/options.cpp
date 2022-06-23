@@ -161,13 +161,13 @@ bool Options::loadOptionsFromBin()
 bool Options::loadOptions(const fbOptions::FB_Options* fb)
 {
     struct OptionsSet {
-        PlainTextBase::Language         lang_{ PlainTextBase::Language::INVALID };
+        PlainTextBase::Language         lang_{ PlainTextBase::Language::__INVALID };
     };
     assert(fb != nullptr);
 
     OptionsSet set;
     set.lang_ = OptionLanguageBiMap::toLeftType(fb->language());
-    if (set.lang_ == PlainTextBase::Language::INVALID) {
+    if (set.lang_ == PlainTextBase::Language::__INVALID) {
         return false;
     }
 

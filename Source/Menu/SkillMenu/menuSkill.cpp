@@ -45,7 +45,7 @@ void menuSkill(istream& is, ostream& os, object::Character& character, const Ind
             break;
         case actionSkill::MODIFY: {
             object::Skill::Type type{ pickSkill(is, os, character, ind1) };
-            if (type != object::Skill::Type::INVALID) {
+            if (type != object::Skill::Type::__INVALID) {
                 menuModifySkill(is, os, character, type, ind1);
             }
             break;
@@ -271,7 +271,7 @@ object::Skill::Type pickSkill(
     }
 
     os << ind0 << text.selectSkill() << endl;
-    object::Skill::Type t{ object::Skill::Type::INVALID };
+    object::Skill::Type t{ object::Skill::Type::__INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<object::Skill::Type>()) &&

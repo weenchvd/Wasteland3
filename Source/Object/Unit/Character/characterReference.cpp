@@ -25,8 +25,8 @@ bool                                CharacterReferenceContainer::initialized_{ f
 
 CharacterReference::CharacterReference()
     :
-    model_              { Character__Model::INVALID },
-    type_               { Character__Type::INVALID },
+    model_              { Character__Model::__INVALID },
+    type_               { Character__Type::__INVALID },
     //armorTypes_         {},
     weaponTypes_        {},
     //consumTypes_        {},
@@ -112,9 +112,9 @@ CharacterReference::CharacterReference()
     radRes_             { 0 },
     initialized_        { false }
 {
-    //armorTypes_.fill(Armor::Type::INVALID);
-    weaponTypes_.fill(Weapon::Type::INVALID);
-    //consumTypes_.fill(Consumable::Type::INVALID);
+    //armorTypes_.fill(Armor::Type::__INVALID);
+    weaponTypes_.fill(Weapon::Type::__INVALID);
+    //consumTypes_.fill(Consumable::Type::__INVALID);
 }
 
 ///************************************************************************************************

@@ -26,7 +26,7 @@ bool                                DamageReferenceContainer::initialized_{ fals
 
 DamageReference::DamageReference() noexcept
     :
-    type_           { Damage__Type::INVALID },
+    type_           { Damage__Type::__INVALID },
     name_           {},
     descrip_        {},
     dmgRobots_      { 0 },

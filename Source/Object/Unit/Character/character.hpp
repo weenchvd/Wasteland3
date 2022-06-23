@@ -323,13 +323,12 @@ public:
     const common::Slot<Weapon, nWSlots_>& slotWeapon() const noexcept { return slotWeapon_; }
     //common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
 
-    bool setWeapon(
-        unsigned int slotNumber,
-        std::unique_ptr<Item>& source,
-        bool (*typeChecker)(Weapon::Type, Weapon::Type)
-    );
+    bool setWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
+                   std::unique_ptr<Item>& source,
+                   bool (*typeChecker)(Weapon::Type, Weapon::Type));
 
-    bool unsetWeapon(unsigned int slotNumber, std::unique_ptr<Item>& receiver);
+    bool unsetWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
+                     std::unique_ptr<Item>& receiver);
 
 ///********** attributes
 public:

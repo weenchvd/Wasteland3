@@ -233,13 +233,12 @@ public:
         return slotWeaponMod_;
     }
 
-    bool setMod(
-        unsigned int slotNumber,
-        std::unique_ptr<Item>& source,
-        bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)
-    ) noexcept;
+    bool setMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
+                std::unique_ptr<Item>& source,
+                bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)) noexcept;
 
-    bool unsetMod(unsigned int slotNumber, std::unique_ptr<Item>& receiver) noexcept;
+    bool unsetMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
+                  std::unique_ptr<Item>& receiver) noexcept;
 
     static const Weapon& weaponDefault() noexcept;
 

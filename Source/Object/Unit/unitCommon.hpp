@@ -14,7 +14,7 @@ using UnitBaseType                  = short int;
 using Unit__Model                   = UnitBaseType;
 
 enum class Unit__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     CHARACTER,
     ///HUMAN,
@@ -24,7 +24,8 @@ enum class Unit__Type : char {
     ///ROBOT,
     ///SYNTH,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 } // namespace object

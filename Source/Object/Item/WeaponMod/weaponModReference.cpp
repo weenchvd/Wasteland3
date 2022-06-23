@@ -29,16 +29,16 @@ WeaponModRequirements::WeaponModRequirements()
     skillReq_       {},
     attrReq_        {}
 {
-    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, common::LevelSkill{ 0 } });
-    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, common::LevelAttribute{ 0 } });
+    skillReq_.fill(skill_requirement_t{ Skill::Type::__INVALID, common::LevelSkill{ 0 } });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::__INVALID, common::LevelAttribute{ 0 } });
 }
 
 ///************************************************************************************************
 
 WeaponModReference::WeaponModReference()
     :
-    model_          { WeaponMod__Model::INVALID },
-    type_           { WeaponMod__Type::INVALID },
+    model_          { WeaponMod__Model::__INVALID },
+    type_           { WeaponMod__Type::__INVALID },
     requirements_   {},
     attack_         {},
     name_           {},
@@ -58,8 +58,8 @@ WeaponModReference::WeaponModReference()
     apAttack_       { 0 },
     apReload_       { 0 },
     shoPerAttack_   { 0 },
-    tyAmmo_         { Ammo::Type::INVALID },
-    tyDmg_          { Damage::Type::INVALID },
+    tyAmmo_         { Ammo::Type::__INVALID },
+    tyDmg_          { Damage::Type::__INVALID },
     initialized_    { false }
 {}
 

@@ -32,6 +32,8 @@ string toString(ErrorType type)
         return u8"CORRUPTED_FILE";
     case ErrorType::SERIALIZATION:
         return u8"SERIALIZATION";
+    case ErrorType::INITIALIZATION:
+        return u8"INITIALIZATION";
     default:
         return u8"Unrecognized error";
     }
@@ -39,19 +41,35 @@ string toString(ErrorType type)
 
 ///************************************************************************************************
 
-IOError::IOError(const char* message)
-    : Exception{ u8"[EXCEPTION] I/O error: " }
+Exception::Exception(const char* message)
 {
-    storage_ += message;
+    storage_ = u8"[EXCEPTION] ";
+    if (message != nullptr) {
+        storage_ += message;
+    }
+}
+
+///************************************************************************************************
+
+IOError::IOError(const char* message)
+    : Exception{ u8"I/O error: " }
+{
+    if (message != nullptr) {
+        storage_ += message;
+    }
 }
 
 IOError::IOError(const char* fileName, const char* message)
-    : Exception{ u8"[EXCEPTION] I/O error: " }
+    : Exception{ u8"I/O error: " }
 {
     storage_ += u8"File '";
-    storage_ += fileName;
+    if (fileName != nullptr) {
+        storage_ += fileName;
+    }
     storage_ += u8"' ";
-    storage_ += message;
+    if (message != nullptr) {
+        storage_ += message;
+    }
 }
 
 ///************************************************************************************************
@@ -59,16 +77,30 @@ IOError::IOError(const char* fileName, const char* message)
 CorruptedFile::CorruptedFile(const char* fileName)
     : IOError{ u8"File '" }
 {
-    storage_ += fileName;
+    if (fileName != nullptr) {
+        storage_ += fileName;
+    }
     storage_ += u8"' is corrupted";
 }
 
 ///************************************************************************************************
 
 SerializationError::SerializationError(const char* message)
-    : Exception{ u8"[EXCEPTION] Serialization error: " }
+    : Exception{ u8"Serialization error: " }
 {
-    storage_ += message;
+    if (message != nullptr) {
+        storage_ += message;
+    }
+}
+
+///************************************************************************************************
+
+InitializationError::InitializationError(const char* message)
+    : Exception{ u8"Initialization error: " }
+{
+    if (message != nullptr) {
+        storage_ += message;
+    }
 }
 
 } // namespace common

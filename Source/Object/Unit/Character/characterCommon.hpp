@@ -16,26 +16,28 @@ namespace game {
 namespace object {
 
 enum class Character__Model : UnitBaseType {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     RANGER_TEMPLATE,
 
     COMPANION_SPIKE,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 enum class Character__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     RANGER,
     COMPANION,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 using CharacterModelBiMap = common::BidirectionalMap<
-    Character__Model, Character__Model::INVALID,
+    Character__Model, Character__Model::__INVALID,
     fbCharacter::FB_CharacterModel, fbCharacter::FB_CharacterModel::FB_CharacterModel_INVALID
 >;
 

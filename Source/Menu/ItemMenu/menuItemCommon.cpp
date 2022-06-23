@@ -198,17 +198,15 @@ void showSlotsAndMods(
     switch (vis.type()) {
     case object::Item::Type::WEAPON: {
         const auto& weapon{ static_cast<const object::Weapon&>(item) };
-        for (int j = 0; j < weapon.slotMod().sizeRaw(); ++j) {
-            if (weapon.slotMod().type(j) != object::WeaponMod::Type::INVALID) {
-                printNumBar(os, ind1, i++,
-                    object::WeaponMod::weaponModText().type(weapon.slotMod().type(j))
-                );
-                os << ": ";
-                if (weapon.slotMod()[j] != nullptr) {
-                    os << weapon.slotMod()[j]->name();
-                }
-                os << endl;
+        for (int j = 0; j < weapon.slotMod().size(); ++j) {
+            printNumBar(os, ind1, i++,
+                object::WeaponMod::weaponModText().type(weapon.slotMod().type(j))
+            );
+            os << ": ";
+            if (weapon.slotMod()[j] != nullptr) {
+                os << weapon.slotMod()[j]->name();
             }
+            os << endl;
         }
         break;
     }
@@ -240,13 +238,11 @@ pair<int, bool> pickSlotNumber(
         const auto& weapon{ static_cast<const object::Weapon&>(item) };
         auto pair{ getNumber(is, os) };
         if (pair.second == true) {
-            for (int j = 0; j < weapon.slotMod().sizeRaw(); ++j) {
-                if (weapon.slotMod().type(j) != object::WeaponMod::Type::INVALID) {
-                    if (pair.first == i) {
-                        return { j, true };
-                    }
-                    ++i;
+            for (int j = 0; j < weapon.slotMod().size(); ++j) {
+                if (pair.first == i) {
+                    return { j, true };
                 }
+                ++i;
             }
             os << comT.errorSymbol() << comT.invalidNumber() << endl;
         }

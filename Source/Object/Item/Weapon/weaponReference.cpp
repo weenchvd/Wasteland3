@@ -30,8 +30,8 @@ WeaponRequirements::WeaponRequirements()
     skillReq_       {},
     attrReq_        {}
 {
-    skillReq_.fill(skill_requirement_t{ Skill::Type::INVALID, common::LevelSkill{ 0 } });
-    attrReq_.fill(attribute_requirement_t{ Attribute::Type::INVALID, common::LevelAttribute{ 0 } });
+    skillReq_.fill(skill_requirement_t{ Skill::Type::__INVALID, common::LevelSkill{ 0 } });
+    attrReq_.fill(attribute_requirement_t{ Attribute::Type::__INVALID, common::LevelAttribute{ 0 } });
 }
 
 ///************************************************************************************************
@@ -58,8 +58,8 @@ bool WeaponPenalties::isPresented() const noexcept
 
 WeaponReference::WeaponReference()
     :
-    model_          { Weapon__Model::INVALID },
-    type_           { Weapon__Type::INVALID },
+    model_          { Weapon__Model::__INVALID },
+    type_           { Weapon__Type::__INVALID },
     weaponModTypes_ {},
     requirements_   {},
     penalties_      {},
@@ -82,11 +82,11 @@ WeaponReference::WeaponReference()
     apAttack_       { 0 },
     apReload_       { 0 },
     shoPerAttack_   { 0 },
-    tyAmmo_         { Ammo::Type::INVALID },
-    tyDmg_          { Damage::Type::INVALID },
+    tyAmmo_         { Ammo::Type::__INVALID },
+    tyDmg_          { Damage::Type::__INVALID },
     initialized_    { false }
 {
-    weaponModTypes_.fill(WeaponMod::Type::INVALID);
+    weaponModTypes_.fill(WeaponMod::Type::__INVALID);
 }
 
 ///************************************************************************************************

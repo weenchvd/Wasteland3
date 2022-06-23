@@ -80,8 +80,8 @@ flatbuffers::Offset<fbWeapon::FB_Weapon> Weapon::serialize(
     flatbuffers::FlatBufferBuilder& fbb) const
 {
     vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponMod>> mods;
-    for (int i = 0; i < slotWeaponMod_.sizeRaw(); ++i) {
-        if (slotWeaponMod_.type(i) != WeaponMod::Type::INVALID && slotWeaponMod_[i]) {
+    for (int i = 0; i < slotWeaponMod_.size(); ++i) {
+        if (slotWeaponMod_[i] != nullptr) {
             mods.push_back(slotWeaponMod_[i]->serialize(fbb));
         }
     }
@@ -107,7 +107,9 @@ unique_ptr<Item> Weapon::deserialize(const fbWeapon::FB_Weapon* fb)
             auto mod{ WeaponMod::deserialize(mods->Get(i)) };
             auto modType{ static_cast<WeaponMod*>(mod.get())->type() };
             auto slotNumber{ weapon.slotMod().slotNumber(modType) };
-            if (!weapon.setMod(slotNumber, mod, isCompatible)) {
+            if (slotNumber == weapon.slotMod().slotNotFound_ ||
+                !weapon.setMod(slotNumber, mod, isCompatible))
+            {
                 throw common::SerializationError{ u8"[Weapon::deserialize] The mod is not set" };
             }
         }
@@ -199,11 +201,9 @@ void Weapon::damageType(Damage::Type type) noexcept
     tyDmg_ = type;
 }
 
-bool Weapon::setMod(
-    unsigned int slotNumber,
-    unique_ptr<Item>& source,
-    bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)
-) noexcept
+bool Weapon::setMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
+                    unique_ptr<Item>& source,
+                    bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)) noexcept
 {
     assert(hasValidValues());
     if (slotWeaponMod_.set(slotNumber, source, typeChecker)) {
@@ -216,7 +216,8 @@ bool Weapon::setMod(
     return false;
 }
 
-bool Weapon::unsetMod(unsigned int slotNumber, unique_ptr<Item>& receiver) noexcept
+bool Weapon::unsetMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
+                      unique_ptr<Item>& receiver) noexcept
 {
     if (slotWeaponMod_.unset(slotNumber, receiver)) {
         this->apply();

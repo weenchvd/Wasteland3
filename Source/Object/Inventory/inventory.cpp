@@ -51,7 +51,7 @@ Roster::Roster(Inventory& inventory) noexcept
     pInv_           { &inventory },
     newItems_       { InventoryIterator{}, InventoryIterator{} },
     oldItems_       { InventoryIterator{}, InventoryIterator{} },
-    type_           { Item::Type::INVALID }
+    type_           { Item::Type::__INVALID }
 {}
 
 void Roster::itemType(Item::Type type) noexcept

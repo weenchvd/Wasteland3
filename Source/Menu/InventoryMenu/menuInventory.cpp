@@ -114,7 +114,7 @@ pair<object::Roster, bool> subMenuShowItems(
     }
     case actionShowItems::SHOW_ITEMS_OF_TYPE: {
         object::Item::Type type{ pickItemType(is, os, ind0) };
-        if (type != object::Item::Type::INVALID) {
+        if (type != object::Item::Type::__INVALID) {
             ret.first = inventory.roster(type);
             ret.second = true;
             auto title{ text.inventory() + " (" + getItemTypeName(type) + "):" };
@@ -182,7 +182,7 @@ object::Item::Type pickItemType(istream& is, ostream& os, const Indent indent)
         printNumBar(os, ind1, i, getItemTypeName(static_cast<object::Item::Type>(i))) << endl;
     }
     os << ind0 << comT.selectType() << endl;
-    object::Item::Type t{ object::Item::Type::INVALID };
+    object::Item::Type t{ object::Item::Type::__INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<object::Item::Type>()) &&

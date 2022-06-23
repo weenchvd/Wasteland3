@@ -70,7 +70,7 @@ private:
     }
 
 private:
-    Item::Type type_{ Item::Type::INVALID };
+    Item::Type type_{ Item::Type::__INVALID };
 };
 
 } // namespace object

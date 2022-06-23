@@ -25,7 +25,7 @@ bool                                AmmoReferenceContainer::initialized_{ false 
 
 AmmoReference::AmmoReference() noexcept
     :
-    type_           { Ammo__Type::INVALID },
+    type_           { Ammo__Type::__INVALID },
     price_          { 0 },
     name_           {},
     descrip_        {},

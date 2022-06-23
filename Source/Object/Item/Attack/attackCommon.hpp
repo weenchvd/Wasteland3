@@ -13,7 +13,7 @@ namespace game {
 namespace object {
 
 enum class Attack__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     SINGLE_TARGET,
     CHAIN_OF_SINGLE_TARGETS,
@@ -23,7 +23,8 @@ enum class Attack__Type : char {
     REMOTE_CIRCULAR_AREA,
     CIRCULAR_AREA,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 ///************************************************************************************************

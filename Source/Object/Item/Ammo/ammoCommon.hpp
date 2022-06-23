@@ -14,7 +14,7 @@ namespace game {
 namespace object {
 
 enum class Ammo__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     NONE,                           // without ammo
     A_5_56,                         // 5.56mm ammo
@@ -33,11 +33,12 @@ enum class Ammo__Type : char {
     ROCKET,
     TACTICAL_NUKE,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 using AmmoTypeBiMap = common::BidirectionalMap<
-    Ammo__Type, Ammo__Type::INVALID,
+    Ammo__Type, Ammo__Type::__INVALID,
     fbAmmo::FB_AmmoType, fbAmmo::FB_AmmoType::FB_AmmoType_INVALID
 >;
 

@@ -15,7 +15,7 @@ using namespace std;
 Damage__Type toDamageType(fbDamage::FB_DamageType id)
 {
     static unordered_map<fbDamage::FB_DamageType, Damage__Type> map{
-        { fbDamage::FB_DamageType_INVALID, Damage__Type::INVALID },
+        { fbDamage::FB_DamageType_INVALID, Damage__Type::__INVALID },
         { fbDamage::FB_DamageType_NORMAL, Damage__Type::NORMAL },
         { fbDamage::FB_DamageType_FIRE, Damage__Type::FIRE },
         { fbDamage::FB_DamageType_COLD, Damage__Type::COLD },

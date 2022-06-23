@@ -13,8 +13,8 @@ namespace game {
 namespace object {
 
 enum class Attribute__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
-
+    __INVALID = -1,                 /// invalid, must be the first
+    // vvv TYPES vvv
     COORDINATION,
     LUCK,
     AWARENESS,
@@ -22,8 +22,9 @@ enum class Attribute__Type : char {
     SPEED,
     INTELLIGENCE,
     CHARISMA,
-
-    NUMBER_OF                       /// must be the last
+    // ^^^ TYPES ^^^
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 ///************************************************************************************************

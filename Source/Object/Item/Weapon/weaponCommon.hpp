@@ -16,18 +16,19 @@ namespace game {
 namespace object {
 
 enum class Weapon__Model : ItemBaseType {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     AR_KALASH97,
     AR_SOCOM,
 
     SMG_RIPPER,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 enum class Weapon__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     AR,
     SMG,
@@ -44,15 +45,15 @@ enum class Weapon__Type : char {
     BLUNT,
     BRAWLING,
     // ^^^ TYPES ^^^
-    NUMBER_OF,                      /// must be the last
+    __NUMBER_OF,
     // vvv GROUPS vvv
     GROUP_ANY,                      // any type
     // ^^^ GROUPS ^^^
-    END
+    __END                           /// must be the last
 };
 
 using WeaponModelBiMap = common::BidirectionalMap<
-    Weapon__Model, Weapon__Model::INVALID,
+    Weapon__Model, Weapon__Model::__INVALID,
     fbWeapon::FB_WeaponModel, fbWeapon::FB_WeaponModel::FB_WeaponModel_INVALID
 >;
 

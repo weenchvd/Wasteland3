@@ -20,7 +20,7 @@ void object::AmmoTypeBiMap::init()
     using object::Ammo__Type;
     using fbAmmo::FB_AmmoType;
 
-    add(Ammo__Type::INVALID, FB_AmmoType::FB_AmmoType_INVALID);
+    add(Ammo__Type::__INVALID, FB_AmmoType::FB_AmmoType_INVALID);
 
     add(Ammo__Type::NONE, FB_AmmoType::FB_AmmoType_NONE);
     add(Ammo__Type::A_5_56, FB_AmmoType::FB_AmmoType_A_5_56);

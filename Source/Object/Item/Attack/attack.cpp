@@ -30,7 +30,7 @@ Attack::Attack() noexcept
     data1_      { common::Range{ 0 } },
     data2_      { common::Quantity{ 0 } },
     range_      { 0 },
-    type_       { Type::INVALID }
+    type_       { Type::__INVALID }
 {}
 
 Attack::Attack(const Type id) noexcept

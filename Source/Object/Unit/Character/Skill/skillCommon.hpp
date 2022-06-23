@@ -13,8 +13,8 @@ namespace game {
 namespace object {
 
 enum class Skill__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
-
+    __INVALID = -1,                 /// invalid, must be the first
+    // vvv TYPES vvv
     // Combat skills
     AUTOMATIC_WEAPONS,
     BIG_GUNS,
@@ -44,19 +44,21 @@ enum class Skill__Type : char {
     HARD_ASS,
     KISS_ASS,
     LEADERSHIP,
-
-    NUMBER_OF                       /// must be the last
+    // ^^^ TYPES ^^^
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 enum class Skill__Group : char {
-    INVALID = -1,                   /// invalid, must be the first
-
+    __INVALID = -1,                 /// invalid, must be the first
+    // vvv TYPES vvv
     COMBAT,
     GENERAL,
     EXPLORATION,
     SOCIAL,
-
-    NUMBER_OF                       /// must be the last
+    // ^^^ TYPES ^^^
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 ///************************************************************************************************

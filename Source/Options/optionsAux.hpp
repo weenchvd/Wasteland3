@@ -15,7 +15,7 @@ namespace game {
 namespace global {
 
 using OptionLanguageBiMap = common::BidirectionalMap<
-    global::PlainTextBase::Language, global::PlainTextBase::Language::INVALID,
+    global::PlainTextBase::Language, global::PlainTextBase::Language::__INVALID,
     fbOptions::FB_Options_Language, fbOptions::FB_Options_Language::FB_Options_Language_INVALID
 >;
 

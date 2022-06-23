@@ -306,7 +306,7 @@ void WeaponList::initialize()
     if (isInitialized()) return;
 
     assert(object::WeaponReferenceContainer::isInitialized());
-    object::Weapon__Type last{ object::Weapon__Type::INVALID };
+    object::Weapon__Type last{ object::Weapon__Type::__INVALID };
     list_.resize(sizeWeaponModType_);
 
     for (size_t k = { common::toUnderlying(common::firstEnum<object::WeaponMod__Type>()) };

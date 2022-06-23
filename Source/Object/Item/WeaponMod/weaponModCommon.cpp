@@ -20,7 +20,7 @@ void object::WeaponModModelBiMap::init()
     using object::WeaponMod__Model;
     using fbWeaponMod::FB_WeaponModModel;
 
-    add(WeaponMod__Model::INVALID, FB_WeaponModModel::FB_WeaponModModel_INVALID);
+    add(WeaponMod__Model::__INVALID, FB_WeaponModModel::FB_WeaponModModel_INVALID);
 
     add(WeaponMod__Model::BARREL_SHORTENED, FB_WeaponModModel::FB_WeaponModModel_BARREL_SHORTENED);
     add(WeaponMod__Model::BARREL_LIGHTWEIGHT, FB_WeaponModModel::FB_WeaponModModel_BARREL_LIGHTWEIGHT);
@@ -80,7 +80,7 @@ bool isCompatible(WeaponMod__Type id1, WeaponMod__Type id2)
 WeaponMod__Type toWeaponModType(fbWeaponMod::FB_WeaponModType id)
 {
     static unordered_map<fbWeaponMod::FB_WeaponModType, WeaponMod__Type> map{
-        { fbWeaponMod::FB_WeaponModType_INVALID, WeaponMod__Type::INVALID },
+        { fbWeaponMod::FB_WeaponModType_INVALID, WeaponMod__Type::__INVALID },
         { fbWeaponMod::FB_WeaponModType_CHOKE, WeaponMod__Type::CHOKE },
         { fbWeaponMod::FB_WeaponModType_BARREL, WeaponMod__Type::BARREL },
         { fbWeaponMod::FB_WeaponModType_UNDERBARREL, WeaponMod__Type::UNDERBARREL },

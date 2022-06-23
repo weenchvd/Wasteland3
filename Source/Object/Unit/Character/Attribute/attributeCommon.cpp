@@ -15,7 +15,7 @@ using namespace std;
 Attribute__Type toAttributeType(fbAttribute::FB_AttributeType id)
 {
     static unordered_map<fbAttribute::FB_AttributeType, Attribute__Type> map{
-        { fbAttribute::FB_AttributeType_INVALID, Attribute__Type::INVALID },
+        { fbAttribute::FB_AttributeType_INVALID, Attribute__Type::__INVALID },
         { fbAttribute::FB_AttributeType_COORDINATION, Attribute__Type::COORDINATION },
         { fbAttribute::FB_AttributeType_LUCK, Attribute__Type::LUCK },
         { fbAttribute::FB_AttributeType_AWARENESS, Attribute__Type::AWARENESS },

@@ -14,7 +14,7 @@ using ItemBaseType                  = short int;
 using Item__Model                   = ItemBaseType;
 
 enum class Item__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     WEAPON,
     ///ARMOR,
@@ -23,7 +23,8 @@ enum class Item__Type : char {
     AMMO,
     ///JUNK,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 } // namespace object

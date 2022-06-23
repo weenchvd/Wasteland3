@@ -20,7 +20,7 @@ void object::CharacterModelBiMap::init()
     using object::Character__Model;
     using fbCharacter::FB_CharacterModel;
 
-    add(Character__Model::INVALID, FB_CharacterModel::FB_CharacterModel_INVALID);
+    add(Character__Model::__INVALID, FB_CharacterModel::FB_CharacterModel_INVALID);
 
     add(Character__Model::RANGER_TEMPLATE, FB_CharacterModel::FB_CharacterModel_RANGER_TEMPLATE);
     add(Character__Model::COMPANION_SPIKE, FB_CharacterModel::FB_CharacterModel_COMPANION_SPIKE);
@@ -37,7 +37,7 @@ using namespace std;
 Character__Model toCharacterModel(fbCharacter::FB_CharacterModel id)
 {
     static unordered_map<fbCharacter::FB_CharacterModel, Character__Model> map{
-        { fbCharacter::FB_CharacterModel_INVALID, Character__Model::INVALID },
+        { fbCharacter::FB_CharacterModel_INVALID, Character__Model::__INVALID },
         { fbCharacter::FB_CharacterModel_RANGER_TEMPLATE, Character__Model::RANGER_TEMPLATE },
         { fbCharacter::FB_CharacterModel_COMPANION_SPIKE, Character__Model::COMPANION_SPIKE }
     };
@@ -47,7 +47,7 @@ Character__Model toCharacterModel(fbCharacter::FB_CharacterModel id)
 Character__Type toCharacterType(fbCharacter::FB_CharacterType id)
 {
     static unordered_map<fbCharacter::FB_CharacterType, Character__Type> map{
-        { fbCharacter::FB_CharacterType_INVALID, Character__Type::INVALID },
+        { fbCharacter::FB_CharacterType_INVALID, Character__Type::__INVALID },
         { fbCharacter::FB_CharacterType_RANGER, Character__Type::RANGER },
         { fbCharacter::FB_CharacterType_COMPANION, Character__Type::COMPANION }
     };

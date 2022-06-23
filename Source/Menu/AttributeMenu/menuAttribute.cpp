@@ -45,7 +45,7 @@ void menuAttribute(istream& is, ostream& os, object::Character& character, const
             break;
         case actionAttribute::MODIFY: {
             object::Attribute::Type type{ pickAttribute(is, os, character, ind1) };
-            if (type != object::Attribute::Type::INVALID) {
+            if (type != object::Attribute::Type::__INVALID) {
                 menuModifyAttribute(is, os, character, type, ind1);
             }
             break;
@@ -223,7 +223,7 @@ object::Attribute::Type pickAttribute(
             static_cast<object::Attribute::Type>(i))) << endl;
     }
     os << ind0 << text.selectAttribute() << endl;
-    object::Attribute::Type t{ object::Attribute::Type::INVALID };
+    object::Attribute::Type t{ object::Attribute::Type::__INVALID };
     auto pair{ getNumber(is, os) };
     if (pair.second == true) {
         if (pair.first >= common::toUnderlying(common::firstEnum<object::Attribute::Type>()) &&

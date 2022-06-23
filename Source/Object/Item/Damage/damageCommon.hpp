@@ -13,7 +13,7 @@ namespace game {
 namespace object {
 
 enum class Damage__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     NORMAL,
     FIRE,
@@ -21,7 +21,8 @@ enum class Damage__Type : char {
     ENERGY,
     EXPLOSIVE,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 ///************************************************************************************************

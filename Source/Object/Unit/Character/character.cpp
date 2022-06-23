@@ -226,10 +226,9 @@ common::Text Character::name() const noexcept
     }
 }
 
-bool Character::setWeapon(
-    unsigned int slotNumber,
-    unique_ptr<Item>& source,
-    bool (*typeChecker)(Weapon::Type, Weapon::Type))
+bool Character::setWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
+                          unique_ptr<Item>& source,
+                          bool (*typeChecker)(Weapon::Type, Weapon::Type))
 {
     assert(hasValidValues());
     if (slotWeapon_.set(slotNumber, source, typeChecker)) {
@@ -242,7 +241,8 @@ bool Character::setWeapon(
     return false;
 }
 
-bool Character::unsetWeapon(unsigned int slotNumber, unique_ptr<Item>& receiver)
+bool Character::unsetWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
+                            unique_ptr<Item>& receiver)
 {
     if (slotWeapon_.unset(slotNumber, receiver)) {
         apply();

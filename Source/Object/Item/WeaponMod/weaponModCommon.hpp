@@ -16,7 +16,7 @@ namespace game {
 namespace object {
 
 enum class WeaponMod__Model : ItemBaseType {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     BARREL_SHORTENED,
     BARREL_LIGHTWEIGHT,
@@ -59,11 +59,12 @@ enum class WeaponMod__Model : ItemBaseType {
     UB_SPEC_OPS_LS,
     UB_LASER_SIGHT,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 enum class WeaponMod__Type : char {
-    INVALID = -1,                   /// invalid, must be the first
+    __INVALID = -1,                 /// invalid, must be the first
     // vvv TYPES vvv
     CHOKE,
     BARREL,
@@ -73,11 +74,12 @@ enum class WeaponMod__Type : char {
     WEIGHT,
     HANDLE,
     // ^^^ TYPES ^^^
-    NUMBER_OF                       /// must be the last
+    __NUMBER_OF,
+    __END                           /// must be the last
 };
 
 using WeaponModModelBiMap = common::BidirectionalMap<
-    WeaponMod__Model, WeaponMod__Model::INVALID,
+    WeaponMod__Model, WeaponMod__Model::__INVALID,
     fbWeaponMod::FB_WeaponModModel, fbWeaponMod::FB_WeaponModModel::FB_WeaponModModel_INVALID
 >;
 
