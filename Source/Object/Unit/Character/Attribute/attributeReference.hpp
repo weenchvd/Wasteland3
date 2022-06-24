@@ -32,11 +32,7 @@ public:
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
-
-    static point_t initialAttributePoints() noexcept { return initAttrPoints_; }
-
-    static level_t initialAttributeLevel() noexcept { return initAttrLevel_; }
+    static bool isInitialized() noexcept { return initialized_; }
 
 private:
     static void initPointDist(const fbAttribute::FB_AttributeReference* fb);
@@ -60,10 +56,8 @@ private:
 
     static point_t                          minAttrPoints_;     // min attribute points
     static point_t                          maxAttrPoints_;     // max attribute points
-    static point_t                          initAttrPoints_;    // initial attribute points
     static level_t                          minAttrLevel_;      // min attribute level
     static level_t                          maxAttrLevel_;      // max attribute level
-    static level_t                          initAttrLevel_;     // initial attribute level
     static bool                             initialized_;
 };
 

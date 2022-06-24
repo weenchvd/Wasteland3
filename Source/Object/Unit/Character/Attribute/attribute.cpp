@@ -32,9 +32,26 @@ Attribute::Attribute(Character& character)
     strDist_    { ref_.strDist_ },
     spdDist_    { ref_.spdDist_ },
     intDist_    { ref_.intDist_ },
-    chaDist_    { ref_.chaDist_ }
+    chaDist_    { ref_.chaDist_ },
+    initialized_{ false }
 {
     assert(isInitialized());
+}
+
+void Attribute::initialize(const AttributeInitializer& initializer)
+{
+    assert(initializer.isInitialized());
+    assert(!isInitialized(true));
+
+    pStor_.add(initializer.attrPoints_);
+    level(Type::COORDINATION).add(initializer.coordLevel_);
+    level(Type::LUCK).add(initializer.luckLevel_);
+    level(Type::AWARENESS).add(initializer.awareLevel_);
+    level(Type::STRENGTH).add(initializer.strLevel_);
+    level(Type::SPEED).add(initializer.speedLevel_);
+    level(Type::INTELLIGENCE).add(initializer.intLevel_);
+    level(Type::CHARISMA).add(initializer.chaLevel_);
+    accept();
 }
 
 bool Attribute::addLevel(Attribute::Type type, level_t shift) noexcept
@@ -184,22 +201,7 @@ unique_ptr<Attribute> Attribute::deserialize(
 {
     assert(fb != nullptr);
     auto a{ make_unique<Attribute>(character) };
-    a->pStor_.add(point_t{ fb->attr_points() });
-    a->pStor_.accept();
-    a->level(Type::COORDINATION).add(level_t{ fb->coord_level() });
-    a->level(Type::COORDINATION).accept();
-    a->level(Type::LUCK).add(level_t{ fb->luck_level() });
-    a->level(Type::LUCK).accept();
-    a->level(Type::AWARENESS).add(level_t{ fb->aware_level() });
-    a->level(Type::AWARENESS).accept();
-    a->level(Type::STRENGTH).add(level_t{ fb->str_level() });
-    a->level(Type::STRENGTH).accept();
-    a->level(Type::SPEED).add(level_t{ fb->speed_level() });
-    a->level(Type::SPEED).accept();
-    a->level(Type::INTELLIGENCE).add(level_t{ fb->int_level() });
-    a->level(Type::INTELLIGENCE).accept();
-    a->level(Type::CHARISMA).add(level_t{ fb->cha_level() });
-    a->level(Type::CHARISMA).accept();
+    a->initialize(AttributeInitializer{ fb });
     return a;
 }
 

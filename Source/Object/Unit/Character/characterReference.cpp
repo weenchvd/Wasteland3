@@ -30,6 +30,7 @@ CharacterReference::CharacterReference()
     //armorTypes_         {},
     weaponTypes_        {},
     //consumTypes_        {},
+    attrInitializer_    {},
     name_               {},
     descrip_            {},
     enteredName_        {},
@@ -175,6 +176,8 @@ CharacterReference CharacterReferenceContainer::initCharacterReference(
         assert((verify ? (common::isValidEnum(ref.weaponTypes_[i]) ||
                           common::isValidEnumAux(ref.weaponTypes_[i])) : true));
     }
+
+    ref.attrInitializer_        = AttributeInitializer{ fb->attributes() };
 
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);

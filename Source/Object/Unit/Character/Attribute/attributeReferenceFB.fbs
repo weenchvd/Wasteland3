@@ -89,10 +89,8 @@ struct FB_CharismaDistribution {
 table FB_AttributeReference {
   min_attr_points:int8 = 0;
   max_attr_points:int8 = 0;
-  init_attr_points:int8 = 0;
   min_attr_level:int8 = 0;
   max_attr_level:int8 = 0;
-  init_attr_level:int8 = 0;
   point_attr_distr:FB_PointAttributeDistribution;
   coord_distr:FB_CoordinationDistribution;
   luck_distr:FB_LuckDistribution;

@@ -205,11 +205,8 @@ void Character::apply() noexcept
 
 void Character::initCtor()
 {
-    attrib_->addPoint(Attribute::attributeReference().initialAttributePoints());
-    attrib_->addLevelToAll(Attribute::attributeReference().initialAttributeLevel());
-    attrib_->accept();
-    skill_->addPoint(Skill::skillReference().initialSkillPoints());
-    skill_->accept();
+    attrib_->initialize(base_.attrInitializer_);
+    //skill_->initialize(base_.skillInitializer_);
 }
 
 bool Character::hasValidValues() const noexcept

@@ -72,10 +72,8 @@ SkillReference::leaderDist_{ vector<EffectSkillLeadership>{} };
 
 SkillReference::point_t                 SkillReference::minSkillPoints_ { 0 };
 SkillReference::point_t                 SkillReference::maxSkillPoints_ { 0 };
-SkillReference::point_t                 SkillReference::initSkillPoints_{ 0 };
 SkillReference::level_t                 SkillReference::minSkillLevel_  { 0 };
 SkillReference::level_t                 SkillReference::maxSkillLevel_  { 0 };
-SkillReference::level_t                 SkillReference::initSkillLevel_ { 0 };
 bool                                    SkillReference::initialized_    { false };
 
 ///************************************************************************************************
@@ -112,10 +110,8 @@ void SkillReference::initialize()
     assert(fb != nullptr);
     minSkillPoints_     = common::PointSkill{ fb->min_skill_points() };
     maxSkillPoints_     = common::PointSkill{ fb->max_skill_points() };
-    initSkillPoints_    = common::PointSkill{ fb->init_skill_points() };
     minSkillLevel_      = common::LevelSkill{ fb->min_skill_level() };
     maxSkillLevel_      = common::LevelSkill{ fb->max_skill_level() };
-    initSkillLevel_     = common::LevelSkill{ fb->init_skill_level() };
 
     initialized_        = true;
 }

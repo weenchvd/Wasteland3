@@ -7,6 +7,7 @@
 #ifndef ATTRIBUTE_HPP
 #define ATTRIBUTE_HPP
 
+#include"attributeAux.hpp"
 #include"attributeCommon.hpp"
 #include"attributeFB_generated.h"
 #include"attributeReference.hpp"
@@ -33,6 +34,10 @@ public:
 
     Attribute(const Attribute&) = delete;
     Attribute& operator=(const Attribute&) = delete;
+
+    void initialize(const AttributeInitializer& initializer);
+
+    bool isInitialized(bool) const noexcept { return initialized_; }
 
     static void initialize();
 
@@ -102,6 +107,8 @@ private:
     common::Distribution<EffectAttSpeed, level_t>       spdDist_;
     common::Distribution<EffectAttInt, level_t>         intDist_;
     common::Distribution<EffectAttCha, level_t>         chaDist_;
+
+    bool                                                initialized_;
 
     static const AttributeReference                     ref_;
     static const AttributeText                          text_;

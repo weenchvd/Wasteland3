@@ -248,7 +248,7 @@
         "cha_level": 1
       },
       "skills": {
-        "skill_points": 4
+        "skill_points": 3
       },
       "character_model": "RANGER_TEMPLATE",
       "character_type": "RANGER",

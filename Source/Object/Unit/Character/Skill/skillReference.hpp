@@ -32,11 +32,7 @@ public:
 
     static void initialize();
 
-    static bool isInitialized() { return initialized_; }
-
-    static point_t initialSkillPoints() noexcept { return initSkillPoints_; }
-
-    static level_t initialSkillLevel() noexcept { return initSkillLevel_; }
+    static bool isInitialized() noexcept { return initialized_; }
 
 private:
     static void initPointDist(const fbSkill::FB_SkillReference* fb);
@@ -78,10 +74,8 @@ private:
 
     static point_t                          minSkillPoints_;    // min skill points
     static point_t                          maxSkillPoints_;    // max skill points
-    static point_t                          initSkillPoints_;   // initial skill points
     static level_t                          minSkillLevel_;     // min skill level
     static level_t                          maxSkillLevel_;     // max skill level
-    static level_t                          initSkillLevel_;    // initial skill level
     static bool                             initialized_;
 };
 

@@ -7,6 +7,7 @@
 #ifndef CHARACTER_REFERENCE_HPP
 #define CHARACTER_REFERENCE_HPP
 
+#include"attributeAux.hpp"
 #include"characterCommon.hpp"
 #include"characterReferenceFB_generated.h"
 #include"common.hpp"
@@ -58,6 +59,7 @@ public:
     //armor_types_t               armorTypes_;    // list of slot types
     weapon_types_t              weaponTypes_;   // list of slot types
     //consumable_types_t          consumTypes_;   // list of slot types
+    AttributeInitializer        attrInitializer_;
 
     common::Text                enteredName_;   // name entered by the player
 

@@ -522,27 +522,25 @@ struct FB_SkillReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_MIN_SKILL_POINTS = 4,
     VT_MAX_SKILL_POINTS = 6,
-    VT_INIT_SKILL_POINTS = 8,
-    VT_MIN_SKILL_LEVEL = 10,
-    VT_MAX_SKILL_LEVEL = 12,
-    VT_INIT_SKILL_LEVEL = 14,
-    VT_POINT_SKILL_DISTR = 16,
-    VT_AUTOMATIC_DISTR = 18,
-    VT_BIG_GUNS_DISTR = 20,
-    VT_BRAWLING_DISTR = 22,
-    VT_MELEE_DISTR = 24,
-    VT_SMALL_ARMS_DISTR = 26,
-    VT_SNIPER_DISTR = 28,
-    VT_ANIMAL_WHISPERER_DISRT = 30,
-    VT_EXPLOSIVES_DISTR = 32,
-    VT_FIRST_AID_DISTR = 34,
-    VT_SNEAKY_SHIT_DISTR = 36,
-    VT_WEIRD_SCIENCE_DISTR = 38,
-    VT_MECHANICS_DISTR = 40,
-    VT_SURVIVAL_DISTR = 42,
-    VT_WEAPON_MODDING_DISTR = 44,
-    VT_BARTER_DISTR = 46,
-    VT_LEADERSHIP_DISTR = 48
+    VT_MIN_SKILL_LEVEL = 8,
+    VT_MAX_SKILL_LEVEL = 10,
+    VT_POINT_SKILL_DISTR = 12,
+    VT_AUTOMATIC_DISTR = 14,
+    VT_BIG_GUNS_DISTR = 16,
+    VT_BRAWLING_DISTR = 18,
+    VT_MELEE_DISTR = 20,
+    VT_SMALL_ARMS_DISTR = 22,
+    VT_SNIPER_DISTR = 24,
+    VT_ANIMAL_WHISPERER_DISRT = 26,
+    VT_EXPLOSIVES_DISTR = 28,
+    VT_FIRST_AID_DISTR = 30,
+    VT_SNEAKY_SHIT_DISTR = 32,
+    VT_WEIRD_SCIENCE_DISTR = 34,
+    VT_MECHANICS_DISTR = 36,
+    VT_SURVIVAL_DISTR = 38,
+    VT_WEAPON_MODDING_DISTR = 40,
+    VT_BARTER_DISTR = 42,
+    VT_LEADERSHIP_DISTR = 44
   };
   int16_t min_skill_points() const {
     return GetField<int16_t>(VT_MIN_SKILL_POINTS, 0);
@@ -550,17 +548,11 @@ struct FB_SkillReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   int16_t max_skill_points() const {
     return GetField<int16_t>(VT_MAX_SKILL_POINTS, 0);
   }
-  int16_t init_skill_points() const {
-    return GetField<int16_t>(VT_INIT_SKILL_POINTS, 0);
-  }
   int8_t min_skill_level() const {
     return GetField<int8_t>(VT_MIN_SKILL_LEVEL, 0);
   }
   int8_t max_skill_level() const {
     return GetField<int8_t>(VT_MAX_SKILL_LEVEL, 0);
-  }
-  int8_t init_skill_level() const {
-    return GetField<int8_t>(VT_INIT_SKILL_LEVEL, 0);
   }
   const fbSkill::FB_PointSkillDistribution *point_skill_distr() const {
     return GetStruct<const fbSkill::FB_PointSkillDistribution *>(VT_POINT_SKILL_DISTR);
@@ -617,10 +609,8 @@ struct FB_SkillReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return VerifyTableStart(verifier) &&
            VerifyField<int16_t>(verifier, VT_MIN_SKILL_POINTS) &&
            VerifyField<int16_t>(verifier, VT_MAX_SKILL_POINTS) &&
-           VerifyField<int16_t>(verifier, VT_INIT_SKILL_POINTS) &&
            VerifyField<int8_t>(verifier, VT_MIN_SKILL_LEVEL) &&
            VerifyField<int8_t>(verifier, VT_MAX_SKILL_LEVEL) &&
-           VerifyField<int8_t>(verifier, VT_INIT_SKILL_LEVEL) &&
            VerifyField<fbSkill::FB_PointSkillDistribution>(verifier, VT_POINT_SKILL_DISTR) &&
            VerifyField<fbSkill::FB_AutomaticWeaponsDistribution>(verifier, VT_AUTOMATIC_DISTR) &&
            VerifyField<fbSkill::FB_BigGunsDistribution>(verifier, VT_BIG_GUNS_DISTR) &&
@@ -652,17 +642,11 @@ struct FB_SkillReferenceBuilder {
   void add_max_skill_points(int16_t max_skill_points) {
     fbb_.AddElement<int16_t>(FB_SkillReference::VT_MAX_SKILL_POINTS, max_skill_points, 0);
   }
-  void add_init_skill_points(int16_t init_skill_points) {
-    fbb_.AddElement<int16_t>(FB_SkillReference::VT_INIT_SKILL_POINTS, init_skill_points, 0);
-  }
   void add_min_skill_level(int8_t min_skill_level) {
     fbb_.AddElement<int8_t>(FB_SkillReference::VT_MIN_SKILL_LEVEL, min_skill_level, 0);
   }
   void add_max_skill_level(int8_t max_skill_level) {
     fbb_.AddElement<int8_t>(FB_SkillReference::VT_MAX_SKILL_LEVEL, max_skill_level, 0);
-  }
-  void add_init_skill_level(int8_t init_skill_level) {
-    fbb_.AddElement<int8_t>(FB_SkillReference::VT_INIT_SKILL_LEVEL, init_skill_level, 0);
   }
   void add_point_skill_distr(const fbSkill::FB_PointSkillDistribution *point_skill_distr) {
     fbb_.AddStruct(FB_SkillReference::VT_POINT_SKILL_DISTR, point_skill_distr);
@@ -730,10 +714,8 @@ inline flatbuffers::Offset<FB_SkillReference> CreateFB_SkillReference(
     flatbuffers::FlatBufferBuilder &_fbb,
     int16_t min_skill_points = 0,
     int16_t max_skill_points = 0,
-    int16_t init_skill_points = 0,
     int8_t min_skill_level = 0,
     int8_t max_skill_level = 0,
-    int8_t init_skill_level = 0,
     const fbSkill::FB_PointSkillDistribution *point_skill_distr = 0,
     const fbSkill::FB_AutomaticWeaponsDistribution *automatic_distr = 0,
     const fbSkill::FB_BigGunsDistribution *big_guns_distr = 0,
@@ -769,10 +751,8 @@ inline flatbuffers::Offset<FB_SkillReference> CreateFB_SkillReference(
   builder_.add_big_guns_distr(big_guns_distr);
   builder_.add_automatic_distr(automatic_distr);
   builder_.add_point_skill_distr(point_skill_distr);
-  builder_.add_init_skill_points(init_skill_points);
   builder_.add_max_skill_points(max_skill_points);
   builder_.add_min_skill_points(min_skill_points);
-  builder_.add_init_skill_level(init_skill_level);
   builder_.add_max_skill_level(max_skill_level);
   builder_.add_min_skill_level(min_skill_level);
   return builder_.Finish();

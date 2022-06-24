@@ -45,10 +45,8 @@ AttributeReference::chaDist_{ vector<EffectAttCha>{} };
 
 AttributeReference::point_t             AttributeReference::minAttrPoints_  { 0 };
 AttributeReference::point_t             AttributeReference::maxAttrPoints_  { 0 };
-AttributeReference::point_t             AttributeReference::initAttrPoints_ { 0 };
 AttributeReference::level_t             AttributeReference::minAttrLevel_   { 0 };
 AttributeReference::level_t             AttributeReference::maxAttrLevel_   { 0 };
-AttributeReference::level_t             AttributeReference::initAttrLevel_  { 0 };
 bool                                    AttributeReference::initialized_    { false };
 
 ///************************************************************************************************
@@ -76,10 +74,8 @@ void AttributeReference::initialize()
     assert(fb != nullptr);
     minAttrPoints_      = common::PointAttribute{ fb->min_attr_points() };
     maxAttrPoints_      = common::PointAttribute{ fb->max_attr_points() };
-    initAttrPoints_     = common::PointAttribute{ fb->init_attr_points() };
     minAttrLevel_       = common::LevelAttribute{ fb->min_attr_level() };
     maxAttrLevel_       = common::LevelAttribute{ fb->max_attr_level() };
-    initAttrLevel_      = common::LevelAttribute{ fb->init_attr_level() };
 
     initialized_        = true;
 }

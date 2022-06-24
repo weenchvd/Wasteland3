@@ -336,18 +336,16 @@ struct FB_AttributeReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   enum FlatBuffersVTableOffset FLATBUFFERS_VTABLE_UNDERLYING_TYPE {
     VT_MIN_ATTR_POINTS = 4,
     VT_MAX_ATTR_POINTS = 6,
-    VT_INIT_ATTR_POINTS = 8,
-    VT_MIN_ATTR_LEVEL = 10,
-    VT_MAX_ATTR_LEVEL = 12,
-    VT_INIT_ATTR_LEVEL = 14,
-    VT_POINT_ATTR_DISTR = 16,
-    VT_COORD_DISTR = 18,
-    VT_LUCK_DISTR = 20,
-    VT_AWARE_DISTR = 22,
-    VT_STR_DISTR = 24,
-    VT_SPEED_DISTR = 26,
-    VT_INT_DISTR = 28,
-    VT_CHA_DISTR = 30
+    VT_MIN_ATTR_LEVEL = 8,
+    VT_MAX_ATTR_LEVEL = 10,
+    VT_POINT_ATTR_DISTR = 12,
+    VT_COORD_DISTR = 14,
+    VT_LUCK_DISTR = 16,
+    VT_AWARE_DISTR = 18,
+    VT_STR_DISTR = 20,
+    VT_SPEED_DISTR = 22,
+    VT_INT_DISTR = 24,
+    VT_CHA_DISTR = 26
   };
   int8_t min_attr_points() const {
     return GetField<int8_t>(VT_MIN_ATTR_POINTS, 0);
@@ -355,17 +353,11 @@ struct FB_AttributeReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
   int8_t max_attr_points() const {
     return GetField<int8_t>(VT_MAX_ATTR_POINTS, 0);
   }
-  int8_t init_attr_points() const {
-    return GetField<int8_t>(VT_INIT_ATTR_POINTS, 0);
-  }
   int8_t min_attr_level() const {
     return GetField<int8_t>(VT_MIN_ATTR_LEVEL, 0);
   }
   int8_t max_attr_level() const {
     return GetField<int8_t>(VT_MAX_ATTR_LEVEL, 0);
-  }
-  int8_t init_attr_level() const {
-    return GetField<int8_t>(VT_INIT_ATTR_LEVEL, 0);
   }
   const fbAttribute::FB_PointAttributeDistribution *point_attr_distr() const {
     return GetStruct<const fbAttribute::FB_PointAttributeDistribution *>(VT_POINT_ATTR_DISTR);
@@ -395,10 +387,8 @@ struct FB_AttributeReference FLATBUFFERS_FINAL_CLASS : private flatbuffers::Tabl
     return VerifyTableStart(verifier) &&
            VerifyField<int8_t>(verifier, VT_MIN_ATTR_POINTS) &&
            VerifyField<int8_t>(verifier, VT_MAX_ATTR_POINTS) &&
-           VerifyField<int8_t>(verifier, VT_INIT_ATTR_POINTS) &&
            VerifyField<int8_t>(verifier, VT_MIN_ATTR_LEVEL) &&
            VerifyField<int8_t>(verifier, VT_MAX_ATTR_LEVEL) &&
-           VerifyField<int8_t>(verifier, VT_INIT_ATTR_LEVEL) &&
            VerifyField<fbAttribute::FB_PointAttributeDistribution>(verifier, VT_POINT_ATTR_DISTR) &&
            VerifyField<fbAttribute::FB_CoordinationDistribution>(verifier, VT_COORD_DISTR) &&
            VerifyField<fbAttribute::FB_LuckDistribution>(verifier, VT_LUCK_DISTR) &&
@@ -421,17 +411,11 @@ struct FB_AttributeReferenceBuilder {
   void add_max_attr_points(int8_t max_attr_points) {
     fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MAX_ATTR_POINTS, max_attr_points, 0);
   }
-  void add_init_attr_points(int8_t init_attr_points) {
-    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_INIT_ATTR_POINTS, init_attr_points, 0);
-  }
   void add_min_attr_level(int8_t min_attr_level) {
     fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MIN_ATTR_LEVEL, min_attr_level, 0);
   }
   void add_max_attr_level(int8_t max_attr_level) {
     fbb_.AddElement<int8_t>(FB_AttributeReference::VT_MAX_ATTR_LEVEL, max_attr_level, 0);
-  }
-  void add_init_attr_level(int8_t init_attr_level) {
-    fbb_.AddElement<int8_t>(FB_AttributeReference::VT_INIT_ATTR_LEVEL, init_attr_level, 0);
   }
   void add_point_attr_distr(const fbAttribute::FB_PointAttributeDistribution *point_attr_distr) {
     fbb_.AddStruct(FB_AttributeReference::VT_POINT_ATTR_DISTR, point_attr_distr);
@@ -472,10 +456,8 @@ inline flatbuffers::Offset<FB_AttributeReference> CreateFB_AttributeReference(
     flatbuffers::FlatBufferBuilder &_fbb,
     int8_t min_attr_points = 0,
     int8_t max_attr_points = 0,
-    int8_t init_attr_points = 0,
     int8_t min_attr_level = 0,
     int8_t max_attr_level = 0,
-    int8_t init_attr_level = 0,
     const fbAttribute::FB_PointAttributeDistribution *point_attr_distr = 0,
     const fbAttribute::FB_CoordinationDistribution *coord_distr = 0,
     const fbAttribute::FB_LuckDistribution *luck_distr = 0,
@@ -493,10 +475,8 @@ inline flatbuffers::Offset<FB_AttributeReference> CreateFB_AttributeReference(
   builder_.add_luck_distr(luck_distr);
   builder_.add_coord_distr(coord_distr);
   builder_.add_point_attr_distr(point_attr_distr);
-  builder_.add_init_attr_level(init_attr_level);
   builder_.add_max_attr_level(max_attr_level);
   builder_.add_min_attr_level(min_attr_level);
-  builder_.add_init_attr_points(init_attr_points);
   builder_.add_max_attr_points(max_attr_points);
   builder_.add_min_attr_points(min_attr_points);
   return builder_.Finish();

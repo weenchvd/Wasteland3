@@ -153,6 +153,12 @@ void initializeMembers(array<unique_ptr<game::object::Unit>,
         auto& c = *static_cast<Character*>(members[i++].get());
         c.name("RUST");
     }
+    /// member 4
+    if (i < members.size()) {
+        members[i] = f.createUnit<Character>(Character::Model::COMPANION_SPIKE);
+        auto& c = *static_cast<Character*>(members[i++].get());
+        c.name("???");
+    }
 }
 
 } // namespace init
