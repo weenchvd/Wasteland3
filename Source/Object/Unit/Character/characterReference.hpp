@@ -11,6 +11,7 @@
 #include"characterCommon.hpp"
 #include"characterReferenceFB_generated.h"
 #include"common.hpp"
+#include"skillAux.hpp"
 #include"weapon.hpp"
 #include<array>
 
@@ -60,6 +61,7 @@ public:
     weapon_types_t              weaponTypes_;   // list of slot types
     //consumable_types_t          consumTypes_;   // list of slot types
     AttributeInitializer        attrInitializer_;
+    SkillInitializer            skillInitializer_;
 
     common::Text                enteredName_;   // name entered by the player
 

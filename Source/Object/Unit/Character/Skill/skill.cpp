@@ -40,9 +40,43 @@ Skill::Skill(Character& character)
     survDist_       { ref_.survDist_ },
     weaponModDist_  { ref_.weaponModDist_ },
     barterDist_     { ref_.barterDist_ },
-    leaderDist_     { ref_.leaderDist_ }
+    leaderDist_     { ref_.leaderDist_ },
+    initialized_    { false }
 {
     assert(isInitialized());
+}
+
+void Skill::initialize(const SkillInitializer& initializer)
+{
+    assert(initializer.isInitialized());
+    assert(!isInitialized(true));
+
+    pStor_.add(initializer.skillPoints_);
+    level(Type::AUTOMATIC_WEAPONS).add(initializer.automaticLevel_);
+    level(Type::BIG_GUNS).add(initializer.bigGunsLevel_);
+    level(Type::BRAWLING).add(initializer.brawlingLevel_);
+    level(Type::MELEE_COMBAT).add(initializer.meleeLevel_);
+    level(Type::SMALL_ARMS).add(initializer.smallArmsLevel_);
+    level(Type::SNIPER_RIFLES).add(initializer.sniperLevel_);
+    level(Type::ANIMAL_WHISPERER).add(initializer.animalWhispererLevel_);
+    level(Type::EXPLOSIVES).add(initializer.explosivesLevel_);
+    level(Type::FIRST_AID).add(initializer.firstAidLevel_);
+    level(Type::SNEAKY_SHIT).add(initializer.sneakyShitLevel_);
+    level(Type::WEIRD_SCIENCE).add(initializer.weirdScienceLevel_);
+    level(Type::ARMOR_MODDING).add(initializer.armorModdingLevel_);
+    level(Type::LOCKPICKING).add(initializer.lockpickingLevel_);
+    level(Type::NERD_STUFF).add(initializer.nerdStuffLevel_);
+    level(Type::MECHANICS).add(initializer.mechanicsLevel_);
+    level(Type::SURVIVAL).add(initializer.survivalLevel_);
+    level(Type::TOASTER_REPAIR).add(initializer.toasterRepairLevel_);
+    level(Type::WEAPON_MODDING).add(initializer.weaponModdingLevel_);
+    level(Type::BARTER).add(initializer.barterLevel_);
+    level(Type::HARD_ASS).add(initializer.hardAssLevel_);
+    level(Type::KISS_ASS).add(initializer.kissAssLevel_);
+    level(Type::LEADERSHIP).add(initializer.leadershipLevel_);
+    accept();
+
+    initialized_ = true;
 }
 
 bool Skill::addLevel(Skill::Type type, level_t shift) noexcept
@@ -282,56 +316,7 @@ unique_ptr<Skill> Skill::deserialize(
 {
     assert(fb != nullptr);
     auto s{ make_unique<Skill>(character) };
-    s->pStor_.add(point_t{ fb->skill_points() });
-    s->pStor_.accept();
-
-    s->level(Type::AUTOMATIC_WEAPONS).add(level_t{ fb->automatic_level() });
-    s->level(Type::AUTOMATIC_WEAPONS).accept();
-    s->level(Type::BIG_GUNS).add(level_t{ fb->big_guns_level() });
-    s->level(Type::BIG_GUNS).accept();
-    s->level(Type::BRAWLING).add(level_t{ fb->brawling_level() });
-    s->level(Type::BRAWLING).accept();
-    s->level(Type::MELEE_COMBAT).add(level_t{ fb->melee_level() });
-    s->level(Type::MELEE_COMBAT).accept();
-    s->level(Type::SMALL_ARMS).add(level_t{ fb->small_arms_level() });
-    s->level(Type::SMALL_ARMS).accept();
-    s->level(Type::SNIPER_RIFLES).add(level_t{ fb->sniper_level() });
-    s->level(Type::SNIPER_RIFLES).accept();
-
-    s->level(Type::ANIMAL_WHISPERER).add(level_t{ fb->animal_whisperer_level() });
-    s->level(Type::ANIMAL_WHISPERER).accept();
-    s->level(Type::EXPLOSIVES).add(level_t{ fb->explosives_level() });
-    s->level(Type::EXPLOSIVES).accept();
-    s->level(Type::FIRST_AID).add(level_t{ fb->first_aid_level() });
-    s->level(Type::FIRST_AID).accept();
-    s->level(Type::SNEAKY_SHIT).add(level_t{ fb->sneaky_shit_level() });
-    s->level(Type::SNEAKY_SHIT).accept();
-    s->level(Type::WEIRD_SCIENCE).add(level_t{ fb->weird_science_level() });
-    s->level(Type::WEIRD_SCIENCE).accept();
-
-    s->level(Type::ARMOR_MODDING).add(level_t{ fb->armor_modding_level() });
-    s->level(Type::ARMOR_MODDING).accept();
-    s->level(Type::LOCKPICKING).add(level_t{ fb->lockpicking_level() });
-    s->level(Type::LOCKPICKING).accept();
-    s->level(Type::NERD_STUFF).add(level_t{ fb->nerd_stuff_level() });
-    s->level(Type::NERD_STUFF).accept();
-    s->level(Type::MECHANICS).add(level_t{ fb->mechanics_level() });
-    s->level(Type::MECHANICS).accept();
-    s->level(Type::SURVIVAL).add(level_t{ fb->survival_level() });
-    s->level(Type::SURVIVAL).accept();
-    s->level(Type::TOASTER_REPAIR).add(level_t{ fb->toaster_repair_level() });
-    s->level(Type::TOASTER_REPAIR).accept();
-    s->level(Type::WEAPON_MODDING).add(level_t{ fb->weapon_modding_level() });
-    s->level(Type::WEAPON_MODDING).accept();
-
-    s->level(Type::BARTER).add(level_t{ fb->barter_level() });
-    s->level(Type::BARTER).accept();
-    s->level(Type::HARD_ASS).add(level_t{ fb->hard_ass_level() });
-    s->level(Type::HARD_ASS).accept();
-    s->level(Type::KISS_ASS).add(level_t{ fb->kiss_ass_level() });
-    s->level(Type::KISS_ASS).accept();
-    s->level(Type::LEADERSHIP).add(level_t{ fb->leadership_level() });
-    s->level(Type::LEADERSHIP).accept();
+    s->initialize(SkillInitializer{ fb });
     return s;
 }
 

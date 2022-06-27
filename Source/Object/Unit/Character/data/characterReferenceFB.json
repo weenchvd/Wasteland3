@@ -278,6 +278,7 @@
         "cha_level": 10
       },
       "skills": {
+        "skill_points": -1,
         "brawling_level": 2,
         "small_arms_level": 2
       },

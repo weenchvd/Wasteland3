@@ -44,14 +44,14 @@ void AttributeInitializer::initialize(const fbAttribute::FB_Attribute* fb) noexc
 {
     assert(fb != nullptr);
 
-    attrPoints_         = common::PointAttribute{ fb->attr_points() };
-    coordLevel_         = common::LevelAttribute{ fb->coord_level() };
-    luckLevel_          = common::LevelAttribute{ fb->luck_level() };
-    awareLevel_         = common::LevelAttribute{ fb->aware_level() };
-    strLevel_           = common::LevelAttribute{ fb->str_level() };
-    speedLevel_         = common::LevelAttribute{ fb->speed_level() };
-    intLevel_           = common::LevelAttribute{ fb->int_level() };
-    chaLevel_           = common::LevelAttribute{ fb->cha_level() };
+    attrPoints_         = point_t{ fb->attr_points() };
+    coordLevel_         = level_t{ fb->coord_level() };
+    luckLevel_          = level_t{ fb->luck_level() };
+    awareLevel_         = level_t{ fb->aware_level() };
+    strLevel_           = level_t{ fb->str_level() };
+    speedLevel_         = level_t{ fb->speed_level() };
+    intLevel_           = level_t{ fb->int_level() };
+    chaLevel_           = level_t{ fb->cha_level() };
 
     initialized_        = true;
 }

@@ -52,6 +52,8 @@ void Attribute::initialize(const AttributeInitializer& initializer)
     level(Type::INTELLIGENCE).add(initializer.intLevel_);
     level(Type::CHARISMA).add(initializer.chaLevel_);
     accept();
+
+    initialized_ = true;
 }
 
 bool Attribute::addLevel(Attribute::Type type, level_t shift) noexcept

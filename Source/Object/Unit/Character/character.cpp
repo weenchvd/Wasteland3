@@ -206,7 +206,7 @@ void Character::apply() noexcept
 void Character::initCtor()
 {
     attrib_->initialize(base_.attrInitializer_);
-    //skill_->initialize(base_.skillInitializer_);
+    skill_->initialize(base_.skillInitializer_);
 }
 
 bool Character::hasValidValues() const noexcept

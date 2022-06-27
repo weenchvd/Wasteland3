@@ -31,6 +31,7 @@ CharacterReference::CharacterReference()
     weaponTypes_        {},
     //consumTypes_        {},
     attrInitializer_    {},
+    skillInitializer_   {},
     name_               {},
     descrip_            {},
     enteredName_        {},
@@ -178,6 +179,7 @@ CharacterReference CharacterReferenceContainer::initCharacterReference(
     }
 
     ref.attrInitializer_        = AttributeInitializer{ fb->attributes() };
+    ref.skillInitializer_       = SkillInitializer{ fb->skills() };
 
     common::initLanguageBundle(fb->name(), ref.name_);
     common::initLanguageBundle(fb->descrip(), ref.descrip_);

@@ -10,6 +10,7 @@
 #include"distribution.hpp"
 #include"specStorage.hpp"
 #include"effectSkill.hpp"
+#include"skillAux.hpp"
 #include"skillCommon.hpp"
 #include"skillFB_generated.h"
 #include"skillReference.hpp"
@@ -33,6 +34,10 @@ public:
 
     Skill(const Skill&) = delete;
     Skill& operator=(const Skill&) = delete;
+
+    void initialize(const SkillInitializer& initializer);
+
+    bool isInitialized(bool) const noexcept { return initialized_; }
 
     static void initialize();
 
@@ -109,6 +114,8 @@ private:
     common::Distribution<EffectSkillWeaponMod, level_t>     weaponModDist_;
     common::Distribution<EffectSkillBarter, level_t>        barterDist_;
     common::Distribution<EffectSkillLeadership, level_t>    leaderDist_;
+
+    bool                                                    initialized_;
 
     static const SkillReference                             ref_;
     static const SkillText                                  text_;
