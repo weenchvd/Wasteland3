@@ -224,11 +224,10 @@ common::Text Character::name() const noexcept
 }
 
 bool Character::setWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
-                          unique_ptr<Item>& source,
-                          bool (*typeChecker)(Weapon::Type, Weapon::Type))
+                          unique_ptr<Item>& source)
 {
     assert(hasValidValues());
-    if (slotWeapon_.set(slotNumber, source, typeChecker)) {
+    if (slotWeapon_.set(slotNumber, source, isCompatible)) {
         apply();
         if (hasValidValues()) return true;
         slotWeapon_.unset(slotNumber, source);
@@ -391,7 +390,7 @@ unique_ptr<Unit> Character::deserialize(const fbCharacter::FB_Character* fb)
         for (int i = 0; i < weapons->size(); ++i) {
             assert(weapons->Get(i) != nullptr);
             auto weapon{ Weapon::deserialize(weapons->Get(i)) };
-            if (!c.setWeapon(i, weapon, isCompatible)) {
+            if (!c.setWeapon(i, weapon)) {
                 throw common::SerializationError{ u8"[Character::deserialize] The weapon is not set" };
             }
         }
@@ -499,7 +498,7 @@ bool equipWeapon(Character& character,
     if (!newWeapon) {
         return false;
     }
-    if (character.setWeapon(weaponSlotNumber, newWeapon, isCompatible)) {
+    if (character.setWeapon(weaponSlotNumber, newWeapon)) {
         return true;
     }
     InventoryIterator iter{ inventory.insert(newWeapon) };

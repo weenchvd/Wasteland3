@@ -35,8 +35,8 @@ void initializeInventory(game::object::Inventory& inventory)
     auto weapon{ f.createItem<Weapon>(Weapon::Model::AR_SOCOM) };
     auto modBarrel{ f.createItem<WeaponMod>(WeaponMod::Model::BARREL_TITANIUM_COBALT) };
     auto modMag{ f.createItem<WeaponMod>(WeaponMod::Model::MAG_QUICKFIRE) };
-    static_cast<Weapon*>(weapon.get())->setMod(0, modBarrel, game::object::isCompatible);
-    static_cast<Weapon*>(weapon.get())->setMod(3, modMag, game::object::isCompatible);
+    static_cast<Weapon*>(weapon.get())->setMod(0, modBarrel);
+    static_cast<Weapon*>(weapon.get())->setMod(3, modMag);
     inventory.insert(weapon, true);
 
     /// weapons

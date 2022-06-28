@@ -234,8 +234,7 @@ public:
     }
 
     bool setMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
-                std::unique_ptr<Item>& source,
-                bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)) noexcept;
+                std::unique_ptr<Item>& source) noexcept;
 
     bool unsetMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
                   std::unique_ptr<Item>& receiver) noexcept;

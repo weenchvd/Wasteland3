@@ -108,7 +108,7 @@ unique_ptr<Item> Weapon::deserialize(const fbWeapon::FB_Weapon* fb)
             auto modType{ static_cast<WeaponMod*>(mod.get())->type() };
             auto slotNumber{ weapon.slotMod().slotNumber(modType) };
             if (slotNumber == weapon.slotMod().slotNotFound_ ||
-                !weapon.setMod(slotNumber, mod, isCompatible))
+                !weapon.setMod(slotNumber, mod))
             {
                 throw common::SerializationError{ u8"[Weapon::deserialize] The mod is not set" };
             }
@@ -202,11 +202,10 @@ void Weapon::damageType(Damage::Type type) noexcept
 }
 
 bool Weapon::setMod(common::Slot<WeaponMod, nWMSlots_>::slot_number_t slotNumber,
-                    unique_ptr<Item>& source,
-                    bool (*typeChecker)(WeaponMod::Type, WeaponMod::Type)) noexcept
+                    unique_ptr<Item>& source) noexcept
 {
     assert(hasValidValues());
-    if (slotWeaponMod_.set(slotNumber, source, typeChecker)) {
+    if (slotWeaponMod_.set(slotNumber, source, isCompatible)) {
         apply();
         if (hasValidValues()) return true;
         slotWeaponMod_.unset(slotNumber, source);

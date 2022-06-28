@@ -159,7 +159,7 @@ void contextSensitiveMenuItemModify_Install(
             auto newMod{ squad.inventory().extract(iterWeaponMod) };
             unique_ptr<object::Item> oldMod{};
             weapon.unsetMod(pairSlotNumber.first, oldMod);
-            weapon.setMod(pairSlotNumber.first, newMod, object::isCompatible);
+            weapon.setMod(pairSlotNumber.first, newMod);
             if (oldMod != nullptr) {
                 squad.inventory().insert(oldMod);
             }

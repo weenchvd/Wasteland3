@@ -324,8 +324,7 @@ public:
     //common::Slot<Weapon, nWSlots_>& slotWeapon() noexcept { return slotWeapon_; }
 
     bool setWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
-                   std::unique_ptr<Item>& source,
-                   bool (*typeChecker)(Weapon::Type, Weapon::Type));
+                   std::unique_ptr<Item>& source);
 
     bool unsetWeapon(common::Slot<Weapon, nWSlots_>::slot_number_t slotNumber,
                      std::unique_ptr<Item>& receiver);
