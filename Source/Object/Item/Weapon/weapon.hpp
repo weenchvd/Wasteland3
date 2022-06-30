@@ -57,11 +57,6 @@ public:
         visitor.visitWeapon(*this);
     }
 
-    flatbuffers::Offset<fbWeapon::FB_Weapon> serialize(
-        flatbuffers::FlatBufferBuilder& fbb) const;
-
-    static std::unique_ptr<Item> deserialize(const fbWeapon::FB_Weapon* fb);
-
     void apply() noexcept;
 
 private:
@@ -248,6 +243,13 @@ public:
     static const WeaponText& weaponText() noexcept {
         return text_;
     }
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbWeapon::FB_Weapon> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbWeapon::FB_Weapon* fb);
 
 private:
     const WeaponReference&      base_;          // reference, sample, template

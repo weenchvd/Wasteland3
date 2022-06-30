@@ -187,13 +187,21 @@ flatbuffers::Offset<fbAttribute::FB_Attribute> Attribute::serialize(
 
     fbAttribute::FB_AttributeBuilder b{ fbb };
     b.add_attr_points(checkedEnum<decltype(&at_t::attr_points), at_t>(storage().getAccepted()));
-    b.add_coord_level(checkedEnum<decltype(&at_t::coord_level), at_t>(level(Type::COORDINATION).getAccepted()));
-    b.add_luck_level(checkedEnum<decltype(&at_t::luck_level), at_t>(level(Type::LUCK).getAccepted()));
-    b.add_aware_level(checkedEnum<decltype(&at_t::aware_level), at_t>(level(Type::AWARENESS).getAccepted()));
-    b.add_str_level(checkedEnum<decltype(&at_t::str_level), at_t>(level(Type::STRENGTH).getAccepted()));
-    b.add_speed_level(checkedEnum<decltype(&at_t::speed_level), at_t>(level(Type::SPEED).getAccepted()));
-    b.add_int_level(checkedEnum<decltype(&at_t::int_level), at_t>(level(Type::INTELLIGENCE).getAccepted()));
-    b.add_cha_level(checkedEnum<decltype(&at_t::cha_level), at_t>(level(Type::CHARISMA).getAccepted()));
+
+    b.add_coord_level(checkedEnum<decltype(&at_t::coord_level), at_t>(
+        level(Type::COORDINATION).getAccepted()));
+    b.add_luck_level(checkedEnum<decltype(&at_t::luck_level), at_t>(
+        level(Type::LUCK).getAccepted()));
+    b.add_aware_level(checkedEnum<decltype(&at_t::aware_level), at_t>(
+        level(Type::AWARENESS).getAccepted()));
+    b.add_str_level(checkedEnum<decltype(&at_t::str_level), at_t>(
+        level(Type::STRENGTH).getAccepted()));
+    b.add_speed_level(checkedEnum<decltype(&at_t::speed_level), at_t>(
+        level(Type::SPEED).getAccepted()));
+    b.add_int_level(checkedEnum<decltype(&at_t::int_level), at_t>(
+        level(Type::INTELLIGENCE).getAccepted()));
+    b.add_cha_level(checkedEnum<decltype(&at_t::cha_level), at_t>(
+        level(Type::CHARISMA).getAccepted()));
     return b.Finish();
 }
 

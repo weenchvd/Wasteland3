@@ -54,17 +54,14 @@ unique_ptr<Item> Item::deserialize(const fbItem::FB_Item* fb)
     switch (fb->item_type()) {
     case fbItem::FB_ItemUnion::FB_ItemUnion_fbWeapon_FB_Weapon: {
         const auto* weapon{ fb->item_as_fbWeapon_FB_Weapon() };
-        assert(weapon != nullptr);
         return Weapon::deserialize(weapon);
     }
     case fbItem::FB_ItemUnion::FB_ItemUnion_fbWeaponMod_FB_WeaponMod: {
         const auto* weaponMod{ fb->item_as_fbWeaponMod_FB_WeaponMod() };
-        assert(weaponMod != nullptr);
         return WeaponMod::deserialize(weaponMod);
     }
     case fbItem::FB_ItemUnion::FB_ItemUnion_fbAmmo_FB_Ammo: {
         const auto* ammo{ fb->item_as_fbAmmo_FB_Ammo() };
-        assert(ammo != nullptr);
         return Ammo::deserialize(ammo);
     }
     default:

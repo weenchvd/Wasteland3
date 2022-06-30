@@ -43,7 +43,6 @@ unique_ptr<Unit> Unit::deserialize(const fbUnit::FB_Unit* fb)
     switch (fb->unit_type()) {
     case fbUnit::FB_UnitUnion::FB_UnitUnion_fbCharacter_FB_Character: {
         const auto* character{ fb->unit_as_fbCharacter_FB_Character() };
-        assert(character != nullptr);
         return Character::deserialize(character);
     }
     default:

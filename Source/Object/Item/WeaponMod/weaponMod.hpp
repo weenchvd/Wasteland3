@@ -54,11 +54,6 @@ public:
         visitor.visitWeaponMod(*this);
     }
 
-    flatbuffers::Offset<fbWeaponMod::FB_WeaponMod> serialize(
-        flatbuffers::FlatBufferBuilder& fbb) const;
-
-    static std::unique_ptr<Item> deserialize(const fbWeaponMod::FB_WeaponMod* fb);
-
     void apply(Weapon& weapon) noexcept;
 
 ///********** unchangeable weapon mod parameters (from reference)
@@ -173,6 +168,13 @@ public:
     static const WeaponModText& weaponModText() noexcept {
         return text_;
     }
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbWeaponMod::FB_WeaponMod> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbWeaponMod::FB_WeaponMod* fb);
 
 private:
     const WeaponModReference&  base_;           // reference, sample, template

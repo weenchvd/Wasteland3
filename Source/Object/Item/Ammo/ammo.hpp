@@ -50,11 +50,6 @@ public:
         visitor.visitAmmo(*this);
     }
 
-    flatbuffers::Offset<fbAmmo::FB_Ammo> serialize(
-        flatbuffers::FlatBufferBuilder& fbb) const;
-
-    static std::unique_ptr<Item> deserialize(const fbAmmo::FB_Ammo* fb);
-
 public:
     virtual Item::Type itemType() const noexcept override {
         return Item::Type::AMMO;
@@ -97,6 +92,13 @@ public:
     static const AmmoText& ammoText() noexcept {
         return text_;
     }
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbAmmo::FB_Ammo> serialize(
+        flatbuffers::FlatBufferBuilder& fbb) const;
+
+    static std::unique_ptr<Item> deserialize(const fbAmmo::FB_Ammo* fb);
 
 private:
     const AmmoReference&    base_;

@@ -286,24 +286,24 @@ flatbuffers::Offset<fbInventory::FB_Inventory> Inventory::serialize(
     /// an assert/exception/panic depending on your language.
 
     Roster rost{ roster() };
-    vector<flatbuffers::Offset<fbItem::FB_Item>> newItems;
-    vector<flatbuffers::Offset<fbItem::FB_Item>> oldItems;
 
+    vector<flatbuffers::Offset<fbItem::FB_Item>> newItemOffsets;
     for (auto iter{ rost.newItems().beg_ }; iter != rost.newItems().end_; ++iter) {
         assert(iter.isValid());
-        newItems.push_back((*iter.get())->serialize(fbb));
+        newItemOffsets.push_back((*iter.get())->serialize(fbb));
     }
+    auto newItemVectorOffset{ fbb.CreateVector(newItemOffsets) };
+
+    vector<flatbuffers::Offset<fbItem::FB_Item>> oldItemOffsets;
     for (auto iter{ rost.oldItems().beg_ }; iter != rost.oldItems().end_; ++iter) {
         assert(iter.isValid());
-        oldItems.push_back((*iter.get())->serialize(fbb));
+        oldItemOffsets.push_back((*iter.get())->serialize(fbb));
     }
-
-    auto newOffset{ fbb.CreateVector(newItems) };
-    auto oldOffset{ fbb.CreateVector(oldItems) };
+    auto oldItemVectorOffset{ fbb.CreateVector(oldItemOffsets) };
 
     fbInventory::FB_InventoryBuilder builder{ fbb };
-    builder.add_new_items(newOffset);
-    builder.add_old_items(oldOffset);
+    builder.add_new_items(newItemVectorOffset);
+    builder.add_old_items(oldItemVectorOffset);
     return builder.Finish();
 }
 
@@ -315,20 +315,16 @@ std::unique_ptr<Inventory> Inventory::deserialize(
     auto inventory{ f.createInventory() };
 
     const auto* newItems{ fb->new_items() };
-    if (newItems != nullptr) {
-        long long int size{ newItems->size() };
-        for (long long int i{ size - 1 }; i >= 0; --i) {
-            auto item{ Item::deserialize(newItems->Get(i)) };
-            inventory->insert(item, true);
-        }
+    long long int size{ newItems->size() }; // cast from unsigned to signed
+    for (long long int i{ size - 1 }; i >= 0; --i) {
+        auto item{ Item::deserialize(newItems->Get(i)) };
+        inventory->insert(item, true);
     }
 
     const auto* oldItems{ fb->old_items() };
-    if (oldItems != nullptr) {
-        for (long long int i = 0; i < oldItems->size(); ++i) {
-            auto item{ Item::deserialize(oldItems->Get(i)) };
-            inventory->insert(item, false);
-        }
+    for (long long int i = 0; i < oldItems->size(); ++i) {
+        auto item{ Item::deserialize(oldItems->Get(i)) };
+        inventory->insert(item, false);
     }
 
     return inventory;

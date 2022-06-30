@@ -17,7 +17,7 @@ flatbuffers::Offset<fbSquad::FB_Squad> Squad::serialize(
     using sq_t  = fbSquad::FB_Squad;
     using usp_t = fbSquad::FB_UnitSlotPair;
 
-    vector<flatbuffers::Offset<fbSquad::FB_UnitSlotPair>> pairs;
+    vector<flatbuffers::Offset<fbSquad::FB_UnitSlotPair>> unitSlotOffsets;
     auto i{ nMembers_ };
     for (i = 0; i < members_.size(); ++i) {
         if (members_[i] != nullptr) {
@@ -26,14 +26,14 @@ flatbuffers::Offset<fbSquad::FB_Squad> Squad::serialize(
             b.add_unit(unitOffset);
             b.add_slot(common::checked<decltype(&usp_t::slot), usp_t>(i));
             auto unitSlotPairOffset{ b.Finish() };
-            pairs.push_back(unitSlotPairOffset);
+            unitSlotOffsets.push_back(unitSlotPairOffset);
         }
     }
-    auto uspVectorOffset{ fbb.CreateVector(pairs) };
+    auto unitSlotVectorOffset{ fbb.CreateVector(unitSlotOffsets) };
     auto inventoryOffset{ invent_->serialize(fbb) };
 
     fbSquad::FB_SquadBuilder b{ fbb };
-    b.add_units(uspVectorOffset);
+    b.add_units(unitSlotVectorOffset);
     b.add_inventory(inventoryOffset);
     b.add_money(common::checkedEnum<decltype(&sq_t::money), sq_t>(money_));
     return b.Finish();
@@ -44,7 +44,6 @@ unique_ptr<Squad> Squad::deserialize(const fbSquad::FB_Squad* fb)
     assert(fb != nullptr);
     auto squad{ make_unique<Squad>() };
     const auto* units{ fb->units() };
-    assert(units != nullptr);
     for (int i = 0; i < units->size(); ++i) {
         auto pair{ units->Get(i) };
         assert(pair != nullptr);

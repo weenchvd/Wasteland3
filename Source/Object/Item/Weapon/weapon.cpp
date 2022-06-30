@@ -79,17 +79,17 @@ Weapon::Weapon(const WeaponReference& ref) noexcept
 flatbuffers::Offset<fbWeapon::FB_Weapon> Weapon::serialize(
     flatbuffers::FlatBufferBuilder& fbb) const
 {
-    vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponMod>> mods;
+    vector<flatbuffers::Offset<fbWeaponMod::FB_WeaponMod>> modOffsets;
     for (int i = 0; i < slotWeaponMod_.size(); ++i) {
         if (slotWeaponMod_[i] != nullptr) {
-            mods.push_back(slotWeaponMod_[i]->serialize(fbb));
+            modOffsets.push_back(slotWeaponMod_[i]->serialize(fbb));
         }
     }
-    auto modOffset{ fbb.CreateVector(mods) };
+    auto modVectorOffset{ fbb.CreateVector(modOffsets) };
 
     fbWeapon::FB_WeaponBuilder builder{ fbb };
     builder.add_model(WeaponModelBiMap::toRightType(model()));
-    builder.add_mods(modOffset);
+    builder.add_mods(modVectorOffset);
     return builder.Finish();
 }
 
@@ -101,19 +101,16 @@ unique_ptr<Item> Weapon::deserialize(const fbWeapon::FB_Weapon* fb)
     auto item{ f.createItem<Weapon>(weaponModel) };
     auto& weapon{ static_cast<Weapon&>(*item.get()) };
     const auto* mods{ fb->mods() };
-    if (mods != nullptr) {
-        for (int i = 0; i < mods->size(); ++i) {
-            assert(mods->Get(i) != nullptr);
-            auto mod{ WeaponMod::deserialize(mods->Get(i)) };
-            auto modType{ static_cast<WeaponMod*>(mod.get())->type() };
-            auto slotNumber{ weapon.slotMod().slotNumber(modType) };
-            if (slotNumber == weapon.slotMod().slotNotFound_ ||
-                !weapon.setMod(slotNumber, mod))
-            {
-                throw common::SerializationError{ u8"[Weapon::deserialize] The mod is not set" };
-            }
+    for (int i = 0; i < mods->size(); ++i) {
+        assert(mods->Get(i) != nullptr);
+        auto mod{ WeaponMod::deserialize(mods->Get(i)) };
+        auto modType{ static_cast<WeaponMod*>(mod.get())->type() };
+        auto slotNumber{ weapon.slotMod().slotNumber(modType) };
+        if (slotNumber == weapon.slotMod().slotNotFound_ ||
+            !weapon.setMod(slotNumber, mod))
+        {
+            throw common::SerializationError{ u8"[Weapon::deserialize] The mod is not set" };
         }
-
     }
     return item;
 }

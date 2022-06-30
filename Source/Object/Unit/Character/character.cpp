@@ -263,14 +263,14 @@ flatbuffers::Offset<fbCharacter::FB_Character> Character::serialize(
         }
     }
     auto weaponVectorOffset{ fbb.CreateVector(weaponOffsets) };
-    auto enteredNameOffset{ fbb.CreateString(enteredName_) };
+    auto enteredNameStringOffset{ fbb.CreateString(enteredName_) };
 
     fbCharacter::FB_CharacterBuilder b{ fbb };
     b.add_attributes(attrOffset);
     b.add_skills(skillOffset);
     b.add_weapons(weaponVectorOffset);
     b.add_model(CharacterModelBiMap::toRightType(model()));
-    b.add_entered_name(enteredNameOffset);
+    b.add_entered_name(enteredNameStringOffset);
 
     b.add_time_detect(checkedEnum<decltype(&ch_t::time_detect), ch_t>(timeDetect_));
     b.add_xp(checkedEnum<decltype(&ch_t::xp), ch_t>(xp_));
@@ -385,14 +385,11 @@ unique_ptr<Unit> Character::deserialize(const fbCharacter::FB_Character* fb)
     c.attrib_.reset(Attribute::deserialize(fb->attributes(), c).release());
     c.skill_.reset(Skill::deserialize(fb->skills(), c).release());
     const auto* weapons{ fb->weapons() };
-    if (weapons != nullptr) {
-        assert(c.slotWeapon_.size() >= weapons->size());
-        for (int i = 0; i < weapons->size(); ++i) {
-            assert(weapons->Get(i) != nullptr);
-            auto weapon{ Weapon::deserialize(weapons->Get(i)) };
-            if (!c.setWeapon(i, weapon)) {
-                throw common::SerializationError{ u8"[Character::deserialize] The weapon is not set" };
-            }
+    assert(c.slotWeapon_.size() >= weapons->size());
+    for (int i = 0; i < weapons->size(); ++i) {
+        auto weapon{ Weapon::deserialize(weapons->Get(i)) };
+        if (!c.setWeapon(i, weapon)) {
+            throw common::SerializationError{ u8"[Character::deserialize] The weapon is not set" };
         }
     }
     c.enteredName_          = Text{ fb->entered_name()->c_str() };

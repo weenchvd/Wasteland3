@@ -113,11 +113,6 @@ public:
 
     void viewedAll() { mergeLists(); }
 
-    flatbuffers::Offset<fbInventory::FB_Inventory> serialize(
-        flatbuffers::FlatBufferBuilder& fbb);
-
-    static std::unique_ptr<Inventory> deserialize(const fbInventory::FB_Inventory* fb);
-
 private:
     InventoryIterator insert(
         std::list<std::unique_ptr<Item>>& receiver,
@@ -133,6 +128,13 @@ private:
     bool check(const std::list<std::unique_ptr<Item>>& source) const;
 
     bool checkAll() const;
+
+///********** serialization
+public:
+    flatbuffers::Offset<fbInventory::FB_Inventory> serialize(
+        flatbuffers::FlatBufferBuilder& fbb);
+
+    static std::unique_ptr<Inventory> deserialize(const fbInventory::FB_Inventory* fb);
 
 private:
     std::list<std::unique_ptr<Item>>    newItems_;
