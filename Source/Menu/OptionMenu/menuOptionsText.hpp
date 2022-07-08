@@ -36,16 +36,10 @@ public:
 
     const text_t& questionSaveChanges() const noexcept { return questionSaveChanges_[li()]; }
 
-    const text_t& saveChanges() const noexcept { return saveChanges_[li()]; }
-
-    const text_t& cancelChanges() const noexcept { return cancelChanges_[li()]; }
-
 private:
     language_bundle_t menuName_;
     language_bundle_t enterGeneral_;
     language_bundle_t questionSaveChanges_;
-    language_bundle_t saveChanges_;
-    language_bundle_t cancelChanges_;
 };
 
 ///************************************************************************************************
@@ -68,12 +62,15 @@ private:
 public:
     const text_t& menuName() const noexcept { return menuName_[li()]; }
 
+    const text_t& language() const noexcept { return language_[li()]; }
+
     const text_t& currentLanguage() const noexcept { return currentLanguage_[li()]; }
 
     const text_t& changeLanguage() const noexcept { return changeLanguage_[li()]; }
 
 private:
     language_bundle_t menuName_;
+    language_bundle_t language_;
     language_bundle_t currentLanguage_;
     language_bundle_t changeLanguage_;
 };

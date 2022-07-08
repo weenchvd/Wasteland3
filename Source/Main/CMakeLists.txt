@@ -13,8 +13,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(EXEC_NAME "wl3")
-set(SOURCE_CXX_LIST "main.cpp"
+set(SOURCE_CXX_LIST "graphicUI.cpp"
                     "initializationAux.cpp"
+                    "main.cpp"
+                    "textUI.cpp"
 )
 
 # Add source to this project's executable.
@@ -22,6 +24,7 @@ add_executable(${EXEC_NAME} ${SOURCE_CXX_LIST})
 
 target_link_libraries(${EXEC_NAME}
                       PRIVATE initialization
+                      PRIVATE imgui
                       PRIVATE inventory
                       PRIVATE locator
                       PRIVATE menu

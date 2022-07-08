@@ -36,41 +36,37 @@ void MenuOptionsText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en("Options menu");
-    temp.ru("Меню опций");
+    temp.en(u8"Options menu");
+    temp.ru(u8"Меню опций");
     initLanguageBundleMenu(temp, common_.menuName_);
 
-    temp.en("Enter the general options menu");
-    temp.ru("Войти в меню общих настроек");
+    temp.en(u8"Enter the general options menu");
+    temp.ru(u8"Войти в меню общих настроек");
     initLanguageBundleMenu(temp, common_.enterGeneral_);
 
-    temp.en("Options have been changed. Do you want to save the changes?");
-    temp.ru("Настройки были изменены. Вы хотите сохранить изменения?");
+    temp.en(u8"Options have been changed. Do you want to save the changes?");
+    temp.ru(u8"Настройки были изменены. Вы хотите сохранить изменения?");
     initLanguageBundleMenu(temp, common_.questionSaveChanges_);
-
-    temp.en("Save changes");
-    temp.ru("Сохранить изменения");
-    initLanguageBundleMenu(temp, common_.saveChanges_);
-
-    temp.en("Cancel changes");
-    temp.ru("Отменить изменения");
-    initLanguageBundleMenu(temp, common_.cancelChanges_);
 }
 
 void MenuOptionsText::initGeneral()
 {
     LanguageBundle temp;
 
-    temp.en("General options menu");
-    temp.ru("Меню общих настроек");
+    temp.en(u8"General options menu");
+    temp.ru(u8"Меню общих настроек");
     initLanguageBundleMenu(temp, general_.menuName_);
 
-    temp.en("Current language:");
-    temp.ru("Текущий язык:");
+    temp.en(u8"Language");
+    temp.ru(u8"Язык");
+    initLanguageBundleMenu(temp, general_.language_);
+
+    temp.en(u8"Current language:");
+    temp.ru(u8"Текущий язык:");
     initLanguageBundleMenu(temp, general_.currentLanguage_);
 
-    temp.en("Change language");
-    temp.ru("Сменить язык");
+    temp.en(u8"Change language");
+    temp.ru(u8"Сменить язык");
     initLanguageBundleMenu(temp, general_.changeLanguage_);
 }
 
@@ -78,12 +74,12 @@ void MenuOptionsText::initAux()
 {
     LanguageBundle temp;
 
-    temp.en("Languages:");
-    temp.ru("Языки:");
+    temp.en(u8"Languages:");
+    temp.ru(u8"Языки:");
     initLanguageBundleMenu(temp, aux_.languages_);
 
-    temp.en("Select a language:");
-    temp.ru("Выберите язык:");
+    temp.en(u8"Select a language:");
+    temp.ru(u8"Выберите язык:");
     initLanguageBundleMenu(temp, aux_.selectLanguage_);
 }
 

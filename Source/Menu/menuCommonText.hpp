@@ -60,6 +60,8 @@ public:
 
     const text_t& cancel() const noexcept { return cancel_[li()]; }
 
+    const text_t& close() const noexcept { return close_[li()]; }
+
     const text_t& promptSymbol() const noexcept { return promptSymbol_[li()]; }
 
     const text_t& errorSymbol() const noexcept { return errorSymbol_[li()]; }
@@ -69,6 +71,10 @@ public:
     const text_t& saveChanges() const noexcept { return saveChanges_[li()]; }
 
     const text_t& cancelChanges() const noexcept { return cancelChanges_[li()]; }
+
+    const text_t& changesSaved() const noexcept { return changesSaved_[li()]; }
+
+    const text_t& changesCanceled() const noexcept { return changesCanceled_[li()]; }
 
     const text_t& actionFailed() const noexcept { return actionFailed_[li()]; }
 
@@ -90,11 +96,14 @@ private:
     language_bundle_t yes_;
     language_bundle_t no_;
     language_bundle_t cancel_;
+    language_bundle_t close_;
     language_bundle_t promptSymbol_;
     language_bundle_t errorSymbol_;
     language_bundle_t notImplemented_;
     language_bundle_t saveChanges_;
     language_bundle_t cancelChanges_;
+    language_bundle_t changesSaved_;
+    language_bundle_t changesCanceled_;
     language_bundle_t actionFailed_;
     language_bundle_t errorOccurred_;
 };

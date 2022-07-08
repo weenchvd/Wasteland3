@@ -13,7 +13,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 
 set(LIBRARY_NAME "menu")
-set(SOURCE_CXX_LIST "menuCommon.cpp"
+set(SOURCE_CXX_LIST "gui_menuCommon.cpp"
+                    "menuCommon.cpp"
                     "menuCommonText.cpp"
                     "AttributeMenu/menuAttribute.cpp"
                     "AttributeMenu/menuAttributeText.cpp"
@@ -28,9 +29,11 @@ set(SOURCE_CXX_LIST "menuCommon.cpp"
                     "ItemMenu/menuItemCommon.cpp"
                     "ItemMenu/menuItemModify.cpp"
                     "ItemMenu/menuItemText.cpp"
+                    "MainMenu/gui_menuMain.cpp"
                     "MainMenu/menuMain.cpp"
                     "MainMenu/menuMainInit.cpp"
                     "MainMenu/menuMainText.cpp"
+                    "OptionMenu/gui_menuOptions.cpp"
                     "OptionMenu/menuOptions.cpp"
                     "OptionMenu/menuOptionsText.cpp"
                     "SkillMenu/menuSkill.cpp"
@@ -55,6 +58,7 @@ target_include_directories(${LIBRARY_NAME}
 
 target_link_libraries(${LIBRARY_NAME}
                       PUBLIC common
+                      PUBLIC imgui
                       PUBLIC inventory
                       PUBLIC locator
                       PUBLIC plainText

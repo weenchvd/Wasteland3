@@ -14,6 +14,8 @@ option(GAME_ENABLE_TEST "Enable tests for game" OFF)
 
 #set(CMAKE_DISABLE_PRECOMPILE_HEADERS ON)
 set(EXTERNAL_PROJECTS_DIR "${CMAKE_SOURCE_DIR}/External")
+set(SRC_FILES_DIR "${CMAKE_SOURCE_DIR}/Files")
+set(SRC_FONTS_DIR "${SRC_FILES_DIR}/Fonts")
 
 #**********************************************************************
 set(DEFAULT_CMAKE_FILE_HASH_FUNC "SHA3_256")
@@ -25,6 +27,7 @@ set(W3EXEC__INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/W3")
 set(W3DATA__DIR__REL_PATH_FROM_W3EXEC "W3_data")
 set(SYSTEM__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/System")
 set(ASSETS__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/Assets")
+set(FONTS__DIR__REL_PATH_FROM_W3EXEC "${W3DATA__DIR__REL_PATH_FROM_W3EXEC}/Fonts")
 
 set(SAVES__DIR__REL_PATH_FROM_W3EXEC "Saves")
 set(SAVE_FILE_EXTENSION "w3save")
@@ -363,6 +366,30 @@ if(WIN32)
       WORKING_DIRECTORY ${BOOST_LIB_REPOS_DIR}
       COMMAND_ECHO      STDOUT
     )
+  endif()
+endif()
+
+if(WIN32)
+  # set paths
+  set(IMGUI_LIB_ROOT_DIR      "${EXTERNAL_PROJECTS_DIR}/imgui")
+  set(IMGUI_LIB_REPOS_DIR     "${IMGUI_LIB_ROOT_DIR}/repos")
+  set(IMGUI_LIB_FCSTUFF_DIR   "${IMGUI_LIB_ROOT_DIR}/cmake-fetchcontent-stuff")
+  set(IMGUI_LIB_BACKENDS_DIR  "${IMGUI_LIB_REPOS_DIR}/backends")
+
+  # download and unpack IMGUI library
+  include(FetchContent)
+  FetchContent_Declare(
+    imgui
+    GIT_REPOSITORY  https://github.com/ocornut/imgui.git
+    GIT_TAG         "5d0deebba46a69aa89e7b666c753251c6e2103bf"
+    PREFIX          ${IMGUI_LIB_FCSTUFF_DIR}
+    SOURCE_DIR      ${IMGUI_LIB_REPOS_DIR}
+  )
+  set(FETCHCONTENT_QUIET OFF CACHE BOOL "" FORCE)
+
+  FetchContent_GetProperties(imgui)
+  if(NOT imgui_POPULATED)
+    FetchContent_Populate(imgui)
   endif()
 endif()
 

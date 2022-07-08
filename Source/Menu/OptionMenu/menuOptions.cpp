@@ -32,8 +32,8 @@ void menuOptions(istream& is, ostream& os, const Indent indent)
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionOptions::GENERAL_OPTIONS, text.enterGeneral()) << endl;
-        printNumBar(os, ind1, actionOptions::SAVE_CHANGES, text.saveChanges()) << endl;
-        printNumBar(os, ind1, actionOptions::CANCEL_CHANGES, text.cancelChanges()) << endl;
+        printNumBar(os, ind1, actionOptions::SAVE_CHANGES, comT.saveChanges()) << endl;
+        printNumBar(os, ind1, actionOptions::CANCEL_CHANGES, comT.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {
@@ -96,8 +96,8 @@ void menuGeneralOptions(istream& is, ostream& os, const Indent indent)
         os << ind0 << comT.actions() << endl;
         printNumBar(os, ind1, actionCommon::EXIT, comT.exitMenu()) << endl;
         printNumBar(os, ind1, actionGeneralOptions::CHANGE_LANGUAGE, text.changeLanguage()) << endl;
-        printNumBar(os, ind1, actionGeneralOptions::SAVE_CHANGES, tCom.saveChanges()) << endl;
-        printNumBar(os, ind1, actionGeneralOptions::CANCEL_CHANGES, tCom.cancelChanges()) << endl;
+        printNumBar(os, ind1, actionGeneralOptions::SAVE_CHANGES, comT.saveChanges()) << endl;
+        printNumBar(os, ind1, actionGeneralOptions::CANCEL_CHANGES, comT.cancelChanges()) << endl;
         os << ind0 << comT.enterAction() << endl;
 
         switch (getAction(is, os)) {

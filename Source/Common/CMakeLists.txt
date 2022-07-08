@@ -47,4 +47,5 @@ target_link_libraries(${LIBRARY_NAME}
 #**********************************************************************
 add_subdirectory("FlatBuffersAux")
 add_subdirectory("FlatBuffersCommon")
+add_subdirectory("ImGui")
 add_subdirectory("Observer")
