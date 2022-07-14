@@ -34,24 +34,24 @@ void MenuItemText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en("Item menu");
-    temp.ru("Меню предмета");
+    temp.en(u8"Item menu");
+    temp.ru(u8"Меню предмета");
     initLanguageBundleMenu(temp, common_.menuName_);
 
-    temp.en("Show full description");
-    temp.ru("Показать полное описание");
+    temp.en(u8"Show full description");
+    temp.ru(u8"Показать полное описание");
     initLanguageBundleMenu(temp, common_.showFullDescr_);
 
-    temp.en("Are you sure you want to remove this item?");
-    temp.ru("Вы уверены, что хотите удалить этот предмет?");
+    temp.en(u8"Are you sure you want to remove this item?");
+    temp.ru(u8"Вы уверены, что хотите удалить этот предмет?");
     initLanguageBundleMenu(temp, common_.questionDelete_);
 
-    temp.en("Equip");
-    temp.ru("Экипировать");
+    temp.en(u8"Equip");
+    temp.ru(u8"Экипировать");
     initLanguageBundleMenu(temp, common_.equip_);
 
-    temp.en("Modify");
-    temp.ru("Модифицировать");
+    temp.en(u8"Modify");
+    temp.ru(u8"Модифицировать");
     initLanguageBundleMenu(temp, common_.modify_);
 }
 
@@ -59,36 +59,36 @@ void MenuItemText::initModify()
 {
     LanguageBundle temp;
 
-    temp.en("Item modification menu");
-    temp.ru("Меню модификации предмета");
+    temp.en(u8"Item modification menu");
+    temp.ru(u8"Меню модификации предмета");
     initLanguageBundleMenu(temp, modify_.menuName_);
 
-    temp.en("Item: ");
-    temp.ru("Предмет: ");
+    temp.en(u8"Item: ");
+    temp.ru(u8"Предмет: ");
     initLanguageBundleMenu(temp, modify_.item_);
 
-    temp.en("Modifications: ");
-    temp.ru("Модификации: ");
+    temp.en(u8"Modifications: ");
+    temp.ru(u8"Модификации: ");
     initLanguageBundleMenu(temp, modify_.mods_);
 
-    temp.en("Install modification");
-    temp.ru("Установить модификацию");
+    temp.en(u8"Install modification");
+    temp.ru(u8"Установить модификацию");
     initLanguageBundleMenu(temp, modify_.installMod_);
 
-    temp.en("Remove modification");
-    temp.ru("Удалить модификацию");
+    temp.en(u8"Remove modification");
+    temp.ru(u8"Удалить модификацию");
     initLanguageBundleMenu(temp, modify_.removeMod_);
 
-    temp.en("Enter slot number");
-    temp.ru("Введите номер слота");
+    temp.en(u8"Enter slot number");
+    temp.ru(u8"Введите номер слота");
     initLanguageBundleMenu(temp, modify_.enterSlotNumber_);
 
-    temp.en("Unsuitable modification");
-    temp.ru("Неподходящая модификация");
+    temp.en(u8"Unsuitable modification");
+    temp.ru(u8"Неподходящая модификация");
     initLanguageBundleMenu(temp, modify_.unsuitableMod_);
 
-    temp.en("Show full description of modification #");
-    temp.ru("Показать полное описание модификации #");
+    temp.en(u8"Show full description of modification #");
+    temp.ru(u8"Показать полное описание модификации #");
     initLanguageBundleMenu(temp, modify_.showFullDescrOfMod_);
 }
 

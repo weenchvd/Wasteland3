@@ -34,20 +34,20 @@ void MenuSquadText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en("Squad");
-    temp.ru("Отряд");
+    temp.en(u8"Squad");
+    temp.ru(u8"Отряд");
     initLanguageBundleMenu(temp, common_.squad_);
 
-    temp.en("Member");
-    temp.ru("Член");
+    temp.en(u8"Member");
+    temp.ru(u8"Член");
     initLanguageBundleMenu(temp, common_.member_);
 
-    temp.en("empty slot");
-    temp.ru("пустой слот");
+    temp.en(u8"empty slot");
+    temp.ru(u8"пустой слот");
     initLanguageBundleMenu(temp, common_.emptySlot_);
 
-    temp.en("Select a character");
-    temp.ru("Выберите персонажа");
+    temp.en(u8"Select a character");
+    temp.ru(u8"Выберите персонажа");
     initLanguageBundleMenu(temp, common_.selectCharacter_);
 }
 
@@ -55,16 +55,16 @@ void MenuSquadText::initMain()
 {
     LanguageBundle temp;
 
-    temp.en("Squad menu");
-    temp.ru("Меню отряда");
+    temp.en(u8"Squad menu");
+    temp.ru(u8"Меню отряда");
     initLanguageBundleMenu(temp, main_.menuName_);
 
-    temp.en("Show squad members");
-    temp.ru("Показать членов отряда");
+    temp.en(u8"Show squad members");
+    temp.ru(u8"Показать членов отряда");
     initLanguageBundleMenu(temp, main_.showMembers_);
 
-    temp.en("Enter the character menu");
-    temp.ru("Войти в меню персонажа");
+    temp.en(u8"Enter the character menu");
+    temp.ru(u8"Войти в меню персонажа");
     initLanguageBundleMenu(temp, main_.enterCharacter_);
 }
 

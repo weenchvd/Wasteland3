@@ -32,64 +32,64 @@ void MenuInventoryText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en("Inventory menu");
-    temp.ru("Меню инвентаря");
+    temp.en(u8"Inventory menu");
+    temp.ru(u8"Меню инвентаря");
     initLanguageBundleMenu(temp, common_.menuName_);
 
-    temp.en("Show money");
-    temp.ru("Показать деньги");
+    temp.en(u8"Show money");
+    temp.ru(u8"Показать деньги");
     initLanguageBundleMenu(temp, common_.showMoney_);
 
-    temp.en("Show items");
-    temp.ru("Показать предметы");
+    temp.en(u8"Show items");
+    temp.ru(u8"Показать предметы");
     initLanguageBundleMenu(temp, common_.showItems_);
 
-    temp.en("Show all items");
-    temp.ru("Показать все предметы");
+    temp.en(u8"Show all items");
+    temp.ru(u8"Показать все предметы");
     initLanguageBundleMenu(temp, common_.showAllItems_);
 
-    temp.en("Show items of a certain type");
-    temp.ru("Показать предметы определенного типа");
+    temp.en(u8"Show items of a certain type");
+    temp.ru(u8"Показать предметы определенного типа");
     initLanguageBundleMenu(temp, common_.showItemsOfType_);
 
-    temp.en("Enter the item menu");
-    temp.ru("Войти в меню предмета");
+    temp.en(u8"Enter the item menu");
+    temp.ru(u8"Войти в меню предмета");
     initLanguageBundleMenu(temp, common_.enterItem_);
 
-    temp.en("Mark all items as viewed");
-    temp.ru("Пометить все предметы как просмотренные");
+    temp.en(u8"Mark all items as viewed");
+    temp.ru(u8"Пометить все предметы как просмотренные");
     initLanguageBundleMenu(temp, common_.markAllAsViewed_);
 
-    temp.en("Money: $");
-    temp.ru("Деньги: $");
+    temp.en(u8"Money: $");
+    temp.ru(u8"Деньги: $");
     initLanguageBundleMenu(temp, common_.money_);
 
-    temp.en("Inventory");
-    temp.ru("Инвентарь");
+    temp.en(u8"Inventory");
+    temp.ru(u8"Инвентарь");
     initLanguageBundleMenu(temp, common_.inventory_);
 
-    temp.en("* - new items");
-    temp.ru("* - новые предметы");
+    temp.en(u8"* - new items");
+    temp.ru(u8"* - новые предметы");
     initLanguageBundleMenu(temp, common_.starNewItems_);
 
-    temp.en("Shop:");
-    temp.ru("Магазин:");
+    temp.en(u8"Shop:");
+    temp.ru(u8"Магазин:");
     initLanguageBundleMenu(temp, common_.shop_);
 
-    temp.en("Item ");
-    temp.ru("Предмет ");
+    temp.en(u8"Item ");
+    temp.ru(u8"Предмет ");
     initLanguageBundleMenu(temp, common_.item_);
 
-    temp.en("Item types:");
-    temp.ru("Типы предметов:");
+    temp.en(u8"Item types:");
+    temp.ru(u8"Типы предметов:");
     initLanguageBundleMenu(temp, common_.typesOfItems_);
 
-    temp.en("Enter the item number");
-    temp.ru("Введите номер предмета");
+    temp.en(u8"Enter the item number");
+    temp.ru(u8"Введите номер предмета");
     initLanguageBundleMenu(temp, common_.enterItemNumber_);
 
-    temp.en("The list of items is outdated. To update the list, use the command: ");
-    temp.ru("Список предметов устарел. Чтобы обновить список, используйте команду: ");
+    temp.en(u8"The list of items is outdated. To update the list, use the command: ");
+    temp.ru(u8"Список предметов устарел. Чтобы обновить список, используйте команду: ");
     initLanguageBundleMenu(temp, common_.listIsOutdated_);
 }
 

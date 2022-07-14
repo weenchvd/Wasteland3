@@ -36,32 +36,32 @@ void MenuSkillText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en("Skills:");
-    temp.ru("Навыки:");
+    temp.en(u8"Skills:");
+    temp.ru(u8"Навыки:");
     initLanguageBundleMenu(temp, common_.skills_);
 
-    temp.en("Skills (accepted):");
-    temp.ru("Навыки (принято):");
+    temp.en(u8"Skills (accepted):");
+    temp.ru(u8"Навыки (принято):");
     initLanguageBundleMenu(temp, common_.skillsAccepted_);
 
-    temp.en("Skill points:");
-    temp.ru("Очки навыков:");
+    temp.en(u8"Skill points:");
+    temp.ru(u8"Очки навыков:");
     initLanguageBundleMenu(temp, common_.skillPoints_);
 
-    temp.en("Skill points (accepted):");
-    temp.ru("Очки навыков (принято):");
+    temp.en(u8"Skill points (accepted):");
+    temp.ru(u8"Очки навыков (принято):");
     initLanguageBundleMenu(temp, common_.skillPointsAccepted_);
 
-    temp.en("Select a skill:");
-    temp.ru("Выберите навык:");
+    temp.en(u8"Select a skill:");
+    temp.ru(u8"Выберите навык:");
     initLanguageBundleMenu(temp, common_.selectSkill_);
 
-    temp.en("Enter the number of levels:");
-    temp.ru("Введите количество уровней:");
+    temp.en(u8"Enter the number of levels:");
+    temp.ru(u8"Введите количество уровней:");
     initLanguageBundleMenu(temp, common_.enterNumOfLevels_);
 
-    temp.en("Invalid number of levels");
-    temp.ru("Недопустимое количество уровней");
+    temp.en(u8"Invalid number of levels");
+    temp.ru(u8"Недопустимое количество уровней");
     initLanguageBundleMenu(temp, common_.invalidNumOfLevels_);
 }
 
@@ -69,24 +69,24 @@ void MenuSkillText::initMain()
 {
     LanguageBundle temp;
 
-    temp.en("Skill menu");
-    temp.ru("Меню навыков");
+    temp.en(u8"Skill menu");
+    temp.ru(u8"Меню навыков");
     initLanguageBundleMenu(temp, main_.menuName_);
 
-    temp.en("Show skills");
-    temp.ru("Показать навыки");
+    temp.en(u8"Show skills");
+    temp.ru(u8"Показать навыки");
     initLanguageBundleMenu(temp, main_.showSkills_);
 
-    temp.en("Show accepted skills");
-    temp.ru("Показать принятые навыки");
+    temp.en(u8"Show accepted skills");
+    temp.ru(u8"Показать принятые навыки");
     initLanguageBundleMenu(temp, main_.showSkillsAccepted_);
 
-    temp.en("Modify");
-    temp.ru("Модифицировать");
+    temp.en(u8"Modify");
+    temp.ru(u8"Модифицировать");
     initLanguageBundleMenu(temp, main_.modify_);
 
-    temp.en("Skills have been changed. Do you want to save the changes?");
-    temp.ru("Навыки были изменены. Вы хотите сохранить изменения?");
+    temp.en(u8"Skills have been changed. Do you want to save the changes?");
+    temp.ru(u8"Навыки были изменены. Вы хотите сохранить изменения?");
     initLanguageBundleMenu(temp, main_.questionSaveChanges_);
 }
 
@@ -94,28 +94,28 @@ void MenuSkillText::initModify()
 {
     LanguageBundle temp;
 
-    temp.en("Skill modification menu");
-    temp.ru("Меню модификации навыков");
+    temp.en(u8"Skill modification menu");
+    temp.ru(u8"Меню модификации навыков");
     initLanguageBundleMenu(temp, modify_.menuName_);
 
-    temp.en("Show skill description");
-    temp.ru("Показать описание навыка");
+    temp.en(u8"Show skill description");
+    temp.ru(u8"Показать описание навыка");
     initLanguageBundleMenu(temp, modify_.showDescription_);
 
-    temp.en("Increase level");
-    temp.ru("Повысить уровень");
+    temp.en(u8"Increase level");
+    temp.ru(u8"Повысить уровень");
     initLanguageBundleMenu(temp, modify_.increaseLevel_);
 
-    temp.en("Decrease level");
-    temp.ru("Понизить уровень");
+    temp.en(u8"Decrease level");
+    temp.ru(u8"Понизить уровень");
     initLanguageBundleMenu(temp, modify_.decreaseLevel_);
 
-    temp.en("Skill:");
-    temp.ru("Навык:");
+    temp.en(u8"Skill:");
+    temp.ru(u8"Навык:");
     initLanguageBundleMenu(temp, modify_.skill_);
 
-    temp.en("Skill (accepted):");
-    temp.ru("Навык (принято):");
+    temp.en(u8"Skill (accepted):");
+    temp.ru(u8"Навык (принято):");
     initLanguageBundleMenu(temp, modify_.skillAccepted_);
 }
 
