@@ -58,6 +58,10 @@ public:
 
     const text_t& fileList() const noexcept { return fileList_[li()]; }
 
+    const text_t& fileNotSelected() const noexcept { return fileNotSelected_[li()]; }
+
+    const text_t& filenameNotSpec() const noexcept { return filenameNotSpec_[li()]; }
+
 private:
     language_bundle_t menuName_;
     language_bundle_t exit_;
@@ -73,6 +77,8 @@ private:
     language_bundle_t gameLoaded_;
     language_bundle_t gameNotLoaded_;
     language_bundle_t fileList_;
+    language_bundle_t fileNotSelected_;
+    language_bundle_t filenameNotSpec_;
 };
 
 ///************************************************************************************************

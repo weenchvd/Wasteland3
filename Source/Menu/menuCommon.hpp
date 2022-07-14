@@ -34,6 +34,7 @@ constexpr auto percent  { '%' };
 constexpr auto dollar   { '$' };
 constexpr auto sharp    { '#' };
 constexpr auto x        { 'X' };
+constexpr auto nl       { '\n' };
 
 constexpr auto separator10  { "----------" };
 constexpr auto separator20  { "--------------------" };

@@ -14,10 +14,17 @@
 namespace game {
 namespace menu {
 
-void guiMenuMain(
-    std::unique_ptr<game::object::Squad>& squad,
-    std::unique_ptr<game::object::Inventory>& shop,
-    bool* open);
+void guiMenuMain(bool* open,
+                 std::unique_ptr<game::object::Squad>& squad,
+                 std::unique_ptr<game::object::Inventory>& shop);
+
+void guiMenuSaveGame(bool* open,
+                     std::unique_ptr<object::Squad>& squad,
+                     std::unique_ptr<object::Inventory>& shop);
+
+void guiMenuLoadGame(bool* open,
+                     std::unique_ptr<object::Squad>& squad,
+                     std::unique_ptr<object::Inventory>& shop);
 
 } // namespace menu
 } // namespace game

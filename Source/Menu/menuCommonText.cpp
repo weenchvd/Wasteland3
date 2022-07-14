@@ -100,6 +100,10 @@ void MenuCommonText::initCommon()
     temp.ru(u8"> ");
     initLanguageBundleMenu(temp, common_.promptSymbol_);
 
+    temp.en(u8"Back");
+    temp.ru(u8"Назад");
+    initLanguageBundleMenu(temp, common_.back_);
+
     temp.en(u8"! ");
     temp.ru(u8"! ");
     initLanguageBundleMenu(temp, common_.errorSymbol_);

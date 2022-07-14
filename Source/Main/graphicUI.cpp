@@ -111,7 +111,7 @@ void graphicUI(
         ImGui::NewFrame();
 
         if (showGuiMenuMain) {
-            game::menu::guiMenuMain(squad, shop, &showGuiMenuMain);
+            game::menu::guiMenuMain(&showGuiMenuMain, squad, shop);
         }
         else {
             done = true;

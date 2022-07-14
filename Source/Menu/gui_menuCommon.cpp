@@ -5,14 +5,9 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"gui_menuCommon.hpp"
-#include"imgui.h"
-#include"imgui_impl_dx11.h"
-#include"imgui_impl_win32.h"
 #include"menuCommonText.hpp"
 #include<algorithm>
 #include<assert.h>
-#include<d3d11.h>
-#include<tchar.h>
 
 #undef min
 #undef max
