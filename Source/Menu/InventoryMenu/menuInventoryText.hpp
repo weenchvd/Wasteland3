@@ -50,6 +50,8 @@ public:
 
     const text_t& starNewItems() const noexcept { return starNewItems_[li()]; }
 
+    const text_t& colorNewItems() const noexcept { return colorNewItems_[li()]; }
+
     const text_t& shop() const noexcept { return shop_[li()]; }
 
     const text_t& item() const noexcept { return item_[li()]; }
@@ -71,6 +73,7 @@ private:
     language_bundle_t money_;
     language_bundle_t inventory_;
     language_bundle_t starNewItems_;
+    language_bundle_t colorNewItems_;
     language_bundle_t shop_;
     language_bundle_t item_;
     language_bundle_t typesOfItems_;

@@ -96,6 +96,10 @@ void MenuCommonText::initCommon()
     temp.ru(u8"Закрыть");
     initLanguageBundleMenu(temp, common_.close_);
 
+    temp.en(u8"Description");
+    temp.ru(u8"Описание");
+    initLanguageBundleMenu(temp, common_.description_);
+
     temp.en(u8"> ");
     temp.ru(u8"> ");
     initLanguageBundleMenu(temp, common_.promptSymbol_);

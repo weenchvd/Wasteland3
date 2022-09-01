@@ -73,11 +73,11 @@ void guiMenuOptions(bool* open)
         ImGui::NewLine();
         ImGui::Separator();
         ImGui::NewLine();
-        if (ImGui::Button(comT.saveChanges().c_str())) {
+        if (ImGui::Button(comT.saveChanges().c_str()) && Locator::getOptions().isModified()) {
             Locator::getOptions().acceptAll();
             showGuiChangesSaved = true;
         }
-        if (ImGui::Button(comT.cancelChanges().c_str())) {
+        if (ImGui::Button(comT.cancelChanges().c_str()) && Locator::getOptions().isModified()) {
             Locator::getOptions().rejectAll();
             showGuiChangesCanceled = true;
         }

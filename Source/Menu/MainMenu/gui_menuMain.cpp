@@ -7,6 +7,7 @@
 #include"flatbuffersAux.hpp"
 #include"gameFB_generated.h"
 #include"gui_menuCommon.hpp"
+#include"gui_menuInventory.hpp"
 #include"gui_menuMain.hpp"
 #include"gui_menuOptions.hpp"
 #include"imgui.h"
@@ -31,10 +32,12 @@ void guiMenuMain(bool* open,
     const auto& text{ MenuMainText::common() };
 
     static bool showGuiMenuOption       { false };
+    static bool showGuiMenuInventory    { false };
     static bool showGuiMenuSaveGame     { false };
     static bool showGuiMenuLoadGame     { false };
 
     if (showGuiMenuOption)              guiMenuOptions(&showGuiMenuOption);
+    if (showGuiMenuInventory)           guiMenuInventory(&showGuiMenuInventory, *squad);
     if (showGuiMenuSaveGame)            guiMenuSaveGame(&showGuiMenuSaveGame, squad, shop);
     if (showGuiMenuLoadGame)            guiMenuLoadGame(&showGuiMenuLoadGame, squad, shop);
 
@@ -48,8 +51,9 @@ void guiMenuMain(bool* open,
         if (ImGui::Button(text.enterSquad().c_str())) {
 
         }
-        if (ImGui::Button(text.enterInventory().c_str())) {
-
+        s = string{ text.enterInventory().c_str() } + u8"###EnterInventory";
+        if (ImGui::Button(s.c_str())) {
+            showGuiMenuInventory = true;
         }
         if (ImGui::Button(text.enterTrade().c_str())) {
 
@@ -101,6 +105,7 @@ void guiMenuSaveGame(bool* open,
         auto filePath{ current_path() };
         filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC).make_preferred();
         auto fileExtension{ string{ sign::dot } + SAVE_FILE_EXTENSION };
+        create_directory(filePath);
         for (const auto& dir : directory_iterator{ filePath }) {
             if (dir.path().extension().u8string() == fileExtension) {
                 filenames.push_back(dir.path().stem().u8string());
@@ -233,6 +238,7 @@ void guiMenuLoadGame(bool* open,
         auto filePath{ current_path() };
         filePath.append(SAVES__DIR__REL_PATH_FROM_W3EXEC).make_preferred();
         auto fileExtension{ string{ sign::dot } + SAVE_FILE_EXTENSION };
+        create_directory(filePath);
         for (const auto& dir : directory_iterator{ filePath }) {
             if (dir.path().extension().u8string() == fileExtension) {
                 filenames.push_back(dir.path().stem().u8string());

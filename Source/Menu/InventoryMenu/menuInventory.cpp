@@ -44,7 +44,8 @@ void menuInventory(istream& is, ostream& os, object::Squad& squad, const Indent 
 
         switch (getAction(is, os)) {
         case actionInventory::MONEY:
-            os << ind1 << text.money() << squad.money() << endl;
+            os << ind1 << text.money() << sign::colon << sign::space << sign::dollar
+                << squad.money() << endl;
             break;
         case actionInventory::SHOW_ITEMS:
             pairRoster = subMenuShowItems(is, os, squad.inventory(), ind1);

@@ -60,8 +60,8 @@ void MenuInventoryText::initCommon()
     temp.ru(u8"Пометить все предметы как просмотренные");
     initLanguageBundleMenu(temp, common_.markAllAsViewed_);
 
-    temp.en(u8"Money: $");
-    temp.ru(u8"Деньги: $");
+    temp.en(u8"Money");
+    temp.ru(u8"Деньги");
     initLanguageBundleMenu(temp, common_.money_);
 
     temp.en(u8"Inventory");
@@ -71,6 +71,10 @@ void MenuInventoryText::initCommon()
     temp.en(u8"* - new items");
     temp.ru(u8"* - новые предметы");
     initLanguageBundleMenu(temp, common_.starNewItems_);
+
+    temp.en(u8"Yellow - new items");
+    temp.ru(u8"Желтый - новые предметы");
+    initLanguageBundleMenu(temp, common_.colorNewItems_);
 
     temp.en(u8"Shop:");
     temp.ru(u8"Магазин:");
