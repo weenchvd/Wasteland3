@@ -7,15 +7,16 @@
 #ifndef GUI_MENU_INVENTORY_HPP
 #define GUI_MENU_INVENTORY_HPP
 
+#include"imgui.h"
 #include"squad.hpp"
 
 namespace game {
 namespace menu {
 
 struct GuiMenuInventoryVars {
-    game::object::Roster::ItemRange     items_;
-    game::object::InventoryIterator&    item_;
-    const game::object::Item*&          selected_;
+    object::Roster::ItemRange           items_;
+    object::InventoryIterator&          item_;
+    object::Item*&                      pItem_;
     bool&                               showGuiNotImplemented_;
     bool&                               showGuiRemoveItem_;
     bool&                               showGuiModifyItem_;
@@ -38,6 +39,11 @@ void guiItemList(GuiMenuInventoryVars& vars,
                  const ImVec4& colorButtonSelected);
 
 void guiContextSensetiveMenuItem(GuiMenuInventoryVars& vars, object::InventoryIterator& item);
+
+void guiItemFullDescription(const object::Item* item,
+                            const ImVec2& size,
+                            bool border,
+                            ImGuiWindowFlags flags = ImGuiWindowFlags_None);
 
 } // namespace menu
 } // namespace game

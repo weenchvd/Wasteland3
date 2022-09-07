@@ -27,6 +27,180 @@ bool                                WeaponList::initialized_{ false };
 
 ///************************************************************************************************
 
+void ItemVisitorWeaponCharacteristics::visitWeapon(const object::Weapon& weapon)
+{
+    reset();
+
+    const auto& sp  { signSpace_ };
+    const auto& x   { signX_ };
+    const auto& p   { signPercent_ };
+    const auto& d   { signDollar_ };
+    const auto& sep { separator_ };
+    const object::Weapon& def{ object::Weapon::weaponDefault() };
+    const auto& text{ weapon.weaponText() };
+    ostringstream oss;
+    bool firstLine{ true };
+    name_ = weapon.name();
+
+    oss.str("");
+    oss << text.common().level() << sp << weapon.level() << sp
+        << text.type(weapon.type());
+    levelAndType_ = oss.str();
+
+    oss.str("");
+    oss << weapon.description();
+    descr_ = oss.str();
+
+    oss.str("");
+    bool modsInstalled{ false };
+    for (int i = 0; modsInstalled == false && i < weapon.slotMod().size(); ++i) {
+        if (weapon.slotMod()[i] != nullptr) {
+            modsInstalled = true;
+        }
+    }
+    if (modsInstalled == true) {
+        firstLine = true;
+        oss << text.common().installedMods() << endl;
+        for (int i = 0; i < weapon.slotMod().size(); ++i) {
+            const auto& weaponMod{ weapon.slotMod()[i] };
+            if (weaponMod != nullptr) {
+                if (!firstLine) {
+                    oss << endl;
+                }
+                oss << weaponMod->name();
+                firstLine = false;
+            }
+        }
+    }
+    installedMods_ = oss.str();
+
+    oss.str("");
+    object::WeaponRequirements wReqDef;
+    const auto skillReqDefaultType{ wReqDef.skillRequirements()[0].first };
+    const auto& skillReq{ weapon.requirements().skillRequirements() };
+    firstLine = true;
+    for (int i = 0; i < skillReq.size(); ++i) {
+        if (skillReq[i].first != skillReqDefaultType) {
+            if (!firstLine) {
+                oss << endl;
+            }
+            oss << text.common().require() << sp << skillReq[i].second << sp
+                << object::SkillText::name(skillReq[i].first);
+            firstLine = false;
+        }
+    }
+    const auto attrReqDefaultType{ wReqDef.attributeRequirements()[0].first };
+    const auto& attrReq{ weapon.requirements().attributeRequirements() };
+    for (int i = 0; i < attrReq.size(); ++i) {
+        if (attrReq[i].first != attrReqDefaultType) {
+            if (!firstLine) {
+                oss << endl;
+            }
+            oss << text.common().require() << sp << attrReq[i].second << sp
+                << object::AttributeText::name(attrReq[i].first);
+            firstLine = false;
+        }
+    }
+    weaponReq_ = oss.str();
+
+    oss.str("");
+    if (weapon.penalties().isPresented()) {
+        oss << text.common().penalty();
+        const object::WeaponPenalties& pen{ def.penalties() };
+        if (weapon.penalties().mulCritDmg_ != pen.mulCritDmg_) {
+            oss << endl << text.penalties().critDamage() << sp
+                << weapon.penalties().mulCritDmg_ << p;
+        }
+        if (weapon.penalties().chaHit_ != pen.chaHit_) {
+            oss << endl << text.penalties().hitChance() << sp
+                << weapon.penalties().chaHit_ << p;
+        }
+        if (weapon.penalties().chaCritDmg_ != pen.chaCritDmg_) {
+            oss << endl << text.penalties().critChance() << sp
+                << weapon.penalties().chaCritDmg_ << p;
+        }
+        if (weapon.penalties().strike_ != pen.strike_) {
+            oss << endl << text.penalties().strikeRate() << sp
+                << weapon.penalties().strike_ << p;
+        }
+    }
+    penalties_ = oss.str();
+
+    oss.str("");
+    oss << text.common().damage() << sp << weapon.damageMinimum() << '-'
+        << weapon.damageMaximum() << sp << x
+        << weapon.shotsPerAttack() << sp
+        << object::Damage::damageReferenceContainer().damageReference(weapon.damageType()).name() << endl;
+    dmgAndDmgType_ = oss.str();
+
+    dmgDescr_ = getDamageDescription(Indent{}, weapon.damageType());
+
+    oss.str("");
+    printAttackDescription(oss, Indent{ 0 }, weapon.attack());
+    attackDescr_ = oss.str();
+
+    oss.str("");
+    oss << text.common().ap() << sp << weapon.actionPointPerAttack();
+    ap_ = oss.str();
+
+    oss.str("");
+    oss << text.common().apReload() << sp << weapon.actionPointPerReload();
+    apReload_ = oss.str();
+
+    if (weapon.capacityAmmo() != def.capacityAmmo()) {
+        oss.str("");
+        oss << text.common().ammoCapacity() << sp << weapon.capacityAmmo();
+        ammoCapacity_ = oss.str();
+    }
+    if (weapon.ammoType() != def.ammoType()) {
+        oss.str("");
+        oss << text.common().ammoType() << sp
+            << object::Ammo::ammoReferenceContainer().ammoReference(weapon.ammoType()).name();
+        ammoType_ = oss.str();
+    }
+    if (weapon.bonusSneakAttackDamage() != def.bonusSneakAttackDamage()) {
+        oss.str("");
+        oss << text.common().bonSneakDamage() << sp << weapon.bonusSneakAttackDamage() << p;
+        bonSneakAttackDmg_ = oss.str();
+    }
+    if (weapon.bonusNormalDamage() != def.bonusNormalDamage()) {
+        oss.str("");
+        oss << text.common().bonNormDamage() << sp << weapon.bonusNormalDamage() << p;
+        bonNormalDmg_ = oss.str();
+    }
+    if (weapon.bonusMeleeDamage() != def.bonusMeleeDamage()) {
+        oss.str("");
+        oss << text.common().bonMeleeDamage() << sp << weapon.bonusMeleeDamage() << p;
+        bonMeleeDmg_ = oss.str();
+    }
+    if (weapon.bonusRangedDamage() != def.bonusRangedDamage()) {
+        oss.str("");
+        oss << text.common().bonRangeDamage() << sp << weapon.bonusRangedDamage() << p;
+        bonRangedDmg_ = oss.str();
+    }
+    oss.str("");
+    oss << text.common().hitChance() << sp << weapon.chanceHit() << p;
+    hitChance_ = oss.str();
+
+    oss.str("");
+    oss << text.common().critDamage() << sp << weapon.multiplierCritDamage() << x;
+    critDamage_ = oss.str();
+
+    oss.str("");
+    oss << text.common().critChance() << sp << weapon.chanceCritDamage() << p;
+    critChance_ = oss.str();
+
+    oss.str("");
+    oss << text.common().penetration() << sp << weapon.armorPenetration();
+    penetration_ = oss.str();
+
+    oss.str("");
+    oss << global::PlainText::plainTextText().common().price() << sp << d << weapon.price();
+    price_ = oss.str();
+}
+
+///************************************************************************************************
+
 void ItemVisitorFullDescription::visitWeapon(const object::Weapon& weapon)
 {
     reset();

@@ -6,7 +6,7 @@
 
 #include"gui_menuCommon.hpp"
 #include"gui_menuInventory.hpp"
-#include"imgui.h"
+#include"gui_menuItem.hpp"
 #include"inventory.hpp"
 #include"itemVisitorFullDescr.hpp"
 #include"itemVisitorType.hpp"
@@ -30,8 +30,8 @@ void guiMenuInventory(bool* open, object::Squad& squad)
 
     auto& roster{ squad.inventory().roster() };
 
-    static InventoryIterator item;
-    static const Item* selected{ nullptr };
+    static InventoryIterator    item;
+    static Item*                pItem{ nullptr };
 
     static bool showGuiNotImplemented   { false };
     static bool showGuiRemoveItem       { false };
@@ -40,14 +40,15 @@ void guiMenuInventory(bool* open, object::Squad& squad)
     guiPopupMessage(&showGuiNotImplemented, u8"##NotImplemented", comT.notImplemented().c_str());
     if (showGuiRemoveItem) {
         bool itemIsSelected{ false };
-        if (item.isValid() && selected == (*item.getConst()).get()) {
+        if (item.isValid() && pItem == item.getConst()->get()) {
             itemIsSelected = true;
         }
         guiRemoveItem(&showGuiRemoveItem, squad.inventory(), item);
         if (itemIsSelected && !item.isValid()) {
-            selected = nullptr;
+            pItem = nullptr;
         }
     }
+    if (showGuiModifyItem) guiMenuItemModify(&showGuiModifyItem, squad, *pItem);
 
     ImGuiWindowFlags window_flags{ 0 };
     guiCommonInitialization(window_flags);
@@ -57,16 +58,16 @@ void guiMenuInventory(bool* open, object::Squad& squad)
     if (ImGui::Begin(s.c_str(), nullptr, window_flags)) {
         const ImGuiStyle& style{ ImGui::GetStyle() };
         ImVec2 contentRegionSize{ ImGui::GetWindowContentRegionMax() };
+        ImVec2 columnSize{
+            contentRegionSize.x / 2.0f - style.ItemSpacing.x,
+            contentRegionSize.y - style.ItemSpacing.y - ImGui::GetFrameHeightWithSpacing() * 5.0f
+        };
 
         ostringstream oss;
         oss << text.money() << sign::colon << sign::space << sign::dollar << squad.money() << endl;
+        ImGui::AlignTextToFramePadding();
         ImGui::Text(oss.str().c_str());
 
-        ImVec2 columnSize{
-            contentRegionSize.x / 2.0f - style.ItemSpacing.x, contentRegionSize.y * 0.7f
-        };
-
-        ImGui::NewLine();
         ImVec2 tableSize{ contentRegionSize.x, ImGui::GetFrameHeight() };
         if (ImGui::BeginTable("Titles", 2, ImGuiTableFlags_None, tableSize))
         {
@@ -86,43 +87,28 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
 
         if (ImGui::BeginChild("ItemList", columnSize, true, ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
-            const ImVec4 colorTurquoise { 17.0f / 255.0f, 118.0f / 255.0f, 113.0f / 255.0f, 1.0f };
-            const ImVec4 colorYellow    { 195.0f / 255.0f, 151.0f / 255.0f, 0.0f / 255.0f, 1.0f };
-            const ImVec4 colorYellowDark{ 125.0f / 255.0f, 97.0f / 255.0f, 0.0f / 255.0f, 1.0f };
-            const ImVec4 colorGray      { 150.0f / 255.0f, 150.0f / 255.0f, 150.0f / 255.0f, 1.0f };
-            const ImVec4 colorGrayDark  { 80.0f / 255.0f, 80.0f / 255.0f, 80.0f / 255.0f, 1.0f };
-
             GuiMenuInventoryVars vars{
                 squad.inventory().roster().newItems(),
                 item,
-                selected,
+                pItem,
                 showGuiNotImplemented,
                 showGuiRemoveItem,
                 showGuiModifyItem
             };
-            guiItemList(vars, colorYellowDark, colorYellow, colorTurquoise, colorTurquoise);
+            guiItemList(vars, color::yellowDark, color::yellow, color::turquoise, color::turquoise);
 
             vars.items_ = squad.inventory().roster().oldItems();
-            guiItemList(vars, colorGrayDark, colorGray, colorTurquoise, colorTurquoise);
+            guiItemList(vars, color::grayDark, color::gray, color::turquoise, color::turquoise);
 
             ImGui::EndChild();
         }
 
         ImGui::SameLine();
-        if (ImGui::BeginChild("ItemDescription", columnSize, true)) {
-            if (selected != nullptr) {
-                ItemVisitorFullDescription vis;
-                selected->accept(vis);
-                ImGui::PushTextWrapPos();
-                ImGui::TextUnformatted(vis.getFullDescription().c_str());
-                ImGui::PopTextWrapPos();
-            }
-            ImGui::EndChild();
-        }
+        guiItemFullDescription(pItem, columnSize, true);
 
-        ImGui::NewLine();
+        ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() });
         if (ImGui::Button(comT.exitMenu().c_str())) {
-            selected = nullptr;
+            pItem = nullptr;
             *open = false;
         }
 
@@ -174,20 +160,19 @@ void guiItemList(GuiMenuInventoryVars& vars,
     ImGui::PushStyleColor(ImGuiCol_Button, colorButton);
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorButtonHovered);
     ImGui::PushStyleColor(ImGuiCol_ButtonActive, colorButtonActive);
-    for (auto iter{ vars.items_.beg_ }; iter != vars.items_.end_; ++iter)
-    {
-        const Item* item{ iter.getConst()->get() };
+    for (auto iter{ vars.items_.beg_ }; iter != vars.items_.end_; ++iter) {
+        Item* item{ iter.get()->get() };
         ImGui::PushID(item);
 
-        static bool popStyleColor{ false };
-        if (vars.selected_ == item) {
+        bool popStyleColor{ false };
+        if (vars.pItem_ == item) {
             popStyleColor = true;
             ImGui::PushStyleColor(ImGuiCol_Button, colorButtonSelected);
         }
         auto textSize{ ImGui::CalcTextSize(item->name().c_str()) };
         ImVec2 buttonSize{ textSize.x + buttonPaddingX2.x, buttonHeight };
         if (ImGui::Button(item->name().c_str(), buttonSize)) {
-            vars.selected_ = item;
+            vars.pItem_ = item;
         }
         if (ImGui::BeginPopupContextItem("ContextMenu")) {
             if (ImGui::Selectable(comT.remove().c_str())) {
@@ -234,7 +219,8 @@ void guiContextSensetiveMenuItem(GuiMenuInventoryVars& vars, object::InventoryIt
             vars.showGuiNotImplemented_ = true;
         }
         if (ImGui::Selectable(text.modify().c_str())) {
-            vars.showGuiNotImplemented_ = true;
+            vars.showGuiModifyItem_ = true;
+            vars.pItem_ = item.get()->get();
         }
         break;
     }
@@ -242,6 +228,23 @@ void guiContextSensetiveMenuItem(GuiMenuInventoryVars& vars, object::InventoryIt
     case object::Item::Type::AMMO:
     default:
         break;
+    }
+}
+
+void guiItemFullDescription(const object::Item* item,
+                            const ImVec2& size,
+                            bool border,
+                            ImGuiWindowFlags flags)
+{
+    if (ImGui::BeginChild("ItemFullDescription", size, border, flags)) {
+        if (item != nullptr) {
+            ItemVisitorFullDescription vis;
+            item->accept(vis);
+            ImGui::PushTextWrapPos();
+            ImGui::TextUnformatted(vis.getFullDescription().c_str());
+            ImGui::PopTextWrapPos();
+        }
+        ImGui::EndChild();
     }
 }
 
