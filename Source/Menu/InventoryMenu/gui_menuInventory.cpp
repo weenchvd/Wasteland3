@@ -11,6 +11,7 @@
 #include"itemVisitorFullDescr.hpp"
 #include"itemVisitorType.hpp"
 #include"menuCommonText.hpp"
+#include"menuInventory.hpp"
 #include"menuInventoryText.hpp"
 #include"menuItemText.hpp"
 #include<sstream>
@@ -87,19 +88,86 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
 
         if (ImGui::BeginChild("ItemList", columnSize, true, ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
-            GuiMenuInventoryVars vars{
-                squad.inventory().roster().newItems(),
-                item,
-                pItem,
-                showGuiNotImplemented,
-                showGuiRemoveItem,
-                showGuiModifyItem
-            };
-            guiItemList(vars, color::yellowDark, color::yellow, color::turquoise, color::turquoise);
+            static LastItemType lastType{ LastItemType::ALL };
+            if (ImGui::BeginTabBar("ItemType")) {
+                if (ImGui::BeginTabItem(comT.all().c_str())) {
+                    if (lastType != LastItemType::ALL) {
+                        pItem = nullptr;
+                    }
+                    lastType = LastItemType::ALL;
+                    GuiMenuInventoryVars vars{
+                        squad.inventory().roster().newItems(),
+                        item,
+                        pItem,
+                        showGuiNotImplemented,
+                        showGuiRemoveItem,
+                        showGuiModifyItem
+                    };
+                    guiItemList(vars, color::yellowDark, color::yellow,
+                        color::turquoise, color::turquoise);
 
-            vars.items_ = squad.inventory().roster().oldItems();
-            guiItemList(vars, color::grayDark, color::gray, color::turquoise, color::turquoise);
+                    vars.items_ = squad.inventory().roster().oldItems();
+                    guiItemList(vars, color::grayDark, color::gray,
+                        color::turquoise, color::turquoise);
 
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::WEAPON).c_str())) {
+                    if (lastType != LastItemType::WEAPON) {
+                        pItem = nullptr;
+                    }
+                    lastType = LastItemType::WEAPON;
+                    GuiMenuInventoryVars vars{
+                        squad.inventory().roster(Item::Type::WEAPON).oldItems(),
+                        item,
+                        pItem,
+                        showGuiNotImplemented,
+                        showGuiRemoveItem,
+                        showGuiModifyItem
+                    };
+                    guiItemList(vars, color::grayDark, color::gray,
+                        color::turquoise, color::turquoise);
+
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::WEAPON_MOD).c_str())) {
+                    if (lastType != LastItemType::WEAPON_MOD) {
+                        pItem = nullptr;
+                    }
+                    lastType = LastItemType::WEAPON_MOD;
+                    GuiMenuInventoryVars vars{
+                        squad.inventory().roster(Item::Type::WEAPON_MOD).oldItems(),
+                        item,
+                        pItem,
+                        showGuiNotImplemented,
+                        showGuiRemoveItem,
+                        showGuiModifyItem
+                    };
+                    guiItemList(vars, color::grayDark, color::gray,
+                        color::turquoise, color::turquoise);
+
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::AMMO).c_str())) {
+                    if (lastType != LastItemType::AMMO) {
+                        pItem = nullptr;
+                    }
+                    lastType = LastItemType::AMMO;
+                    GuiMenuInventoryVars vars{
+                        squad.inventory().roster(Item::Type::AMMO).oldItems(),
+                        item,
+                        pItem,
+                        showGuiNotImplemented,
+                        showGuiRemoveItem,
+                        showGuiModifyItem
+                    };
+                    guiItemList(vars, color::grayDark, color::gray,
+                        color::turquoise, color::turquoise);
+
+                    ImGui::EndTabItem();
+                }
+                ImGui::EndTabBar();
+            }
             ImGui::EndChild();
         }
 
@@ -108,6 +176,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
 
         ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() });
         if (ImGui::Button(comT.exitMenu().c_str())) {
+            squad.inventory().viewedAll();
             pItem = nullptr;
             *open = false;
         }

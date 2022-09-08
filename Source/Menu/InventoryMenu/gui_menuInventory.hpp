@@ -13,6 +13,13 @@
 namespace game {
 namespace menu {
 
+enum class LastItemType : char {
+    ALL,
+    WEAPON,
+    WEAPON_MOD,
+    AMMO
+};
+
 struct GuiMenuInventoryVars {
     object::Roster::ItemRange           items_;
     object::InventoryIterator&          item_;

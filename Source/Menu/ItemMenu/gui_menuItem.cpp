@@ -15,6 +15,7 @@
 #include"menuItemText.hpp"
 #include"weapon.hpp"
 #include"weaponMod.hpp"
+#include<sstream>
 
 namespace game {
 namespace menu {
@@ -129,43 +130,47 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                     }
                     ImGui::PopID();
                 }
-                ImGui::NewLine();
-                ImGui::TextUnformatted(visWeaponChar.damageAndDamageType().c_str());
+
+                ostringstream oss;
+                oss << visWeaponChar.damageAndDamageType() << endl;
                 const auto& dmgDescr{ visWeaponChar.damageDescription() };
                 if (dmgDescr.size() > 0) {
-                    ImGui::TextUnformatted(dmgDescr.c_str());
+                    oss << dmgDescr;
                 }
-                ImGui::TextUnformatted(visWeaponChar.attackDescription().c_str());
-                ImGui::TextUnformatted(visWeaponChar.actionPoints().c_str());
-                ImGui::TextUnformatted(visWeaponChar.actionPointsReload().c_str());
+                oss << visWeaponChar.attackDescription()
+                    << visWeaponChar.actionPoints() << endl
+                    << visWeaponChar.actionPointsReload() << endl;
                 const auto& ammoCap{ visWeaponChar.ammoCapacity() };
                 if (ammoCap.size() > 0) {
-                    ImGui::TextUnformatted(ammoCap.c_str());
+                    oss << ammoCap << endl;
                 }
                 const auto& ammoType{ visWeaponChar.ammoType() };
                 if (ammoType.size() > 0) {
-                    ImGui::TextUnformatted(ammoType.c_str());
+                    oss << ammoType << endl;
                 }
                 const auto& bonSneakAtt{ visWeaponChar.bonusSneakAttackDamage() };
                 if (bonSneakAtt.size() > 0) {
-                    ImGui::TextUnformatted(bonSneakAtt.c_str());
+                    oss << bonSneakAtt << endl;
                 }
                 const auto& bonNormalDmg{ visWeaponChar.bonusNormalDamage() };
                 if (bonNormalDmg.size() > 0) {
-                    ImGui::TextUnformatted(bonNormalDmg.c_str());
+                    oss << bonNormalDmg << endl;
                 }
                 const auto& bonMeleeDmg{ visWeaponChar.bonusMeleeDamage() };
                 if (bonMeleeDmg.size() > 0) {
-                    ImGui::TextUnformatted(bonMeleeDmg.c_str());
+                    oss << bonMeleeDmg << endl;
                 }
                 const auto& bonRangedDmg{ visWeaponChar.bonusRangedDamage() };
                 if (bonRangedDmg.size() > 0) {
-                    ImGui::TextUnformatted(bonRangedDmg.c_str());
+                    oss << bonRangedDmg << endl;
                 }
-                ImGui::TextUnformatted(visWeaponChar.hitChance().c_str());
-                ImGui::TextUnformatted(visWeaponChar.critDamage().c_str());
-                ImGui::TextUnformatted(visWeaponChar.critChance().c_str());
-                ImGui::TextUnformatted(visWeaponChar.penetration().c_str());
+                oss << visWeaponChar.hitChance() << endl
+                    << visWeaponChar.critDamage() << endl
+                    << visWeaponChar.critChance() << endl
+                    << visWeaponChar.penetration();
+
+                ImGui::NewLine();
+                ImGui::TextUnformatted(oss.str().c_str());
 
                 ImGui::EndChild();
             }

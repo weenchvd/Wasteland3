@@ -66,6 +66,8 @@ public:
 
     const text_t& description() const noexcept { return description_[li()]; }
 
+    const text_t& all() const noexcept { return all_[li()]; }
+
     const text_t& promptSymbol() const noexcept { return promptSymbol_[li()]; }
 
     const text_t& errorSymbol() const noexcept { return errorSymbol_[li()]; }
@@ -103,6 +105,7 @@ private:
     language_bundle_t close_;
     language_bundle_t back_;
     language_bundle_t description_;
+    language_bundle_t all_;
     language_bundle_t promptSymbol_;
     language_bundle_t errorSymbol_;
     language_bundle_t notImplemented_;
