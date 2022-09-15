@@ -34,6 +34,8 @@ public:
 
     const text_t& member() const noexcept { return member_[li()]; }
 
+    const text_t& character() const noexcept { return character_[li()]; }
+
     const text_t& emptySlot() const noexcept { return emptySlot_[li()]; }
 
     const text_t& selectCharacter() const noexcept { return selectCharacter_[li()]; }
@@ -41,6 +43,7 @@ public:
 private:
     language_bundle_t squad_;
     language_bundle_t member_;
+    language_bundle_t character_;
     language_bundle_t emptySlot_;
     language_bundle_t selectCharacter_;
 };

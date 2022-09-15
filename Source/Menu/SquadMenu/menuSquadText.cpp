@@ -42,6 +42,10 @@ void MenuSquadText::initCommon()
     temp.ru(u8"Член");
     initLanguageBundleMenu(temp, common_.member_);
 
+    temp.en(u8"Character");
+    temp.ru(u8"Персонаж");
+    initLanguageBundleMenu(temp, common_.character_);
+
     temp.en(u8"empty slot");
     temp.ru(u8"пустой слот");
     initLanguageBundleMenu(temp, common_.emptySlot_);

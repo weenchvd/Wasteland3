@@ -38,6 +38,8 @@ void guiGetYesNo(bool* open,
                  const char* messageText,
                  YesNo& result);
 
+void helpMarker(const char* description);
+
 } // namespace menu
 } // namespace game
 

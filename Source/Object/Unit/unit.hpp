@@ -31,6 +31,8 @@ public:
 
     virtual Unit::Model unitModel() const noexcept = 0;
 
+    virtual const common::Text& name() const noexcept = 0;
+
     virtual void accept(UnitVisitor& visitor) noexcept {};
 
 ///********** serialization

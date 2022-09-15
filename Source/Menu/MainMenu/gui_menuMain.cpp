@@ -76,9 +76,8 @@ void guiMenuMain(bool* open,
         if (ImGui::Button(text.exit().c_str())) {
             *open = false;
         }
-
-        ImGui::End();
     }
+    ImGui::End();
 }
 
 void guiMenuSaveGame(bool* open,
@@ -209,9 +208,8 @@ void guiMenuSaveGame(bool* open,
         }
 
         guiPopupMessage(&showMessage, u8"##Message", message.c_str());
-
-        ImGui::End();
     }
+    ImGui::End();
 }
 
 void guiMenuLoadGame(bool* open,
@@ -310,9 +308,8 @@ void guiMenuLoadGame(bool* open,
         }
 
         guiPopupMessage(&showMessage, u8"##Message", message.c_str());
-
-        ImGui::End();
     }
+    ImGui::End();
 }
 
 } // namespace menu

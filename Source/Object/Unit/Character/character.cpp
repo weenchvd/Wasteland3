@@ -215,7 +215,7 @@ bool Character::hasValidValues() const noexcept
     return true;
 }
 
-common::Text Character::name() const noexcept
+const common::Text& Character::name() const noexcept
 {
     switch (base_.type_) {
     case Character::Type::RANGER:   return enteredName_;

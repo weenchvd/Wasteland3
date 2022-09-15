@@ -27,6 +27,13 @@ enum class Item__Type : char {
     __END                           /// must be the last
 };
 
+///************************************************************************************************
+
+// @brief Check if the types are compatible.
+// @param "id1" - must be a type;
+// @param "id2" - must be a type;
+bool isCompatible(Item__Type id1, Item__Type id2);
+
 } // namespace object
 } // namespace game
 

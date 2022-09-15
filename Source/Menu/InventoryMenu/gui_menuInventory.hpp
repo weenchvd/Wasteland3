@@ -13,6 +13,12 @@
 namespace game {
 namespace menu {
 
+enum class ActiveSubmenu : char {
+    INVENTORY,
+    ATTRIBUTES,
+    SKILLS
+};
+
 enum class LastItemType : char {
     ALL,
     WEAPON,
@@ -21,12 +27,15 @@ enum class LastItemType : char {
 };
 
 struct GuiMenuInventoryVars {
-    object::Roster::ItemRange           items_;
-    object::InventoryIterator&          item_;
+    object::Squad&                      squad_;
+    object::Roster::ItemRange           itemRange_;
+    object::InventoryIterator&          iItem_;
     object::Item*&                      pItem_;
-    bool&                               showGuiNotImplemented_;
+    object::Character*&                 pChar_;
+    int&                                integer_;
     bool&                               showGuiRemoveItem_;
     bool&                               showGuiModifyItem_;
+    bool&                               showGuiEquipItem_;
 };
 
 ///************************************************************************************************

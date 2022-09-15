@@ -52,6 +52,14 @@ void MenuInventoryText::initCommon()
     temp.ru(u8"Показать предметы определенного типа");
     initLanguageBundleMenu(temp, common_.showItemsOfType_);
 
+    temp.en(u8"Show stats");
+    temp.ru(u8"Показать статистику");
+    initLanguageBundleMenu(temp, common_.showStats_);
+
+    temp.en(u8"Hide stats");
+    temp.ru(u8"Скрыть статистику");
+    initLanguageBundleMenu(temp, common_.hideStats_);
+
     temp.en(u8"Enter the item menu");
     temp.ru(u8"Войти в меню предмета");
     initLanguageBundleMenu(temp, common_.enterItem_);

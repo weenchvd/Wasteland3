@@ -75,16 +75,16 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                     ImGui::PushID(slot.get());
                     ImGui::TextUnformatted(wmodT.type(slots.type(i)).c_str());
 
-                    bool popStyleColor{ false };
+                    bool setColorButton{ false };
                     if (selected) {
                         if (selected == slot.get()) {
-                            popStyleColor = true;
+                            setColorButton = true;
                             ImGui::PushStyleColor(ImGuiCol_Button, color::turquoise);
                         }
                         else if (object::isCompatible(weapon.slotMod().type(i),
                             static_cast<const WeaponMod*>(selected)->type()))
                         {
-                            popStyleColor = true;
+                            setColorButton = true;
                             ImGui::PushStyleColor(ImGuiCol_Button, color::green);
                         }
                     }
@@ -106,7 +106,7 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                     else {
                         ImGui::Button("##EmptySlot", buttonSize);
                     }
-                    if (popStyleColor) {
+                    if (setColorButton) {
                         ImGui::PopStyleColor();
                     }
                     if (ImGui::BeginDragDropTarget()) {
@@ -171,9 +171,8 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
 
                 ImGui::NewLine();
                 ImGui::TextUnformatted(oss.str().c_str());
-
-                ImGui::EndChild();
             }
+            ImGui::EndChild();
 
             ImGui::SameLine();
             if (ImGui::BeginChild("WeaponMods", columnSize, true)) {
@@ -192,9 +191,8 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                     Item* mod{ iter.get()->get() };
                     ImGui::PushID(mod);
 
-                    bool popStyleColor{ false };
-                    if (selected == mod) {
-                        popStyleColor = true;
+                    bool setColorButton{ selected == mod ? true : false };
+                    if (setColorButton) {
                         ImGui::PushStyleColor(ImGuiCol_Button, color::turquoise);
                     }
                     auto textSize{ ImGui::CalcTextSize(mod->name().c_str()) };
@@ -208,8 +206,7 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                         ImGui::TextUnformatted(mod->name().c_str());
                         ImGui::EndDragDropSource();
                     }
-                    if (popStyleColor) {
-                        popStyleColor = false;
+                    if (setColorButton) {
                         ImGui::PopStyleColor();
                     }
 
@@ -229,9 +226,8 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
 
                     ImGui::PopID();
                 }
-
-                ImGui::EndChild();
             }
+            ImGui::EndChild();
 
             ImGui::SameLine();
             guiItemFullDescription(selected, columnSize, true);
@@ -249,9 +245,8 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
             selected = nullptr;
             *open = false;
         }
-
-        ImGui::End();
     }
+    ImGui::End();
 }
 
 ///************************************************************************************************

@@ -104,6 +104,10 @@ void MenuCommonText::initCommon()
     temp.ru(u8"Все");
     initLanguageBundleMenu(temp, common_.all_);
 
+    temp.en(u8"Slot");
+    temp.ru(u8"Слот");
+    initLanguageBundleMenu(temp, common_.slot_);
+
     temp.en(u8"> ");
     temp.ru(u8"> ");
     initLanguageBundleMenu(temp, common_.promptSymbol_);

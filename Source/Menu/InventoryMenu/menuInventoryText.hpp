@@ -40,6 +40,10 @@ public:
 
     const text_t& showItemsOfType() const noexcept { return showItemsOfType_[li()]; }
 
+    const text_t& showStats() const noexcept { return showStats_[li()]; }
+
+    const text_t& hideStats() const noexcept { return hideStats_[li()]; }
+
     const text_t& enterItemMenu() const noexcept { return enterItem_[li()]; }
 
     const text_t& markAllAsViewed() const noexcept { return markAllAsViewed_[li()]; }
@@ -68,6 +72,8 @@ private:
     language_bundle_t showItems_;
     language_bundle_t showAllItems_;
     language_bundle_t showItemsOfType_;
+    language_bundle_t showStats_;
+    language_bundle_t hideStats_;
     language_bundle_t enterItem_;
     language_bundle_t markAllAsViewed_;
     language_bundle_t money_;

@@ -84,7 +84,7 @@ public:
         return base_.type_;
     }
 
-    common::Text name() const noexcept;
+    virtual const common::Text& name() const noexcept override;
     void name(common::Text name) noexcept { enteredName_ = name; }
 
     common::Time timeDetection() const noexcept { return timeDetect_; }

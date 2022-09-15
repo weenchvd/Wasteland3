@@ -38,6 +38,8 @@ public:
 
     const text_t& equip() const noexcept { return equip_[li()]; }
 
+    const text_t& unequip() const noexcept { return unequip_[li()]; }
+
     const text_t& modify() const noexcept { return modify_[li()]; }
 
 private:
@@ -45,6 +47,7 @@ private:
     language_bundle_t showFullDescr_;
     language_bundle_t questionDelete_;
     language_bundle_t equip_;
+    language_bundle_t unequip_;
     language_bundle_t modify_;
 };
 

@@ -50,6 +50,10 @@ void MenuItemText::initCommon()
     temp.ru(u8"Экипировать");
     initLanguageBundleMenu(temp, common_.equip_);
 
+    temp.en(u8"Unequip");
+    temp.ru(u8"Снять");
+    initLanguageBundleMenu(temp, common_.unequip_);
+
     temp.en(u8"Modify");
     temp.ru(u8"Модифицировать");
     initLanguageBundleMenu(temp, common_.modify_);
