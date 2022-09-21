@@ -7,6 +7,7 @@
 #ifndef GUI_MENU_INVENTORY_HPP
 #define GUI_MENU_INVENTORY_HPP
 
+#include"common.hpp"
 #include"imgui.h"
 #include"squad.hpp"
 
@@ -60,6 +61,15 @@ void guiItemFullDescription(const object::Item* item,
                             const ImVec2& size,
                             bool border,
                             ImGuiWindowFlags flags = ImGuiWindowFlags_None);
+
+void guiShowStats(object::Character& ch,
+                  const char ph,
+                  const float tw);
+
+void guiPrintText(const common::Text& left,
+                  const common::Text& right,
+                  const char placeholder,
+                  const float totalWidth);
 
 } // namespace menu
 } // namespace game

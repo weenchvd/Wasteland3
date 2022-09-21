@@ -29,9 +29,19 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
     using game::object::Weapon;
     using game::object::WeaponMod;
 
-    const auto& comT{ MenuCommonText::common() };
-    const auto& text{ MenuItemText::modify() };
-    const auto& wmodT{ WeaponMod::weaponModText() };
+    const auto& comT    { MenuCommonText::common() };
+    const auto& text    { MenuItemText::modify() };
+    const auto& wmodT   { WeaponMod::weaponModText() };
+
+    const ImVec4 colItem            { color::grayDark };
+    const ImVec4 colItemHovered     { color::gray };
+    const ImVec4 colItemActive      { color::turquoise };
+    const ImVec4 colItemSelected    { color::turquoise };
+    const ImVec4 colSlot            { color::grayDark };
+    const ImVec4 colSlotHovered     { color::gray };
+    const ImVec4 colSlotActive      { color::turquoise };
+    const ImVec4 colSlotSelected    { color::turquoise };
+    const ImVec4 colSlotCompatible  { color::green };
 
     static const Item* selected{ nullptr };
 
@@ -47,9 +57,6 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
             contentRegionSize.x / 3.0f - style.ItemSpacing.x,
             contentRegionSize.y - style.ItemSpacing.y - ImGui::GetFrameHeightWithSpacing() * 3.0f
         };
-        ImGui::PushStyleColor(ImGuiCol_Button, color::grayDark);
-        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, color::gray);
-        ImGui::PushStyleColor(ImGuiCol_ButtonActive, color::turquoise);
 
         object::ItemVisitorType vis;
         item.accept(vis);
@@ -61,7 +68,11 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
             ItemVisitorWeaponCharacteristics visWeaponChar;
             weapon.accept(visWeaponChar);
 
+            ///********** Weapon window
             if (ImGui::BeginChild("WeaponModification", columnSize, true)) {
+                ImGui::PushStyleColor(ImGuiCol_Button, colSlot);
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colSlotHovered);
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, colSlotActive);
                 ImVec2 buttonSize{
                     columnSize.x - style.ItemSpacing.x * 2.0f,
                     0.0f
@@ -79,13 +90,13 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
                     if (selected) {
                         if (selected == slot.get()) {
                             setColorButton = true;
-                            ImGui::PushStyleColor(ImGuiCol_Button, color::turquoise);
+                            ImGui::PushStyleColor(ImGuiCol_Button, colSlotSelected);
                         }
                         else if (object::isCompatible(weapon.slotMod().type(i),
                             static_cast<const WeaponMod*>(selected)->type()))
                         {
                             setColorButton = true;
-                            ImGui::PushStyleColor(ImGuiCol_Button, color::green);
+                            ImGui::PushStyleColor(ImGuiCol_Button, colSlotCompatible);
                         }
                     }
                     if (slot != nullptr) {
@@ -171,12 +182,18 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
 
                 ImGui::NewLine();
                 ImGui::TextUnformatted(oss.str().c_str());
+
+                ImGui::PopStyleColor(3);
             }
             ImGui::EndChild();
 
+            ///********** Weapon mods window
             ImGui::SameLine();
             if (ImGui::BeginChild("WeaponMods", columnSize, true)) {
                 squad.inventory().viewedAll();
+                ImGui::PushStyleColor(ImGuiCol_Button, colItem);
+                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colItemHovered);
+                ImGui::PushStyleColor(ImGuiCol_ButtonActive, colItemActive);
                 object::Roster weaponMods{ squad.inventory().roster(Item::Type::WEAPON_MOD) };
                 for (auto iter{ weaponMods.oldItems().beg_};
                     iter != weaponMods.oldItems().end_;
@@ -193,7 +210,7 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
 
                     bool setColorButton{ selected == mod ? true : false };
                     if (setColorButton) {
-                        ImGui::PushStyleColor(ImGuiCol_Button, color::turquoise);
+                        ImGui::PushStyleColor(ImGuiCol_Button, colItemSelected);
                     }
                     auto textSize{ ImGui::CalcTextSize(mod->name().c_str()) };
                     ImVec2 buttonSize{ textSize.x + buttonPaddingX2.x, buttonHeight };
@@ -226,9 +243,11 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
 
                     ImGui::PopID();
                 }
+                ImGui::PopStyleColor(3);
             }
             ImGui::EndChild();
 
+            ///********** Description window
             ImGui::SameLine();
             guiItemFullDescription(selected, columnSize, true);
 
@@ -238,7 +257,6 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
             assert(true);
             break;
         }
-        ImGui::PopStyleColor(3);
 
         ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() });
         if (ImGui::Button(comT.exitMenu().c_str())) {

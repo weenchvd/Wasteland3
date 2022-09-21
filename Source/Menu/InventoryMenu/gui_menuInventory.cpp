@@ -5,6 +5,7 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"character.hpp"
+#include"characterText.hpp"
 #include"gui_menuCommon.hpp"
 #include"gui_menuInventory.hpp"
 #include"gui_menuItem.hpp"
@@ -115,7 +116,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
             contentRegionSize.y - style.ItemSpacing.y - ImGui::GetFrameHeightWithSpacing() * 9.0f
         };
 
-        ///********** SubMenus
+        ///********** Submenus
         static ActiveSubmenu activeSM{ ActiveSubmenu::INVENTORY };
         ImGuiTableFlags_ tableSubMenusFlags{ static_cast<ImGuiTableFlags_>(
             ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame
@@ -168,7 +169,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
         ImGui::PopStyleVar();
 
-        ///********** SquadMembers
+        ///********** Squad members
         ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted(squadT.squad().c_str());
 
@@ -255,9 +256,22 @@ void guiMenuInventory(bool* open, object::Squad& squad)
                 ImGui::PushStyleColor(ImGuiCol_ButtonActive, colSlotActive);
 
                 ImGui::TextUnformatted(pChar->name().c_str());
+                ostringstream oss;
+                oss << object::CharacterText::common().level() << sign::space << pChar->level()
+                    << sign::space << pChar->characterText().type(pChar->type());
+                ImGui::TextUnformatted(oss.str().c_str());
                 ImGui::NewLine();
                 if (showStats) {
-
+                    ///ImGui::PushStyleVar();
+                    for (int i = 0; i < pChar->slotWeapon().size(); ++i) {
+                        if (pChar->slotWeapon()[i].get() == pItem) {
+                            pItem = nullptr;
+                            break;
+                        }
+                    }
+                    int totalWidth =
+                        columnSize.x - style.WindowPadding.x * 2.0f - style.ScrollbarSize;
+                    guiShowStats(*pChar, sign::dot, totalWidth);
                 }
                 else {
                     ImVec2 buttonSize{
@@ -292,6 +306,10 @@ void guiMenuInventory(bool* open, object::Squad& squad)
                                     if (oldMod != nullptr) {
                                         squad.inventory().insert(oldMod);
                                     }
+                                }
+                                if (ImGui::Selectable(itemT.modify().c_str())) {
+                                    showGuiModifyItem = true;
+                                    pItem = slot.get();
                                 }
                                 ImGui::EndPopup();
                             }
@@ -359,7 +377,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
         ImGui::EndChild();
 
-        ///********** ItemList
+        ///********** Item list
         ImGui::SameLine();
         if (ImGui::BeginChild("ItemList", columnSize, true, ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
             static LastItemType lastType{ LastItemType::ALL };
@@ -416,7 +434,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
         ImGui::EndChild();
 
-        ///********** ItemFullDescription
+        ///********** Full item description
         ImGui::SameLine();
         guiItemFullDescription(pItem, columnSize, true);
 
@@ -426,6 +444,7 @@ void guiMenuInventory(bool* open, object::Squad& squad)
             squad.inventory().viewedAll();
             pItem = nullptr;
             pChar = nullptr;
+            showStats = false;
             *open = false;
         }
 
@@ -506,11 +525,11 @@ void guiItemList(GuiMenuInventoryVars& vars,
             vars.pItem_ = pItem;
         }
         if (ImGui::BeginPopupContextItem("ContextMenu")) {
+            guiContextSensetiveMenuItem(vars, iter);
             if (ImGui::Selectable(comT.remove().c_str())) {
                 vars.showGuiRemoveItem_ = true;
                 vars.iItem_ = iter;
             }
-            guiContextSensetiveMenuItem(vars, iter);
             ImGui::EndPopup();
         }
         if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
@@ -593,6 +612,111 @@ void guiItemFullDescription(const object::Item* pItem,
         }
     }
     ImGui::EndChild();
+}
+
+// @param "ph" - placeholder;
+// @param "tw" - total width;
+void guiShowStats(object::Character& ch,
+                  const char ph,
+                  const float tw)
+{
+    const auto& tCom{ object::CharacterText::common() };
+    const auto& tSta{ object::CharacterText::stats() };
+
+    constexpr auto sp{ sign::space };
+    constexpr auto pc{ sign::percent };
+    constexpr auto x { sign::x };
+
+    ImGui::TextUnformatted(tCom.stats().c_str());
+    ostringstream oss;
+    clearStream(oss) << ch.constitutionCurrent() << sign::slash << ch.constitutionMaximum();
+    guiPrintText(tSta.con(), oss.str(), ph, tw);
+    clearStream(oss) << ch.experience();
+    guiPrintText(tCom.xp(), oss.str(), ph, tw);
+    clearStream(oss) << ch.constitutionPerLevel();
+    guiPrintText(tSta.conPerLevel(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusHealing() << pc;
+    guiPrintText(tSta.healingBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.actionPointMaximum();
+    guiPrintText(tSta.actionPoints(), oss.str(), ph, tw);
+    clearStream(oss) << ch.chanceHit() << pc;
+    guiPrintText(tSta.hitChance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.chanceCritDamage() << pc;
+    guiPrintText(tSta.critChance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.multiplierCritDamage() << x;
+    guiPrintText(tSta.critDmg(), oss.str(), ph, tw);
+    clearStream(oss) << ch.armorPenetration();
+    guiPrintText(tSta.penetration(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusSneakAttackDamage() << pc;
+    guiPrintText(tSta.sneakAttackDmg(), oss.str(), ph, tw);
+    clearStream(oss) << ch.strikeRate() << pc;
+    guiPrintText(tSta.strikeRate(), oss.str(), ph, tw);
+    clearStream(oss) << ch.armor();
+    guiPrintText(tSta.armor(), oss.str(), ph, tw);
+    clearStream(oss) << ch.evasion() << pc;
+    guiPrintText(tSta.evasion(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceCritDamage() << pc;
+    guiPrintText(tSta.critResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceFireDamage() << pc;
+    guiPrintText(tSta.fireResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceColdDamage() << pc;
+    guiPrintText(tSta.coldResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceEnergyDamage() << pc;
+    guiPrintText(tSta.energyResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceExplosiveDamage() << pc;
+    guiPrintText(tSta.explosiveResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.resistanceStatusEffect() << pc;
+    guiPrintText(tSta.statusEffectResistance(), oss.str(), ph, tw);
+    clearStream(oss) << tCom.level() << sp << ch.radiationResistance();
+    guiPrintText(tSta.radiationResistance(), oss.str(), ph, tw);
+    clearStream(oss) << ch.downedTime();
+    guiPrintText(tSta.downedTime(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusMeleeDamage() << pc;
+    guiPrintText(tSta.meleeDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusRangedDamage() << pc;
+    guiPrintText(tSta.rangedDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusNormalDamage() << pc;
+    guiPrintText(tSta.normalDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusFireDamage() << pc;
+    guiPrintText(tSta.fireDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusColdDamage() << pc;
+    guiPrintText(tSta.coldDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusEnergyDamage() << pc;
+    guiPrintText(tSta.energyDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.bonusExplosiveDamage() << pc;
+    guiPrintText(tSta.explosiveDmgBonus(), oss.str(), ph, tw);
+    clearStream(oss) << ch.perception();
+    guiPrintText(tSta.perception(), oss.str(), ph, tw);
+    clearStream(oss) << ch.multiplierThrowingRange() << x;
+    guiPrintText(tSta.throwingRange(), oss.str(), ph, tw);
+    clearStream(oss) << ch.initiative() << pc;
+    guiPrintText(tSta.initiative(), oss.str(), ph, tw);
+    clearStream(oss) << ch.timeDetection() << sp << tCom.sec();
+    guiPrintText(tSta.detectionTime(), oss.str(), ph, tw);
+    clearStream(oss) << ch.multiplierCombatSpeed() << x;
+    guiPrintText(tSta.combatSpeed(), oss.str(), ph, tw);
+    //clearStream(oss) << ch.();
+    //guiPrintText(tSta.quickSlots(), oss.str(), ph, tw);
+    clearStream(oss) << ch.rangeLeadership() << sp << tCom.m_meter();
+    guiPrintText(tSta.leadershipRange(), oss.str(), ph, tw);
+}
+
+void guiPrintText(const common::Text& left,
+                  const common::Text& right,
+                  const char placeholder,
+                  const float totalWidth)
+{
+    float textWidthLeft { ImGui::CalcTextSize(left.c_str()).x };
+    float textWidthRight{ ImGui::CalcTextSize(right.c_str()).x };
+    float textWidthPlaceholder{ totalWidth - textWidthLeft - textWidthRight };
+    common::Text phText{ sign::space };
+    phText += sign::space;
+    while (ImGui::CalcTextSize(phText.c_str()).x < textWidthPlaceholder) {
+        phText += placeholder;
+    }
+    swap(phText[1], phText[phText.size() - 1]);
+    common::Text fullText{ left + phText + right };
+    ImGui::TextUnformatted(fullText.c_str());
 }
 
 } // namespace menu
