@@ -40,6 +40,12 @@ void guiGetYesNo(bool* open,
 
 void helpMarker(const char* description);
 
+void fitButtonInWindowWidth(const char* buttonText);
+
+void fitButtonInWindowWidth(const char* buttonText,
+                            const float buttonTotalPaddingWidth,
+                            const float windowPosXRight);
+
 } // namespace menu
 } // namespace game
 

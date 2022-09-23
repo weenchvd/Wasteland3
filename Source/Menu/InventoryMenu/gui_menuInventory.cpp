@@ -379,58 +379,77 @@ void guiMenuInventory(bool* open, object::Squad& squad)
 
         ///********** Item list
         ImGui::SameLine();
-        if (ImGui::BeginChild("ItemList", columnSize, true, ImGuiWindowFlags_AlwaysVerticalScrollbar)) {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.0f, 0.0f });
+        ImGuiWindowFlags flags{ ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse };
+        if (ImGui::BeginChild("Inventory", columnSize, false, flags)) {
+            ImGui::PopStyleVar();
+            const float buttonTotalPaddingWidth{ style.FramePadding.x * 2 };
+            const float windowPosXRight{
+                ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x
+            };
             static LastItemType lastType{ LastItemType::ALL };
-            if (ImGui::BeginTabBar("ItemType")) {
-                if (ImGui::BeginTabItem(comT.all().c_str())) {
-                    if (lastType != LastItemType::ALL) {
-                        pItem = nullptr;
-                    }
-                    lastType = LastItemType::ALL;
+            static LastItemType curType{ LastItemType::ALL };
+            const char* buttonText{ nullptr };
+            buttonText = comT.all().c_str();
+            if (ImGui::Button(buttonText)) {
+                curType = LastItemType::ALL;
+            }
 
+            buttonText = getItemTypeName(Item::Type::WEAPON).c_str();
+            fitButtonInWindowWidth(buttonText, buttonTotalPaddingWidth, windowPosXRight);
+            if (ImGui::Button(buttonText)) {
+                curType = LastItemType::WEAPON;
+            }
+
+            buttonText = getItemTypeName(Item::Type::WEAPON_MOD).c_str();
+            fitButtonInWindowWidth(buttonText, buttonTotalPaddingWidth, windowPosXRight);
+            if (ImGui::Button(buttonText)) {
+                curType = LastItemType::WEAPON_MOD;
+            }
+
+            buttonText = getItemTypeName(Item::Type::AMMO).c_str();
+            fitButtonInWindowWidth(buttonText, buttonTotalPaddingWidth, windowPosXRight);
+            if (ImGui::Button(buttonText)) {
+                curType = LastItemType::AMMO;
+            }
+
+            ImGui::Separator();
+
+            if (ImGui::BeginChild("ItemList", ImVec2{ 0.0f, 0.0f }, false)) {
+                if (lastType != curType) {
+                    lastType = curType;
+                    pItem = nullptr;
+                }
+                switch (curType) {
+                case LastItemType::ALL: {
                     vars.itemRange_ = squad.inventory().roster().newItems();
                     guiItemList(vars, colItemNew, colItemHoveredNew, colItemActive, colItemSelected);
 
                     vars.itemRange_ = squad.inventory().roster().oldItems();
                     guiItemList(vars, colItem, colItemHovered, colItemActive, colItemSelected);
-
-                    ImGui::EndTabItem();
+                    break;
                 }
-                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::WEAPON).c_str())) {
-                    if (lastType != LastItemType::WEAPON) {
-                        pItem = nullptr;
-                    }
-                    lastType = LastItemType::WEAPON;
-
+                case LastItemType::WEAPON: {
                     vars.itemRange_ = squad.inventory().roster(Item::Type::WEAPON).oldItems();
                     guiItemList(vars, colItem, colItemHovered, colItemActive, colItemSelected);
-
-                    ImGui::EndTabItem();
+                    break;
                 }
-                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::WEAPON_MOD).c_str())) {
-                    if (lastType != LastItemType::WEAPON_MOD) {
-                        pItem = nullptr;
-                    }
-                    lastType = LastItemType::WEAPON_MOD;
-
+                case LastItemType::WEAPON_MOD: {
                     vars.itemRange_ = squad.inventory().roster(Item::Type::WEAPON_MOD).oldItems();
                     guiItemList(vars, colItem, colItemHovered, colItemActive, colItemSelected);
-
-                    ImGui::EndTabItem();
+                    break;
                 }
-                if (ImGui::BeginTabItem(getItemTypeName(Item::Type::AMMO).c_str())) {
-                    if (lastType != LastItemType::AMMO) {
-                        pItem = nullptr;
-                    }
-                    lastType = LastItemType::AMMO;
-
+                case LastItemType::AMMO: {
                     vars.itemRange_ = squad.inventory().roster(Item::Type::AMMO).oldItems();
                     guiItemList(vars, colItem, colItemHovered, colItemActive, colItemSelected);
-
-                    ImGui::EndTabItem();
+                    break;
                 }
-                ImGui::EndTabBar();
+                }
             }
+            ImGui::EndChild();
+        }
+        else {
+            ImGui::PopStyleVar();
         }
         ImGui::EndChild();
 
@@ -504,9 +523,9 @@ void guiItemList(GuiMenuInventoryVars& vars,
     const auto& comT{ MenuCommonText::common() };
 
     const ImGuiStyle& style{ ImGui::GetStyle() };
-    const ImVec2 buttonPaddingX2{ style.FramePadding.x * 2, style.FramePadding.y * 2 };
-    const auto buttonHeight{ ImGui::GetFrameHeight() };
-    const auto windowVisibleX{ ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x };
+    const float buttonTotalPaddingWidth{ style.FramePadding.x * 2 };
+    const float buttonHeight{ ImGui::GetFrameHeight() };
+    const float windowPosXRight{ ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x };
 
     ImGui::PushStyleColor(ImGuiCol_Button, colorItem);
     ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colorItemHovered);
@@ -520,7 +539,7 @@ void guiItemList(GuiMenuInventoryVars& vars,
             ImGui::PushStyleColor(ImGuiCol_Button, colorItemSelected);
         }
         auto textSize{ ImGui::CalcTextSize(pItem->name().c_str()) };
-        ImVec2 buttonSize{ textSize.x + buttonPaddingX2.x, buttonHeight };
+        ImVec2 buttonSize{ textSize.x + buttonTotalPaddingWidth, buttonHeight };
         if (ImGui::Button(pItem->name().c_str(), buttonSize)) {
             vars.pItem_ = pItem;
         }
@@ -544,16 +563,8 @@ void guiItemList(GuiMenuInventoryVars& vars,
 
         auto iterNext{ iter };
         if (++iterNext != vars.itemRange_.end_) {
-            const auto textSize{
-                ImGui::CalcTextSize(iterNext.getConst()->get()->name().c_str())
-            };
-            const auto buttonWidth{ textSize.x + buttonPaddingX2.x };
-            const auto buttonEndPosX{
-                ImGui::GetItemRectMax().x + style.ItemSpacing.x + buttonWidth
-            };
-            if (buttonEndPosX < windowVisibleX) {
-                ImGui::SameLine();
-            }
+            fitButtonInWindowWidth(iterNext.getConst()->get()->name().c_str(),
+                buttonTotalPaddingWidth, windowPosXRight);
         }
 
         ImGui::PopID();

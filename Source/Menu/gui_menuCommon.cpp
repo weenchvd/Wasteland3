@@ -135,5 +135,30 @@ void helpMarker(const char* description)
     }
 }
 
+void fitButtonInWindowWidth(const char* buttonText)
+{
+    const float buttonTotalPaddingWidth{ ImGui::GetStyle().FramePadding.x * 2 };
+    const float windowPosXRight{ ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x };
+    fitButtonInWindowWidth(buttonText, buttonTotalPaddingWidth, windowPosXRight);
+}
+
+void fitButtonInWindowWidth(const char* buttonText,
+                            const float buttonTotalPaddingWidth,
+                            const float windowPosXRight)
+{
+    assert(buttonText != nullptr);
+    if (buttonText == nullptr) {
+        return;
+    }
+    const float textWidth{ ImGui::CalcTextSize(buttonText).x };
+    const float buttonWidth{ textWidth + buttonTotalPaddingWidth };
+    const float buttonPosXRight{
+        ImGui::GetItemRectMax().x + ImGui::GetStyle().ItemSpacing.x + buttonWidth
+    };
+    if (buttonPosXRight < windowPosXRight) {
+        ImGui::SameLine();
+    }
+}
+
 } // namespace menu
 } // namespace game

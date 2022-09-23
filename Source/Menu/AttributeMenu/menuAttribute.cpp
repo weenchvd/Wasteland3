@@ -152,7 +152,7 @@ void showAllAttributes(
     const auto& text{ MenuAttributeText::common() };
 
     showAttPoints(is, os, character, ind0, accepted);
-    os << ind0 << (accepted ? text.attributesAccepted() : text.attributes()) << endl;
+    os << ind0 << (accepted ? text.attributesAccepted() : text.attributes()) << sign::colon << endl;
 
     unsigned int width{ 0 };
     for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
@@ -215,7 +215,7 @@ object::Attribute::Type pickAttribute(
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuAttributeText::common() };
 
-    os << ind0 << text.attributes() << endl;
+    os << ind0 << text.attributes() << sign::colon << endl;
     for (int i{ common::toUnderlying(common::firstEnum<object::Attribute::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Attribute::Type>()); ++i)
     {

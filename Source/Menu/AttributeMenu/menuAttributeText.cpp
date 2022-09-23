@@ -36,12 +36,12 @@ void MenuAttributeText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en(u8"Attributes:");
-    temp.ru(u8"Атрибуты:");
+    temp.en(u8"Attributes");
+    temp.ru(u8"Атрибуты");
     initLanguageBundleMenu(temp, common_.attributes_);
 
-    temp.en(u8"Attributes (accepted):");
-    temp.ru(u8"Атрибуты (принято):");
+    temp.en(u8"Attributes (accepted)");
+    temp.ru(u8"Атрибуты (принято)");
     initLanguageBundleMenu(temp, common_.attributesAccepted_);
 
     temp.en(u8"Attribute points:");
