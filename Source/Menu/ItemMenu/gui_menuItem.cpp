@@ -33,12 +33,12 @@ void guiMenuItemModify(bool* open, object::Squad& squad, object::Item& item)
     const auto& text    { MenuItemText::modify() };
     const auto& wmodT   { WeaponMod::weaponModText() };
 
-    const ImVec4 colItem            { color::grayDark };
-    const ImVec4 colItemHovered     { color::gray };
+    const ImVec4 colItem            { color::greyDark };
+    const ImVec4 colItemHovered     { color::grey };
     const ImVec4 colItemActive      { color::turquoise };
     const ImVec4 colItemSelected    { color::turquoise };
-    const ImVec4 colSlot            { color::grayDark };
-    const ImVec4 colSlotHovered     { color::gray };
+    const ImVec4 colSlot            { color::greyDark };
+    const ImVec4 colSlotHovered     { color::grey };
     const ImVec4 colSlotActive      { color::turquoise };
     const ImVec4 colSlotSelected    { color::turquoise };
     const ImVec4 colSlotCompatible  { color::green };

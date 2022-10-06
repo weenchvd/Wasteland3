@@ -7,7 +7,7 @@
 #include"flatbuffersAux.hpp"
 #include"gameFB_generated.h"
 #include"gui_menuCommon.hpp"
-#include"gui_menuInventory.hpp"
+#include"gui_menuGeneral.hpp"
 #include"gui_menuMain.hpp"
 #include"gui_menuOptions.hpp"
 #include"imgui.h"
@@ -32,12 +32,12 @@ void guiMenuMain(bool* open,
     const auto& text{ MenuMainText::common() };
 
     static bool showGuiMenuOption       { false };
-    static bool showGuiMenuInventory    { false };
+    static bool showGuiMenuGeneral      { false };
     static bool showGuiMenuSaveGame     { false };
     static bool showGuiMenuLoadGame     { false };
 
     if (showGuiMenuOption)              guiMenuOptions(&showGuiMenuOption);
-    if (showGuiMenuInventory)           guiMenuInventory(&showGuiMenuInventory, *squad);
+    if (showGuiMenuGeneral)             guiMenuGeneral(&showGuiMenuGeneral, *squad);
     if (showGuiMenuSaveGame)            guiMenuSaveGame(&showGuiMenuSaveGame, squad, shop);
     if (showGuiMenuLoadGame)            guiMenuLoadGame(&showGuiMenuLoadGame, squad, shop);
 
@@ -53,7 +53,7 @@ void guiMenuMain(bool* open,
         }
         s = string{ text.enterInventory().c_str() } + u8"###EnterInventory";
         if (ImGui::Button(s.c_str())) {
-            showGuiMenuInventory = true;
+            showGuiMenuGeneral = true;
         }
         if (ImGui::Button(text.enterTrade().c_str())) {
 

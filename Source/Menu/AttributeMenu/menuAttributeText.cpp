@@ -44,12 +44,12 @@ void MenuAttributeText::initCommon()
     temp.ru(u8"Атрибуты (принято)");
     initLanguageBundleMenu(temp, common_.attributesAccepted_);
 
-    temp.en(u8"Attribute points:");
-    temp.ru(u8"Очки атрибутов:");
+    temp.en(u8"Attribute points");
+    temp.ru(u8"Очки атрибутов");
     initLanguageBundleMenu(temp, common_.attrPoints_);
 
-    temp.en(u8"Attribute points (accepted):");
-    temp.ru(u8"Очки атрибутов (принято):");
+    temp.en(u8"Attribute points (accepted)");
+    temp.ru(u8"Очки атрибутов (принято)");
     initLanguageBundleMenu(temp, common_.attrPointsAccepted_);
 
     temp.en(u8"Select an attribute:");
@@ -63,6 +63,26 @@ void MenuAttributeText::initCommon()
     temp.en(u8"Invalid number of levels");
     temp.ru(u8"Недопустимое количество уровней");
     initLanguageBundleMenu(temp, common_.invalidNumOfLevels_);
+
+    temp.en(u8"Undo changes");
+    temp.ru(u8"Отменить изменения");
+    initLanguageBundleMenu(temp, common_.undoChanges_);
+
+    temp.en(u8"Are you sure want to undo all pending changes? "
+        u8"Any unconfirmed Skill Points will be refunded");
+    temp.ru(u8"Вы уверены, что хотите отменить все ожидающие изменения? "
+        u8"Любые неподтвержденные очки навыков будут возвращены");
+    initLanguageBundleMenu(temp, common_.questionUndoChanges_);
+
+    temp.en(u8"Confirm changes");
+    temp.ru(u8"Подтвердить изменения");
+    initLanguageBundleMenu(temp, common_.confirmChanges_);
+
+    temp.en(u8"Leaving this screen will confirm any pending Skill Points you have allocated. "
+        u8"Do you wish to continue?");
+    temp.ru(u8"Выход из этого экрана подтвердит все отложенные очки навыков, которые вы выделили. "
+        u8"Вы хотите продолжить?");
+    initLanguageBundleMenu(temp, common_.questionConfirmChanges_);
 }
 
 void MenuAttributeText::initMain()

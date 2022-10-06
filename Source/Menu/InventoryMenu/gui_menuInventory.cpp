@@ -7,6 +7,7 @@
 #include"character.hpp"
 #include"characterText.hpp"
 #include"gui_menuCommon.hpp"
+#include"gui_menuGeneral.hpp"
 #include"gui_menuInventory.hpp"
 #include"gui_menuItem.hpp"
 #include"inventory.hpp"
@@ -29,7 +30,7 @@ namespace menu {
 
 using namespace std;
 
-void guiMenuInventory(bool* open, object::Squad& squad)
+void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
 {
     using game::object::InventoryIterator;
     using game::object::Item;
@@ -43,37 +44,43 @@ void guiMenuInventory(bool* open, object::Squad& squad)
 
     const ImVec4 colItemNew         { color::yellowDark };
     const ImVec4 colItemHoveredNew  { color::yellow };
-    const ImVec4 colItem            { color::grayDark };
-    const ImVec4 colItemHovered     { color::gray };
+    const ImVec4 colItem            { color::greyDark };
+    const ImVec4 colItemHovered     { color::grey };
     const ImVec4 colItemActive      { color::turquoise };
     const ImVec4 colItemSelected    { color::turquoise };
-    const ImVec4 colSlot            { color::grayDark };
-    const ImVec4 colSlotHovered     { color::gray };
+    const ImVec4 colSlot            { color::greyDark };
+    const ImVec4 colSlotHovered     { color::grey };
     const ImVec4 colSlotActive      { color::turquoise };
     const ImVec4 colSlotSelected    { color::turquoise };
     const ImVec4 colSlotCompatible  { color::green };
 
-    static InventoryIterator    iItem{};
-    static Item*                pItem{ nullptr };
-    static Character*           pChar{ nullptr };
-    static int                  integer{ 0 };
+    static InventoryIterator&       iItem{ gVars.iItem_ };
+    static Item*&                   pItem{ gVars.pItem_ };
+    static Character*&              pChar{ gVars.pChar_ };
+    static int&                     integer{ gVars.integer_ };
 
     static bool showGuiRemoveItem       { false };
     static bool showGuiModifyItem       { false };
     static bool showGuiEquipItem        { false };
     static bool showStats               { false };
 
+    object::Squad& squad{ gVars.squad_ };
+
     GuiMenuInventoryVars vars{
-        squad,
-        squad.inventory().roster().oldItems(),
-        iItem,
-        pItem,
-        pChar,
-        integer,
+        gVars.squad_,
+        gVars.squad_.inventory().roster().oldItems(),
+        gVars.iItem_,
+        gVars.pItem_,
+        gVars.pChar_,
+        gVars.integer_,
         showGuiRemoveItem,
         showGuiModifyItem,
         showGuiEquipItem
     };
+
+    if (gVars.curSM_ != gVars.prevSM_) {
+        showStats = false;
+    }
 
     ///********** Show GUI
     if (showGuiRemoveItem) {
@@ -90,10 +97,10 @@ void guiMenuInventory(bool* open, object::Squad& squad)
     if (showGuiModifyItem) guiMenuItemModify(&showGuiModifyItem, squad, *pItem);
 
     if (showGuiEquipItem) {
-        auto newMod{ squad.inventory().extract(vars.iItem_) };
+        auto newMod{ squad.inventory().extract(iItem) };
         unique_ptr<object::Item> oldMod{};
-        pChar->unsetWeapon(vars.integer_, oldMod);
-        pChar->setWeapon(vars.integer_, newMod);
+        pChar->unsetWeapon(integer, oldMod);
+        pChar->setWeapon(integer, newMod);
         if (oldMod != nullptr) {
             squad.inventory().insert(oldMod);
         }
@@ -117,113 +124,10 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         };
 
         ///********** Submenus
-        static ActiveSubmenu activeSM{ ActiveSubmenu::INVENTORY };
-        ImGuiTableFlags_ tableSubMenusFlags{ static_cast<ImGuiTableFlags_>(
-            ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame
-        ) };
-        ImGui::PushStyleVar(ImGuiStyleVar_CellPadding, ImVec2{ 0.0f, 0.0f });
-        if (ImGui::BeginTable("SubMenus", 5, tableSubMenusFlags)) {
-            bool setColorButton{ false };
-            const ImVec2 buttonSizeSubMenus{
-                contentRegionSize.x / 5, ImGui::GetFrameHeight() * 2.0f + style.ItemSpacing.y
-            };
-
-            ImGui::TableNextRow();
-            ImGui::TableNextColumn();
-            setColorButton = (activeSM == ActiveSubmenu::INVENTORY) ? true : false;
-            if (setColorButton) {
-                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
-            }
-            if (ImGui::Button(text.inventory().c_str(), buttonSizeSubMenus)) {
-                activeSM = ActiveSubmenu::INVENTORY;
-            }
-            if (setColorButton) {
-                ImGui::PopStyleColor();
-            }
-
-            ImGui::TableNextColumn();
-            setColorButton = (activeSM == ActiveSubmenu::ATTRIBUTES) ? true : false;
-            if (setColorButton) {
-                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
-            }
-            if (ImGui::Button(MenuAttributeText::common().attributes().c_str(), buttonSizeSubMenus)) {
-                //activeSM = ActiveSubmenu::ATTRIBUTES;
-            }
-            if (setColorButton) {
-                ImGui::PopStyleColor();
-            }
-
-            ImGui::TableNextColumn();
-            setColorButton = (activeSM == ActiveSubmenu::SKILLS) ? true : false;
-            if (setColorButton) {
-                ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
-            }
-            if (ImGui::Button(MenuSkillText::common().skills().c_str(), buttonSizeSubMenus)) {
-                //activeSM = ActiveSubmenu::SKILLS;
-            }
-            if (setColorButton) {
-                ImGui::PopStyleColor();
-            }
-
-            ImGui::EndTable();
-        }
-        ImGui::PopStyleVar();
+        guiMenuGeneral_Submenu(gVars);
 
         ///********** Squad members
-        ImGui::AlignTextToFramePadding();
-        ImGui::TextUnformatted(squadT.squad().c_str());
-
-        ImGuiTableFlags_ tableSquadMembersFlags{ static_cast<ImGuiTableFlags_>(
-            ImGuiTableFlags_Borders | ImGuiTableFlags_SizingStretchSame
-        ) };
-        int squadSize{ 0 };
-        for (int i = 0; i < squad.members().size(); ++i) {
-            if (squad.members()[i] != nullptr) {
-                ++squadSize;
-            }
-        }
-        const ImVec2 buttonSizeSquadMembers{
-            150.0f, ImGui::GetFrameHeight() * 2.0f + style.ItemSpacing.y
-        };
-        ImGui::PushStyleVar(ImGuiStyleVar_CellPadding, ImVec2{ 0.0f, 0.0f });
-        if (ImGui::BeginTable("SquadMembers", squadSize, tableSquadMembersFlags,
-            ImVec2{ buttonSizeSquadMembers.x * squadSize, 0.0f }))
-        {
-            ImGui::TableNextRow();
-            for (int i = 0; i < squad.members().size(); ++i) {
-                if (squad.members()[i] != nullptr) {
-                    auto& member{ squad.members()[i] };
-                    ImGui::TableNextColumn();
-                    bool setColorButton{ pChar == member.get() ? true : false};
-                    if (setColorButton) {
-                        ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
-                    }
-                    if (ImGui::Button(member->name().c_str(), buttonSizeSquadMembers)) {
-                        if (pChar) {
-                            bool selectedItemBelongsToSelectedCharacter{ false };
-                            for (int i = 0; i < pChar->slotWeapon().size(); ++i) {
-                                if (pChar->slotWeapon()[i].get() == pItem) {
-                                    selectedItemBelongsToSelectedCharacter = true;
-                                    break;
-                                }
-                            }
-                            if (selectedItemBelongsToSelectedCharacter &&
-                                pChar != member.get())
-                            {
-                                pItem = nullptr;
-                            }
-                        }
-                        pChar = static_cast<Character*>(member.get());
-                    }
-                    if (setColorButton) {
-                        ImGui::PopStyleColor();
-                    }
-                }
-            }
-
-            ImGui::EndTable();
-        }
-        ImGui::PopStyleVar();
+        guiMenuGeneral_SquadMembers(gVars);
 
         ///********** Titles
         const ImVec2 tableSizeTitles{ contentRegionSize.x, ImGui::GetFrameHeight() };
@@ -249,133 +153,14 @@ void guiMenuInventory(bool* open, object::Squad& squad)
         }
 
         ///********** Unit
-        if (ImGui::BeginChild("Unit", columnSize, true)) {
-            if (pChar != nullptr) {
-                ImGui::PushStyleColor(ImGuiCol_Button, colSlot);
-                ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colSlotHovered);
-                ImGui::PushStyleColor(ImGuiCol_ButtonActive, colSlotActive);
-
-                ImGui::TextUnformatted(pChar->name().c_str());
-                ostringstream oss;
-                oss << object::CharacterText::common().level() << sign::space << pChar->level()
-                    << sign::space << pChar->characterText().type(pChar->type());
-                ImGui::TextUnformatted(oss.str().c_str());
-                ImGui::NewLine();
-                if (showStats) {
-                    ///ImGui::PushStyleVar();
-                    for (int i = 0; i < pChar->slotWeapon().size(); ++i) {
-                        if (pChar->slotWeapon()[i].get() == pItem) {
-                            pItem = nullptr;
-                            break;
-                        }
-                    }
-                    int totalWidth =
-                        columnSize.x - style.WindowPadding.x * 2.0f - style.ScrollbarSize;
-                    guiShowStats(*pChar, sign::dot, totalWidth);
-                }
-                else {
-                    ImVec2 buttonSize{
-                        columnSize.x - style.ItemSpacing.x * 2.0f, ImGui::GetFrameHeight()
-                    };
-                    ostringstream oss;
-                    for (int i = 0; i < pChar->slotWeapon().size(); ++i) {
-                        auto& slot{ pChar->slotWeapon()[i] };
-                        ImGui::PushID(i);
-                        oss.str("");
-                        oss << charT.weapon() << sign::space << i + 1;
-                        ImGui::TextUnformatted(oss.str().c_str());
-                        bool setColorButton{ false };
-                        if (pItem) {
-                            if (pItem == slot.get()) {
-                                setColorButton = true;
-                                ImGui::PushStyleColor(ImGuiCol_Button, colItemSelected);
-                            }
-                            else if (object::isCompatible(Item::Type::WEAPON, pItem->itemType())) {
-                                setColorButton = true;
-                                ImGui::PushStyleColor(ImGuiCol_Button, colSlotCompatible);
-                            }
-                        }
-                        if (slot != nullptr) {
-                            if (ImGui::Button(slot->name().c_str(), buttonSize)) {
-                                pItem = slot.get();
-                            }
-                            if (ImGui::BeginPopupContextItem("ContextMenu")) {
-                                if (ImGui::Selectable(itemT.unequip().c_str())) {
-                                    unique_ptr<object::Item> oldMod{};
-                                    pChar->unsetWeapon(i, oldMod);
-                                    if (oldMod != nullptr) {
-                                        squad.inventory().insert(oldMod);
-                                    }
-                                }
-                                if (ImGui::Selectable(itemT.modify().c_str())) {
-                                    showGuiModifyItem = true;
-                                    pItem = slot.get();
-                                }
-                                ImGui::EndPopup();
-                            }
-                            if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None)) {
-                                pItem = slot.get();
-                                integer = i;
-                                ImGui::SetDragDropPayload("EquippedItem",
-                                    &integer, sizeof(integer));
-                                ImGui::TextUnformatted(slot->name().c_str());
-                                ImGui::EndDragDropSource();
-                            }
-                        }
-                        else {
-                            ImGui::Button("##EmptySlot", buttonSize);
-                        }
-                        if (ImGui::BeginDragDropTarget()) {
-                            const ImGuiPayload* payload{
-                                ImGui::AcceptDragDropPayload("EquippedItem")
-                            };
-                            if (payload) {
-                                assert(payload->DataSize == sizeof(integer));
-                                int index{ *static_cast<int*>(payload->Data) };
-                                assert(index >= 0 && index < pChar->slotWeapon().size());
-                                unique_ptr<object::Item> weapon1{};
-                                unique_ptr<object::Item> weapon2{};
-                                pChar->unsetWeapon(i, weapon1);
-                                pChar->unsetWeapon(index, weapon2);
-                                pChar->setWeapon(i, weapon2);
-                                pChar->setWeapon(index, weapon1);
-                            }
-                            ImGui::EndDragDropTarget();
-                        }
-                        if (ImGui::BeginDragDropTarget()) {
-                            const ImGuiPayload* payload{
-                                ImGui::AcceptDragDropPayload("InventoryItem")
-                            };
-                            if (payload) {
-                                assert(payload->DataSize == sizeof(InventoryIterator));
-                                InventoryIterator iter{
-                                    *static_cast<InventoryIterator*>(payload->Data)
-                                };
-                                assert(iter.isValid());
-                                if (object::isCompatible(Item::Type::WEAPON,
-                                    iter.get()->get()->itemType()))
-                                {
-                                    auto newWeapon{ squad.inventory().extract(iter) };
-                                    unique_ptr<object::Item> oldWeapon{};
-                                    pChar->unsetWeapon(i, oldWeapon);
-                                    pChar->setWeapon(i, newWeapon);
-                                    if (oldWeapon != nullptr) {
-                                        squad.inventory().insert(oldWeapon);
-                                    }
-                                }
-                            }
-                            ImGui::EndDragDropTarget();
-                        }
-                        if (setColorButton) {
-                            ImGui::PopStyleColor();
-                        }
-                        ImGui::PopID();
-                    }
-                }
-                ImGui::PopStyleColor(3);
-            }
-        }
-        ImGui::EndChild();
+        const GuiWindowUnitColors uColors{
+            colSlot,
+            colSlotHovered,
+            colSlotActive,
+            colItemSelected,
+            colSlotCompatible
+        };
+        guiWindowUnit(gVars, uColors, columnSize, showStats, showGuiModifyItem);
 
         ///********** Item list
         ImGui::SameLine();

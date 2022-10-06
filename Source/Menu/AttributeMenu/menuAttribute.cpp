@@ -199,7 +199,7 @@ void showAttPoints(
 {
     const auto& text{ MenuAttributeText::common() };
 
-    os << indent << (accepted ? text.attrPointsAccepted() : text.attrPoints())
+    os << indent << (accepted ? text.attrPointsAccepted() : text.attrPoints()) << sign::colon
         << sign::space << (accepted ? character.attribute().storage().getAccepted() :
             character.attribute().storage().get()) << endl;
 }

@@ -123,6 +123,21 @@ void guiGetYesNo(bool* open,
     ImGui::End();
 }
 
+void guiDescription(const char* description,
+                    const ImVec2& size,
+                    bool border,
+                    ImGuiWindowFlags flags)
+{
+    if (ImGui::BeginChild("Description", size, border, flags)) {
+        if (description != nullptr) {
+            ImGui::PushTextWrapPos();
+            ImGui::TextUnformatted(description);
+            ImGui::PopTextWrapPos();
+        }
+    }
+    ImGui::EndChild();
+}
+
 void helpMarker(const char* description)
 {
     ImGui::TextDisabled("(?)");

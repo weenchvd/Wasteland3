@@ -8,17 +8,12 @@
 #define GUI_MENU_INVENTORY_HPP
 
 #include"common.hpp"
+#include"gui_menuGeneral.hpp"
 #include"imgui.h"
 #include"squad.hpp"
 
 namespace game {
 namespace menu {
-
-enum class ActiveSubmenu : char {
-    INVENTORY,
-    ATTRIBUTES,
-    SKILLS
-};
 
 enum class LastItemType : char {
     ALL,
@@ -41,7 +36,7 @@ struct GuiMenuInventoryVars {
 
 ///************************************************************************************************
 
-void guiMenuInventory(bool* open, object::Squad& squad);
+void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars);
 
 ///************************************************************************************************
 
