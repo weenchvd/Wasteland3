@@ -162,7 +162,7 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
     static Item*&                   pItem{ gVars.pItem_ };
     static Character*&              pChar{ gVars.pChar_ };
     static int&                     integer{ gVars.integer_ };
-    static const char*              description{ nullptr };
+    static const char*              pDescr{ nullptr };
 
     static bool showStats                       { false };
     static bool showGuiExit                     { false };
@@ -177,11 +177,12 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
         pItem,
         pChar,
         integer,
-        description,
+        pDescr,
         showStats,
         showGuiExit
     };
 
+    static common::Text description{};
     static GuiMenuAttributeState state{ gVars, vars };
 
     ///********** Windows
@@ -228,14 +229,14 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
             ImVec2 textSize{ ImGui::CalcTextSize(oss.str().c_str()) };
             ImGui::SameLine(columnSize.x - textSize.x);
             ImGui::TextUnformatted(oss.str().c_str());
-            ImVec2 cursorScreenPos{ ImGui::GetCursorScreenPos() };
+            ImVec2 pos{ ImGui::GetCursorScreenPos() };
             ImGui::SetCursorScreenPos(
-                ImVec2{ cursorScreenPos.x, cursorScreenPos.y + ImGui::GetFrameHeight() * 0.5f });
+                ImVec2{ pos.x, pos.y + (int)(ImGui::GetFrameHeight() * 0.2f) });
 
             ImGui::Separator();
-            cursorScreenPos = ImGui::GetCursorScreenPos();
+            pos = ImGui::GetCursorScreenPos();
             ImGui::SetCursorScreenPos(
-                ImVec2{ cursorScreenPos.x, cursorScreenPos.y + ImGui::GetFrameHeight() * 0.5f });
+                ImVec2{ pos.x, pos.y + (int)(ImGui::GetFrameHeight() * 0.2f) });
 
             if (ImGui::BeginChild("AttributeBars", ImVec2{ 0.0f, 0.0f }, false)) {
                 if (pChar) {
@@ -259,18 +260,27 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
                     for (int i{ common::toUnderlying(common::firstEnum<Attribute::Type>()) };
                         i <= common::toUnderlying(common::lastEnum<Attribute::Type>()); ++i)
                     {
+                        bool isHovered{ false };
                         Attribute::Type attrType{ static_cast<Attribute::Type>(i) };
                         char levelShift{ guiLevelBar<Attribute::level_t, Attribute::point_t>(
                             c->attribute().attributeText().name(attrType),
-                            columnSize, colors,
+                            colors,
                             c->attribute().level(attrType),
                             c->attribute().storage(),
                             c->attribute().pointDistibution(),
-                            true, barIndent)
+                            isHovered,
+                            ImGui::GetWindowContentRegionMax().x, 5, 8, barIndent, true)
                         };
                         if (levelShift > 0) {
                             pChar->attribute().addLevel(attrType,
                                 static_cast<Attribute::level_t>(levelShift));
+                        }
+                        if (isHovered) {
+                            oss.str("");
+                            oss << c->attribute().attributeText().name(attrType) << endl
+                                << c->attribute().attributeText().descr(attrType);
+                            description = oss.str();
+                            pDescr = description.c_str();
                         }
                     }
                 }
@@ -282,9 +292,9 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
         }
         ImGui::EndChild();
 
-        ///********** Full item description
+        ///********** Attribute description
         ImGui::SameLine();
-        guiDescription(description, columnSize, true);
+        guiDescription(pDescr, columnSize, true);
 
         ///********** Buttons at the bottom
         ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() });

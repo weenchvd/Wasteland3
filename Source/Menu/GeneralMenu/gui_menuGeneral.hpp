@@ -12,6 +12,7 @@
 #include"imgui.h"
 #include"specStorage.hpp"
 #include"squad.hpp"
+#include<cmath>
 
 namespace game {
 namespace menu {
@@ -64,68 +65,62 @@ void guiWindowUnit(GuiMenuGeneralVars& gVars,
                    bool& showStats,
                    bool& showGuiModifyItem);
 
-//template<class Level, class Point>
-//char guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const GuiLevelBarColors& colors,
-//                 const common::SpecStorage<Level>& level,
-//                 const common::SpecStorage<Point>& points,
-//                 const common::Distribution<Point, Level>& dist);
-
-//void guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const char minLevel,
-//                 const char maxLevel,
-//                 char& curLevel);
-
 template<class Level, class Point>
 char guiLevelBar(const common::Text& title,
-                 const ImVec2& windowSize,
                  const GuiLevelBarColors& colors,
                  const common::SpecStorage<Level>& level,
                  const common::SpecStorage<Point>& points,
                  const common::Distribution<Point, Level>& dist,
-                 const bool onSameLine = false,
-                 const int barIndent = 0)
+                 bool& isHovered,
+                 const int fullWidth,
+                 const int horizontalIndent = 0,
+                 const int verticalIndent = 0,
+                 const int barIndent = 0,
+                 const bool onSameLine = false)
 {
-    constexpr int addIndent{ 20 };
     const auto& style{ ImGui::GetStyle() };
-    ImVec2 posTemp{ ImGui::GetCursorScreenPos() };
-    int indent{ barIndent };
+    const ImVec2 posInit{ ImGui::GetCursorScreenPos() };
+    ImVec2 pos{ round(posInit.x + horizontalIndent), round(posInit.y + verticalIndent) };
+    ImGui::SetCursorScreenPos(pos);
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(title.c_str());
+    const float minIndent{ 20.0f };
+    float indent{ (float)barIndent };
     if (onSameLine) {
-        ImGui::SameLine();
+        ImGui::SameLine(0.0f, 0.0f);
         if (barIndent <= 0) {
-            indent = ImGui::CalcTextSize(title.c_str()).x + addIndent;
+            indent = round(ImGui::CalcTextSize(title.c_str()).x + minIndent);
         }
     }
     else {
-        posTemp = ImGui::GetCursorScreenPos();
+        const ImVec2 p{ ImGui::GetCursorScreenPos() };
+        pos = ImVec2{ p.x + horizontalIndent, p.y };
     }
-    const ImVec2 pos{ posTemp };
 
     ///********** Set bar and button sizes
     const auto minLevel{ static_cast<char>(level.getMinPossible()) };
     const auto maxLevel{ static_cast<char>(level.getMaxPossible()) };
     const short int nLevels{ maxLevel - minLevel };
     const float barSpacing{ 3.0f };
-    ImVec2 barSize{
-        windowSize.x - style.ItemSpacing.x - indent, ImGui::GetFrameHeight() * 0.8f
-    };
     ImVec2 buttonSize{
-        (barSize.x - barSpacing) / nLevels - barSpacing, barSize.y - barSpacing * 2
+        floor((fullWidth - horizontalIndent * 2 - indent - barSpacing) / nLevels - barSpacing),
+        floor(ImGui::GetFrameHeight() * 0.8f - barSpacing * 2)
     };
     if (buttonSize.x < buttonSize.y) {
         buttonSize.x = buttonSize.y;
-        barSize.x = (buttonSize.x + barSpacing) * nLevels + barSpacing;
     }
+    ImVec2 barSize{
+        (buttonSize.x + barSpacing) * nLevels + barSpacing, buttonSize.y + barSpacing * 2
+    };
 
     ///********** Draw the edge of the bar
-    const ImVec2 posBar{ pos.x + indent, pos.y };
+    const ImVec2 posBar{
+        round(pos.x + (fullWidth - horizontalIndent * 2 - barSize.x)),
+        round(pos.y + (ImGui::GetFrameHeight() - barSize.y) / 2)
+    };
     const ImVec4 col{ style.Colors[ImGuiCol_Border] };
     const float borderWidth{ 1.0f };
-    ImGui::GetWindowDrawList()->AddRect(posBar, ImVec2(posBar.x + barSize.x, posBar.y + barSize.y),
+    ImGui::GetWindowDrawList()->AddRect(posBar, ImVec2{ posBar.x + barSize.x, posBar.y + barSize.y },
         ImU32{ ImColor{ col } }, 0.0f, ImDrawFlags_None, borderWidth);
 
     ///********** Draw invisible bar buttons
@@ -179,13 +174,26 @@ char guiLevelBar(const common::Text& title,
         ImGui::SetCursorScreenPos(posButton);
     }
 
+    ///********** Check focus
+    ImVec2 buttonSizeAttrFrame{ 0.0f, 0.0f };
     if (onSameLine) {
-        ImGui::SetCursorScreenPos(
-            ImVec2{ pos.x, pos.y + ImGui::GetFrameHeight() + style.ItemSpacing.y });
+        buttonSizeAttrFrame =
+            ImVec2{ (float)fullWidth, round(ImGui::GetFrameHeight() + verticalIndent * 2) };
     }
     else {
-        ImGui::SetCursorScreenPos(ImVec2{ pos.x, pos.y + barSize.y + style.ItemSpacing.y });
+        buttonSizeAttrFrame =
+            ImVec2{ (float)fullWidth, round(ImGui::GetFrameHeight() * 2 + verticalIndent * 2) };
     }
+    ImGui::SetCursorScreenPos(posInit);
+    ImGui::InvisibleButton("AttributeFrame", buttonSizeAttrFrame);
+    if (ImGui::IsItemHovered()) {
+        ImGui::GetWindowDrawList()->AddRect(posInit,
+            ImVec2{ posInit.x + buttonSizeAttrFrame.x, posInit.y + buttonSizeAttrFrame.y },
+            ImU32{ ImColor{ color::blue } }, 0.0f, ImDrawFlags_None, 2.0f);
+        isHovered = true;
+    }
+    ImGui::SetCursorScreenPos(ImVec2{ posInit.x, posInit.y + buttonSizeAttrFrame.y });
+
     if (buttonPressed > minLevel &&
         points.get() >= dist.total(static_cast<Level>(buttonPressed), level.get()))
     {
@@ -193,188 +201,6 @@ char guiLevelBar(const common::Text& title,
     }
     return 0;
 }
-
-//template<class Level, class Point>
-//char guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const GuiLevelBarColors& colors,
-//                 const common::SpecStorage<Level>& level,
-//                 const common::SpecStorage<Point>& points,
-//                 const common::Distribution<Point, Level>& dist)
-//{
-//    const auto& style{ ImGui::GetStyle() };
-//    ImGui::AlignTextToFramePadding();
-//    ImGui::TextUnformatted(title.c_str());
-//
-//    const auto minLevel{ static_cast<char>(level.getMinPossible()) };
-//    const auto maxLevel{ static_cast<char>(level.getMaxPossible()) };
-//    const short int nLevels{ maxLevel - minLevel };
-//    const float barSpacing{ 3.0f };
-//    ImVec2 barSize{
-//        windowSize.x - style.ItemSpacing.x, ImGui::GetFrameHeight() * 0.8f
-//    };
-//    ImVec2 buttonSize{
-//        (barSize.x - barSpacing) / nLevels - barSpacing, barSize.y - barSpacing * 2
-//    };
-//    if (buttonSize.x < barSize.y) {
-//        buttonSize.x = barSize.y;
-//        barSize.x = (buttonSize.x + barSpacing) * nLevels + barSpacing;
-//    }
-//
-//    ///********** Draw the edge of the bar
-//    const ImVec2 pos{ ImGui::GetCursorScreenPos() };
-//    const ImVec4 col{ style.Colors[ImGuiCol_Border] };
-//    const float borderWidth{ 1.0f };
-//    ImGui::GetWindowDrawList()->AddRect(pos, ImVec2(pos.x + barSize.x, pos.y + barSize.y),
-//        ImU32{ ImColor{ col } }, 0.0f, ImDrawFlags_None, borderWidth);
-//
-//    ///********** Draw invisible bar buttons
-//    ImVec2 posButton{ pos.x + barSpacing, pos.y + barSpacing };
-//    ImGui::SetCursorScreenPos(posButton);
-//    int buttonPressed{ minLevel };
-//    int buttonHovered{ minLevel };
-//    ImGui::PushID(title.c_str());
-//    for (int i{ minLevel + 1 }; i <= maxLevel; ++i) {
-//        ImGui::PushID(i);
-//        if (ImGui::InvisibleButton("", buttonSize)) {
-//            buttonPressed = i;
-//        }
-//        if (ImGui::IsItemHovered()) {
-//            buttonHovered = i;
-//        }
-//        posButton = ImVec2{ posButton.x + buttonSize.x + barSpacing, posButton.y };
-//        ImGui::SetCursorScreenPos(posButton);
-//        ImGui::PopID();
-//    }
-//    ImGui::PopID();
-//
-//    ///********** Draw visible bar buttons
-//    posButton = ImVec2{ pos.x + barSpacing, pos.y + barSpacing };
-//    const auto currentLevel{ static_cast<char>(level.get()) };
-//    for (int i{ minLevel + 1 }; i <= maxLevel; ++i) {
-//        ImVec4 colButton{ colors.accepted_ };
-//        if (i > currentLevel) {
-//            if (points.get() >= dist.total(static_cast<Level>(i), level.get())) {
-//                if (i <= buttonHovered) {
-//                    colButton = colors.availableHighlighted_;
-//                }
-//                else {
-//                    colButton = colors.available_;
-//                }
-//            }
-//            else {
-//                if (i <= buttonHovered) {
-//                    colButton = colors.available_;
-//                }
-//                else {
-//                    colButton = colors.notAccepted_;
-//                }
-//            }
-//        }
-//        ImGui::GetWindowDrawList()->AddRectFilled(posButton,
-//            ImVec2(posButton.x + buttonSize.x, posButton.y + buttonSize.y),
-//            ImU32{ ImColor{ colButton } }, 0.0f, ImDrawFlags_None);
-//
-//        posButton = ImVec2{ posButton.x + buttonSize.x + barSpacing, posButton.y };
-//        ImGui::SetCursorScreenPos(posButton);
-//    }
-//
-//    ImGui::SetCursorScreenPos(ImVec2{ pos.x, pos.y + barSize.y + style.ItemSpacing.y });
-//    if (buttonPressed > minLevel &&
-//        points.get() >= dist.total(static_cast<Level>(buttonPressed), level.get()))
-//    {
-//        return buttonPressed - static_cast<char>(level.get());
-//    }
-//    return 0;
-//}
-
-//template<class Level, class Point>
-//char guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const GuiLevelBarColors& colors,
-//                 const common::SpecStorage<Level>& level,
-//                 const common::SpecStorage<Point>& points,
-//                 const common::Distribution<Point, Level>& dist)
-//{
-//    const auto& style{ ImGui::GetStyle() };
-//    ImGui::AlignTextToFramePadding();
-//    ImGui::TextUnformatted(title.c_str());
-//
-//    const auto minLevel{ static_cast<char>(level.getMinPossible()) };
-//    const auto maxLevel{ static_cast<char>(level.getMaxPossible()) };
-//    const short int nLevels{ maxLevel - minLevel };
-//    const float barSpacing{ 3.0f };
-//    const ImVec2 barSize{
-//        windowSize.x - style.ItemSpacing.x, ImGui::GetFrameHeight() * 0.8f
-//    };
-//    const ImVec2 buttonSize{
-//        (barSize.x - barSpacing) / nLevels - barSpacing, barSize.y - barSpacing * 2
-//    };
-//
-//    const ImVec2 pos{ ImGui::GetCursorScreenPos() };
-//    const ImVec4 col{ style.Colors[ImGuiCol_Border] };
-//    const float borderWidth{ 1.0f };
-//    ImGui::GetWindowDrawList()->AddRect(pos, ImVec2(pos.x + barSize.x, pos.y + barSize.y),
-//        ImU32{ ImColor{ col } }, 0.0f, ImDrawFlags_None, borderWidth);
-//
-//    ImVec2 posButton{ pos.x + barSpacing, pos.y + barSpacing };
-//    ImGui::SetCursorScreenPos(posButton);
-//    ImGui::PushStyleColor(ImGuiCol_Button, colors.accepted_);
-//    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colors.accepted_);
-//    ImGui::PushStyleColor(ImGuiCol_ButtonActive, colors.accepted_);
-//    const auto currentLevel{ static_cast<char>(level.get()) };
-//    int buttonPressed{ minLevel };
-//    int buttonHovered{ minLevel };
-//    ImGui::PushID(title.c_str());
-//    for (int i{ minLevel + 1 }; i <= maxLevel; ++i) {
-//        ImGui::PushID(i);
-//        ImVec4 colButton{};
-//        ImVec4 colButtonHovered{};
-//        ImVec4 colButtonActive{};
-//        bool setColorButton{ false };
-//        if (i > currentLevel) {
-//            setColorButton      = true;
-//            if (points.get() >= dist.total(static_cast<Level>(i), level.get())) {
-//                colButton           = colors.available_;
-//                colButtonHovered    = colors.available_;
-//                colButtonActive     = colors.available_;
-//            }
-//            else {
-//                colButton           = colors.notAccepted_;
-//                colButtonHovered    = colors.notAccepted_;
-//                colButtonActive     = colors.notAccepted_;
-//            }
-//        }
-//        if (setColorButton) {
-//            ImGui::PushStyleColor(ImGuiCol_Button, colButton);
-//            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colButtonHovered);
-//            ImGui::PushStyleColor(ImGuiCol_ButtonActive, colButtonActive);
-//        }
-//        if (ImGui::Button("##Cell", buttonSize)) {
-//            buttonPressed = i;
-//        }
-//        //if (ImGui::IsItemHovered()) {
-//        //    buttonHovered = i;
-//        //}
-//        if (setColorButton) {
-//            ImGui::PopStyleColor(3);
-//        }
-//        posButton = ImVec2{ posButton.x + buttonSize.x + barSpacing, posButton.y };
-//        ImGui::SetCursorScreenPos(posButton);
-//
-//        ImGui::PopID();
-//    }
-//    ImGui::PopID();
-//    ImGui::PopStyleColor(3);
-//
-//    ImGui::SetCursorScreenPos(ImVec2{ pos.x, pos.y + barSize.y + style.ItemSpacing.y });
-//    if (buttonPressed > minLevel &&
-//        points.get() >= dist.total(static_cast<Level>(buttonPressed), level.get()))
-//    {
-//        return buttonPressed - static_cast<char>(level.get());
-//    }
-//    return 0;
-//}
 
 } // namespace menu
 } // namespace game
