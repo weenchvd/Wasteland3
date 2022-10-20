@@ -5,12 +5,12 @@
 // (See accompanying file LICENSE or copy at https://www.boost.org/LICENSE_1_0.txt)
 
 #include"character.hpp"
-#include"gui_menuAttribute.hpp"
 #include"gui_menuCommon.hpp"
-#include"menuAttributeText.hpp"
+#include"gui_menuSkill.hpp"
 #include"menuCommon.hpp"
 #include"menuCommonText.hpp"
 #include"menuInventoryText.hpp"
+#include"menuSkillText.hpp"
 #include<sstream>
 
 namespace game {
@@ -18,8 +18,8 @@ namespace menu {
 
 using namespace std;
 
-GuiMenuAttributeState::GuiMenuAttributeState(
-    GuiMenuGeneralVars& gVars, GuiMenuAttributeVars& vars) noexcept
+GuiMenuSkillState::GuiMenuSkillState(
+    GuiMenuGeneralVars& gVars, GuiMenuSkillVars& vars) noexcept
     :
     iItem_      { vars.iItem_ },
     pItem_      { vars.pItem_ },
@@ -30,12 +30,12 @@ GuiMenuAttributeState::GuiMenuAttributeState(
     showGuiExit_{ vars.showGuiExit_ }
 {}
 
-void GuiMenuAttributeState::changeSubmenu(Submenu previousSM)
+void GuiMenuSkillState::changeSubmenu(Submenu previousSM)
 {
     static bool showGuiQuestionConfirmChanges{ false };
     static Submenu nextSM{ Submenu::INVENTORY };
     if (previousSM != curSM_) {
-        if (pChar_ != nullptr && pChar_->attribute().isModified()) {
+        if (pChar_ != nullptr && pChar_->skill().isModified()) {
             showGuiQuestionConfirmChanges = true;
             nextSM = curSM_;
             curSM_ = previousSM;
@@ -48,11 +48,11 @@ void GuiMenuAttributeState::changeSubmenu(Submenu previousSM)
     if (showGuiQuestionConfirmChanges) {
         YesNo result{ YesNo::INVALID };
         guiGetYesNo(&showGuiQuestionConfirmChanges, u8"##QuestionConfirmChanges",
-            MenuAttributeText::common().questionConfirmChanges().c_str(), result);
+            MenuSkillText::common().questionConfirmChanges().c_str(), result);
         switch (result) {
         case YesNo::YES:
             showGuiQuestionConfirmChanges = false;
-            pChar_->attribute().accept();
+            pChar_->skill().accept();
             curSM_ = nextSM;
             showStats_ = false;
             descr_ = nullptr;
@@ -66,12 +66,12 @@ void GuiMenuAttributeState::changeSubmenu(Submenu previousSM)
     }
 }
 
-void GuiMenuAttributeState::changeCharacter(object::Character* pCharPrev)
+void GuiMenuSkillState::changeCharacter(object::Character* pCharPrev)
 {
     static bool showGuiQuestionConfirmChanges{ false };
     static object::Character* pCharNext{ nullptr };
     if (pCharPrev != pChar_ ) {
-        if (pCharPrev != nullptr && pCharPrev->attribute().isModified()) {
+        if (pCharPrev != nullptr && pCharPrev->skill().isModified()) {
             showGuiQuestionConfirmChanges = true;
             pCharNext = pChar_;
             pChar_ = pCharPrev;
@@ -83,11 +83,11 @@ void GuiMenuAttributeState::changeCharacter(object::Character* pCharPrev)
     if (showGuiQuestionConfirmChanges) {
         YesNo result{ YesNo::INVALID };
         guiGetYesNo(&showGuiQuestionConfirmChanges, u8"##QuestionConfirmChanges",
-            MenuAttributeText::common().questionConfirmChanges().c_str(), result);
+            MenuSkillText::common().questionConfirmChanges().c_str(), result);
         switch (result) {
         case YesNo::YES:
             showGuiQuestionConfirmChanges = false;
-            pCharPrev->attribute().accept();
+            pCharPrev->skill().accept();
             pChar_ = pCharNext;
             descr_ = nullptr;
             break;
@@ -100,20 +100,20 @@ void GuiMenuAttributeState::changeCharacter(object::Character* pCharPrev)
     }
 }
 
-void GuiMenuAttributeState::exitTheMenu(bool* open, object::Squad& squad)
+void GuiMenuSkillState::exitTheMenu(bool* open, object::Squad& squad)
 {
     static bool showGuiQuestionConfirmChanges{ false };
-    if (pChar_ != nullptr && pChar_->attribute().isModified()) {
+    if (pChar_ != nullptr && pChar_->skill().isModified()) {
         showGuiQuestionConfirmChanges = true;
     }
     if (showGuiQuestionConfirmChanges) {
         YesNo result{ YesNo::INVALID };
         guiGetYesNo(&showGuiQuestionConfirmChanges, u8"##QuestionConfirmChanges",
-            MenuAttributeText::common().questionConfirmChanges().c_str(), result);
+            MenuSkillText::common().questionConfirmChanges().c_str(), result);
         switch (result) {
         case YesNo::YES:
             showGuiQuestionConfirmChanges = false;
-            pChar_->attribute().accept();
+            pChar_->skill().accept();
             break;
         case YesNo::NO:
             showGuiQuestionConfirmChanges = false;
@@ -134,17 +134,17 @@ void GuiMenuAttributeState::exitTheMenu(bool* open, object::Squad& squad)
 
 ///************************************************************************************************
 
-void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
+void guiMenuSkill(bool* open, GuiMenuGeneralVars& gVars)
 {
     using game::object::InventoryIterator;
     using game::object::Item;
     using game::object::Character;
-    using game::object::Attribute;
+    using game::object::Skill;
 
     const auto& comT    { MenuCommonText::common() };
     const auto& invenT  { MenuInventoryText::common() };
-    const auto& text    { MenuAttributeText::common() };
-    const auto& tMain   { MenuAttributeText::main() };
+    const auto& text    { MenuSkillText::common() };
+    const auto& tMain   { MenuSkillText::main() };
 
     static InventoryIterator&       iItem{ gVars.iItem_ };
     static Item*&                   pItem{ gVars.pItem_ };
@@ -158,7 +158,7 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
 
     object::Squad& squad{ gVars.squad_ };
 
-    GuiMenuAttributeVars vars{
+    GuiMenuSkillVars vars{
         squad,
         squad.inventory().roster().oldItems(),
         iItem,
@@ -171,14 +171,14 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
     };
 
     static common::Text description{};
-    static GuiMenuAttributeState state{ gVars, vars };
+    static GuiMenuSkillState state{ gVars, vars };
 
     ///********** Windows
     ImGuiWindowFlags window_flags{ 0 };
     guiCommonInitialization(window_flags);
     string s;
 
-    s = string{ tMain.menuName().c_str() } + u8"###MenuAttribute";
+    s = string{ tMain.menuName().c_str() } + u8"###MenuSkill";
     if (ImGui::Begin(s.c_str(), nullptr, window_flags)) {
         const ImGuiStyle& style{ ImGui::GetStyle() };
         ImVec2 contentRegionSize{ ImGui::GetWindowContentRegionMax() };
@@ -203,17 +203,17 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
         bool dummyShowGuiModifyItem{ false };
         guiWindowUnit(gVars, dummyColors, columnSize, showStats, dummyShowGuiModifyItem);
 
-        ///********** Attribute list
+        ///********** Skill list
         ImGui::SameLine();
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0.0f, 0.0f });
         ImGuiWindowFlags flags{ ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse };
-        if (ImGui::BeginChild("Attribute", columnSize, false, flags)) {
+        if (ImGui::BeginChild("Skill", columnSize, false, flags)) {
             ImGui::PopStyleVar();
 
-            ImGui::TextUnformatted(text.attributes().c_str());
+            ImGui::TextUnformatted(text.skills().c_str());
             ostringstream oss;
-            oss << text.attrPoints() << sign::colon << sign::space
-                << (pChar != nullptr ? static_cast<int>(pChar->attribute().storage().get()) : 0);
+            oss << text.skillPoints() << sign::colon << sign::space
+                << (pChar != nullptr ? static_cast<int>(pChar->skill().storage().get()) : 0);
             ImVec2 textSize{ ImGui::CalcTextSize(oss.str().c_str()) };
             ImGui::SameLine(columnSize.x - textSize.x);
             ImGui::TextUnformatted(oss.str().c_str());
@@ -226,48 +226,47 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
             ImGui::SetCursorScreenPos(
                 ImVec2{ pos.x, pos.y + (int)(ImGui::GetFrameHeight() * 0.2f) });
 
-            if (ImGui::BeginChild("AttributeBars", ImVec2{ 0.0f, 0.0f }, false)) {
+            if (ImGui::BeginChild("SkillBars", ImVec2{ 0.0f, 0.0f }, false)) {
                 if (pChar) {
                     GuiLevelBarColors colors{
-                        color::grey20, color::blue, color::grey40, color::grey90
+                        color::grey20, color::orange, color::grey40, color::grey90
                     };
                     const Character* c{ pChar };
                     int maxTextWidth{ 0 };
-                    for (int i{ common::toUnderlying(common::firstEnum<Attribute::Type>()) };
-                        i <= common::toUnderlying(common::lastEnum<Attribute::Type>()); ++i)
+                    for (int i{ common::toUnderlying(common::firstEnum<Skill::Type>()) };
+                        i <= common::toUnderlying(common::lastEnum<Skill::Type>()); ++i)
                     {
-                        Attribute::Type attrType{ static_cast<Attribute::Type>(i) };
+                        Skill::Type skillType{ static_cast<Skill::Type>(i) };
                         ImVec2 textSize{
-                            ImGui::CalcTextSize(c->attribute().attributeText().name(attrType).c_str())
+                            ImGui::CalcTextSize(c->skill().skillText().name(skillType).c_str())
                         };
                         if (maxTextWidth < textSize.x) {
                             maxTextWidth = textSize.x;
                         }
                     }
-                    const int barIndent{ maxTextWidth + 100 };
-                    for (int i{ common::toUnderlying(common::firstEnum<Attribute::Type>()) };
-                        i <= common::toUnderlying(common::lastEnum<Attribute::Type>()); ++i)
+                    for (int i{ common::toUnderlying(common::firstEnum<Skill::Type>()) };
+                        i <= common::toUnderlying(common::lastEnum<Skill::Type>()); ++i)
                     {
                         bool isHovered{ false };
-                        Attribute::Type attrType{ static_cast<Attribute::Type>(i) };
-                        char levelShift{ guiLevelBar<Attribute::level_t, Attribute::point_t>(
-                            c->attribute().attributeText().name(attrType),
+                        Skill::Type skillType{ static_cast<Skill::Type>(i) };
+                        char levelShift{ guiLevelBar<Skill::level_t, Skill::point_t>(
+                            c->skill().skillText().name(skillType),
                             colors,
-                            c->attribute().level(attrType),
-                            c->attribute().storage(),
-                            c->attribute().pointDistibution(),
+                            c->skill().level(skillType),
+                            c->skill().storage(),
+                            c->skill().pointDistibution(),
                             isHovered,
-                            ImGui::GetWindowContentRegionMax().x, 5, 8, barIndent, true)
+                            ImGui::GetWindowContentRegionMax().x, 5, 8, 0, false)
                         };
                         if (levelShift > 0) {
-                            pChar->attribute().addLevel(attrType,
-                                static_cast<Attribute::level_t>(levelShift));
+                            pChar->skill().addLevel(skillType,
+                                static_cast<Skill::level_t>(levelShift));
                         }
                         if (isHovered) {
                             oss.str("");
-                            oss << c->attribute().attributeText().name(attrType) << endl
+                            oss << c->skill().skillText().name(skillType) << endl
                                 << sign::separator30 << endl
-                                << c->attribute().attributeText().descr(attrType);
+                                << c->skill().skillText().descr(skillType);
                             description = oss.str();
                             pDescr = description.c_str();
                         }
@@ -281,7 +280,7 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
         }
         ImGui::EndChild();
 
-        ///********** Attribute description
+        ///********** Skill description
         ImGui::SameLine();
         guiDescription(pDescr, columnSize, true);
 
@@ -311,7 +310,7 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
         }
         ImGui::SameLine();
         if (ImGui::Button(text.undoChanges().c_str())) {
-            if (pChar != nullptr && pChar->attribute().isModified()) {
+            if (pChar != nullptr && pChar->skill().isModified()) {
                 showGuiQuestionUndoChanges = true;
             }
         }
@@ -321,7 +320,7 @@ void guiMenuAttribute(bool* open, GuiMenuGeneralVars& gVars)
             guiGetYesNo(&showGuiQuestionUndoChanges, u8"##QuestionUndoChanges",
                 text.questionUndoChanges().c_str(), result);
             if (result == YesNo::YES) {
-                pChar->attribute().reject();
+                pChar->skill().reject();
             }
         }
     }

@@ -69,6 +69,10 @@ public:
         return pStor_;
     }
 
+    const common::Distribution<point_t, level_t>& pointDistibution() const noexcept {
+        return pDist_;
+    }
+
     static const SkillReference& skillReference() noexcept {
         return ref_;
     }

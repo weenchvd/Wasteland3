@@ -18,6 +18,7 @@ namespace color {
 const ImVec4 green              { 43.0f / 255.0f, 146.0f / 255.0f, 22.0f / 255.0f, 1.0f };
 const ImVec4 turquoise          { 17.0f / 255.0f, 118.0f / 255.0f, 113.0f / 255.0f, 1.0f };
 const ImVec4 blue               { 66.0f / 255.0f, 173.0f / 255.0f, 250.0f / 255.0f, 1.0f };
+const ImVec4 orange             { 255.0f / 255.0f, 153.0f / 255.0f, 0.0f / 255.0f, 1.0f };
 const ImVec4 yellow             { 195.0f / 255.0f, 151.0f / 255.0f, 0.0f / 255.0f, 1.0f };
 const ImVec4 yellowDark         { 125.0f / 255.0f, 97.0f / 255.0f, 0.0f / 255.0f, 1.0f };
 const ImVec4 grey               { 150.0f / 255.0f, 150.0f / 255.0f, 150.0f / 255.0f, 1.0f };

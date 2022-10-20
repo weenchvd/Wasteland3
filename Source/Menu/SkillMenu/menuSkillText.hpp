@@ -44,6 +44,14 @@ public:
 
     const text_t& invalidNumOfLevels() const noexcept { return invalidNumOfLevels_[li()]; }
 
+    const text_t& undoChanges() const noexcept { return undoChanges_[li()]; }
+
+    const text_t& questionUndoChanges() const noexcept { return questionUndoChanges_[li()]; }
+
+    const text_t& confirmChanges() const noexcept { return confirmChanges_[li()]; }
+
+    const text_t& questionConfirmChanges() const noexcept { return questionConfirmChanges_[li()]; }
+
 private:
     language_bundle_t skills_;
     language_bundle_t skillsAccepted_;
@@ -52,6 +60,10 @@ private:
     language_bundle_t selectSkill_;
     language_bundle_t enterNumOfLevels_;
     language_bundle_t invalidNumOfLevels_;
+    language_bundle_t undoChanges_;
+    language_bundle_t questionUndoChanges_;
+    language_bundle_t confirmChanges_;
+    language_bundle_t questionConfirmChanges_;
 };
 
 ///************************************************************************************************

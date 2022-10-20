@@ -36,20 +36,20 @@ void MenuSkillText::initCommon()
 {
     LanguageBundle temp;
 
-    temp.en(u8"Skills:");
-    temp.ru(u8"Навыки:");
+    temp.en(u8"Skills");
+    temp.ru(u8"Навыки");
     initLanguageBundleMenu(temp, common_.skills_);
 
-    temp.en(u8"Skills (accepted):");
-    temp.ru(u8"Навыки (принято):");
+    temp.en(u8"Skills (accepted)");
+    temp.ru(u8"Навыки (принято)");
     initLanguageBundleMenu(temp, common_.skillsAccepted_);
 
-    temp.en(u8"Skill points:");
-    temp.ru(u8"Очки навыков:");
+    temp.en(u8"Skill points");
+    temp.ru(u8"Очки навыков");
     initLanguageBundleMenu(temp, common_.skillPoints_);
 
-    temp.en(u8"Skill points (accepted):");
-    temp.ru(u8"Очки навыков (принято):");
+    temp.en(u8"Skill points (accepted)");
+    temp.ru(u8"Очки навыков (принято)");
     initLanguageBundleMenu(temp, common_.skillPointsAccepted_);
 
     temp.en(u8"Select a skill:");
@@ -63,6 +63,26 @@ void MenuSkillText::initCommon()
     temp.en(u8"Invalid number of levels");
     temp.ru(u8"Недопустимое количество уровней");
     initLanguageBundleMenu(temp, common_.invalidNumOfLevels_);
+
+    temp.en(u8"Undo changes");
+    temp.ru(u8"Отменить изменения");
+    initLanguageBundleMenu(temp, common_.undoChanges_);
+
+    temp.en(u8"Are you sure want to undo all pending changes? "
+        u8"Any unconfirmed Skill Points will be refunded");
+    temp.ru(u8"Вы уверены, что хотите отменить все ожидающие изменения? "
+        u8"Любые неподтвержденные очки навыков будут возвращены");
+    initLanguageBundleMenu(temp, common_.questionUndoChanges_);
+
+    temp.en(u8"Confirm changes");
+    temp.ru(u8"Подтвердить изменения");
+    initLanguageBundleMenu(temp, common_.confirmChanges_);
+
+    temp.en(u8"Leaving this screen will confirm any pending Skill Points you have allocated. "
+        u8"Do you wish to continue?");
+    temp.ru(u8"Выход из этого экрана подтвердит все отложенные очки навыков, которые вы выделили. "
+        u8"Вы хотите продолжить?");
+    initLanguageBundleMenu(temp, common_.questionConfirmChanges_);
 }
 
 void MenuSkillText::initMain()

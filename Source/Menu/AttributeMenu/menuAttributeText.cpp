@@ -69,18 +69,18 @@ void MenuAttributeText::initCommon()
     initLanguageBundleMenu(temp, common_.undoChanges_);
 
     temp.en(u8"Are you sure want to undo all pending changes? "
-        u8"Any unconfirmed Skill Points will be refunded");
+        u8"Any unconfirmed Attribute Points will be refunded");
     temp.ru(u8"Вы уверены, что хотите отменить все ожидающие изменения? "
-        u8"Любые неподтвержденные очки навыков будут возвращены");
+        u8"Любые неподтвержденные очки атрибутов будут возвращены");
     initLanguageBundleMenu(temp, common_.questionUndoChanges_);
 
     temp.en(u8"Confirm changes");
     temp.ru(u8"Подтвердить изменения");
     initLanguageBundleMenu(temp, common_.confirmChanges_);
 
-    temp.en(u8"Leaving this screen will confirm any pending Skill Points you have allocated. "
+    temp.en(u8"Leaving this screen will confirm any pending Attribute Points you have allocated. "
         u8"Do you wish to continue?");
-    temp.ru(u8"Выход из этого экрана подтвердит все отложенные очки навыков, которые вы выделили. "
+    temp.ru(u8"Выход из этого экрана подтвердит все отложенные очки атрибутов, которые вы выделили. "
         u8"Вы хотите продолжить?");
     initLanguageBundleMenu(temp, common_.questionConfirmChanges_);
 }

@@ -154,7 +154,7 @@ void showAllSkills(
     const auto& text{ MenuSkillText::common() };
 
     showSkillPoints(is, os, character, ind0, accepted);
-    os << ind0 << (accepted ? text.skillsAccepted() : text.skills()) << endl;
+    os << ind0 << (accepted ? text.skillsAccepted() : text.skills()) << sign::colon << endl;
 
     unsigned int width{ 0 };
     for (int i{ common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
@@ -246,7 +246,7 @@ void showSkillPoints(
 {
     const auto& text{ MenuSkillText::common() };
 
-    os << indent << (accepted ? text.skillPointsAccepted() : text.skillPoints())
+    os << indent << (accepted ? text.skillPointsAccepted() : text.skillPoints()) << sign::colon
         << sign::space << (accepted ? character.skill().storage().getAccepted() :
             character.skill().storage().get()) << endl;
 }
@@ -262,7 +262,7 @@ object::Skill::Type pickSkill(
     const auto& comT{ MenuCommonText::common() };
     const auto& text{ MenuSkillText::common() };
 
-    os << ind0 << text.skills() << endl;
+    os << ind0 << text.skills() << sign::colon << endl;
     for (int i{ common::toUnderlying(common::firstEnum<object::Skill::Type>()) };
         i <= common::toUnderlying(common::lastEnum<object::Skill::Type>()); ++i)
     {

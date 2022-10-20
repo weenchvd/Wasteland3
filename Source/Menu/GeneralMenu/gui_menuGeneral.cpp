@@ -8,6 +8,7 @@
 #include"gui_menuAttribute.hpp"
 #include"gui_menuGeneral.hpp"
 #include"gui_menuInventory.hpp"
+#include"gui_menuSkill.hpp"
 #include"inventory.hpp"
 #include"item.hpp"
 #include"menuAttributeText.hpp"
@@ -69,6 +70,7 @@ void guiMenuGeneral(bool* open, object::Squad& squad)
 
     if (showGuiMenuInventory)           guiMenuInventory(&showGuiMenuInventory, vars);
     if (showGuiMenuAttribute)           guiMenuAttribute(&showGuiMenuAttribute, vars);
+    if (showGuiMenuSkill)               guiMenuSkill(&showGuiMenuSkill, vars);
 
     if (!(showGuiMenuInventory || showGuiMenuAttribute || showGuiMenuSkill)) {
         current = Submenu::INVENTORY;
@@ -124,7 +126,7 @@ void guiMenuGeneral_Submenu(GuiMenuGeneralVars& vars)
             ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_ButtonActive]);
         }
         if (ImGui::Button(MenuSkillText::common().skills().c_str(), buttonSizeSubmenus)) {
-            //vars.curSM_ = Submenu::SKILLS;
+            vars.curSM_ = Submenu::SKILLS;
         }
         if (isActiveSubmenu) {
             ImGui::PopStyleColor();
@@ -332,136 +334,6 @@ void guiWindowUnit(GuiMenuGeneralVars& gVars,
     }
     ImGui::EndChild();
 }
-
-//template<class Level, class Point>
-//char guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const GuiLevelBarColors& colors,
-//                 const common::SpecStorage<Level>& level,
-//                 const common::SpecStorage<Point>& points,
-//                 const common::Distribution<Point, Level>& dist)
-//{
-//    const auto& style{ ImGui::GetStyle() };
-//    ImGui::AlignTextToFramePadding();
-//    ImGui::TextUnformatted(title.c_str());
-//
-//    const auto minLevel{ static_cast<char>(level.getMinPossible()) };
-//    const auto maxLevel{ static_cast<char>(level.getMaxPossible()) };
-//    const short int nLevels{ maxLevel - minLevel };
-//    const float barSpacing{ 3.0f };
-//    const ImVec2 barSize{
-//        windowSize.x - style.ItemSpacing.x, ImGui::GetFrameHeight() * 0.8f
-//    };
-//    const ImVec2 buttonSize{
-//        (barSize.x - barSpacing) / nLevels - barSpacing, barSize.y - barSpacing * 2
-//    };
-//
-//    const ImVec2 pos{ ImGui::GetCursorScreenPos() };
-//    const ImVec4 col{ style.Colors[ImGuiCol_Border] };
-//    const float borderWidth{ 1.0f };
-//    ImGui::GetWindowDrawList()->AddRect(pos, ImVec2(pos.x + barSize.x, pos.y + barSize.y),
-//        ImU32{ ImColor{ col } }, 0.0f, ImDrawFlags_None, borderWidth);
-//
-//    ImVec2 posButton{ pos.x + barSpacing, pos.y + barSpacing };
-//    ImGui::SetCursorScreenPos(posButton);
-//    ImGui::PushStyleColor(ImGuiCol_Button, colors.accepted_);
-//    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colors.accepted_);
-//    ImGui::PushStyleColor(ImGuiCol_ButtonActive, colors.accepted_);
-//    const auto currentLevel{ static_cast<char>(level.get()) };
-//    int buttonPressed{ minLevel };
-//    int buttonHovered{ minLevel };
-//    ImGui::PushID(title.c_str());
-//    for (int i{ minLevel + 1 }; i <= maxLevel; ++i) {
-//        ImGui::PushID(i);
-//        ImVec4 colButton{};
-//        ImVec4 colButtonHovered{};
-//        ImVec4 colButtonActive{};
-//        bool setColorButton{ false };
-//        if (i > currentLevel) {
-//            setColorButton      = true;
-//            if (points.get() >= dist.total(static_cast<Level>(i), level.get())) {
-//                colButton           = colors.available_;
-//                colButtonHovered    = colors.available_;
-//                colButtonActive     = colors.available_;
-//            }
-//            else {
-//                colButton           = colors.notAccepted_;
-//                colButtonHovered    = colors.notAccepted_;
-//                colButtonActive     = colors.notAccepted_;
-//            }
-//        }
-//        if (setColorButton) {
-//            ImGui::PushStyleColor(ImGuiCol_Button, colButton);
-//            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, colButtonHovered);
-//            ImGui::PushStyleColor(ImGuiCol_ButtonActive, colButtonActive);
-//        }
-//        if (ImGui::Button("##Cell", buttonSize)) {
-//            buttonPressed = i;
-//        }
-//        //if (ImGui::IsItemHovered()) {
-//        //    buttonHovered = i;
-//        //}
-//        if (setColorButton) {
-//            ImGui::PopStyleColor(3);
-//        }
-//        posButton = ImVec2{ posButton.x + buttonSize.x + barSpacing, posButton.y };
-//        ImGui::SetCursorScreenPos(posButton);
-//
-//        ImGui::PopID();
-//    }
-//    ImGui::PopID();
-//    ImGui::PopStyleColor(3);
-//
-//    ImGui::SetCursorScreenPos(ImVec2{ pos.x, pos.y + barSize.y + style.ItemSpacing.y });
-//    if (buttonPressed > minLevel &&
-//        points.get() >= dist.total(static_cast<Level>(buttonPressed), level.get()))
-//    {
-//        return buttonPressed - static_cast<char>(level.get());
-//    }
-//    return 0;
-//}
-
-//void guiLevelBar(const common::Text& title,
-//                 const ImVec2& windowSize,
-//                 const char minLevel,
-//                 const char maxLevel,
-//                 char& curLevel)
-//{
-//    const auto& style{ ImGui::GetStyle() };
-//    ImGui::AlignTextToFramePadding();
-//    ImGui::TextUnformatted(title.c_str());
-//
-//    const short int nLevels{ maxLevel - minLevel };
-//    const float barSpacing{ 3.0f };
-//    const ImVec2 barSize{
-//        windowSize.x - style.ItemSpacing.x, ImGui::GetFrameHeight() * 0.8f
-//    };
-//    const ImVec2 buttonSize{
-//        (barSize.x - barSpacing) / nLevels - barSpacing, barSize.y - barSpacing * 2
-//    };
-//
-//    const ImVec2 pos{ ImGui::GetCursorScreenPos() };
-//    const ImVec4 col{ style.Colors[ImGuiCol_Border] };
-//    const float borderWidth{ 1.0f };
-//    ImGui::GetWindowDrawList()->AddRect(pos, ImVec2(pos.x + barSize.x, pos.y + barSize.y),
-//        ImU32{ ImColor{ col } }, 0.0f, ImDrawFlags_None, borderWidth);
-//
-//    ImVec2 posButton{ pos.x + barSpacing, pos.y + barSpacing };
-//    ImGui::SetCursorScreenPos(posButton);
-//    for (int i{ minLevel + 1 }; i <= maxLevel; ++i) {
-//        ImGui::PushID(i);
-//        if (ImGui::Button("##Cell", buttonSize)) {
-//
-//        }
-//        posButton = ImVec2{ posButton.x + buttonSize.x + barSpacing, posButton.y };
-//        ImGui::SetCursorScreenPos(posButton);
-//
-//
-//        ImGui::PopID();
-//    }
-//
-//    ImGui::SetCursorScreenPos(ImVec2{ pos.x, pos.y + barSize.y + style.ItemSpacing.y });
-//}
 
 } // namespace menu
 } // namespace game

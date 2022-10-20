@@ -38,7 +38,6 @@ void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
 
     const auto& comT    { MenuCommonText::common() };
     const auto& text    { MenuInventoryText::common() };
-    const auto& squadT  { MenuSquadText::common() };
     const auto& charT   { MenuCharacterText::common() };
     const auto& itemT   { MenuItemText::common() };
 
@@ -129,30 +128,8 @@ void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
         ///********** Squad members
         guiMenuGeneral_SquadMembers(gVars);
 
-        ///********** Titles
-        const ImVec2 tableSizeTitles{ contentRegionSize.x, ImGui::GetFrameHeight() };
-        if (ImGui::BeginTable("Titles", 3, ImGuiTableFlags_None, tableSizeTitles)) {
-            ImGui::TableSetupColumn(nullptr, ImGuiTableColumnFlags_WidthFixed, columnSize.x);
-
-            ImGui::TableNextRow();
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted(squadT.character().c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted(text.inventory().c_str());
-            ImGui::SameLine(); helpMarker(text.colorNewItems().c_str());
-            ImGui::SameLine();
-            ostringstream oss;
-            oss << sign::dollar << squad.money();
-            ImGui::TextUnformatted(oss.str().c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::TextUnformatted(comT.description().c_str());
-
-            ImGui::EndTable();
-        }
-
         ///********** Unit
+        ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() });
         const GuiWindowUnitColors uColors{
             colSlot,
             colSlotHovered,
@@ -168,6 +145,15 @@ void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
         ImGuiWindowFlags flags{ ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse };
         if (ImGui::BeginChild("Inventory", columnSize, false, flags)) {
             ImGui::PopStyleVar();
+            ImGui::TextUnformatted(text.inventory().c_str());
+            ImGui::SameLine(); helpMarker(text.colorNewItems().c_str());
+            ostringstream oss;
+            oss << sign::dollar << squad.money();
+            ImVec2 textSize{ ImGui::CalcTextSize(oss.str().c_str()) };
+            ImGui::SameLine(columnSize.x - textSize.x);
+            ImGui::TextUnformatted(oss.str().c_str());
+
+            ImGui::Separator();
             const float buttonTotalPaddingWidth{ style.FramePadding.x * 2 };
             const float windowPosXRight{
                 ImGui::GetWindowPos().x + ImGui::GetWindowContentRegionMax().x
@@ -198,8 +184,7 @@ void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
                 curType = LastItemType::AMMO;
             }
 
-            ImGui::Separator();
-
+            ImGui::Dummy(ImVec2{ 0, ImGui::GetFrameHeight() / 3 });
             if (ImGui::BeginChild("ItemList", ImVec2{ 0.0f, 0.0f }, false)) {
                 if (lastType != curType) {
                     lastType = curType;
