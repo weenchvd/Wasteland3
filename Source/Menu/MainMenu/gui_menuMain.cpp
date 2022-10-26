@@ -36,10 +36,11 @@ void guiMenuMain(bool* open,
     static bool showGuiMenuSaveGame     { false };
     static bool showGuiMenuLoadGame     { false };
 
-    if (showGuiMenuOption)              guiMenuOptions(&showGuiMenuOption);
-    if (showGuiMenuGeneral)             guiMenuGeneral(&showGuiMenuGeneral, *squad);
-    if (showGuiMenuSaveGame)            guiMenuSaveGame(&showGuiMenuSaveGame, squad, shop);
-    if (showGuiMenuLoadGame)            guiMenuLoadGame(&showGuiMenuLoadGame, squad, shop);
+    ///********** Show GUI
+    if (showGuiMenuOption)              { guiMenuOptions(&showGuiMenuOption); return; }
+    if (showGuiMenuGeneral)             { guiMenuGeneral(&showGuiMenuGeneral, *squad); return; }
+    if (showGuiMenuSaveGame)            { guiMenuSaveGame(&showGuiMenuSaveGame, squad, shop); return; }
+    if (showGuiMenuLoadGame)            { guiMenuLoadGame(&showGuiMenuLoadGame, squad, shop); return; }
 
     ImGuiWindowFlags window_flags{ 0 };
     guiCommonInitialization(window_flags);

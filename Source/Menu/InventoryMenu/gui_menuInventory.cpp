@@ -91,9 +91,13 @@ void guiMenuInventory(bool* open, GuiMenuGeneralVars& gVars)
         if (itemIsSelected && !iItem.isValid()) {
             pItem = nullptr;
         }
+        return;
     }
 
-    if (showGuiModifyItem) guiMenuItemModify(&showGuiModifyItem, squad, *pItem);
+    if (showGuiModifyItem) {
+        guiMenuItemModify(&showGuiModifyItem, squad, *pItem);
+        return;
+    }
 
     if (showGuiEquipItem) {
         auto newMod{ squad.inventory().extract(iItem) };

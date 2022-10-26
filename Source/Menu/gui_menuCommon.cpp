@@ -84,41 +84,40 @@ void guiGetYesNo(bool* open,
     assert(messageText != nullptr);
     if (open == nullptr || windowTitle == nullptr || messageText == nullptr) return;
 
-    const auto& comT{ MenuCommonText::common() };
+    ImGuiWindowFlags window_flags{ 0 };
+    guiCommonInitialization(window_flags);
+    window_flags &= ~ImGuiWindowFlags_NoBringToFrontOnFocus;
 
-    ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
-    ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2{ 0.5f, 0.5f });
-    const float textPadding{ 20 };
-    const float windowWidth{ ImGui::CalcTextSize(messageText).x + textPadding };
-    const float minWindowWidth{ 300 };
-    ImVec2 windowSize{ max(windowWidth, minWindowWidth), 0 };
-    ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
+    string s{ string{ windowTitle } + u8"###YesNo" };
+    if (ImGui::Begin(s.c_str(), nullptr, window_flags)) {
+        const auto& comT{ MenuCommonText::common() };
 
-    ImGuiWindowFlags window_flags{ ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoSavedSettings };
-    if (ImGui::Begin(windowTitle, open, window_flags)) {
+        ImVec2 center{ ImGui::GetMainViewport()->GetCenter() };
+        const float textWidth{ ImGui::CalcTextSize(messageText).x };
+        ImVec2 textPos{ center.x - textWidth / 2, center.y - ImGui::GetFrameHeight() };
+        ImGui::SetCursorScreenPos(textPos);
         ImGui::Text(messageText);
 
-        const float buttonTextPadding{ 40 };
+        const float buttonTextPadding{ 40.0f };
         const char* buttonTextYes{ comT.yes().c_str() };
-        ImVec2 buttonSizeYes{ ImGui::CalcTextSize(buttonTextYes).x + buttonTextPadding, 0 };
+        ImVec2 buttonSizeYes{ ImGui::CalcTextSize(buttonTextYes).x + buttonTextPadding, 0.0f };
         const char* buttonTextNo{ comT.no().c_str() };
-        ImVec2 buttonSizeNo{ ImGui::CalcTextSize(buttonTextNo).x + buttonTextPadding, 0 };
+        ImVec2 buttonSizeNo{ ImGui::CalcTextSize(buttonTextNo).x + buttonTextPadding, 0.0f };
 
-        const float buttonPadding{ 10 };
-        ImVec2 buttonSize{ max(buttonSizeYes.x, buttonSizeNo.x), 0 };
+        const float buttonPadding{ 10.0f };
+        ImVec2 buttonSize{ max(buttonSizeYes.x, buttonSizeNo.x), 0.0f };
         float indent{ ImGui::GetWindowWidth() / 2 - buttonSize.x - buttonPadding };
-        ImGui::NewLine();
+        ImGui::Dummy(ImVec2{ 0.0f, ImGui::GetFrameHeight() });
         ImGui::SameLine(indent);
         if (ImGui::Button(buttonTextYes, buttonSize)) {
             result = YesNo::YES;
             *open = false;
         }
-        ImGui::SameLine(0, buttonPadding * 2);
+        ImGui::SameLine(0.0f, buttonPadding * 2);
         if (ImGui::Button(buttonTextNo, buttonSize)) {
             result = YesNo::NO;
             *open = false;
         }
-
     }
     ImGui::End();
 }

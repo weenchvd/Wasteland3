@@ -173,6 +173,16 @@ void guiMenuSkill(bool* open, GuiMenuGeneralVars& gVars)
     static common::Text description{};
     static GuiMenuSkillState state{ gVars, vars };
 
+    if (showGuiQuestionUndoChanges) {
+        YesNo result{ YesNo::INVALID };
+        guiGetYesNo(&showGuiQuestionUndoChanges, u8"##QuestionUndoChanges",
+            text.questionUndoChanges().c_str(), result);
+        if (result == YesNo::YES) {
+            pChar->skill().reject();
+        }
+        return;
+    }
+
     ///********** Windows
     ImGuiWindowFlags window_flags{ 0 };
     guiCommonInitialization(window_flags);
@@ -312,15 +322,6 @@ void guiMenuSkill(bool* open, GuiMenuGeneralVars& gVars)
         if (ImGui::Button(text.undoChanges().c_str())) {
             if (pChar != nullptr && pChar->skill().isModified()) {
                 showGuiQuestionUndoChanges = true;
-            }
-        }
-
-        if (showGuiQuestionUndoChanges) {
-            YesNo result{ YesNo::INVALID };
-            guiGetYesNo(&showGuiQuestionUndoChanges, u8"##QuestionUndoChanges",
-                text.questionUndoChanges().c_str(), result);
-            if (result == YesNo::YES) {
-                pChar->skill().reject();
             }
         }
     }

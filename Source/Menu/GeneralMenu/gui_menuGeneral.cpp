@@ -226,13 +226,13 @@ void guiWindowUnit(GuiMenuGeneralVars& gVars,
                         break;
                     }
                 }
-                int totalWidth =
-                    windowSize.x - style.WindowPadding.x * 2.0f - style.ScrollbarSize;
+                int totalWidth = ImGui::GetWindowContentRegionMax().x - style.WindowPadding.x;
                 guiShowStats(*pChar, sign::dot, totalWidth);
             }
             else if (gVars.curSM_ == Submenu::INVENTORY) {
                 ImVec2 buttonSize{
-                    windowSize.x - style.ItemSpacing.x * 2.0f, ImGui::GetFrameHeight()
+                    ImGui::GetWindowContentRegionMax().x - style.WindowPadding.x,
+                    ImGui::GetFrameHeight()
                 };
                 ostringstream oss;
                 for (int i = 0; i < pChar->slotWeapon().size(); ++i) {
